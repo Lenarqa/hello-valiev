@@ -15,7 +15,7 @@ const ContentWrapper = styled.div`
 const BgImg = styled.img`
   position: absolute;
   right: 0;
-  z-index: 0;
+  z-index: -1;
 `;
 
 const Title = styled.div`
@@ -25,6 +25,7 @@ const Title = styled.div`
   font-size: 124px;
   color: #fff;
   font-family: 'Factor A';
+  margin-bottom: 88px;
 `;
 
 const Content: React.FC = () => {
