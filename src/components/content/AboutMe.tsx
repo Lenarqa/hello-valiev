@@ -5,11 +5,12 @@ import MyCard from "./MyCard";
 const AboutMeSection = styled.div`
   display: flex;
   width: 100%;
+  margin-bottom: 120px;
 `;
 
 const Img = styled.img`
   height: 383px;
-  min-width: 519px;
+  max-width: 519px;
   margin-top: 30px;
   border-radius: 2px;
 `;
@@ -17,7 +18,7 @@ const Img = styled.img`
 const AboutMe: React.FC = () => {
   return (
     <AboutMeSection>
-      <Img src={require("../../assets/img/photo.jpg")} alt="photo" />
+      <Img src={require("../../assets/img/Me_03.webp")} alt="photo" />
       <MyCard />
     </AboutMeSection>
   );

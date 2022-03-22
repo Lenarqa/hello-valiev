@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import bg from "../../assets/img/bg.svg";
+import SliderSection from "../Slider/Slider";
 import AboutMe from "./AboutMe";
 
 const ContentSection = styled.div`
@@ -24,7 +25,7 @@ const Title = styled.div`
   color: #fff;
   font-size: 124px;
   color: #fff;
-  font-family: 'Factor A';
+  font-family: "Factor A";
   margin-bottom: 88px;
 `;
 
@@ -36,6 +37,7 @@ const Content: React.FC = () => {
         <Title>Добро пожаловать в академию!</Title>
         <AboutMe />
       </ContentWrapper>
+      <SliderSection />
     </ContentSection>
   );
 };
