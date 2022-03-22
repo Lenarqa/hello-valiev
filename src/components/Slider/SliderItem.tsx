@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import ButtonAdd from "../UI/ButtonAdd";
 
-const Item = styled.div`
+interface IItem {
+  index: number;
+  curSlide: number;
+}
+
+const Item = styled.div<IItem>`
   width: 519px;
   height: 279px;
   padding: 24px;
@@ -35,18 +39,21 @@ const UserInfo = styled.div`
     border-radius: 2px;
     margin-right: 20px;
   }
-
-  p {
-  }
 `;
 
-const SliderItem: React.FC = () => {
+interface ISliderItem {
+  name: string;
+  index: number;
+  curSlide: number;
+}
+
+const SliderItem: React.FC<ISliderItem> = (props) => {
   return (
-    <Item>
+    <Item index={props.index} curSlide={props.curSlide}>
       <Header>
         <UserInfo>
           <img src={require("../../assets/img/users/user-2.png")} alt="photo" />
-          <p>Name</p>
+          <p>{props.name}</p>
         </UserInfo>
         <p>08.01.2022</p>
       </Header>
