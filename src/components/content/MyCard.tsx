@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import man from "../../assets/icons/man.svg";
+import animal from "../../assets/icons/animal.svg";
 
 const Card = styled.div`
   display: flex;
@@ -46,17 +48,36 @@ const Text = styled.p`
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
+  margin-right: 10px;
 `;
 
 const Info = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin-bottom: 18px;
 `;
 
 const InfoItem = styled.div`
   display: flex;
+  margin-right: 40px;
+`;
+
+const AboutMeInfo = styled.div`
+    margin-bottom: 10px;
+`
+
+const AboutMeText = styled.div`
+  font-family: "Gilroy", sans-serif;
+  color: #333;
+  font-size: 18px;
+  line-height: 24px;
+`;
+
+const Footer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 const MyCard: React.FC = () => {
@@ -74,24 +95,34 @@ const MyCard: React.FC = () => {
         <InfoItem>
           <Title>Пол:</Title>
           <Text>Мужской</Text>
+          <img src={man} />
         </InfoItem>
         <InfoItem>
           <Title>Возраст:</Title>
           <Text>23</Text>
         </InfoItem>
       </Info>
+      <AboutMeInfo>
+        <AboutMeText>
+          <b>О себе:</b> Hello everybody! Меня зовут Ленар, мне 23 года, я
+          студент ТУСУРа. Учусь на программиста-экономиста на 1 курсе
+          магистратуры. За время бакалавариата, я успел попробовать себя во
+          многих областях программирования и не только. Попробовал себя в роли
+          бухгалтера, помошника метролога, инженера-программиста и т.д. И в
+          итоге я пришел к frontend разработке, и хотя сначала я относился к
+          этому скептически, попробовав, я понял, что да, это то в чем бы я
+          хотел заниматься, разработка интерфейсов, логика пользовательского
+          взаимодействие, движение данных внутри сайта и анимация, все это меня
+          очень привлекло.
+        </AboutMeText>
+      </AboutMeInfo>
       <div>
-        <Title>О себе</Title>
-        <p>
-          О себе: Всем привет! Меня зовут Яна, мне 22 года, я студент. Учусь на
-          программиста, но хочу стать продуктовым аналитиком. Недавно, например,
-          я начала проходить курс на известной платформе, который поможет мне
-          устроиться на работу моей мечты! BTW: И да, у меня есть милая кошка
-          :)
-        </p>
-      </div>
-      <div>
-        <p>Домашнее животное: нету</p>
+        <Footer>
+          <img src={animal} style={{marginRight: 12}}/>
+          <AboutMeText>
+            <b>Домашних животных:</b> нет
+          </AboutMeText>
+        </Footer>
       </div>
     </Card>
   );
