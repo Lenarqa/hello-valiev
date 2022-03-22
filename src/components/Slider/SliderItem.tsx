@@ -1,12 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-interface IItem {
-  index: number;
-  curSlide: number;
-}
-
-const Item = styled.div<IItem>`
+const Item = styled.div`
   width: 519px;
   height: 279px;
   padding: 24px;
@@ -43,28 +38,26 @@ const UserInfo = styled.div`
 
 interface ISliderItem {
   name: string;
-  index: number;
-  curSlide: number;
+  imgUrl: string;
+  date: string;
+  text: string;
 }
 
-const SliderItem: React.FC<ISliderItem> = (props) => {
+const SliderItem: React.FC<ISliderItem> = ({ name, imgUrl, date, text }) => {
+  if (imgUrl.trim().length === 0) {
+    imgUrl = "User-0.png";
+  }
+
   return (
-    <Item index={props.index} curSlide={props.curSlide}>
+    <Item>
       <Header>
         <UserInfo>
-          <img src={require("../../assets/img/users/user-2.png")} alt="photo" />
-          <p>{props.name}</p>
+          <img src={require(`../../assets/img/users/${imgUrl}`)} alt="photo" />
+          <p>{name}</p>
         </UserInfo>
-        <p>08.01.2022</p>
+        <p>{date}</p>
       </Header>
-      <Content>
-        Отличный коллектив, руководители понимают сам процесс работы каждого
-        сотрудника и помогают всем без исключения. Система KPI позволяет реально
-        хорошо зарабатывать по простому принципу - чем больше и лучше ты
-        работаешь, тем больше денег получаешь. Соцпакет - отличная страховка
-        ДМС, организовали курсы английского языка бесплатно, оплачивают
-        тренажерный зал. Зарплату выплачивают всегда вовремя.
-      </Content>
+      <Content>{text}</Content>
     </Item>
   );
 };
