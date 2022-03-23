@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ButtonAdd from "../UI/ButtonAdd";
 import HeaderButton from "../UI/HeaderButton";
 import { ReactComponent as Info } from "../../assets/icons/info.svg";
+import FileItem from "./FileItem";
 
 const StyledReviewModal = styled.div`
   position: absolute;
   width: 676px;
-  height: 443px;
+  min-height: 443px;
   background-color: #fff;
   padding: 24px;
   top: 50%;
@@ -133,12 +134,52 @@ interface IReviewModal {
   close: () => void;
 }
 
-const ReviewModal: React.FC<IReviewModal> = ({close}) => {
+const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
+  const [userName, setUserName] = useState<string>("");
+  const [isError, setIsError] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string>("");
+  const [userFile, setUserFile] = useState({});
+
+  const changeNameHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const value = e.currentTarget.value;
+    if (value.trim().length === 0) {
+      setUserName(value);
+      setErrorMsg("Поле не может быть пустым");
+      setIsError(true);
+      return;
+    } else if (value.length > 20) {
+      setErrorMsg("Количество символов не должно превышать 20");
+      setIsError(true);
+      return;
+    } else {
+      setUserName(value);
+    }
+  };
+
+  const imgSelectHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("imgSelectHandler");
+
+    if (e.currentTarget.files?.length !== 0) {
+      const file = e.currentTarget.files;
+      if (file) {
+        // var reader = new FileReader();
+        // const objectUrl = URL.createObjectURL(file);
+        // console.log(url);
+        setUserFile(file[0]);
+      }
+    }
+  };
+
+  const fileUploadHandler = () => {
+    document.getElementById("selectImg")?.click();
+  };
+
   return (
     <StyledReviewModal>
       <Header>
         <Title>Отзыв</Title>
-        <Btn onClick={close}/>
+        <Btn onClick={close} />
       </Header>
       <Content>
         <Item>
@@ -146,9 +187,21 @@ const ReviewModal: React.FC<IReviewModal> = ({close}) => {
             <Label>Как вас зовут?</Label>
           </div>
           <div style={{ display: "flex" }}>
-            <Input placeholder="Имя Фамилия" type="text" />
-            <ButtonAdd onClick={() => {}}>Загрузить фото</ButtonAdd>
+            <Input
+              placeholder="Имя Фамилия"
+              type="text"
+              value={userName}
+              onChange={changeNameHandler}
+            />
+            <input
+              id="selectImg"
+              type="file"
+              style={{ display: "none" }}
+              onChange={imgSelectHandler}
+            />
+            <ButtonAdd onClick={fileUploadHandler}>Загрузить фото</ButtonAdd>
           </div>
+            <FileItem />
         </Item>
         <Item>
           <Label>Все ли вам понравилось?</Label>
