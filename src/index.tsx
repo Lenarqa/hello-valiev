@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    position: relative;
     background-color: #585CC6;
   }
 `;

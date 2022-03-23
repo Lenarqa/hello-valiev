@@ -5,6 +5,7 @@ import SliderItem from "./SliderItem";
 import { IReview } from "../../models/models";
 import { DUMMY_DATA } from "../../constanst/dummyData";
 import SliderBtn from "./SliderBtn";
+import ReviewModal from "../modal/ReviewModal";
 
 const StyledSliderSection = styled.div`
   display: flex;
@@ -95,6 +96,7 @@ const ActionSection = styled.div`
 `;
 
 const SliderSection: React.FC = () => {
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [rewies, setRewiews] = useState<IReview[]>(DUMMY_DATA);
   const [curSlide, setCurSlide] = useState<number>(0);
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -104,7 +106,7 @@ const SliderSection: React.FC = () => {
 
   useEffect(() => {
     console.log("curSlide = " + curSlide);
-    console.log(`rewies = ${rewies.length-1}`);
+    console.log(`rewies = ${rewies.length - 1}`);
 
     if (curSlide === 0) {
       setDisableLeftBtn(true);
@@ -139,7 +141,9 @@ const SliderSection: React.FC = () => {
       <Reviews>
         <Header>
           <Title>Отзывы</Title>
-          <ButtonAdd>Добавить отзыв</ButtonAdd>
+          <ButtonAdd onClick={() => setShowModal(true)}>
+            Добавить отзыв
+          </ButtonAdd>
         </Header>
 
         <SlidesWrapper>
@@ -182,6 +186,7 @@ const SliderSection: React.FC = () => {
           disabled={disableRightBtn}
         />
       </ActionSection>
+      {showModal && <ReviewModal close={()=>{setShowModal(false)}}/>}
     </StyledSliderSection>
   );
 };

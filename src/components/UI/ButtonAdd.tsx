@@ -16,9 +16,13 @@ const Button = styled.div`
   border-radius: 2px;
 `;
 
-const ButtonAdd: React.FC = (props) => {
+interface IButtonAdd {
+  onClick: ()=>void;
+}
+
+const ButtonAdd: React.FC<IButtonAdd> = (props) => {
   return (
-    <Button>
+    <Button onClick={props.onClick}>
       <img src={plus} style={{ marginRight: 12 }} />
       {props.children}
     </Button>
