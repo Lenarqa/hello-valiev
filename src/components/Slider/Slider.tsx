@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import styled, { keyframes } from "styled-components";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import ButtonAdd from "../UI/ButtonAdd";
 import SliderItem from "./SliderItem";
 import { IReview } from "../../models/models";
 import { DUMMY_DATA } from "../../constanst/dummyData";
+import SliderBtn from "./SliderBtn";
 
 const StyledSliderSection = styled.div`
+  display: flex;
   width: 100%;
   margin-bottom: 106px;
 `;
@@ -76,7 +78,6 @@ const Bar = styled.button<IBar>`
 
   &:hover {
     background-color: #585cc6;
-
   }
 
   &:nth-child(${(props) => props.activeIndex + 1}) {
@@ -85,15 +86,54 @@ const Bar = styled.button<IBar>`
   }
 `;
 
+const ActionSection = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  width: 100%;
+  padding-left: 34px;
+`;
+
 const SliderSection: React.FC = () => {
   const [rewies, setRewiews] = useState<IReview[]>(DUMMY_DATA);
   const [curSlide, setCurSlide] = useState<number>(0);
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
+  const [disableLeftBtn, setDisableLeftBtn] = useState<boolean>(true);
+  const [disableRightBtn, setDisableRightBtn] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log("curSlide = " + curSlide);
+    console.log(`rewies = ${rewies.length-1}`);
+
+    if (curSlide === 0) {
+      setDisableLeftBtn(true);
+    } else {
+      setDisableLeftBtn(false);
+    }
+
+    if (curSlide === rewies.length - 2) {
+      setDisableRightBtn(true);
+    } else {
+      setDisableRightBtn(false);
+    }
+  }, [curSlide, rewies]);
+
   const nextSlideBarHandler = (index: number) => {
     setCurSlide(index);
     setActiveIndex(index);
   };
+
+  const nextSlideBtnHandler = (isReverse: boolean) => {
+    if (!isReverse) {
+      setCurSlide((prev) => prev + 1);
+      setActiveIndex((prev) => prev + 1);
+    } else {
+      setCurSlide((prev) => prev - 1);
+      setActiveIndex((prev) => prev - 1);
+    }
+  };
+
   return (
     <StyledSliderSection>
       <Reviews>
@@ -116,7 +156,7 @@ const SliderSection: React.FC = () => {
           </Slides>
           <Navigation>
             {rewies.map((rewiew, index) => {
-              // this if check that the slider always displays 2 reviews
+              // this if check that the slider always displays 2 reviews (if rewiews odd number 3,5.7...)
               if (index < rewies.length - 1) {
                 return (
                   <Bar
@@ -130,6 +170,18 @@ const SliderSection: React.FC = () => {
           </Navigation>
         </SlidesWrapper>
       </Reviews>
+      <ActionSection>
+        <SliderBtn
+          isReverce={true}
+          onClick={nextSlideBtnHandler}
+          disabled={disableLeftBtn}
+        />
+        <SliderBtn
+          isReverce={false}
+          onClick={nextSlideBtnHandler}
+          disabled={disableRightBtn}
+        />
+      </ActionSection>
     </StyledSliderSection>
   );
 };
