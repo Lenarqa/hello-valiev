@@ -139,6 +139,7 @@ const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [userFile, setUserFile] = useState({});
+  const [loagingImg, setLoadingImg] = useState<number>(20);
 
   const changeNameHandler = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -159,13 +160,9 @@ const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
 
   const imgSelectHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("imgSelectHandler");
-
     if (e.currentTarget.files?.length !== 0) {
       const file = e.currentTarget.files;
       if (file) {
-        // var reader = new FileReader();
-        // const objectUrl = URL.createObjectURL(file);
-        // console.log(url);
         setUserFile(file[0]);
       }
     }
@@ -201,7 +198,7 @@ const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
             />
             <ButtonAdd onClick={fileUploadHandler}>Загрузить фото</ButtonAdd>
           </div>
-            <FileItem />
+          <FileItem />
         </Item>
         <Item>
           <Label>Все ли вам понравилось?</Label>
