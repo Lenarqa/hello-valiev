@@ -3,6 +3,7 @@ import styled from "styled-components";
 import plus from "../../assets/icons/plus.svg";
 
 const Button = styled.div`
+  cursor: pointer;
   height: 52px;
   width: 220px;
   padding: 17px 28px;
@@ -17,7 +18,7 @@ const Button = styled.div`
 `;
 
 interface IButtonAdd {
-  onClick: ()=>void;
+  onClick: () => void;
 }
 
 const ButtonAdd: React.FC<IButtonAdd> = (props) => {

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ReactComponent as File } from "../../assets/icons/file.svg";
+import { ReactComponent as Delete } from "../../assets/icons/delete.svg";
 import LoadingIndicator from "../Slider/Loading/LoadingIndicator";
 import ProgressBar from "../Slider/ProgressBar";
 
@@ -31,20 +32,26 @@ const Title = styled.div`
   font-size: 14px;
   margin-bottom: -6px;
 `;
-const LoadingBar = styled.div`
-    width: 80%;
-    border: 4px solid #C2C4FF;
-`
 
-const FileItem: React.FC = () => {
+interface IFileItem {
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
+  deleteUserFile: () => void;
+}
+
+const FileItem: React.FC<IFileItem> = ({ isLoading, setIsLoading, deleteUserFile }) => {
   return (
     <StyledFileItem>
-      <File style={{marginRight:13}}/>
+      <File style={{ marginRight: 13 }} />
       <FileContent>
         <Title>Photo</Title>
-        <ProgressBar />
+        <ProgressBar isLoading={isLoading} setIsLoading={setIsLoading} />
       </FileContent>
-      <LoadingIndicator />
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        <Delete style={{ cursor: "pointer" }} onClick={deleteUserFile}/>
+      )}
     </StyledFileItem>
   );
 };

@@ -12,6 +12,8 @@ const Button = styled.button`
   font-family: "Gilroy-Regular", sans-serif;
   font-weight: 600;
   font-size: 18px;
+  border: none;
+  border-radius: 2px;
 `;
 
 const HeaderButton: React.FC = (props) => {

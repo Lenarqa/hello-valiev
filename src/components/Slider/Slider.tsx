@@ -104,10 +104,8 @@ const SliderSection: React.FC = () => {
   const [disableLeftBtn, setDisableLeftBtn] = useState<boolean>(true);
   const [disableRightBtn, setDisableRightBtn] = useState<boolean>(false);
 
-  useEffect(() => {
-    console.log("curSlide = " + curSlide);
-    console.log(`rewies = ${rewies.length - 1}`);
 
+  useEffect(() => {
     if (curSlide === 0) {
       setDisableLeftBtn(true);
     } else {
