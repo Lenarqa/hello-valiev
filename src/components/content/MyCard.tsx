@@ -8,9 +8,13 @@ const Card = styled.div`
   flex-direction: column;
   background-color: #fff;
   width: 100%;
-  height: 383px;
   padding: 40px;
   border-radius: 2px;
+
+  @media (max-width: 321px) {
+    margin-top: -16px;
+    padding: 16px;
+  }
 `;
 
 const Header = styled.div`
@@ -32,6 +36,25 @@ const Header = styled.div`
     font-weight: 400;
     font-size: 18px;
   }
+
+  @media (max-width: 676px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (max-width: 321px) {
+    align-items: flex-start;
+
+    p:first-child {
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    p:last-child {
+      font-size: 16px;
+    }
+  }
 `;
 
 const Title = styled.p`
@@ -41,6 +64,10 @@ const Title = styled.p`
   font-size: 18px;
   color: #333333;
   margin-right: 4px;
+
+  @media (max-width: 321px) {
+    font-size: 16px;
+  }
 `;
 
 const Text = styled.p`
@@ -49,6 +76,10 @@ const Text = styled.p`
   font-weight: 400;
   font-size: 18px;
   margin-right: 10px;
+
+  @media (max-width: 321px) {
+    font-size: 16px;
+  }
 `;
 
 const Info = styled.div`
@@ -56,22 +87,49 @@ const Info = styled.div`
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 18px;
+
+  @media (max-width: 676px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (max-width: 321px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 16px;
+  }
 `;
 
 const InfoItem = styled.div`
   display: flex;
   margin-right: 40px;
+
+  @media (max-width: 676px) {
+    margin: 10px 0;
+  }
+
+  @media (max-width: 321px) {
+    margin-top: 0;
+    margin-bottom: 12px;
+  }
 `;
 
 const AboutMeInfo = styled.div`
-    margin-bottom: 10px;
-`
+  margin-bottom: 10px;
+`;
 
 const AboutMeText = styled.div`
   font-family: "Gilroy", sans-serif;
   color: #333;
   font-size: 18px;
   line-height: 24px;
+
+  @media (max-width: 321px) {
+    font-size: 16px;
+    line-height: 22px;
+  }
 `;
 
 const Footer = styled.div`
@@ -118,7 +176,7 @@ const MyCard: React.FC = () => {
       </AboutMeInfo>
       <div>
         <Footer>
-          <img src={animal} style={{marginRight: 12}}/>
+          <img src={animal} style={{ marginRight: 12 }} />
           <AboutMeText>
             <b>Домашних животных:</b> нет
           </AboutMeText>

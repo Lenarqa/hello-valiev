@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import bg from "../../assets/img/bg.svg";
 import SliderSection from "../Slider/Slider";
@@ -13,6 +13,10 @@ const ContentSection = styled.div`
 
 const ContentWrapper = styled.div`
   padding: 93px 80px 106px 80px;
+
+  @media (max-width: 321px) {
+    padding: 0 16px;
+  }
 `;
 
 const BgImg = styled.img`
@@ -29,6 +33,22 @@ const Title = styled.div`
   color: #fff;
   font-family: "Factor A";
   margin-bottom: 88px;
+
+  @media (max-width: 1240px) {
+    font-size: 80px;
+  }
+
+  @media (max-width: 888px) {
+    font-size: 50px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 321px) {
+    font-size: 48px;
+    margin-bottom: 64px;
+  }
 `;
 
 const Content: React.FC = () => {
@@ -42,7 +62,7 @@ const Content: React.FC = () => {
         <Title>Добро пожаловать в академию!</Title>
         <AboutMe />
       </ContentWrapper>
-      <SliderSection setShowGoodWindow={setShowGoodWindow}/>
+      <SliderSection setShowGoodWindow={setShowGoodWindow} />
       {showGoodWindow && <GoodWindow setShowGoodWindow={setShowGoodWindow} />}
       {showBadWindow && <BadWindow setShowBadWindow={setShowBadWindow} />}
     </ContentSection>

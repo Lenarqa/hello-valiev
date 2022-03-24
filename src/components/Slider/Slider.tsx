@@ -6,11 +6,23 @@ import { IReview } from "../../models/models";
 import { DUMMY_DATA } from "../../constanst/dummyData";
 import SliderBtn from "./SliderBtn";
 import ReviewModal from "../modal/ReviewModal";
+import { ReactComponent as ButtonAddIcon } from "../../assets/icons/buttonAdd.svg";
+
+import useWindowDimensions from "../../functions/ScreenSize";
 
 const StyledSliderSection = styled.div`
   display: flex;
   width: 100%;
   margin-bottom: 106px;
+
+  @media (max-width: 1210px) {
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 321px) {
+    margin-bottom: 82px;
+  }
 `;
 
 const Header = styled.div`
@@ -18,18 +30,36 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 56px;
+
+  @media (max-width: 321px) {
+    margin-bottom: 21px;
+  }
 `;
 
 const Title = styled.h2`
   font-size: 68px;
   color: #333333;
   font-family: "Factor A";
+
+  @media (max-width: 321px) {
+    font-size: 32px;
+  }
 `;
 
 const Reviews = styled.div`
   background-color: #fff;
-  width: 1198px;
+  max-width: 1198px;
   padding: 74px 80px 0px 80px;
+
+  @media (max-width: 1210px) {
+    max-width: 560px;
+    padding: 74px 20px 0px 20px;
+  }
+
+  @media (max-width: 321px) {
+    width: 100%;
+    padding: 20px 16px;
+  }
 `;
 
 // Slider logic
@@ -39,20 +69,34 @@ const SlidesWrapper = styled.div`
   width: 102%;
   position: relative;
   transition: 1s ease;
+
+  @media (max-width: 321px) {
+    height: auto;
+  }
 `;
 
 interface ISlider {
   slideNum: number;
   curSlide: number;
+  sliderItemWith: number;
 }
 
 const Slides = styled.div<ISlider>`
   transition: 1s ease;
-  width: ${({ slideNum }) => `${(slideNum + 1) * 100}%`};
+  width: ${({ slideNum, sliderItemWith }) => {
+    return sliderItemWith < 321
+      ? `${slideNum * 100}%`
+      : `${(slideNum + 1) * 100}%`;
+  }};
   height: 100%;
   display: flex;
   padding-bottom: 64px;
-  margin-left: ${({ curSlide }) => `${curSlide * -543}px`};
+  margin-left: ${({ curSlide, sliderItemWith }) =>
+    `${curSlide * sliderItemWith}px`};
+
+  @media (max-width: 321px) {
+    padding-bottom: 32px;
+  }
 `;
 
 const Navigation = styled.div`
@@ -61,6 +105,10 @@ const Navigation = styled.div`
   left: 50%;
   transform: translateX(-50%);
   display: flex;
+
+  @media (max-width: 321px) {
+    bottom: 8px;
+  }
 `;
 
 interface IBar {
@@ -93,6 +141,10 @@ const ActionSection = styled.div`
   align-items: flex-end;
   width: 100%;
   padding-left: 34px;
+
+  @media (max-width: 1380px) {
+    display: none;
+  }
 `;
 
 interface ISliderSection {
@@ -100,6 +152,13 @@ interface ISliderSection {
 }
 
 const SliderSection: React.FC<ISliderSection> = (props) => {
+  const { height, width } = useWindowDimensions();
+
+  let sliderItemWidth = -543;
+  if (width < 321) {
+    sliderItemWidth = -300;
+  }
+
   const [showModal, setShowModal] = useState<boolean>(false);
   const [rewies, setRewiews] = useState<IReview[]>(DUMMY_DATA);
   const [curSlide, setCurSlide] = useState<number>(0);
@@ -142,13 +201,24 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
       <Reviews>
         <Header>
           <Title>Отзывы</Title>
-          <ButtonAdd onClick={() => setShowModal(true)}>
-            Добавить отзыв
-          </ButtonAdd>
+          {width < 700 ? (
+            <ButtonAddIcon
+              onClick={() => setShowModal(true)}
+              style={{ height: 42, width: 42 }}
+            />
+          ) : (
+            <ButtonAdd onClick={() => setShowModal(true)}>
+              Добавить отзыв
+            </ButtonAdd>
+          )}
         </Header>
 
         <SlidesWrapper>
-          <Slides slideNum={rewies.length} curSlide={curSlide}>
+          <Slides
+            slideNum={rewies.length}
+            curSlide={curSlide}
+            sliderItemWith={sliderItemWidth}
+          >
             {rewies.map((rewiew) => (
               <SliderItem
                 key={rewiew.id}

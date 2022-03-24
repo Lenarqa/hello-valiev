@@ -11,6 +11,11 @@ const StyledFooter = styled.footer`
   width: 100%;
   background-color: #f5f5f5;
   padding: 20px 80px;
+
+  @media (max-width: 321px) {
+    flex-direction: column;
+    padding: 12px 24px;
+  }
 `;
 
 const Text = styled.div`
@@ -18,6 +23,12 @@ const Text = styled.div`
   font-weight: 500;
   font-size: 16px;
   color: #8a8a8a;
+
+  @media (max-width: 321px) {
+    color: #333333;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
 `;
 
 const IconA = styled.a`
