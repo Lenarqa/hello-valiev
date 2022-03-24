@@ -53,7 +53,7 @@ const Title = styled.div`
 
 const Content: React.FC = () => {
   const [showGoodWindow, setShowGoodWindow] = useState<boolean>(false);
-  const [showBadWindow, setShowBadWindow] = useState<boolean>(true);
+  const [showBadWindow, setShowBadWindow] = useState<boolean>(false);
 
   return (
     <ContentSection>
