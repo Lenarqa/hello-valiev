@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/hello-valiev/static/css/main.7fd1671d.css",
+    "main.js": "/hello-valiev/static/js/main.ea40a0c4.js",
+    "static/media/Me_03.webp": "/hello-valiev/static/media/Me_03.f338e19a92ce3f18bef3.webp",
+    "static/media/FactorAMedium-Regular.ttf": "/hello-valiev/static/media/FactorAMedium-Regular.1a1b89bd931afe1bfa27.ttf",
+    "static/media/photo.jpg": "/hello-valiev/static/media/photo.2c778dc9e9b065821fc4.jpg",
+    "static/media/animal.svg": "/hello-valiev/static/media/animal.42d6230321a6de0a782e40911285e553.svg",
+    "static/media/file.svg": "/hello-valiev/static/media/file.f7a10a84365717af4149525387e294f3.svg",
+    "static/media/reddit.svg": "/hello-valiev/static/media/reddit.b4ac23c9d09afa26e12b63fb03c80483.svg",
+    "static/media/vk.svg": "/hello-valiev/static/media/vk.94b4606fc4b909990f05dc036436a786.svg",
+    "static/media/bg.svg": "/hello-valiev/static/media/bg.36d19b0d5ce39746ea8acc81bc0379e5.svg",
+    "static/media/telegram.svg": "/hello-valiev/static/media/telegram.e8894f6fa60daa71fcb94ec645105513.svg",
+    "static/media/delete.svg": "/hello-valiev/static/media/delete.f3edd5955b2bd6c943cac441b188c59a.svg",
+    "static/media/success.svg": "/hello-valiev/static/media/success.6eb9124caccaa98f567123f4846003df.svg",
+    "static/media/greenBubbles.svg": "/hello-valiev/static/media/greenBubbles.465f9449630ab263e832f6944e10d863.svg",
+    "static/media/redBubbles.svg": "/hello-valiev/static/media/redBubbles.2337e197c658b8fcd2771e0c114aed31.svg",
+    "index.html": "/hello-valiev/index.html",
+    "static/media/man.svg": "/hello-valiev/static/media/man.045dda3c1a2cafcf2404ada59c057c67.svg",
+    "static/media/info.svg": "/hello-valiev/static/media/info.1b35efe34ae7ba17871a2034b4870cbb.svg",
+    "static/media/button1.svg": "/hello-valiev/static/media/button1.ee4963e2cb752ed4d08d7fa82c107582.svg",
+    "static/media/bad.svg": "/hello-valiev/static/media/bad.25ac5d66ea61faa1ad14ed25b736d007.svg",
+    "static/media/error.svg": "/hello-valiev/static/media/error.32b5b9e323e9b27537e3e5572390a522.svg",
+    "static/media/close.svg": "/hello-valiev/static/media/close.35eab2172fe5dbb24f7c0ed2daab287d.svg",
+    "static/media/close2.svg": "/hello-valiev/static/media/close2.b736a10d5fbf1920ca83c8e283ecf475.svg",
+    "static/media/buttonAdd.svg": "/hello-valiev/static/media/buttonAdd.c9c4d03a3323c6c4bbd6970d03fa28f9.svg",
+    "static/media/plus.svg": "/hello-valiev/static/media/plus.75a21b6bf9a3d513b795f0b6ff855b10.svg",
+    "main.7fd1671d.css.map": "/hello-valiev/static/css/main.7fd1671d.css.map",
+    "main.ea40a0c4.js.map": "/hello-valiev/static/js/main.ea40a0c4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7fd1671d.css",
+    "static/js/main.ea40a0c4.js"
+  ]
+}
