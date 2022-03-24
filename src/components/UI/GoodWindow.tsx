@@ -35,6 +35,7 @@ const Icon = styled.div`
   top: -42px;
   z-index: 10;
 `;
+
 const Info = styled.div`
   width: 244px;
   height: 92px;
@@ -64,10 +65,10 @@ const Text = styled.div`
 `;
 
 interface IGoogWindow {
-    setShowGoodWindow: (value: boolean) => void;
+  setShowGoodWindow: (value: boolean) => void;
 }
 
-const GoodWindow: React.FC <IGoogWindow>= ({setShowGoodWindow}) => {
+const GoodWindow: React.FC<IGoogWindow> = ({ setShowGoodWindow }) => {
   return (
     <StyledGoodWindow>
       <Wrapper>
@@ -94,7 +95,7 @@ const GoodWindow: React.FC <IGoogWindow>= ({setShowGoodWindow}) => {
             top: 24,
             right: 24,
           }}
-          onClick={()=>{
+          onClick={() => {
             setShowGoodWindow(false);
           }}
         />

@@ -5,13 +5,20 @@ import { ReactComponent as Close } from "../../assets/icons/close2.svg";
 import { ReactComponent as RedBubbles } from "../../assets/img/redBubbles.svg";
 
 const StyledGoodWindow = styled.div`
-  position: absolute;
+  position: fixed;
   right: 40px;
-  bottom: -40px;
+  bottom: 10px;
   width: 438px;
   height: 132px;
-  background: #F64B3C;
+  background: #f64b3c;
   border-radius: 32px;
+
+  @media (max-width: 321px) {
+    position: fixed;
+    width: 310px;
+    right: 10px;
+    bottom: 12px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -29,10 +36,16 @@ const Icon = styled.div`
   top: -42px;
   z-index: 10;
 `;
+
 const Info = styled.div`
   width: 244px;
   height: 92px;
   margin-left: 130px;
+
+  @media (max-width: 321px) {
+    width: 160px;
+    margin-left: 40px;
+  }
 `;
 
 const Title = styled.div`
@@ -40,6 +53,10 @@ const Title = styled.div`
   font-weight: 500;
   font-size: 32px;
   color: #fff;
+
+  @media (max-width: 321px) {
+    font-size: 22px;
+  }
 `;
 
 const Text = styled.div`
@@ -50,10 +67,10 @@ const Text = styled.div`
 `;
 
 interface IBadWindow {
-    setShowBadWindow: (value: boolean) => void;
+  setShowBadWindow: (value: boolean) => void;
 }
 
-const BadWindow: React.FC <IBadWindow>= ({setShowBadWindow}) => {
+const BadWindow: React.FC<IBadWindow> = ({ setShowBadWindow }) => {
   return (
     <StyledGoodWindow>
       <Wrapper>
@@ -80,7 +97,7 @@ const BadWindow: React.FC <IBadWindow>= ({setShowBadWindow}) => {
             top: 24,
             right: 24,
           }}
-          onClick={()=>{
+          onClick={() => {
             setShowBadWindow(false);
           }}
         />
