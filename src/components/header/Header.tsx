@@ -60,7 +60,7 @@ const Header: React.FC = () => {
           <p>academy</p>
       </Title>
       <div>
-        <HeaderButton>Панель управления</HeaderButton>
+        <HeaderButton onClick={()=>{alert("Панель управления")}}>Панель управления</HeaderButton>
       </div>
     </StyledHeader>
   );

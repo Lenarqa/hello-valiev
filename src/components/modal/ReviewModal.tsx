@@ -5,6 +5,7 @@ import HeaderButton from "../UI/HeaderButton";
 import { ReactComponent as Info } from "../../assets/icons/info.svg";
 import FileItem from "./FileItem";
 import ErrorMsg from "../UI/ErrorMsg";
+import { FileModel } from "../../models/models";
 type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
 
 const StyledReviewModal = styled.div`
@@ -113,13 +114,16 @@ const Counter = styled.div`
   line-height: 14px;
   color: #8a8a8a;
   position: absolute;
-  right: 4px;
+  right: 16px;
   bottom: 4px;
 `;
 
-const Textarea = styled.textarea`
+interface ITextarea {
+    isError: boolean;
+}
+const Textarea = styled.textarea<ITextarea>`
   font-family: "Gilroy-Regular";
-  border: 1px solid #e0e0e0;
+  border: ${({isError}) => isError ? "1px solid #EB5757" : "1px solid #e0e0e0;"};
   border-radius: 2px;
   width: 628px;
   height: 105px;
@@ -161,6 +165,9 @@ interface IReviewModal {
 
 const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
   const [userName, setUserName] = useState<string>("");
+  const [userFile, setUserFile] = useState<FileModel>();
+  const [userRewiew, setUserRewiew] = useState<string>("");
+
   const [isErrorName, setIsErrorName] = useState<boolean>(false);
   const [errorNameMsg, setErrorNameMsg] = useState<string>("");
 
@@ -168,15 +175,17 @@ const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
   const [errorFileMsg, setErrorFileMsg] = useState<string>("");
 
   const [isErrorRewiew, setIsErrorRewiew] = useState<boolean>(false);
-  const [errorRewiewMsg, setErrorRewiew] = useState<string>("");
+  const [errorRewiewMsg, setErrorRewiewMsg] = useState<string>("");
 
-  const [userFile, setUserFile] = useState({});
+  const [isErrorSending, setIsErrorSending] = useState<boolean>(false);
+  const [errorSendingMsg, setErrorSengingMsg] = useState<string>("");
+
   const [isLoadingFile, setIsLoadingFile] = useState<boolean>(false);
   const [showUsersFile, setShowUsersFile] = useState<boolean>(false);
-  const [userRewiew, setUserRewiew] = useState<string>("");
 
   const changeNameHandler = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
+    setIsErrorSending(false);
     const value = e.currentTarget.value;
     if (value.trim().length === 0) {
       setUserName(value);
@@ -194,21 +203,22 @@ const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
   };
 
   const imgSelectHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsErrorSending(false);
     if (e.currentTarget.files?.length !== 0) {
       const files = e.currentTarget.files;
       if (files) {
-          const fileSize:number = files[0].size / 8 /1024;
-          console.log(fileSize);
-          if(fileSize > 5){
-              setIsErrorFile(true);
-              setErrorFileMsg("Размер изображения не должен превышать 5мб.");
-              return;
-          }     
-          if(showUsersFile) {
+        const fileSize: number = files[0].size / 8 / 1024;
+
+        if (fileSize > 5) {
+          setIsErrorFile(true);
+          setErrorFileMsg("Размер изображения не должен превышать 5мб.");
+          return;
+        }
+        if (showUsersFile) {
             setIsErrorFile(true);
             setErrorFileMsg("Может быть загружено только одно изображение.");
-            return;
-          }   
+          return;
+        }
         setUserFile(files[0]);
         setIsLoadingFile(true);
         setShowUsersFile(true);
@@ -218,7 +228,7 @@ const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
   };
 
   const deleteUserFileHandler = () => {
-    setUserFile({});
+    setUserFile({} as FileModel);
     setShowUsersFile(false);
   };
 
@@ -227,12 +237,35 @@ const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
   };
 
   const textareaChangeHandler: TextAreaChangeEventHandler = (e) => {
-    if (e.target.value.length < 201) {
+    if (e.target.value.trim().length <= 0) {
+      setIsErrorSending(false);
       setUserRewiew(e.target.value);
-    } else if (e.target.value.trim.length === 0) {
+      setIsErrorRewiew(true);
+      setErrorRewiewMsg("Поле не может быть пустым");
       return;
+    } else if (e.target.value.length < 201) {
+      setIsErrorSending(false);
+      setUserRewiew(e.target.value);
+      setIsErrorRewiew(false);
+    }
+  };
+
+  const sendDataHandler = () => {
+    if (
+      !isErrorName &&
+      !isErrorFile &&
+      !isErrorRewiew &&
+      userName.trim().length > 0 &&
+      userRewiew.trim().length > 0
+    ) {
+      alert(
+        `ФИО - ${userName} \n Наименование фала - ${userFile?.name} \n Отзыв пользователя - ${userRewiew}`
+      );
+      setIsErrorSending(false);
+      close();
     } else {
-      return;
+      setIsErrorSending(true);
+      setErrorSengingMsg("Не все поля заполнены");
     }
   };
 
@@ -280,16 +313,19 @@ const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
               placeholder="Напишите пару слов о вашем опыте."
               onChange={textareaChangeHandler}
               value={userRewiew}
+              isError={isErrorRewiew}
             />
             <Counter>{userRewiew.length}/200</Counter>
           </TextareaWrapper>
+          {isErrorRewiew && <ErrorMsg>{errorRewiewMsg}</ErrorMsg>}
         </Item>
       </Content>
       <Actions>
-        <HeaderButton>Отправить отзыв</HeaderButton>
+        <HeaderButton onClick={sendDataHandler}>Отправить отзыв</HeaderButton>
         <Info />
         <ActionText>Все отзывы проходят модерацию в течение 2 часов</ActionText>
       </Actions>
+      {isErrorSending && <ErrorMsg>{errorSendingMsg}</ErrorMsg>}
     </StyledReviewModal>
   );
 };

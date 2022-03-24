@@ -5,3 +5,11 @@ export interface IReview {
   date: string;
   text: string;
 }
+
+export interface FileModel {
+  name: string;
+  lastModified: number;
+  webkitRelativePath: string;
+  size: number;
+  type: string;
+}

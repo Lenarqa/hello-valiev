@@ -16,7 +16,11 @@ const Button = styled.button`
   border-radius: 2px;
 `;
 
-const HeaderButton: React.FC = (props) => {
-  return <Button>{props.children}</Button>;
+interface IButton {
+  onClick: ()=>void;
+}
+
+const HeaderButton: React.FC<IButton> = (props) => {
+  return <Button onClick={props.onClick}>{props.children}</Button>;
 };
 export default HeaderButton;
