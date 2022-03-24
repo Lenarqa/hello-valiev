@@ -20,8 +20,8 @@ const AboutMeSection = styled.div`
 
 const Img = styled.img`
   height: auto;
-  max-width: 519px;
-  margin-top: 30px;
+  max-width: 460px;
+  margin-top: 2px;
   border-radius: 2px;
 
   @media (max-width: 1116px) {

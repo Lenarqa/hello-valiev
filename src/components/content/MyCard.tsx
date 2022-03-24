@@ -8,8 +8,10 @@ const Card = styled.div`
   flex-direction: column;
   background-color: #fff;
   width: 100%;
+  margin-top: -20px;
   padding: 40px;
   border-radius: 2px;
+  height: fit-content;
 
   @media (max-width: 321px) {
     margin-top: -16px;
