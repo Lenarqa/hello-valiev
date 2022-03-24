@@ -208,6 +208,8 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
   const [showUsersFile, setShowUsersFile] = useState<boolean>(false);
   const [isBigFile, setIsBigFile] = useState<boolean>(false);
 
+  const [disabledBtn, setDisabledBtn] = useState<boolean>(true);
+
   const changeNameHandler = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     setIsErrorSending(false);
@@ -216,12 +218,14 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
       setUserName(value);
       setErrorNameMsg("Поле не может быть пустым");
       setIsErrorName(true);
+      setDisabledBtn(true);
       return;
     } else if (value.length > 20) {
       setErrorNameMsg("Количество символов не должно превышать 20");
       setIsErrorName(true);
       return;
     } else {
+      setDisabledBtn(false);
       setUserName(value);
       setIsErrorName(false);
     }
@@ -236,8 +240,8 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
 
         if (fileSize > 5) {
           setIsBigFile(true);
-        }else {
-            setIsBigFile(false);
+        } else {
+          setIsBigFile(false);
         }
 
         if (showUsersFile) {
@@ -323,7 +327,9 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
                 style={{ display: "none" }}
                 onChange={imgSelectHandler}
               />
-              <ButtonAdd onClick={fileUploadHandler}>Загрузить фото</ButtonAdd>
+              <ButtonAdd onClick={fileUploadHandler} isDisabled={disabledBtn}>
+                Загрузить фото
+              </ButtonAdd>
             </div>
             {isErrorName && <ErrorMsg>{errorNameMsg}</ErrorMsg>}
             {isErrorFile && <ErrorMsg>{errorFileMsg}</ErrorMsg>}

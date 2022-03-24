@@ -2,7 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import plus from "../../assets/icons/plus.svg";
 
-const Button = styled.div`
+interface IButton {
+  isDisabled?: boolean;
+}
+
+const Button = styled.button<IButton>`
   cursor: pointer;
   height: 52px;
   width: 220px;
@@ -14,16 +18,23 @@ const Button = styled.div`
   color: #fff;
   font-family: "Gilroy-Regular", sans-serif;
   font-weight: 600;
+  border: none;
   border-radius: 2px;
+
+  &:disabled {
+    background-color: #8A8A8A;
+  }
+
 `;
 
 interface IButtonAdd {
   onClick: () => void;
+  isDisabled?: boolean;
 }
 
 const ButtonAdd: React.FC<IButtonAdd> = (props) => {
   return (
-    <Button onClick={props.onClick}>
+    <Button onClick={props.onClick} isDisabled={props.isDisabled} disabled={props.isDisabled}>
       <img src={plus} style={{ marginRight: 12 }} />
       {props.children}
     </Button>
