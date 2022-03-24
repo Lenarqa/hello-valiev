@@ -5,13 +5,19 @@ import { ReactComponent as Close } from "../../assets/icons/close.svg";
 import { ReactComponent as GreenBubbles } from "../../assets/img/greenBubbles.svg";
 
 const StyledGoodWindow = styled.div`
-  position: absolute;
+  position: fixed;
   right: 40px;
-  bottom: -40px;
+  bottom: 10px;
   width: 438px;
   height: 132px;
   background: #b5ffa2;
   border-radius: 32px;
+
+  @media (max-width: 321px) {
+    position: fixed;
+    width: 288px;
+    bottom: 12px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -33,6 +39,10 @@ const Info = styled.div`
   width: 244px;
   height: 92px;
   margin-left: 130px;
+
+  @media (max-width: 321px) {
+    margin-left: 90px;
+  }
 `;
 
 const Title = styled.div`
@@ -40,6 +50,10 @@ const Title = styled.div`
   font-weight: 500;
   font-size: 32px;
   color: #333333;
+
+  @media (max-width: 321px) {
+    font-size: 24px;
+  }
 `;
 
 const Text = styled.div`

@@ -19,6 +19,12 @@ const StyledReviewModal = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
+
+  @media (max-width: 321px) {
+    width: 288px;
+    height: auto;
+    padding: 16px;
+  }
 `;
 
 const Header = styled.div`
@@ -71,15 +77,35 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 40px;
+
+  @media (max-width: 321px) {
+    margin-bottom: 32px;
+  }
 `;
 
 const Item = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 32px;
 
   &:last-child {
+    margin-top: 32px;
     margin-bottom: 0;
+  }
+
+  @media (max-width: 321px) {
+    width: 288px;
+    height: auto;
+    margin-bottom: 0px;
+
+    &:first-child {
+      div {
+        flex-direction: column;
+      }
+    }
+    &:last-child {
+      margin-top: 32px;
+      
+    }
   }
 `;
 
@@ -101,6 +127,11 @@ const Input = styled.input<IIput>`
   font-size: 14px;
   line-height: 22px;
   color: #8a8a8a;
+
+  @media (max-width: 321px) {
+    width: 256px;
+    margin-bottom: 12px;
+  }
 `;
 
 const TextareaWrapper = styled.div`
@@ -118,6 +149,11 @@ const Counter = styled.div`
   position: absolute;
   right: 16px;
   bottom: 4px;
+
+  @media (max-width: 321px) {
+    right: 50px;
+    bottom: 20px;
+  }
 `;
 
 interface ITextarea {
@@ -136,6 +172,11 @@ const Textarea = styled.textarea<ITextarea>`
   line-height: 22px;
   color: #8a8a8a;
   resize: none;
+
+  @media (max-width: 321px) {
+    width: 256px;
+    margin-bottom: 12px;
+  }
 `;
 
 const Label = styled.p`
@@ -151,6 +192,10 @@ const ActionText = styled.p`
   color: #8a8a8a;
   font-weight: 400;
   font-size: 12px;
+
+  @media (max-width: 321px) {
+    font-size: 10px;
+  }
 `;
 
 const Actions = styled.div`
@@ -159,6 +204,10 @@ const Actions = styled.div`
 
   svg {
     margin: 0 10px 0 18px;
+  }
+
+  @media (max-width: 321px) {
+    flex-direction: column-reverse;
   }
 `;
 
@@ -180,6 +229,16 @@ const Overlay = styled.div`
   -ms-filter: blur(10px);
   -o-filter: blur(10px);
   z-index: 100;
+`;
+
+const ActionInfo = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  @media (max-width: 321px) {
+    margin-bottom: 12px;
+  }
 `;
 
 interface IReviewModal {
@@ -333,16 +392,16 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
             </div>
             {isErrorName && <ErrorMsg>{errorNameMsg}</ErrorMsg>}
             {isErrorFile && <ErrorMsg>{errorFileMsg}</ErrorMsg>}
-            {showUsersFile && (
-              <FileItem
-                isBigFile={isBigFile}
-                name={userFile?.name}
-                isLoading={isLoadingFile}
-                setIsLoading={setIsLoadingFile}
-                deleteUserFile={deleteUserFileHandler}
-              />
-            )}
           </Item>
+          {showUsersFile && (
+            <FileItem
+              isBigFile={isBigFile}
+              name={userFile?.name}
+              isLoading={isLoadingFile}
+              setIsLoading={setIsLoadingFile}
+              deleteUserFile={deleteUserFileHandler}
+            />
+          )}
           <Item>
             <Label>Все ли вам понравилось?</Label>
             <TextareaWrapper>
@@ -359,10 +418,12 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
         </Content>
         <Actions>
           <HeaderButton onClick={sendDataHandler}>Отправить отзыв</HeaderButton>
-          <Info />
-          <ActionText>
-            Все отзывы проходят модерацию в течение 2 часов
-          </ActionText>
+          <ActionInfo>
+            <Info />
+            <ActionText>
+              Все отзывы проходят модерацию в течение 2 часов
+            </ActionText>
+          </ActionInfo>
         </Actions>
         {isErrorSending && <ErrorMsg>{errorSendingMsg}</ErrorMsg>}
       </StyledReviewModal>

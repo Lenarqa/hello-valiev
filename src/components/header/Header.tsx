@@ -18,11 +18,11 @@ const StyledHeader = styled.header`
   @media (max-width: 710px) {
     padding: 16px 21px;
   }
-  
+
   @media (max-width: 321px) {
     margin-bottom: 43px;
   }
-  `;
+`;
 
 const PhotoSection = styled.div`
   display: flex;
@@ -68,7 +68,7 @@ const Img = styled.img`
   width: 52px;
   border-radius: 2px;
   margin-right: 20px;
-  
+
   @media (max-width: 321px) {
     margin-right: 8px;
   }

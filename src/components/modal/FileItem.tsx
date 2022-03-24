@@ -12,9 +12,14 @@ const StyledFileItem = styled.div`
   border-radius: 2px;
   display: flex;
   justify-content: flex-start;
+  flex-direction: row;
   align-items: center;
   padding: 14px 12px;
   margin-top: 12px;
+
+  @media (max-width: 321px) {
+    flex-direction: row;
+  }
 `;
 
 const FileContent = styled.div`
