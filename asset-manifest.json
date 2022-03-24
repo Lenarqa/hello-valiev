@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/hello-valiev/static/css/main.7fd1671d.css",
-    "main.js": "/hello-valiev/static/js/main.ea40a0c4.js",
+    "main.js": "/hello-valiev/static/js/main.3c0efbd3.js",
     "static/media/Me_03.webp": "/hello-valiev/static/media/Me_03.f338e19a92ce3f18bef3.webp",
     "static/media/FactorAMedium-Regular.ttf": "/hello-valiev/static/media/FactorAMedium-Regular.1a1b89bd931afe1bfa27.ttf",
     "static/media/photo.jpg": "/hello-valiev/static/media/photo.2c778dc9e9b065821fc4.jpg",
@@ -26,10 +26,10 @@
     "static/media/buttonAdd.svg": "/hello-valiev/static/media/buttonAdd.c9c4d03a3323c6c4bbd6970d03fa28f9.svg",
     "static/media/plus.svg": "/hello-valiev/static/media/plus.75a21b6bf9a3d513b795f0b6ff855b10.svg",
     "main.7fd1671d.css.map": "/hello-valiev/static/css/main.7fd1671d.css.map",
-    "main.ea40a0c4.js.map": "/hello-valiev/static/js/main.ea40a0c4.js.map"
+    "main.3c0efbd3.js.map": "/hello-valiev/static/js/main.3c0efbd3.js.map"
   },
   "entrypoints": [
     "static/css/main.7fd1671d.css",
-    "static/js/main.ea40a0c4.js"
+    "static/js/main.3c0efbd3.js"
   ]
 }
