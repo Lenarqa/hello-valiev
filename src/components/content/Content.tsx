@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import bg from "../../assets/img/bg.svg";
 import SliderSection from "../Slider/Slider";
 import AboutMe from "./AboutMe";
+import GoodWindow from "../UI/GoodWindow";
+import BadWindow from "../UI/BadWindow";
 
 const ContentSection = styled.div`
   width: 100%;
@@ -30,6 +32,9 @@ const Title = styled.div`
 `;
 
 const Content: React.FC = () => {
+  const [showGoodWindow, setShowGoodWindow] = useState<boolean>(false);
+  const [showBadWindow, setShowBadWindow] = useState<boolean>(false);
+
   return (
     <ContentSection>
       <BgImg src={bg} />
@@ -37,7 +42,9 @@ const Content: React.FC = () => {
         <Title>Добро пожаловать в академию!</Title>
         <AboutMe />
       </ContentWrapper>
-      <SliderSection />
+      <SliderSection setShowGoodWindow={setShowGoodWindow}/>
+      {showGoodWindow && <GoodWindow setShowGoodWindow={setShowGoodWindow} />}
+      {showBadWindow && <BadWindow setShowBadWindow={setShowBadWindow} />}
     </ContentSection>
   );
 };

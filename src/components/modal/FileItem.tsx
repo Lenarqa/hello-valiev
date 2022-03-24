@@ -24,9 +24,13 @@ const FileContent = styled.div`
   margin-right: 16px;
 `;
 
-const Title = styled.div`
+interface ITitle {
+  isBigFile: boolean;
+}
+
+const Title = styled.div<ITitle>`
   font-family: "Gilroy-Regular";
-  color: #333333;
+  color: ${({ isBigFile }) => (isBigFile ? "#EB5757" : "#333333")};
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
@@ -34,23 +38,39 @@ const Title = styled.div`
 `;
 
 interface IFileItem {
+  isBigFile: boolean;
+  name: string | undefined;
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
   deleteUserFile: () => void;
 }
 
-const FileItem: React.FC<IFileItem> = ({ isLoading, setIsLoading, deleteUserFile }) => {
+const FileItem: React.FC<IFileItem> = ({
+  isBigFile,
+  name,
+  isLoading,
+  setIsLoading,
+  deleteUserFile,
+}) => {
+  if (!name) {
+    name = "Некорректное значение";
+  }
+
+  if (isBigFile) {
+    name = "Your file is too big!";
+  }
+
   return (
     <StyledFileItem>
       <File style={{ marginRight: 13 }} />
       <FileContent>
-        <Title>Photo</Title>
-        <ProgressBar isLoading={isLoading} setIsLoading={setIsLoading} />
+        <Title isBigFile={isBigFile}>{name}</Title>
+        <ProgressBar isBigFile={isBigFile} isLoading={isLoading} setIsLoading={setIsLoading} />
       </FileContent>
       {isLoading ? (
-        <LoadingIndicator />
+        <LoadingIndicator/>
       ) : (
-        <Delete style={{ cursor: "pointer" }} onClick={deleteUserFile}/>
+        <Delete style={{ cursor: "pointer" }} onClick={deleteUserFile} />
       )}
     </StyledFileItem>
   );

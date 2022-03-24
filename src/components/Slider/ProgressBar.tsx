@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Wrapper = styled.div`
+interface IWrapper {
+  isBigFile: boolean;
+}
+
+const Wrapper = styled.div<IWrapper>`
   progress {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -18,7 +22,7 @@ const Wrapper = styled.div`
   }
 
   progress::-moz-progress-bar {
-    background: #585cc6;
+    background: ${({ isBigFile }) => (isBigFile ? "#EB5757" : "#585cc6")};
     border-radius: 8px;
   }
 
@@ -28,37 +32,44 @@ const Wrapper = styled.div`
   }
 
   progress[value]::-webkit-progress-value {
-    background-color: #585cc6;
+    background-color: ${({ isBigFile }) => (isBigFile ? "#EB5757" : "#585cc6")};
     border-radius: 2px;
   }
-  
 `;
 
 interface IProgressBar {
-    isLoading: boolean;
-    setIsLoading: (value: boolean) => void;
+  isBigFile: boolean;
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
 }
 
-const ProgressBar: React.FC<IProgressBar> = ({isLoading, setIsLoading}) => {
+const ProgressBar: React.FC<IProgressBar> = ({
+  isBigFile,
+  isLoading,
+  setIsLoading,
+}) => {
   const [value, setValue] = useState<number>(0);
 
   useEffect(() => {
-      if(isLoading) {
-          const interval = setInterval(() => {
-            setValue((prev) => {
-              const newValue = prev + 10;
-              if (newValue === 100) {
-                clearInterval(interval);
-                setIsLoading(false);
-              }
-              return newValue;
-            });
-          }, 1000);
-      }
-  }, [isLoading, setIsLoading]);
+    let interval: any;
+    if (isLoading) {
+      interval = setInterval(() => {
+        setValue((prev) => {
+          const newValue = prev + 10;
+          return newValue;
+        });
+        if (value === 100) {
+          setIsLoading(false);
+        }
+      }, 1000);
+    }
+    return () => {
+      clearInterval(interval);
+    }
+  }, [value, isLoading, setIsLoading]);
 
   return (
-    <Wrapper>
+    <Wrapper isBigFile={isBigFile}>
       <progress value={value} max={100} />
     </Wrapper>
   );

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReactDOM from "react-dom";
 import styled from "styled-components";
 import ButtonAdd from "../UI/ButtonAdd";
 import HeaderButton from "../UI/HeaderButton";
@@ -17,6 +18,7 @@ const StyledReviewModal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 1000;
 `;
 
 const Header = styled.div`
@@ -119,11 +121,12 @@ const Counter = styled.div`
 `;
 
 interface ITextarea {
-    isError: boolean;
+  isError: boolean;
 }
 const Textarea = styled.textarea<ITextarea>`
   font-family: "Gilroy-Regular";
-  border: ${({isError}) => isError ? "1px solid #EB5757" : "1px solid #e0e0e0;"};
+  border: ${({ isError }) =>
+    isError ? "1px solid #EB5757" : "1px solid #e0e0e0;"};
   border-radius: 2px;
   width: 628px;
   height: 105px;
@@ -159,11 +162,32 @@ const Actions = styled.div`
   }
 `;
 
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  background-color: rgba(0, 0, 0, 0.2);
+
+  filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  -ms-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  -webkit-filter: blur(01px);
+  -moz-filter: blur(10px);
+  -ms-filter: blur(10px);
+  -o-filter: blur(10px);
+  z-index: 100;
+`;
+
 interface IReviewModal {
   close: () => void;
+  setShowGoodWindow: (value: boolean) => void;
 }
 
-const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
+const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
   const [userName, setUserName] = useState<string>("");
   const [userFile, setUserFile] = useState<FileModel>();
   const [userRewiew, setUserRewiew] = useState<string>("");
@@ -182,6 +206,7 @@ const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
 
   const [isLoadingFile, setIsLoadingFile] = useState<boolean>(false);
   const [showUsersFile, setShowUsersFile] = useState<boolean>(false);
+  const [isBigFile, setIsBigFile] = useState<boolean>(false);
 
   const changeNameHandler = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -210,13 +235,14 @@ const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
         const fileSize: number = files[0].size / 8 / 1024;
 
         if (fileSize > 5) {
-          setIsErrorFile(true);
-          setErrorFileMsg("Размер изображения не должен превышать 5мб.");
-          return;
+          setIsBigFile(true);
+        }else {
+            setIsBigFile(false);
         }
+
         if (showUsersFile) {
-            setIsErrorFile(true);
-            setErrorFileMsg("Может быть загружено только одно изображение.");
+          setIsErrorFile(true);
+          setErrorFileMsg("Может быть загружено только одно изображение.");
           return;
         }
         setUserFile(files[0]);
@@ -262,6 +288,7 @@ const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
         `ФИО - ${userName} \n Наименование фала - ${userFile?.name} \n Отзыв пользователя - ${userRewiew}`
       );
       setIsErrorSending(false);
+      setShowGoodWindow(true);
       close();
     } else {
       setIsErrorSending(true);
@@ -269,64 +296,72 @@ const ReviewModal: React.FC<IReviewModal> = ({ close }) => {
     }
   };
 
-  return (
-    <StyledReviewModal>
-      <Header>
-        <Title>Отзыв</Title>
-        <Btn onClick={close} />
-      </Header>
-      <Content>
-        <Item>
-          <div>
-            <Label>Как вас зовут?</Label>
-          </div>
-          <div style={{ display: "flex" }}>
-            <Input
-              placeholder="Имя Фамилия"
-              type="text"
-              value={userName}
-              onChange={changeNameHandler}
-              isError={isErrorName}
-            />
-            <input
-              id="selectImg"
-              type="file"
-              style={{ display: "none" }}
-              onChange={imgSelectHandler}
-            />
-            <ButtonAdd onClick={fileUploadHandler}>Загрузить фото</ButtonAdd>
-          </div>
-          {isErrorName && <ErrorMsg>{errorNameMsg}</ErrorMsg>}
-          {isErrorFile && <ErrorMsg>{errorFileMsg}</ErrorMsg>}
-          {showUsersFile && (
-            <FileItem
-              isLoading={isLoadingFile}
-              setIsLoading={setIsLoadingFile}
-              deleteUserFile={deleteUserFileHandler}
-            />
-          )}
-        </Item>
-        <Item>
-          <Label>Все ли вам понравилось?</Label>
-          <TextareaWrapper>
-            <Textarea
-              placeholder="Напишите пару слов о вашем опыте."
-              onChange={textareaChangeHandler}
-              value={userRewiew}
-              isError={isErrorRewiew}
-            />
-            <Counter>{userRewiew.length}/200</Counter>
-          </TextareaWrapper>
-          {isErrorRewiew && <ErrorMsg>{errorRewiewMsg}</ErrorMsg>}
-        </Item>
-      </Content>
-      <Actions>
-        <HeaderButton onClick={sendDataHandler}>Отправить отзыв</HeaderButton>
-        <Info />
-        <ActionText>Все отзывы проходят модерацию в течение 2 часов</ActionText>
-      </Actions>
-      {isErrorSending && <ErrorMsg>{errorSendingMsg}</ErrorMsg>}
-    </StyledReviewModal>
+  return ReactDOM.createPortal(
+    <>
+      <Overlay />
+      <StyledReviewModal>
+        <Header>
+          <Title>Отзыв</Title>
+          <Btn onClick={close} />
+        </Header>
+        <Content>
+          <Item>
+            <div>
+              <Label>Как вас зовут?</Label>
+            </div>
+            <div style={{ display: "flex" }}>
+              <Input
+                placeholder="Имя Фамилия"
+                type="text"
+                value={userName}
+                onChange={changeNameHandler}
+                isError={isErrorName}
+              />
+              <input
+                id="selectImg"
+                type="file"
+                style={{ display: "none" }}
+                onChange={imgSelectHandler}
+              />
+              <ButtonAdd onClick={fileUploadHandler}>Загрузить фото</ButtonAdd>
+            </div>
+            {isErrorName && <ErrorMsg>{errorNameMsg}</ErrorMsg>}
+            {isErrorFile && <ErrorMsg>{errorFileMsg}</ErrorMsg>}
+            {showUsersFile && (
+              <FileItem
+                isBigFile={isBigFile}
+                name={userFile?.name}
+                isLoading={isLoadingFile}
+                setIsLoading={setIsLoadingFile}
+                deleteUserFile={deleteUserFileHandler}
+              />
+            )}
+          </Item>
+          <Item>
+            <Label>Все ли вам понравилось?</Label>
+            <TextareaWrapper>
+              <Textarea
+                placeholder="Напишите пару слов о вашем опыте."
+                onChange={textareaChangeHandler}
+                value={userRewiew}
+                isError={isErrorRewiew}
+              />
+              <Counter>{userRewiew.length}/200</Counter>
+            </TextareaWrapper>
+            {isErrorRewiew && <ErrorMsg>{errorRewiewMsg}</ErrorMsg>}
+          </Item>
+        </Content>
+        <Actions>
+          <HeaderButton onClick={sendDataHandler}>Отправить отзыв</HeaderButton>
+          <Info />
+          <ActionText>
+            Все отзывы проходят модерацию в течение 2 часов
+          </ActionText>
+        </Actions>
+        {isErrorSending && <ErrorMsg>{errorSendingMsg}</ErrorMsg>}
+      </StyledReviewModal>
+    </>,
+    document.getElementById("portal") as Element
   );
 };
 export default ReviewModal;

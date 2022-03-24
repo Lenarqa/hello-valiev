@@ -95,7 +95,11 @@ const ActionSection = styled.div`
   padding-left: 34px;
 `;
 
-const SliderSection: React.FC = () => {
+interface ISliderSection {
+  setShowGoodWindow: (value: boolean) => void;
+}
+
+const SliderSection: React.FC<ISliderSection> = (props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [rewies, setRewiews] = useState<IReview[]>(DUMMY_DATA);
   const [curSlide, setCurSlide] = useState<number>(0);
@@ -103,7 +107,6 @@ const SliderSection: React.FC = () => {
 
   const [disableLeftBtn, setDisableLeftBtn] = useState<boolean>(true);
   const [disableRightBtn, setDisableRightBtn] = useState<boolean>(false);
-
 
   useEffect(() => {
     if (curSlide === 0) {
@@ -184,7 +187,14 @@ const SliderSection: React.FC = () => {
           disabled={disableRightBtn}
         />
       </ActionSection>
-      {showModal && <ReviewModal close={()=>{setShowModal(false)}}/>}
+      {showModal && (
+        <ReviewModal
+          close={() => {
+            setShowModal(false);
+          }}
+          setShowGoodWindow={props.setShowGoodWindow}
+        />
+      )}
     </StyledSliderSection>
   );
 };
