@@ -20,6 +20,16 @@ const StyledReviewModal = styled.div`
   transform: translate(-50%, -50%);
   z-index: 1000;
 
+  @media (max-width: 710px) {
+    width: 400px;
+    height: auto;
+    padding: 16px;
+  }
+
+  @media (max-width: 420px) {
+    width: 288px;
+  }
+
   @media (max-width: 321px) {
     width: 288px;
     height: auto;
@@ -78,7 +88,7 @@ const Content = styled.div`
   flex-direction: column;
   margin-bottom: 40px;
 
-  @media (max-width: 321px) {
+  @media (max-width: 421px) {
     margin-bottom: 32px;
   }
 `;
@@ -92,7 +102,7 @@ const Item = styled.div`
     margin-bottom: 0;
   }
 
-  @media (max-width: 321px) {
+  @media (max-width: 421px) {
     width: 288px;
     height: auto;
     margin-bottom: 0px;
@@ -128,7 +138,7 @@ const Input = styled.input<IIput>`
   line-height: 22px;
   color: #8a8a8a;
 
-  @media (max-width: 321px) {
+  @media (max-width: 421px) {
     width: 256px;
     margin-bottom: 12px;
   }
@@ -150,7 +160,7 @@ const Counter = styled.div`
   right: 16px;
   bottom: 4px;
 
-  @media (max-width: 321px) {
+  @media (max-width: 421px) {
     right: 50px;
     bottom: 20px;
   }
@@ -173,7 +183,11 @@ const Textarea = styled.textarea<ITextarea>`
   color: #8a8a8a;
   resize: none;
 
-  @media (max-width: 321px) {
+  @media (max-width: 710px) {
+    width: 100%;
+  }
+
+  @media (max-width: 421px) {
     width: 256px;
     margin-bottom: 12px;
   }
@@ -193,7 +207,7 @@ const ActionText = styled.p`
   font-weight: 400;
   font-size: 12px;
 
-  @media (max-width: 321px) {
+  @media (max-width: 421px) {
     font-size: 10px;
   }
 `;
@@ -206,7 +220,7 @@ const Actions = styled.div`
     margin: 0 10px 0 18px;
   }
 
-  @media (max-width: 321px) {
+  @media (max-width: 421px) {
     flex-direction: column-reverse;
   }
 `;
@@ -236,7 +250,7 @@ const ActionInfo = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  @media (max-width: 321px) {
+  @media (max-width: 421px) {
     margin-bottom: 12px;
   }
 `;

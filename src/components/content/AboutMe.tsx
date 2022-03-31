@@ -12,6 +12,10 @@ const AboutMeSection = styled.div`
     align-items: flex-end;
   }
 
+  @media (max-width: 590px) {
+    margin-bottom: 70px;
+  }
+
   @media (max-width: 321px) {
     align-items: flex-start;
     margin-bottom: 57px;
@@ -26,6 +30,10 @@ const Img = styled.img`
 
   @media (max-width: 1116px) {
     flex-direction: column;
+  }
+
+  @media (max-width: 590px) {
+    max-width: 100%;
   }
 
   @media (max-width: 321px) {

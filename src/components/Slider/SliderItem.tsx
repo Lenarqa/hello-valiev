@@ -9,6 +9,11 @@ const Item = styled.div`
   background-color: #f5f5f5;
   margin-right: 24px;
 
+  @media (max-width: 590px) {
+    height: auto;
+    padding: 16px 12px;
+  }
+
   @media (max-width: 321px) {
     width: 100%;
     height: auto;

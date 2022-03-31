@@ -12,6 +12,11 @@ const StyledFooter = styled.footer`
   background-color: #f5f5f5;
   padding: 20px 80px;
 
+  @media (max-width: 590px) {
+    flex-direction: column;
+    padding: 12px 24px;
+  }
+
   @media (max-width: 321px) {
     flex-direction: column;
     padding: 12px 24px;
@@ -23,6 +28,11 @@ const Text = styled.div`
   font-weight: 500;
   font-size: 16px;
   color: #8a8a8a;
+
+  @media (max-width: 590px) {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
 
   @media (max-width: 321px) {
     color: #333333;

@@ -31,6 +31,12 @@ const Header = styled.div`
   align-items: center;
   margin-bottom: 56px;
 
+  
+  @media (max-width: 420px) {
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
   @media (max-width: 321px) {
     margin-bottom: 21px;
   }
@@ -56,6 +62,17 @@ const Reviews = styled.div`
     padding: 74px 20px 0px 20px;
   }
 
+  @media (max-width: 590px) {
+    max-width: 400px;
+    /* padding: 74px 20px 0px 20px; */
+  }
+
+  @media (max-width: 420px) {
+    padding: 10px;
+    max-width: 330px;
+    /* padding: 74px 20px 0px 20px; */
+  }
+
   @media (max-width: 321px) {
     width: 100%;
     padding: 20px 16px;
@@ -69,6 +86,14 @@ const SlidesWrapper = styled.div`
   width: 102%;
   position: relative;
   transition: 1s ease;
+
+  @media (max-width: 590px) {
+    height: 412px;
+  }
+
+  @media (max-width: 420px) {
+    height: auto;
+  }
 
   @media (max-width: 321px) {
     height: auto;
@@ -155,6 +180,15 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
   const { height, width } = useWindowDimensions();
 
   let sliderItemWidth = -543;
+
+  if (width < 590) {
+    sliderItemWidth = -356;
+  }
+
+  if (width < 420) {
+    sliderItemWidth = -318;
+  }
+
   if (width < 321) {
     sliderItemWidth = -300;
   }

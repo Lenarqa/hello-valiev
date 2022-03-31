@@ -13,7 +13,7 @@ const StyledGoodWindow = styled.div`
   background: #f64b3c;
   border-radius: 32px;
 
-  @media (max-width: 321px) {
+  @media (max-width: 490px) {
     position: fixed;
     width: 310px;
     right: 10px;
@@ -42,7 +42,7 @@ const Info = styled.div`
   height: 92px;
   margin-left: 130px;
 
-  @media (max-width: 321px) {
+  @media (max-width: 490px) {
     width: 160px;
     margin-left: 40px;
   }
@@ -54,7 +54,7 @@ const Title = styled.div`
   font-size: 32px;
   color: #fff;
 
-  @media (max-width: 321px) {
+  @media (max-width: 490px) {
     font-size: 22px;
   }
 `;

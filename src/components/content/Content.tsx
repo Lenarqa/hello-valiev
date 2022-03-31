@@ -14,6 +14,10 @@ const ContentSection = styled.div`
 const ContentWrapper = styled.div`
   padding: 93px 80px 106px 80px;
 
+  @media (max-width: 590px) {
+    padding: 0 16px;
+  }
+
   @media (max-width: 321px) {
     padding: 0 16px;
   }
