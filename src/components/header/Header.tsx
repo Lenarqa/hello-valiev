@@ -19,6 +19,10 @@ const StyledHeader = styled.header`
     padding: 16px 21px;
   }
 
+  @media (max-width: 590px) {
+    margin-bottom: 60px;
+  }
+
   @media (max-width: 321px) {
     margin-bottom: 43px;
   }
