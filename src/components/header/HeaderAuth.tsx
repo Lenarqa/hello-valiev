@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import ILinkLogo from "../../assets/img/iLink.svg";
-import AcademyLogo from "../../assets/img/academy.svg";
+import { ReactComponent as ILinkLogo } from "../../assets/img/iLink.svg";
+import { ReactComponent as AcademyLogo } from "../../assets/img/academy.svg";
 
 const StyledHeader = styled.header`
   display: flex;
@@ -16,14 +16,12 @@ const LogoWrapper = styled.div`
   flex-direction: column;
 `;
 
-const Logo = styled.img``;
-
 const HeaderAuth: React.FC = () => {
   return (
     <StyledHeader>
       <LogoWrapper>
-        <Logo src={ILinkLogo} alt="ILink-logo" />
-        <Logo src={AcademyLogo} alt="Academy-logo" />
+        <ILinkLogo style={{marginBottom: 7}}/>
+        <AcademyLogo/>
       </LogoWrapper>
     </StyledHeader>
   );

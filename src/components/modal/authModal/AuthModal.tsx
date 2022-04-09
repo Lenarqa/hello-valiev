@@ -1,7 +1,6 @@
 import React from "react";
 import style from "./AuthModal.module.css";
-import styled from "styled-components";
-import BlueButton from "../../UI/BlueButton/BlueButton";
+import BlueButton from "../../UI/Button/Button";
 
 const AuthModal: React.FC = () => {
   return (
