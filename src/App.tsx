@@ -1,9 +1,10 @@
-import AboutMe from "./pages/AboutMe";
-import Auth from "./pages/Auth";
+import AboutMe from "./pages/aboutMe/AboutMe";
+import Auth from "./pages/auth/Auth";
 
 function App() {
   return (
     <Auth />
+    // <AboutMe />
   );
 }
 

@@ -1,0 +1,14 @@
+.content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.bgImg {
+  position: absolute;
+  left: 0px;
+  top: 40px;
+  width: 100%;
+  z-index: -1;
+}

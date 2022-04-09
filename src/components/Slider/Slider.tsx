@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ButtonAdd from "../UI/ButtonAdd";
 import SliderItem from "./SliderItem";
 import { IReview } from "../../models/models";
-import { DUMMY_DATA } from "../../constanst/dummyData";
+import { DUMMY_DATA } from "../../constants/dummyData";
 import SliderBtn from "./SliderBtn";
 import ReviewModal from "../modal/ReviewModal";
 import { ReactComponent as ButtonAddIcon } from "../../assets/icons/buttonAdd.svg";
@@ -31,7 +31,6 @@ const Header = styled.div`
   align-items: center;
   margin-bottom: 56px;
 
-  
   @media (max-width: 420px) {
     flex-direction: column;
     margin-bottom: 10px;
@@ -64,13 +63,11 @@ const Reviews = styled.div`
 
   @media (max-width: 590px) {
     max-width: 400px;
-    /* padding: 74px 20px 0px 20px; */
   }
 
   @media (max-width: 420px) {
     padding: 10px;
     max-width: 330px;
-    /* padding: 74px 20px 0px 20px; */
   }
 
   @media (max-width: 321px) {
