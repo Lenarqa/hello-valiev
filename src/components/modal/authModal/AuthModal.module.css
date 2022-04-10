@@ -75,4 +75,10 @@
   color: #585CC6;
 }
 
+.hoverEmailMsg {
+  position: absolute;
+  top: -32px;
+  right: -15px;
+
+}
 

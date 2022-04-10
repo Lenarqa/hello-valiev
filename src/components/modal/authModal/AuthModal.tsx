@@ -4,9 +4,15 @@ import BlueButton from "../../UI/Button/Button";
 import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg";
 import { ReactComponent as OpenEyeIcon } from "../../../assets/icons/openEye.svg";
 import { ReactComponent as CloseEyeIcon } from "../../../assets/icons/closeEye.svg";
+import MsgWindow from "../../UI/MsgWindow/MsgWindow";
 
 const AuthModal: React.FC = () => {
   const [email, setEmail] = useState<string>("");
+  const [isEmailError, setIsEmailError] = useState<boolean>(false);
+  const [emailErrorMsg, setEmailErrorMsg] = useState<string>("");
+  const [isHoverEmailMsg, setIsHoverEmailMsg] = useState<boolean>(false);
+
+  const [isPasswordError, setIsPasswordError] = useState<boolean>(false);
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
 
   const emailValidation =
@@ -15,12 +21,33 @@ const AuthModal: React.FC = () => {
 
   const emailValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
+    setEmailErrorMsg("");
     setEmail(newValue);
-    if (emailValidation.test(email)) {
-      console.log(true);
-    } else {
-      console.log(false);
+    setIsEmailError(false);
+
+    if (email.trim() === " ") {
+      setIsEmailError(true);
+      setEmailErrorMsg("Поле не может быть пустым");
+      return;
     }
+
+    if (emailValidation.test(email)) {
+      setIsEmailError(false);
+    } else {
+      setIsEmailError(true);
+    }
+  };
+
+  const showPasswordHandler = () => {
+    setIsVisiblePassword((prev) => !prev);
+  };
+
+  const emailMouseOutHandler = () => {
+    setIsHoverEmailMsg(false);
+  };
+
+  const emailMouseOverHandler = () => {
+    setIsHoverEmailMsg(true);
   };
 
   return (
@@ -36,17 +63,38 @@ const AuthModal: React.FC = () => {
             value={email}
           />
           <div className={style.icons}>
-            <InfoIcon className={style.icon} />
+            {isEmailError && (
+              <InfoIcon
+                className={style.icon}
+                onMouseOver={emailMouseOverHandler}
+                onMouseOut={emailMouseOutHandler}
+              />
+            )}
+            {isHoverEmailMsg && <MsgWindow style={style.hoverEmailMsg}>{emailErrorMsg}</MsgWindow>}
           </div>
         </div>
       </div>
       <div className={style.formItem}>
         <label htmlFor="password">Пароль</label>
         <div className={style.inputWrapper}>
-          <input id="password" placeholder="Введите пароль" type="password" />
+          <input
+            id="password"
+            placeholder="Введите пароль"
+            type={isVisiblePassword ? "text" : "password"}
+          />
           <div className={style.icons}>
-            {isVisiblePassword ? <CloseEyeIcon className={style.icon}  /> : <OpenEyeIcon className={style.icon} />}
-            <InfoIcon className={style.icon} />
+            {isVisiblePassword ? (
+              <CloseEyeIcon
+                className={style.icon}
+                onClick={showPasswordHandler}
+              />
+            ) : (
+              <OpenEyeIcon
+                className={style.icon}
+                onClick={showPasswordHandler}
+              />
+            )}
+            {isPasswordError && <InfoIcon className={style.icon} />}
           </div>
         </div>
       </div>
