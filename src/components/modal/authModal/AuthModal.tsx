@@ -25,16 +25,42 @@ const AuthModal: React.FC = () => {
     setEmail(newValue);
     setIsEmailError(false);
 
-    if (email.trim() === " ") {
+    if (newValue.trim().length === 0) {
       setIsEmailError(true);
       setEmailErrorMsg("Поле не может быть пустым");
       return;
     }
 
-    if (emailValidation.test(email)) {
-      setIsEmailError(false);
-    } else {
+    if (/,/.test(newValue)) {
       setIsEmailError(true);
+      setEmailErrorMsg("Email не может содержать в себе запятых");
+      return;
+    }
+
+    if (!/^(?=[a-zA-Z0-9])/.test(newValue)) {
+      setIsEmailError(true);
+      setEmailErrorMsg(
+        "Email не может начинаться с символа, только с числа или латинских букв, любого регистра"
+      );
+      return;
+    } 
+    
+    if ((!newValue.includes("@") && newValue.length > 25) || (newValue.split("@")[0].length > 25)) {
+      setIsEmailError(true);
+      setEmailErrorMsg("Количество символов до знака @ не может быть длиннее 25");
+      return;
+    }
+
+    if (!newValue.includes("@") && newValue.length > 25) { 
+      setIsEmailError(true);
+      setEmailErrorMsg("Количество символов до знака @ не может быть длиннее 25");
+      return;
+    }
+
+    if(!/@/.test(newValue)) {
+      setIsEmailError(true);
+      setEmailErrorMsg("Email обязан содержать в себе символ @");
+      return;
     }
   };
 
@@ -70,7 +96,9 @@ const AuthModal: React.FC = () => {
                 onMouseOut={emailMouseOutHandler}
               />
             )}
-            {isHoverEmailMsg && <MsgWindow style={style.hoverEmailMsg}>{emailErrorMsg}</MsgWindow>}
+            {isHoverEmailMsg && (
+              <MsgWindow style={style.hoverEmailMsg}>{emailErrorMsg}</MsgWindow>
+            )}
           </div>
         </div>
       </div>
