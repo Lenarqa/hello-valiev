@@ -9,9 +9,9 @@ import ChangePasswordModal from "../modal/changePasswordModal/ChangePasswordModa
 const AuthContent: React.FC = () => {
   return (
     <div className={style.content}>
-      {/* <AuthModal /> */}
+      <AuthModal />
       {/* <PasswordRecoveryModal /> */}
-      <ChangePasswordModal />
+      {/* <ChangePasswordModal /> */}
       <img className={style.bgImg} src={bg} />
     </div>
   );

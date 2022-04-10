@@ -10,7 +10,6 @@
   border-radius: 2px;
   background-color: #fff;
   padding: 40px 40px 24px 40px;
-  margin-bottom: 444px;
 }
 
 .form h2 {
@@ -36,10 +35,34 @@
 }
 
 .formItem input {
+  width: 100%;
   padding: 15px 12px;
   border: 1px solid #e0e0e0;
   border-radius: 2px;
+}
+
+.inputWrapper {
+  position: relative;
   width: 100%;
+}
+
+.icons {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.icons :last-child {
+  margin-left: 14px;
+}
+
+.icon {
+  cursor: pointer;
 }
 
 .text {
@@ -51,3 +74,5 @@
   line-height: 16px;
   color: #585CC6;
 }
+
+

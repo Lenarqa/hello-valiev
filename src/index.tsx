@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     position: relative;
+    height: 100%;
     background-color: #585CC6;
   }
 `;
