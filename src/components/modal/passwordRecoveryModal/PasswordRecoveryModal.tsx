@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./PasswordRecoveryModal.module.css";
-import BlueButton from "../../UI/Button/Button";
+import Button from "../../UI/Button/Button";
 
 const PasswordRecoveryModal: React.FC = () => {
   return (
@@ -13,8 +13,8 @@ const PasswordRecoveryModal: React.FC = () => {
         <input type="text" placeholder="Введите электронную почту" />
       </div>
       <div className={style.actions}>
-        <BlueButton>Отправить код</BlueButton>
-        <BlueButton>Отмена</BlueButton>
+        <Button type="button">Отправить код</Button>
+        <Button type="button">Отмена</Button>
       </div>
     </form>
   );

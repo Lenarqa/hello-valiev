@@ -39,11 +39,26 @@
   padding: 15px 12px;
   border: 1px solid #e0e0e0;
   border-radius: 2px;
+  font-family: "Gilroy-Regular";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  font-style: normal;
+}
+.formItem .passwordInput[type="text"] {
+  font-weight: 600;
+  letter-spacing: 0.2em;
 }
 
 .inputWrapper {
   position: relative;
   width: 100%;
+}
+
+.formItem .errorInput,
+.errorInput:focus,
+.errorInput:active {
+  outline: 2px solid #eb5757;
 }
 
 .icons {
@@ -65,7 +80,6 @@
   margin-left: 14px;
 }
 
-
 .text {
   cursor: pointer;
   font-family: "Gilroy-regular";
@@ -73,7 +87,7 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
-  color: #585CC6;
+  color: #585cc6;
 }
 
 .hoverMsg {
@@ -81,4 +95,3 @@
   top: -37px;
   right: -15px;
 }
-

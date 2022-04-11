@@ -14,8 +14,8 @@ const ChangePasswordModal: React.FC = () => {
         <input type="text" placeholder="Введите электронную почту" />
       </div>
       <div className={style.actions}>
-        <Button>Отправить код</Button>
-        <Button>Отмена</Button>
+        <Button type="button">Отправить код</Button>
+        <Button type="button">Отмена</Button>
       </div>
     </form>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import style from "./AuthModal.module.css";
-import BlueButton from "../../UI/Button/Button";
+import Button from "../../UI/Button/Button";
 import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg";
 import { ReactComponent as OpenEyeIcon } from "../../../assets/icons/openEye.svg";
 import { ReactComponent as CloseEyeIcon } from "../../../assets/icons/closeEye.svg";
@@ -17,6 +17,8 @@ const AuthModal: React.FC = () => {
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
   const [passwordErrorMsg, setPasswordErrorMsg] = useState<string>("");
   const [isHoverPassword, setIsHoverPassword] = useState<boolean>(false);
+
+  const [btnIsDisable, setBtnIsDisable] = useState<boolean>(true);
 
   const emailValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const emailValidation =
@@ -104,7 +106,7 @@ const AuthModal: React.FC = () => {
     if (!emailValidation.test(newValue)) {
       setIsEmailError(true);
       setEmailErrorMsg(
-        "Email не может включать в себе кирилицу или другие другие алфавиты, используйте только латиницу"
+        "Email не может включать в себе кирилицу или другие алфавиты, используйте только латиницу"
       );
       return;
     }
@@ -169,20 +171,16 @@ const AuthModal: React.FC = () => {
 
     // \W это аналог ([^a-zA-Z0-9_]) он позволяет вводить кириллицу
     // я не думаю что в пароле должна быть кириллица поэтому добавил проверку
-    // если кириллица в пароле должна быть я ее уберу. 
-    if(/[а-яА-ЯёЁ]/.test(newValue)) {
+    // если кириллица в пароле все таки имеет место быть я уберу эту проверку.
+    if (/[а-яА-ЯёЁ]/.test(newValue)) {
       setIsPasswordError(true);
-      setPasswordErrorMsg(
-        "Пароль может содержать только латинские буквы"
-      );
+      setPasswordErrorMsg("Пароль может содержать только латинские буквы");
       return;
     }
 
     if (!passwordValidation.test(newValue)) {
       setIsPasswordError(true);
-      setPasswordErrorMsg(
-        "Что то пошло не так"
-      );
+      setPasswordErrorMsg("Что то пошло не так");
       return;
     }
   };
@@ -207,8 +205,13 @@ const AuthModal: React.FC = () => {
     setIsHoverPassword(true);
   };
 
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Submit!");
+  };
+
   return (
-    <form className={style.form}>
+    <form className={style.form} onSubmit={submitHandler}>
       <h2>Войти</h2>
       <div className={style.formItem}>
         <label htmlFor="login">Логин</label>
@@ -218,6 +221,7 @@ const AuthModal: React.FC = () => {
             placeholder="Введите логин"
             onChange={emailValidationHandler}
             value={email}
+            className={isEmailError ? style.errorInput : ""}
           />
           <div className={style.icons}>
             {isEmailError && (
@@ -237,6 +241,11 @@ const AuthModal: React.FC = () => {
         <label htmlFor="password">Пароль</label>
         <div className={style.inputWrapper}>
           <input
+            className={
+              isPasswordError
+                ? `${style.passwordInput} ${style.errorInput} `
+                : style.passwordInput
+            }
             id="password"
             placeholder="Введите пароль"
             type={isVisiblePassword ? "text" : "password"}
@@ -268,7 +277,9 @@ const AuthModal: React.FC = () => {
           </div>
         </div>
       </div>
-      <BlueButton>Войти</BlueButton>
+      <Button type="submit" isDisable={btnIsDisable}>
+        Войти
+      </Button>
       <div className={style.text}>Забыли пароль?</div>
     </form>
   );
