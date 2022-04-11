@@ -10,16 +10,17 @@ const AuthModal: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [emailErrorMsg, setEmailErrorMsg] = useState<string>("");
-  const [isHoverEmailMsg, setIsHoverEmailMsg] = useState<boolean>(false);
+  const [isHoverEmail, setIsHoverEmail] = useState<boolean>(false);
 
+  const [password, setPassword] = useState<string>("");
   const [isPasswordError, setIsPasswordError] = useState<boolean>(false);
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
-
-  const emailValidation =
-    /^((?=[a-zA-Z0-9])[a-zA-Z0-9!#$%&\\'*+\-\/=?^_`.{|}~]{1,25})@(([a-zA-Z0-9\-]){1,25}\.)([a-zA-Z0-9]{2,4})$/;
-  const passwordValidation = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,24}$/;
+  const [passwordErrorMsg, setPasswordErrorMsg] = useState<string>("");
+  const [isHoverPassword, setIsHoverPassword] = useState<boolean>(false);
 
   const emailValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    const emailValidation =
+      /^((?=[a-zA-Z0-9])[a-zA-Z0-9!#$%&\\'*+\-\/=?^_`.{|}~]{1,25})@(([a-zA-Z0-9\-]){1,25}\.)([a-zA-Z0-9]{2,4})$/;
     const newValue = e.currentTarget.value;
     setEmailErrorMsg("");
     setEmail(newValue);
@@ -109,16 +110,101 @@ const AuthModal: React.FC = () => {
     }
   };
 
+  const passwordValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    const passwordValidation =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,24}$/;
+
+    const newValue = e.currentTarget.value;
+    setPasswordErrorMsg("");
+    setPassword(newValue);
+    setIsPasswordError(false);
+
+    if (newValue.trim().length === 0) {
+      setIsPasswordError(true);
+      setPasswordErrorMsg("Поле не может быть пустым");
+      return;
+    }
+
+    if (newValue.trim().length === 0) {
+      setIsPasswordError(true);
+      setPasswordErrorMsg("Поле не может быть пустым");
+      return;
+    }
+
+    if (!/.*\d/.test(newValue)) {
+      setIsPasswordError(true);
+      setPasswordErrorMsg("Пароль должен содержать цифры");
+      return;
+    }
+
+    if (!/.*[a-z]/.test(newValue)) {
+      setIsPasswordError(true);
+      setPasswordErrorMsg(
+        "Пароль должен содержать латинские буквы нижнего регистра"
+      );
+      return;
+    }
+
+    if (!/.*[A-Z]/.test(newValue)) {
+      setIsPasswordError(true);
+      setPasswordErrorMsg(
+        "Пароль должен содержать латинские буквы верхнего регистра"
+      );
+      return;
+    }
+
+    if (!/.*\W/.test(newValue)) {
+      setIsPasswordError(true);
+      setPasswordErrorMsg("Пароль должен содержать символы (например !№%:?)");
+      return;
+    }
+
+    if (newValue.length < 8 || newValue.length > 24) {
+      setIsPasswordError(true);
+      setPasswordErrorMsg(
+        "Пароль не может быть короче 8 символов и длиннее 24 символов"
+      );
+      return;
+    }
+
+    // \W это аналог ([^a-zA-Z0-9_]) он позволяет вводить кириллицу
+    // я не думаю что в пароле должна быть кириллица поэтому добавил проверку
+    // если кириллица в пароле должна быть я ее уберу. 
+    if(/[а-яА-ЯёЁ]/.test(newValue)) {
+      setIsPasswordError(true);
+      setPasswordErrorMsg(
+        "Пароль может содержать только латинские буквы"
+      );
+      return;
+    }
+
+    if (!passwordValidation.test(newValue)) {
+      setIsPasswordError(true);
+      setPasswordErrorMsg(
+        "Что то пошло не так"
+      );
+      return;
+    }
+  };
+
   const showPasswordHandler = () => {
     setIsVisiblePassword((prev) => !prev);
   };
 
   const emailMouseOutHandler = () => {
-    setIsHoverEmailMsg(false);
+    setIsHoverEmail(false);
   };
 
   const emailMouseOverHandler = () => {
-    setIsHoverEmailMsg(true);
+    setIsHoverEmail(true);
+  };
+
+  const passwordMouseOutHandler = () => {
+    setIsHoverPassword(false);
+  };
+
+  const passwordMouseOverHandler = () => {
+    setIsHoverPassword(true);
   };
 
   return (
@@ -141,8 +227,8 @@ const AuthModal: React.FC = () => {
                 onMouseOut={emailMouseOutHandler}
               />
             )}
-            {isHoverEmailMsg && (
-              <MsgWindow style={style.hoverEmailMsg}>{emailErrorMsg}</MsgWindow>
+            {isHoverEmail && (
+              <MsgWindow style={style.hoverMsg}>{emailErrorMsg}</MsgWindow>
             )}
           </div>
         </div>
@@ -154,6 +240,8 @@ const AuthModal: React.FC = () => {
             id="password"
             placeholder="Введите пароль"
             type={isVisiblePassword ? "text" : "password"}
+            onChange={passwordValidationHandler}
+            value={password}
           />
           <div className={style.icons}>
             {isVisiblePassword ? (
@@ -167,7 +255,16 @@ const AuthModal: React.FC = () => {
                 onClick={showPasswordHandler}
               />
             )}
-            {isPasswordError && <InfoIcon className={style.icon} />}
+            {isPasswordError && (
+              <InfoIcon
+                className={style.icon}
+                onMouseOver={passwordMouseOverHandler}
+                onMouseOut={passwordMouseOutHandler}
+              />
+            )}
+            {isHoverPassword && (
+              <MsgWindow style={style.hoverMsg}>{passwordErrorMsg}</MsgWindow>
+            )}
           </div>
         </div>
       </div>

@@ -57,13 +57,14 @@
   margin-right: 15px;
 }
 
-.icons :last-child {
-  margin-left: 14px;
-}
-
 .icon {
   cursor: pointer;
 }
+
+.icons :nth-child(2) {
+  margin-left: 14px;
+}
+
 
 .text {
   cursor: pointer;
@@ -75,10 +76,9 @@
   color: #585CC6;
 }
 
-.hoverEmailMsg {
+.hoverMsg {
   position: absolute;
   top: -37px;
   right: -15px;
-
 }
 
