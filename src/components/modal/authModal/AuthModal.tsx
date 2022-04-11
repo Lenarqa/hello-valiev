@@ -43,23 +43,68 @@ const AuthModal: React.FC = () => {
         "Email не может начинаться с символа, только с числа или латинских букв, любого регистра"
       );
       return;
-    } 
-    
-    if ((!newValue.includes("@") && newValue.length > 25) || (newValue.split("@")[0].length > 25)) {
+    }
+
+    if (
+      (!newValue.includes("@") && newValue.length > 25) ||
+      newValue.split("@")[0].length > 25
+    ) {
       setIsEmailError(true);
-      setEmailErrorMsg("Количество символов до знака @ не может быть длиннее 25");
+      setEmailErrorMsg(
+        "Количество символов до знака @ не может быть длиннее 25"
+      );
       return;
     }
 
-    if (!newValue.includes("@") && newValue.length > 25) { 
+    if (!newValue.includes("@") && newValue.length > 25) {
       setIsEmailError(true);
-      setEmailErrorMsg("Количество символов до знака @ не может быть длиннее 25");
+      setEmailErrorMsg(
+        "Количество символов до знака @ не может быть длиннее 25 символов"
+      );
       return;
     }
 
-    if(!/@/.test(newValue)) {
+    if (!/@/.test(newValue)) {
       setIsEmailError(true);
       setEmailErrorMsg("Email обязан содержать в себе символ @");
+      return;
+    }
+
+    // text lenght after @ and before (.com/.ru) can`t be > 25
+    if (
+      (newValue.includes("@") &&
+        newValue.split("@")[1].split(".")[0].length > 25) ||
+      (newValue.includes("@") &&
+        newValue.split("@")[1].split(".")[0].length < 1)
+    ) {
+      setIsEmailError(true);
+      setEmailErrorMsg(
+        "Количество символов после знака @ не может быть больше 25 символов и короче 1"
+      );
+      return;
+    }
+
+    // Email need to include domain.
+    if (
+      (newValue.includes("@") &&
+        newValue.split("@")[1].includes(".") &&
+        (newValue.split("@")[1].split(".")[1].length < 2 ||
+          newValue.split("@")[1].split(".")[1].length > 4)) ||
+      (newValue.includes("@") && !newValue.split("@")[1].includes("."))
+    ) {
+      setIsEmailError(true);
+      setEmailErrorMsg(
+        "Email обязательно должен содержать домен (.ru/com и т.д). Домен не может быть короче 2 символов и длиннее 4"
+      );
+      return;
+    }
+
+    //final check, check
+    if (!emailValidation.test(newValue)) {
+      setIsEmailError(true);
+      setEmailErrorMsg(
+        "Email не может включать в себе кирилицу или другие другие алфавиты, используйте только латиницу"
+      );
       return;
     }
   };
