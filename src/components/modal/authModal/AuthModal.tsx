@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./AuthModal.module.css";
 import Button from "../../UI/Button/Button";
 import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg";
@@ -20,6 +20,21 @@ const AuthModal: React.FC = () => {
 
   const [btnIsDisable, setBtnIsDisable] = useState<boolean>(true);
 
+  useEffect(()=>{
+    console.log("useEffect");  
+    if(!isEmailError && !isPasswordError) {
+      setBtnIsDisable(false);
+      console.log("active");
+      
+    }
+
+    if(email.trim().length === 0 || password.trim().length === 0) {
+      setBtnIsDisable(true);
+      console.log("disable");
+      
+    }
+  }, [isEmailError, isPasswordError, email, password])
+
   const emailValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const emailValidation =
       /^((?=[a-zA-Z0-9])[a-zA-Z0-9!#$%&\\'*+\-\/=?^_`.{|}~]{1,25})@(([a-zA-Z0-9\-]){1,25}\.)([a-zA-Z0-9]{2,4})$/;
@@ -27,6 +42,7 @@ const AuthModal: React.FC = () => {
     setEmailErrorMsg("");
     setEmail(newValue);
     setIsEmailError(false);
+    setBtnIsDisable(true);
 
     if (newValue.trim().length === 0) {
       setIsEmailError(true);
@@ -114,7 +130,7 @@ const AuthModal: React.FC = () => {
     // когда пользователь оставляет мышку поверх infoIcon
     // чтобы не оставалось окно без сообщения, когда нет ошибок
     if (emailValidation.test(newValue)) {
-      setIsHoverEmail(false)
+      setIsHoverEmail(false);
     }
   };
 
@@ -126,6 +142,7 @@ const AuthModal: React.FC = () => {
     setPasswordErrorMsg("");
     setPassword(newValue);
     setIsPasswordError(false);
+    setBtnIsDisable(true);
 
     if (newValue.trim().length === 0) {
       setIsPasswordError(true);
@@ -193,7 +210,7 @@ const AuthModal: React.FC = () => {
     // когда пользователь оставляет мышку поверх infoIcon
     // чтобы не оставалось окно без сообщения, когда нет ошибок
     if (passwordValidation.test(newValue)) {
-      setIsHoverPassword(false)
+      setIsHoverPassword(false);
     }
   };
 
