@@ -7,6 +7,7 @@ import { ReactComponent as CloseEyeIcon } from "../../../assets/icons/closeEye.s
 import MsgWindow from "../../UI/MsgWindow/MsgWindow";
 
 interface IAuthModal {
+  isFooterErrMsg: boolean;
   showFooterErrMsg: () => void;
   hideFooterErrMsg: () => void;
 }
@@ -24,6 +25,16 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
   const [isHoverPassword, setIsHoverPassword] = useState<boolean>(false);
 
   const [btnIsDisable, setBtnIsDisable] = useState<boolean>(true);
+
+  let emailInputStyle = isEmailError ? style.errorInput : "";
+  let passwordInputStyle = isPasswordError
+    ? `${style.passwordInput} ${style.errorInput} `
+    : style.passwordInput;
+
+  if (props.isFooterErrMsg) {
+    emailInputStyle = style.error;
+    passwordInputStyle = style.error;
+  }
 
   useEffect(() => {
     if (!isEmailError && !isPasswordError) {
@@ -241,8 +252,6 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     if (email === "enter@gmail.com" && password === "Enter123!") {
       alert("Добро пожаловать!");
     } else {
-      setIsEmailError(true);
-      setIsPasswordError(true);
       setBtnIsDisable(true);
       props.showFooterErrMsg();
     }
@@ -259,7 +268,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
             placeholder="Введите логин"
             onChange={emailValidationHandler}
             value={email}
-            className={isEmailError ? style.errorInput : ""}
+            className={emailInputStyle}
           />
           <div className={style.icons}>
             {isEmailError && (
@@ -279,11 +288,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
         <label htmlFor="password">Пароль</label>
         <div className={style.inputWrapper}>
           <input
-            className={
-              isPasswordError
-                ? `${style.passwordInput} ${style.errorInput} `
-                : style.passwordInput
-            }
+            className={passwordInputStyle}
             id="password"
             placeholder="Введите пароль"
             type={isVisiblePassword ? "text" : "password"}
@@ -302,7 +307,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
                 onClick={showPasswordHandler}
               />
             )}
-            {isPasswordError && (
+            {isPasswordError && !props.isFooterErrMsg && (
               <InfoIcon
                 className={style.icon}
                 onMouseOver={passwordMouseOverHandler}

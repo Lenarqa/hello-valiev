@@ -61,6 +61,12 @@
   outline: 2px solid #eb5757;
 }
 
+.formItem .error,
+.error:focus,
+.error:active {
+  outline: 2px solid #eb5757;
+}
+
 .icons {
   position: absolute;
   right: 0;

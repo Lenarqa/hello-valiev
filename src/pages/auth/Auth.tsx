@@ -19,7 +19,7 @@ const Auth: React.FC = () => {
   return (
     <div className={style.wrapper}>
       <HeaderAuth />
-      <AuthContent showFooterErrMsg={showFooterErrMsgHandler} hideFooterErrMsg={hideFooterErrMsgHandler}/>
+      <AuthContent isFooterErrMsg={isFooterErrMsg} showFooterErrMsg={showFooterErrMsgHandler} hideFooterErrMsg={hideFooterErrMsgHandler}/>
       {isFooterErrMsg && <FooterErrorMsg text="Такого пользователя не существует" />}
       <Footer />
     </div>

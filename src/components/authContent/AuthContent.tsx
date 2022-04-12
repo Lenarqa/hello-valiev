@@ -6,6 +6,7 @@ import PasswordRecoveryModal from "../modal/passwordRecoveryModal/PasswordRecove
 import ChangePasswordModal from "../modal/changePasswordModal/ChangePasswordModal";
 
 interface AuthContent {
+  isFooterErrMsg: boolean;
   showFooterErrMsg: () => void;
   hideFooterErrMsg: () => void;
 }
@@ -14,7 +15,7 @@ interface AuthContent {
 const AuthContent: React.FC<AuthContent> = (props) => {
   return (
     <div className={style.content}>
-      <AuthModal showFooterErrMsg={props.showFooterErrMsg} hideFooterErrMsg={props.hideFooterErrMsg}/>
+      <AuthModal isFooterErrMsg={props.isFooterErrMsg} showFooterErrMsg={props.showFooterErrMsg} hideFooterErrMsg={props.hideFooterErrMsg}/>
       {/* <PasswordRecoveryModal /> */}
       {/* <ChangePasswordModal /> */}
       <img className={style.bgImg} src={bg} />
