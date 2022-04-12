@@ -15,11 +15,11 @@ const AuthContent: React.FC<AuthContent> = (props) => {
 
   const showPswdRecoveryModalHandler = () => {
     setIsShowPswdRecovery(true);
-  }
+  };
 
   const hidePswdRecoveryModalHandler = () => {
     setIsShowPswdRecovery(false);
-  }
+  };
 
   return (
     <div className={style.content}>
@@ -31,7 +31,11 @@ const AuthContent: React.FC<AuthContent> = (props) => {
           showPasswordRecoveryModal={showPswdRecoveryModalHandler}
         />
       )}
-      {isShowPswdRecovery && <PasswordRecoveryModal />}
+      {isShowPswdRecovery && (
+        <PasswordRecoveryModal
+          hidePswdRecoveryModal={hidePswdRecoveryModalHandler}
+        />
+      )}
       <img className={style.bgImg} src={bg} />
     </div>
   );

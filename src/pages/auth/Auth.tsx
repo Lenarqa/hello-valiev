@@ -10,17 +10,23 @@ const Auth: React.FC = () => {
 
   const showFooterErrMsgHandler = () => {
     setIsFooterErrMsg(true);
-  }
+  };
 
   const hideFooterErrMsgHandler = () => {
     setIsFooterErrMsg(false);
-  }
+  };
 
   return (
     <div className={style.wrapper}>
       <HeaderAuth />
-      <AuthContent isFooterErrMsg={isFooterErrMsg} showFooterErrMsg={showFooterErrMsgHandler} hideFooterErrMsg={hideFooterErrMsgHandler}/>
-      {isFooterErrMsg && <FooterErrorMsg text="Такого пользователя не существует" />}
+      <AuthContent
+        isFooterErrMsg={isFooterErrMsg}
+        showFooterErrMsg={showFooterErrMsgHandler}
+        hideFooterErrMsg={hideFooterErrMsgHandler}
+      />
+      {isFooterErrMsg && (
+        <FooterErrorMsg text="Такого пользователя не существует" />
+      )}
       <Footer />
     </div>
   );

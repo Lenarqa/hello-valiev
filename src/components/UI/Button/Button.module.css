@@ -1,7 +1,6 @@
 .button {
   cursor: pointer;
   padding: 17px 28px;
-  background-color: #585cc6;
   border-radius: 2px;
   color: #fff;
   border: none;
@@ -12,8 +11,17 @@
   font-weight: 600;
   font-size: 18px;
   line-height: 18px;
+
+  /* test */
+  background: linear-gradient(to left, #585cc6 50%, #6469e6e6 50%) right;
+  background-size: 200%;
+  transition: 0.5s ease-out;
+}
+
+.button:hover {
+  background-position: left;
 }
 
 .button:disabled {
-  background-color: #8a8a8a;
+  background: #8a8a8a 100%;
 }

@@ -322,7 +322,11 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
           </div>
         </div>
       </div>
-      <Button type="submit" isDisable={btnIsDisable}>
+      <Button
+        type="submit"
+        isDisable={btnIsDisable}
+        onClick={() => submitHandler.bind(this)}
+      >
         Войти
       </Button>
       <button
