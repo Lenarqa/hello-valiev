@@ -259,6 +259,11 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     }
   };
 
+  const passwordRecoveryModalHandler = () => {
+    props.hideFooterErrMsg();
+    props.showPasswordRecoveryModal();
+  }
+
   return (
     <form className={style.form} onSubmit={submitHandler}>
       <h2>Войти</h2>
@@ -332,7 +337,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       <button
         type="button"
         className={style.btn}
-        onClick={props.showPasswordRecoveryModal}
+        onClick={passwordRecoveryModalHandler}
       >
         Забыли пароль?
       </button>
