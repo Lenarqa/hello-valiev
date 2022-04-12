@@ -1,0 +1,12 @@
+.footerErrorMsg {
+    width: 100%;
+    background-color: #EB5757;
+    height: 62px;
+    color: #ffffff;
+    font-weight: 500;
+    font-family: "Gilroy-Regular";
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

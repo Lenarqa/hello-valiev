@@ -6,7 +6,11 @@ import { ReactComponent as OpenEyeIcon } from "../../../assets/icons/openEye.svg
 import { ReactComponent as CloseEyeIcon } from "../../../assets/icons/closeEye.svg";
 import MsgWindow from "../../UI/MsgWindow/MsgWindow";
 
-const AuthModal: React.FC = () => {
+interface IAuthModal {
+  toggleFooterErrMsg: () => void;
+}
+
+const AuthModal: React.FC<IAuthModal> = (props) => {
   const [email, setEmail] = useState<string>("");
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [emailErrorMsg, setEmailErrorMsg] = useState<string>("");
@@ -20,20 +24,15 @@ const AuthModal: React.FC = () => {
 
   const [btnIsDisable, setBtnIsDisable] = useState<boolean>(true);
 
-  useEffect(()=>{
-    console.log("useEffect");  
-    if(!isEmailError && !isPasswordError) {
+  useEffect(() => {
+    if (!isEmailError && !isPasswordError) {
       setBtnIsDisable(false);
-      console.log("active");
-      
     }
 
-    if(email.trim().length === 0 || password.trim().length === 0) {
+    if (email.trim().length === 0 || password.trim().length === 0) {
       setBtnIsDisable(true);
-      console.log("disable");
-      
     }
-  }, [isEmailError, isPasswordError, email, password])
+  }, [isEmailError, isPasswordError, email, password]);
 
   const emailValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const emailValidation =
@@ -127,7 +126,7 @@ const AuthModal: React.FC = () => {
       return;
     }
 
-    // когда пользователь оставляет мышку поверх infoIcon
+    // когда пользователь оставляет мышку поверх infoIcon и иконка исчезает
     // чтобы не оставалось окно без сообщения, когда нет ошибок
     if (emailValidation.test(newValue)) {
       setIsHoverEmail(false);
@@ -236,7 +235,15 @@ const AuthModal: React.FC = () => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Submit!");
+    if (email === "enter@gmail.com" && password === "Enter123!") {
+      alert("Добро пожаловать!");
+    } else {
+      console.log("Такого пользователя не существует");
+      setIsEmailError(true);
+      setIsPasswordError(true);
+      setBtnIsDisable(true);
+      props.toggleFooterErrMsg();
+    }
   };
 
   return (
