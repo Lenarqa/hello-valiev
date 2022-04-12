@@ -8,14 +8,18 @@ import FooterErrorMsg from "../../components/UI/footerErrorMsg/FooterErrorMsg";
 const Auth: React.FC = () => {
   const [isFooterErrMsg, setIsFooterErrMsg] = useState<boolean>(false);
 
-  const toggleFooterErrMsgHandler = () => {
-    setIsFooterErrMsg(prev=>!prev);
+  const showFooterErrMsgHandler = () => {
+    setIsFooterErrMsg(true);
+  }
+
+  const hideFooterErrMsgHandler = () => {
+    setIsFooterErrMsg(false);
   }
 
   return (
     <div className={style.wrapper}>
       <HeaderAuth />
-      <AuthContent toggleFooterErrMsg={toggleFooterErrMsgHandler}/>
+      <AuthContent showFooterErrMsg={showFooterErrMsgHandler} hideFooterErrMsg={hideFooterErrMsgHandler}/>
       {isFooterErrMsg && <FooterErrorMsg text="Такого пользователя не существует" />}
       <Footer />
     </div>

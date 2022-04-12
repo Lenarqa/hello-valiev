@@ -7,7 +7,8 @@ import { ReactComponent as CloseEyeIcon } from "../../../assets/icons/closeEye.s
 import MsgWindow from "../../UI/MsgWindow/MsgWindow";
 
 interface IAuthModal {
-  toggleFooterErrMsg: () => void;
+  showFooterErrMsg: () => void;
+  hideFooterErrMsg: () => void;
 }
 
 const AuthModal: React.FC<IAuthModal> = (props) => {
@@ -42,6 +43,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     setEmail(newValue);
     setIsEmailError(false);
     setBtnIsDisable(true);
+    props.hideFooterErrMsg();
 
     if (newValue.trim().length === 0) {
       setIsEmailError(true);
@@ -142,6 +144,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     setPassword(newValue);
     setIsPasswordError(false);
     setBtnIsDisable(true);
+    props.hideFooterErrMsg();
 
     if (newValue.trim().length === 0) {
       setIsPasswordError(true);
@@ -238,11 +241,10 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     if (email === "enter@gmail.com" && password === "Enter123!") {
       alert("Добро пожаловать!");
     } else {
-      console.log("Такого пользователя не существует");
       setIsEmailError(true);
       setIsPasswordError(true);
       setBtnIsDisable(true);
-      props.toggleFooterErrMsg();
+      props.showFooterErrMsg();
     }
   };
 
