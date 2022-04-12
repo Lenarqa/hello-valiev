@@ -110,6 +110,12 @@ const AuthModal: React.FC = () => {
       );
       return;
     }
+
+    // когда пользователь оставляет мышку поверх infoIcon
+    // чтобы не оставалось окно без сообщения, когда нет ошибок
+    if (emailValidation.test(newValue)) {
+      setIsHoverEmail(false)
+    }
   };
 
   const passwordValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
@@ -182,6 +188,12 @@ const AuthModal: React.FC = () => {
       setIsPasswordError(true);
       setPasswordErrorMsg("Что то пошло не так");
       return;
+    }
+
+    // когда пользователь оставляет мышку поверх infoIcon
+    // чтобы не оставалось окно без сообщения, когда нет ошибок
+    if (passwordValidation.test(newValue)) {
+      setIsHoverPassword(false)
     }
   };
 
