@@ -10,6 +10,7 @@ interface IAuthModal {
   isFooterErrMsg: boolean;
   showFooterErrMsg: () => void;
   hideFooterErrMsg: () => void;
+  showPasswordRecoveryModal: () => void;
 }
 
 const AuthModal: React.FC<IAuthModal> = (props) => {
@@ -26,6 +27,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
 
   const [btnIsDisable, setBtnIsDisable] = useState<boolean>(true);
 
+  // input styling
   let emailInputStyle = isEmailError ? style.errorInput : "";
   let passwordInputStyle = isPasswordError
     ? `${style.passwordInput} ${style.errorInput} `
@@ -326,7 +328,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       <button
         type="button"
         className={style.btn}
-        onClick={() => console.log("hello")}
+        onClick={props.showPasswordRecoveryModal}
       >
         Забыли пароль?
       </button>

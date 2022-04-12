@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./AuthContent.module.css";
 import AuthModal from "../modal/authModal/AuthModal";
 import bg from "../../assets/img/bgAuth.svg";
@@ -11,14 +11,27 @@ interface AuthContent {
 }
 
 const AuthContent: React.FC<AuthContent> = (props) => {
+  const [isShowPswdRecovery, setIsShowPswdRecovery] = useState<boolean>(false);
+
+  const showPswdRecoveryModalHandler = () => {
+    setIsShowPswdRecovery(true);
+  }
+
+  const hidePswdRecoveryModalHandler = () => {
+    setIsShowPswdRecovery(false);
+  }
+
   return (
     <div className={style.content}>
-      {/* <AuthModal
-        isFooterErrMsg={props.isFooterErrMsg}
-        showFooterErrMsg={props.showFooterErrMsg}
-        hideFooterErrMsg={props.hideFooterErrMsg}
-      /> */}
-      <PasswordRecoveryModal />
+      {!isShowPswdRecovery && (
+        <AuthModal
+          isFooterErrMsg={props.isFooterErrMsg}
+          showFooterErrMsg={props.showFooterErrMsg}
+          hideFooterErrMsg={props.hideFooterErrMsg}
+          showPasswordRecoveryModal={showPswdRecoveryModalHandler}
+        />
+      )}
+      {isShowPswdRecovery && <PasswordRecoveryModal />}
       <img className={style.bgImg} src={bg} />
     </div>
   );
