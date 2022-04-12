@@ -86,7 +86,9 @@
   margin-left: 14px;
 }
 
-.text {
+.btn {
+  border: none;
+  background-color: transparent;
   cursor: pointer;
   font-family: "Gilroy-regular";
   font-style: normal;

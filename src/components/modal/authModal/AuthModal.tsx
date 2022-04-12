@@ -323,7 +323,13 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       <Button type="submit" isDisable={btnIsDisable}>
         Войти
       </Button>
-      <div className={style.text}>Забыли пароль?</div>
+      <button
+        type="button"
+        className={style.btn}
+        onClick={() => console.log("hello")}
+      >
+        Забыли пароль?
+      </button>
     </form>
   );
 };
