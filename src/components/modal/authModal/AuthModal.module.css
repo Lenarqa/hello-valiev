@@ -45,6 +45,7 @@
   line-height: 22px;
   font-style: normal;
 }
+
 .formItem .passwordInput[type="text"] {
   font-weight: 600;
   letter-spacing: 0.2em;
