@@ -34,7 +34,7 @@ interface ITitle {
 }
 
 const Title = styled.div<ITitle>`
-  font-family: "Gilroy-Regular";
+  font-family: "Gilroy";
   color: ${({ isBigFile }) => (isBigFile ? "#EB5757" : "#333333")};
   font-style: normal;
   font-weight: 600;

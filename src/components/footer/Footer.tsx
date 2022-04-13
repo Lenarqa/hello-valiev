@@ -24,7 +24,7 @@ const StyledFooter = styled.footer`
 `;
 
 const Text = styled.div`
-  font-family: "Gilroy", sans-serif;
+  font-family: "Gilroy";
   font-weight: 500;
   font-size: 16px;
   color: #8a8a8a;

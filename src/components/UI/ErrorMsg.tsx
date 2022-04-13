@@ -12,7 +12,7 @@ const Error = styled.div`
 `;
 
 const Text = styled.div`
-  font-family: "Gilroy-Regular";
+  font-family: "Gilroy";
   color: #EB5757;
   font-weight: 400;
   font-size: 12px;

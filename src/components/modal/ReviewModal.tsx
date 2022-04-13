@@ -125,7 +125,7 @@ interface IIput {
 
 const Input = styled.input<IIput>`
   transition: all 0.5s ease;
-  font-family: "Gilroy-Regular";
+  font-family: "Gilroy";
   width: 395px;
   height: 52px;
   border: ${({ isError }) =>
@@ -149,7 +149,7 @@ const TextareaWrapper = styled.div`
 `;
 
 const Counter = styled.div`
-  font-family: "Gilroy-Regular";
+  font-family: "Gilroy";
   width: 30px;
   height: 14px;
   font-weight: 400;
@@ -170,7 +170,7 @@ interface ITextarea {
   isError: boolean;
 }
 const Textarea = styled.textarea<ITextarea>`
-  font-family: "Gilroy-Regular";
+  font-family: "Gilroy";
   border: ${({ isError }) =>
     isError ? "1px solid #EB5757" : "1px solid #e0e0e0;"};
   border-radius: 2px;
@@ -202,7 +202,7 @@ const Label = styled.p`
 `;
 
 const ActionText = styled.p`
-  font-family: "Gilroy-Regular";
+  font-family: "Gilroy";
   color: #8a8a8a;
   font-weight: 400;
   font-size: 12px;

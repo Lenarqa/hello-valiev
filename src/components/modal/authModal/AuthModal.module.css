@@ -39,7 +39,7 @@
   padding: 15px 12px;
   border: 1px solid #e0e0e0;
   border-radius: 2px;
-  font-family: "Gilroy-Regular";
+  font-family: "Gilroy";
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
@@ -101,7 +101,7 @@ input[data-has-data="true"]:active {
   border: none;
   background-color: transparent;
   cursor: pointer;
-  font-family: "Gilroy-regular";
+  font-family: "Gilroy";
   font-style: normal;
   font-weight: 500;
   font-size: 12px;

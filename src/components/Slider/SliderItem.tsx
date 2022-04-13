@@ -44,7 +44,7 @@ const Header = styled.div`
 `;
 
 const Content = styled.div`
-  font-family: "Gilroy",sans-serif;
+  font-family: "Gilroy";
   font-size: 14px;
   color: #333333;
   line-height: 22px;

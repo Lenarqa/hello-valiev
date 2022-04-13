@@ -34,7 +34,7 @@ const Header = styled.div`
 
   p:last-child {
     color: #8a8a8a;
-    font-family: "Gilroy", sans-serif;
+    font-family: "Gilroy";
     font-weight: 400;
     font-size: 18px;
   }
@@ -60,7 +60,7 @@ const Header = styled.div`
 `;
 
 const Title = styled.p`
-  font-family: "Gilroy", sans-serif;
+  font-family: "Gilroy";
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -73,7 +73,7 @@ const Title = styled.p`
 `;
 
 const Text = styled.p`
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Gilroy";
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -123,10 +123,12 @@ const AboutMeInfo = styled.div`
 `;
 
 const AboutMeText = styled.div`
-  font-family: "Gilroy", sans-serif;
+  font-family: "Gilroy";
   color: #333;
+  font-style: normal;
   font-size: 18px;
   line-height: 24px;
+  letter-spacing: 0.01em;
 
   @media (max-width: 321px) {
     font-size: 16px;

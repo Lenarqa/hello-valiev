@@ -34,7 +34,6 @@ const PhotoSection = styled.div`
 `;
 
 const Name = styled.h2`
-  font-family: "Gilroy";
   color: #333;
   font-size: 18px;
   font-family: "Gilroy-Bold", sans-serif;

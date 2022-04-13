@@ -9,7 +9,7 @@ const Button = styled.button`
   padding: 17px 28px;
   background-color: #585cc6;
   color: #ffffff;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Gilroy";
   font-weight: 600;
   font-size: 18px;
   border: none;

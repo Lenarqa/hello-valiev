@@ -16,7 +16,7 @@ const Button = styled.button<IButton>`
   justify-content: center;
   align-items: center;
   color: #fff;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Gilroy";
   font-weight: 600;
   border: none;
   border-radius: 2px;
