@@ -27,17 +27,6 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
 
   const [btnIsDisable, setBtnIsDisable] = useState<boolean>(true);
 
-  // input styling
-  let emailInputStyle = isEmailError ? style.errorInput : "";
-  let passwordInputStyle = isPasswordError
-    ? `${style.passwordInput} ${style.errorInput} `
-    : style.passwordInput;
-
-  if (props.isFooterErrMsg) {
-    emailInputStyle = style.error;
-    passwordInputStyle = style.error;
-  }
-
   useEffect(() => {
     if (!isEmailError && !isPasswordError) {
       setBtnIsDisable(false);
@@ -174,12 +163,16 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     }
 
     if (!/.*[a-z]/.test(newValue)) {
-      setErrorPassword("Пароль должен содержать латинские буквы нижнего регистра");
+      setErrorPassword(
+        "Пароль должен содержать латинские буквы нижнего регистра"
+      );
       return;
     }
 
     if (!/.*[A-Z]/.test(newValue)) {
-      setErrorPassword( "Пароль должен содержать латинские буквы верхнего регистра")
+      setErrorPassword(
+        "Пароль должен содержать латинские буквы верхнего регистра"
+      );
       return;
     }
 
@@ -189,7 +182,9 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     }
 
     if (newValue.length < 8 || newValue.length > 24) {
-      setErrorPassword("Пароль не может быть короче 8 символов и длиннее 24 символов");
+      setErrorPassword(
+        "Пароль не может быть короче 8 символов и длиннее 24 символов"
+      );
       return;
     }
 
@@ -197,7 +192,9 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     // я не думаю что в пароле должна быть кириллица поэтому добавил проверку
     // если кириллица в пароле все таки имеет место быть я уберу эту проверку.
     if (/[а-яА-ЯёЁ]/.test(newValue)) {
-      setErrorPassword("Пароль не может содержать кириллицу, используйте только латиницу");
+      setErrorPassword(
+        "Пароль не может содержать кириллицу, используйте только латиницу"
+      );
       return;
     }
 
@@ -254,7 +251,9 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
             placeholder="Введите логин"
             onChange={emailValidationHandler}
             value={email}
-            className={emailInputStyle}
+            data-isError={isEmailError}
+            data-isUnknownUser={props.isFooterErrMsg}
+            data-hasData={!isEmailError && email.trim().length > 0}
           />
           <div className={style.icons}>
             {isEmailError && (
@@ -274,7 +273,10 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
         <label htmlFor="password">Пароль</label>
         <div className={style.inputWrapper}>
           <input
-            className={passwordInputStyle}
+            data-isError={isPasswordError}
+            data-isUnknownUser={props.isFooterErrMsg}
+            data-hasData={!isPasswordError && password.trim().length > 0}
+            // className={passwordInputStyle}
             id="password"
             placeholder="Введите пароль"
             type={isVisiblePassword ? "text" : "password"}

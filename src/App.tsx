@@ -3,7 +3,7 @@ import Auth from "./pages/auth/Auth";
 
 function App() {
   return (
-      <Auth />
+    <Auth />
     // <AboutMe />
   );
 }

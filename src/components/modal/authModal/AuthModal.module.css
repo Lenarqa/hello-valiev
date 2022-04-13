@@ -56,15 +56,21 @@
   width: 100%;
 }
 
-.formItem .errorInput,
-.errorInput:focus,
-.errorInput:active {
+.formItem input[data-isError="true"],
+input[data-isError="true"]:focus,
+input[data-isError="true"]:active {
   outline: 2px solid #eb5757;
 }
 
-.formItem .error,
-.error:focus,
-.error:active {
+.formItem input[data-hasData="true"],
+input[data-hasData="true"]:focus,
+input[data-hasData="true"]:active {
+  outline: 2px solid #585cc6;
+}
+
+.formItem input[data-isUnknownUser="true"],
+.formItem input[data-isUnknownUser="true"]:focus,
+.formItem input[data-isUnknownUser="true"]:active {
   outline: 2px solid #eb5757;
 }
 
@@ -97,6 +103,19 @@
   font-size: 12px;
   line-height: 16px;
   color: #585cc6;
+  transition: all 1s ease;
+}
+
+.btn::after {
+  display: block;
+  content: "";
+  border-bottom: solid 1px #797ddf;
+  transform: scaleX(0);
+  transition: all 250ms ease-in-out;
+}
+
+.btn:hover::after {
+  transform: scaleX(1);
 }
 
 .hoverMsg {
