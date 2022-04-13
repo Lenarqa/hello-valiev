@@ -138,14 +138,16 @@ const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
         <h2>Сброс пароля</h2>
       </div>
       <div className={style.formItem}>
-        <label htmlFor="">Электронная почта</label>
+        <label htmlFor="login">Электронная почта</label>
         <div className={style.inputWrapper}>
           <input
             id="login"
             placeholder="Введите логин"
             onChange={emailValidationHandler}
             value={email}
-            className={isEmailError ? style.errorInput : ""}
+            data-isError={isEmailError}
+            data-hasData={!isEmailError && email.trim().length > 0}
+            // className={isEmailError ? style.errorInput : ""}
           />
           <div className={style.icons}>
             {isEmailError && (
