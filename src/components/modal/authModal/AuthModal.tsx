@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import style from "./AuthModal.module.css";
 import Button from "../../UI/button/Button";
 import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg";
@@ -9,10 +10,11 @@ import MsgWindow from "../../UI/msgWindow/MsgWindow";
 interface IAuthModal {
   isFooterErrMsg: boolean;
   showFooterErrMsg: (value: boolean) => void;
-  showPasswordRecoveryModal: () => void;
+  // showPasswordRecoveryModal: () => void;
 }
 
 const AuthModal: React.FC<IAuthModal> = (props) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [emailErrorMsg, setEmailErrorMsg] = useState<string>("");
@@ -228,7 +230,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     e.preventDefault();
     if (emailValidation.test(email) && passwordValidation.test(password)) {
       if (email === "enter@gmail.com" && password === "Enter123!") {
-        alert("Добро пожаловать!");
+        navigate(`/hello-valiev/about-me`);
       } else {
         setBtnIsDisable(true);
         props.showFooterErrMsg(true);
@@ -238,7 +240,8 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
 
   const passwordRecoveryModalHandler = () => {
     props.showFooterErrMsg(false);
-    props.showPasswordRecoveryModal();
+    // props.showPasswordRecoveryModal();
+    navigate(`/hello-valiev/passwordRecovery`);
   };
 
   return (

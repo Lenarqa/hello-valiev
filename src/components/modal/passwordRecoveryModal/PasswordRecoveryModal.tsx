@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import style from "./PasswordRecoveryModal.module.css";
 import Button from "../../UI/button/Button";
 import MsgWindow from "../../UI/msgWindow/MsgWindow";
@@ -6,12 +7,13 @@ import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg
 import { ReactComponent as ArrowLeftIcon } from "../../../assets/icons/arrowLeft.svg";
 
 interface IPasswordRecoveryModal {
-  hidePswdRecoveryModal: () => void;
+  // hidePswdRecoveryModal: () => void;
   showGoodWindow: (value: boolean) => void;
   showBadWindow: (value: boolean) => void;
 }
 
 const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [emailErrorMsg, setEmailErrorMsg] = useState<string>("");
@@ -148,9 +150,13 @@ const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
     }
   };
 
+  const cancelHandler = () => {
+    navigate(`/*`);
+  }
+
   return (
     <form className={style.form} onSubmit={submitHandler}>
-      <div className={style.formHeader} onClick={props.hidePswdRecoveryModal}>
+      <div className={style.formHeader} onClick={cancelHandler}>
         <ArrowLeftIcon className={style.arrow} />
         <h2>Сброс пароля</h2>
       </div>
@@ -183,7 +189,7 @@ const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
         <Button type="submit" isDisable={btnIsDisable}>
           Отправить код
         </Button>
-        <Button type="button" onClick={props.hidePswdRecoveryModal}>
+        <Button type="button" onClick={cancelHandler}>
           Отмена
         </Button>
       </div>
