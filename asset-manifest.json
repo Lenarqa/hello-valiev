@@ -1,8 +1,9 @@
 {
   "files": {
-    "main.css": "/hello-valiev/static/css/main.a05410c9.css",
-    "main.js": "/hello-valiev/static/js/main.b1f441b3.js",
+    "main.css": "/hello-valiev/static/css/main.72333a36.css",
+    "main.js": "/hello-valiev/static/js/main.19449b93.js",
     "static/media/Me_03.webp": "/hello-valiev/static/media/Me_03.f338e19a92ce3f18bef3.webp",
+    "static/media/Gilroy-Regular.ttf": "/hello-valiev/static/media/Gilroy-Regular.b91b0127c56a8e5f9e83.ttf",
     "static/media/FactorAMedium-Regular.ttf": "/hello-valiev/static/media/FactorAMedium-Regular.1a1b89bd931afe1bfa27.ttf",
     "static/media/photo.jpg": "/hello-valiev/static/media/photo.2c778dc9e9b065821fc4.jpg",
     "static/media/animal.svg": "/hello-valiev/static/media/animal.42d6230321a6de0a782e40911285e553.svg",
@@ -22,9 +23,9 @@
     "static/media/success.svg": "/hello-valiev/static/media/success.6eb9124caccaa98f567123f4846003df.svg",
     "static/media/greenBubbles.svg": "/hello-valiev/static/media/greenBubbles.465f9449630ab263e832f6944e10d863.svg",
     "static/media/redBubbles.svg": "/hello-valiev/static/media/redBubbles.2337e197c658b8fcd2771e0c114aed31.svg",
-    "index.html": "/hello-valiev/index.html",
     "static/media/man.svg": "/hello-valiev/static/media/man.045dda3c1a2cafcf2404ada59c057c67.svg",
     "static/media/openEye.svg": "/hello-valiev/static/media/openEye.8b76be566bb12b84ed76ca76d88de4fe.svg",
+    "index.html": "/hello-valiev/index.html",
     "static/media/infoSquare.svg": "/hello-valiev/static/media/infoSquare.eafe15029908b2d84104624e06d58010.svg",
     "static/media/info.svg": "/hello-valiev/static/media/info.1b35efe34ae7ba17871a2034b4870cbb.svg",
     "static/media/button1.svg": "/hello-valiev/static/media/button1.ee4963e2cb752ed4d08d7fa82c107582.svg",
@@ -35,11 +36,11 @@
     "static/media/close2.svg": "/hello-valiev/static/media/close2.b736a10d5fbf1920ca83c8e283ecf475.svg",
     "static/media/buttonAdd.svg": "/hello-valiev/static/media/buttonAdd.c9c4d03a3323c6c4bbd6970d03fa28f9.svg",
     "static/media/plus.svg": "/hello-valiev/static/media/plus.75a21b6bf9a3d513b795f0b6ff855b10.svg",
-    "main.a05410c9.css.map": "/hello-valiev/static/css/main.a05410c9.css.map",
-    "main.b1f441b3.js.map": "/hello-valiev/static/js/main.b1f441b3.js.map"
+    "main.72333a36.css.map": "/hello-valiev/static/css/main.72333a36.css.map",
+    "main.19449b93.js.map": "/hello-valiev/static/js/main.19449b93.js.map"
   },
   "entrypoints": [
-    "static/css/main.a05410c9.css",
-    "static/js/main.b1f441b3.js"
+    "static/css/main.72333a36.css",
+    "static/js/main.19449b93.js"
   ]
 }
