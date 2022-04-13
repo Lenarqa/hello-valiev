@@ -1,12 +1,11 @@
-.goodWindow {
+.badWindow {
   position: fixed;
   right: 40px;
-  bottom: 10px;
+  bottom: 104px;
   width: 438px;
   height: 132px;
   background: #f64b3c;
   border-radius: 32px;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,6 +35,7 @@
   font-family: "Gilroy-Regular";
   font-weight: 400;
   font-size: 14px;
+  line-height: 22px;
   color: #fff;
 }
 
@@ -55,7 +55,7 @@
 }
 
 @media (max-width: 490px) {
-  .goodWindow {
+  .badWindow {
     position: fixed;
     width: 310px;
     right: 10px;
@@ -69,5 +69,37 @@
 
   .info h2 {
     font-size: 22px;
+  }
+}
+
+@media (max-width: 320px) {
+  .badWindow {
+    position: fixed;
+    width: 288px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 108px;
+  }
+
+  .icon {
+    left: 8px;
+    top: -40px;
+  }
+
+  .redBubblesBg {
+   width: 70px;
+  }
+
+  .info {
+    width: 160px;
+  }
+
+  .info h2 {
+    font-size: 22px;
+  }
+
+  .closeIcon {
+    top: 25px;
+    right: 20px;
   }
 }

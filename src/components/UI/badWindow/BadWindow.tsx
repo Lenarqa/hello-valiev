@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./BadWindow.module.css";
-import { ReactComponent as BadIcon } from "../../../assets/icons/bad.svg";
+import { ReactComponent as BadIcon } from "../../../assets/icons/bad2.svg";
 import { ReactComponent as CloseIcon } from "../../../assets/icons/close2.svg";
 import { ReactComponent as RedBubblesBg } from "../../../assets/img/redBubbles.svg";
 
@@ -12,7 +12,7 @@ interface IBadWindow {
 
 const BadWindow: React.FC<IBadWindow> = ({ title, text, setShowBadWindow }) => {
   return (
-    <div className={style.goodWindow}>
+    <div className={style.badWindow}>
         <BadIcon className={style.icon} />
         <RedBubblesBg className={style.redBubblesBg} />
         <div className={style.info}>

@@ -9,7 +9,7 @@ import BadWindow from "../../components/UI/badWindow/BadWindow";
 
 const Auth: React.FC = () => {
   const [isFooterErrMsg, setIsFooterErrMsg] = useState<boolean>(false);
-  const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(true);
+  const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(false);
   const [isShowBadWindow, setIsShowBadWindow] = useState<boolean>(false);
 
   return (

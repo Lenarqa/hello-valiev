@@ -26,6 +26,11 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
 
   const [btnIsDisable, setBtnIsDisable] = useState<boolean>(true);
 
+  const passwordValidation = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,24}$/;
+
+  const emailValidation =
+    /^((?=[a-zA-Z0-9])[a-zA-Z0-9!#$%&\\'*+\-\/=?^_`.{|}~]{1,25})@(([a-zA-Z0-9\-]){1,25}\.)([a-zA-Z0-9]{2,4})$/;
+
   useEffect(() => {
     if (!isEmailError && !isPasswordError) {
       setBtnIsDisable(false);
@@ -43,8 +48,6 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
   };
 
   const emailValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    const emailValidation =
-      /^((?=[a-zA-Z0-9])[a-zA-Z0-9!#$%&\\'*+\-\/=?^_`.{|}~]{1,25})@(([a-zA-Z0-9\-]){1,25}\.)([a-zA-Z0-9]{2,4})$/;
     const newValue = e.currentTarget.value;
     setEmailErrorMsg("");
     setEmail(newValue);
@@ -141,15 +144,12 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
   };
 
   const passwordValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    const passwordValidation =
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,24}$/;
-
     const newValue = e.currentTarget.value;
     setPasswordErrorMsg("");
     setPassword(newValue);
     setIsPasswordError(false);
     setBtnIsDisable(true);
-    props.showFooterErrMsg(false)
+    props.showFooterErrMsg(false);
 
     if (newValue.trim().length === 0) {
       setErrorPassword("Поле не может быть пустым");
@@ -226,11 +226,13 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email === "enter@gmail.com" && password === "Enter123!") {
-      alert("Добро пожаловать!");
-    } else {
-      setBtnIsDisable(true);
-      props.showFooterErrMsg(true);
+    if (emailValidation.test(email) && passwordValidation.test(password)) {
+      if (email === "enter@gmail.com" && password === "Enter123!") {
+        alert("Добро пожаловать!");
+      } else {
+        setBtnIsDisable(true);
+        props.showFooterErrMsg(true);
+      }
     }
   };
 
@@ -250,9 +252,9 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
             placeholder="Введите логин"
             onChange={emailValidationHandler}
             value={email}
-            data-isError={isEmailError}
-            data-isUnknownUser={props.isFooterErrMsg}
-            data-hasData={!isEmailError && email.trim().length > 0}
+            data-is-error={isEmailError}
+            data-is-unknown-user={props.isFooterErrMsg}
+            data-has-data={!isEmailError && email.trim().length > 0}
           />
           <div className={style.icons}>
             {isEmailError && (
@@ -272,9 +274,9 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
         <label htmlFor="password">Пароль</label>
         <div className={style.inputWrapper}>
           <input
-            data-isError={isPasswordError}
-            data-isUnknownUser={props.isFooterErrMsg}
-            data-hasData={!isPasswordError && password.trim().length > 0}
+            data-is-error={isPasswordError}
+            data-is-unknown-user={props.isFooterErrMsg}
+            data-has-data={!isPasswordError && password.trim().length > 0}
             id="password"
             placeholder="Введите пароль"
             type={isVisiblePassword ? "text" : "password"}
@@ -308,6 +310,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       </div>
       <Button
         type="submit"
+        style={style.enterBtn}
         isDisable={btnIsDisable}
         onClick={() => submitHandler.bind(this)}
       >

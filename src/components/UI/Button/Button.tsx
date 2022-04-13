@@ -3,6 +3,7 @@ import style from "./Button.module.css";
 
 interface IButton {
   onClick?: () => void;
+  style?: string;
   type: "button" | "submit" | "reset" | undefined;
   isDisable?: boolean;
 }
@@ -12,7 +13,7 @@ const Button: React.FC<IButton> = (props) => {
     <button
       type={props.type}
       disabled={props.isDisable}
-      className={style.button}
+      className={`${props.style} ${style.button} `}
       onClick={props.onClick}
     >
       {props.children}

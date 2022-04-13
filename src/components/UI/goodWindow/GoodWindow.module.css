@@ -1,7 +1,7 @@
 .goodWindow {
   position: fixed;
   right: 40px;
-  bottom: 10px;
+  bottom: 104px;
   width: 438px;
   height: 132px;
   background: #b5ffa2;
@@ -36,6 +36,7 @@
   font-weight: 400;
   font-size: 14px;
   color: #333333;
+  line-height: 22px;
 }
 
 .greenBubblesBg {
@@ -66,5 +67,38 @@
 
   .info h2 {
     font-size: 24px;
+  }
+}
+
+@media (max-width: 320px) {
+  .goodWindow {
+    position: fixed;
+    width: 288px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 108px;
+  }
+
+  .icon {
+    left: 8px;
+    top: -40px;
+  }
+
+  .greenBubblesBg {
+   width: 90px;
+  }
+
+  .info {
+    width: 166px;
+    margin-left: 100px;
+  }
+
+  .info h2 {
+    font-size: 24px;
+  }
+
+  .closeIcon {
+    top: 25px;
+    right: 20px;
   }
 }

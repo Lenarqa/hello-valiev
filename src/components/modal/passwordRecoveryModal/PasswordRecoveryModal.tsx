@@ -162,9 +162,8 @@ const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
             placeholder="Введите логин"
             onChange={emailValidationHandler}
             value={email}
-            data-isError={isEmailError}
-            data-hasData={!isEmailError && email.trim().length > 0}
-            // className={isEmailError ? style.errorInput : ""}
+            data-is-error={isEmailError}
+            data-has-data={!isEmailError && email.trim().length > 0}
           />
           <div className={style.icons}>
             {isEmailError && (
@@ -181,17 +180,16 @@ const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
         </div>
       </div>
       <div className={style.actions}>
-        <Button
-          type="submit"
-          isDisable={btnIsDisable}
-          // onClick={() => submitHandler.bind(this)}
-        >
+        <Button type="submit" isDisable={btnIsDisable}>
           Отправить код
         </Button>
         <Button type="button" onClick={props.hidePswdRecoveryModal}>
           Отмена
         </Button>
       </div>
+      <button className={style.mobileBtn} type="submit" disabled={btnIsDisable}>
+        Cбросить
+      </button>
     </form>
   );
 };

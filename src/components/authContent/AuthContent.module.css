@@ -13,3 +13,11 @@
   width: 100%;
   z-index: -1;
 }
+
+@media (max-width: 320px) {
+  .bgImg {
+    top: 194px;
+    width: 400%;
+    left: -447px;
+  }
+}
