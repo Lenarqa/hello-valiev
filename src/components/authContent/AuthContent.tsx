@@ -6,8 +6,9 @@ import PasswordRecoveryModal from "../modal/passwordRecoveryModal/PasswordRecove
 
 interface AuthContent {
   isFooterErrMsg: boolean;
-  showFooterErrMsg: () => void;
-  hideFooterErrMsg: () => void;
+  showFooterErrMsg: (value: boolean) => void;
+  showGoodWindow: (value: boolean) => void;
+  showBadWindow: (value: boolean) => void;
 }
 
 const AuthContent: React.FC<AuthContent> = (props) => {
@@ -27,13 +28,14 @@ const AuthContent: React.FC<AuthContent> = (props) => {
         <AuthModal
           isFooterErrMsg={props.isFooterErrMsg}
           showFooterErrMsg={props.showFooterErrMsg}
-          hideFooterErrMsg={props.hideFooterErrMsg}
           showPasswordRecoveryModal={showPswdRecoveryModalHandler}
         />
       )}
       {isShowPswdRecovery && (
         <PasswordRecoveryModal
           hidePswdRecoveryModal={hidePswdRecoveryModalHandler}
+          showGoodWindow={props.showGoodWindow}
+          showBadWindow={props.showBadWindow}
         />
       )}
       <img className={style.bgImg} src={bg} />

@@ -7,6 +7,8 @@ import { ReactComponent as ArrowLeftIcon } from "../../../assets/icons/arrowLeft
 
 interface IPasswordRecoveryModal {
   hidePswdRecoveryModal: () => void;
+  showGoodWindow: (value: boolean) => void;
+  showBadWindow: (value: boolean) => void;
 }
 
 const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
@@ -15,6 +17,8 @@ const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
   const [emailErrorMsg, setEmailErrorMsg] = useState<string>("");
   const [isHoverEmail, setIsHoverEmail] = useState<boolean>(false);
   const [btnIsDisable, setBtnIsDisable] = useState<boolean>(true);
+  const emailValidation =
+    /^((?=[a-zA-Z0-9])[a-zA-Z0-9!#$%&\\'*+\-\/=?^_`.{|}~]{1,25})@(([a-zA-Z0-9\-]){1,25}\.)([a-zA-Z0-9]{2,4})$/;
 
   useEffect(() => {
     if (!isEmailError) {
@@ -33,8 +37,6 @@ const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
   };
 
   const emailValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    const emailValidation =
-      /^((?=[a-zA-Z0-9])[a-zA-Z0-9!#$%&\\'*+\-\/=?^_`.{|}~]{1,25})@(([a-zA-Z0-9\-]){1,25}\.)([a-zA-Z0-9]{2,4})$/;
     const newValue = e.currentTarget.value;
     setEmailErrorMsg("");
     setEmail(newValue);
@@ -131,8 +133,23 @@ const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
     setIsHoverEmail(true);
   };
 
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (emailValidation.test(email)) {
+      if (email === "enter@gmail.com") {
+        setTimeout(() => {
+          props.showGoodWindow(true);
+        }, 2000);
+      } else {
+        setTimeout(() => {
+          props.showBadWindow(true);
+        }, 2000);
+      }
+    }
+  };
+
   return (
-    <form className={style.form}>
+    <form className={style.form} onSubmit={submitHandler}>
       <div className={style.formHeader} onClick={props.hidePswdRecoveryModal}>
         <ArrowLeftIcon className={style.arrow} />
         <h2>Сброс пароля</h2>
@@ -165,9 +182,9 @@ const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
       </div>
       <div className={style.actions}>
         <Button
-          type="button"
-          onClick={() => console.log("Send cod!")}
+          type="submit"
           isDisable={btnIsDisable}
+          // onClick={() => submitHandler.bind(this)}
         >
           Отправить код
         </Button>

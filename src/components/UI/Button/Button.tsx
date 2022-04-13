@@ -2,7 +2,7 @@ import React from "react";
 import style from "./Button.module.css";
 
 interface IButton {
-  onClick: () => void;
+  onClick?: () => void;
   type: "button" | "submit" | "reset" | undefined;
   isDisable?: boolean;
 }

@@ -12,21 +12,14 @@ const Auth: React.FC = () => {
   const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(true);
   const [isShowBadWindow, setIsShowBadWindow] = useState<boolean>(false);
 
-  const showFooterErrMsgHandler = () => {
-    setIsFooterErrMsg(true);
-  };
-
-  const hideFooterErrMsgHandler = () => {
-    setIsFooterErrMsg(false);
-  };
-
   return (
     <div className={style.wrapper}>
       <HeaderAuth />
       <AuthContent
         isFooterErrMsg={isFooterErrMsg}
-        showFooterErrMsg={showFooterErrMsgHandler}
-        hideFooterErrMsg={hideFooterErrMsgHandler}
+        showFooterErrMsg={setIsFooterErrMsg}
+        showGoodWindow={setIsShowGoodWindow}
+        showBadWindow={setIsShowBadWindow}
       />
       {isFooterErrMsg && (
         <FooterErrorMsg text="Такого пользователя не существует" />

@@ -8,8 +8,7 @@ import MsgWindow from "../../UI/msgWindow/MsgWindow";
 
 interface IAuthModal {
   isFooterErrMsg: boolean;
-  showFooterErrMsg: () => void;
-  hideFooterErrMsg: () => void;
+  showFooterErrMsg: (value: boolean) => void;
   showPasswordRecoveryModal: () => void;
 }
 
@@ -51,7 +50,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     setEmail(newValue);
     setIsEmailError(false);
     setBtnIsDisable(true);
-    props.hideFooterErrMsg();
+    props.showFooterErrMsg(false);
 
     if (newValue.trim().length === 0) {
       setErrorEmail("Поле не может быть пустым");
@@ -150,7 +149,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     setPassword(newValue);
     setIsPasswordError(false);
     setBtnIsDisable(true);
-    props.hideFooterErrMsg();
+    props.showFooterErrMsg(false)
 
     if (newValue.trim().length === 0) {
       setErrorPassword("Поле не может быть пустым");
@@ -231,12 +230,12 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       alert("Добро пожаловать!");
     } else {
       setBtnIsDisable(true);
-      props.showFooterErrMsg();
+      props.showFooterErrMsg(true);
     }
   };
 
   const passwordRecoveryModalHandler = () => {
-    props.hideFooterErrMsg();
+    props.showFooterErrMsg(false);
     props.showPasswordRecoveryModal();
   };
 
@@ -276,7 +275,6 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
             data-isError={isPasswordError}
             data-isUnknownUser={props.isFooterErrMsg}
             data-hasData={!isPasswordError && password.trim().length > 0}
-            // className={passwordInputStyle}
             id="password"
             placeholder="Введите пароль"
             type={isVisiblePassword ? "text" : "password"}
