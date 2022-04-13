@@ -67,10 +67,12 @@ const Text = styled.div`
 `;
 
 interface IBadWindow {
+  title: string;
+  text: string;
   setShowBadWindow: (value: boolean) => void;
 }
 
-const BadWindow: React.FC<IBadWindow> = ({ setShowBadWindow }) => {
+const BadWindow: React.FC<IBadWindow> = ({ title, text, setShowBadWindow }) => {
   return (
     <StyledGoodWindow>
       <Wrapper>
@@ -87,8 +89,8 @@ const BadWindow: React.FC<IBadWindow> = ({ setShowBadWindow }) => {
           }}
         />
         <Info>
-          <Title>Что-то не так...</Title>
-          <Text>Не получилось отправить отзыв. Попробуйте еще раз!</Text>
+          <Title>{title}</Title>
+          <Text>{text}</Text>
         </Info>
         <Close
           style={{

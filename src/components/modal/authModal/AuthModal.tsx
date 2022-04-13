@@ -112,7 +112,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
         newValue.split("@")[1].split(".")[0].length < 1)
     ) {
       setErrorEmail(
-        "Количество символов после знака @ не может быть больше 25 символов и короче 1"
+        "Количество символов после знака @ не может быть больше 25 символов и меньше 1"
       );
       return;
     }
@@ -134,7 +134,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     //final check, check
     if (!emailValidation.test(newValue)) {
       setErrorEmail(
-        "Email не может включать в себе кирилицу или другие алфавиты, используйте только латиницу"
+        "Email не может включать в себе кирилицу, используйте только латинский алфавит"
       );
       return;
     }

@@ -67,8 +67,14 @@ const Content: React.FC = () => {
         <AboutMe />
       </ContentWrapper>
       <SliderSection setShowGoodWindow={setShowGoodWindow} />
-      {showGoodWindow && <GoodWindow setShowGoodWindow={setShowGoodWindow} />}
-      {showBadWindow && <BadWindow setShowBadWindow={setShowBadWindow} />}
+      {showGoodWindow && (
+        <GoodWindow
+          title="Успешно!"
+          text="Спасибо за отзыв о нашей компании :)"
+          setShowGoodWindow={setShowGoodWindow}
+        />
+      )}
+      {showBadWindow && <BadWindow title="Что-то не так..." text="Не получилось отправить отзыв. Попробуйте еще раз!" setShowBadWindow={setShowBadWindow} />}
     </ContentSection>
   );
 };

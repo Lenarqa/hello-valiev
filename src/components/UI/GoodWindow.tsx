@@ -65,10 +65,12 @@ const Text = styled.div`
 `;
 
 interface IGoogWindow {
+  title: string;
+  text: string;
   setShowGoodWindow: (value: boolean) => void;
 }
 
-const GoodWindow: React.FC<IGoogWindow> = ({ setShowGoodWindow }) => {
+const GoodWindow: React.FC<IGoogWindow> = ({title, text, setShowGoodWindow }) => {
   return (
     <StyledGoodWindow>
       <Wrapper>
@@ -85,8 +87,8 @@ const GoodWindow: React.FC<IGoogWindow> = ({ setShowGoodWindow }) => {
           }}
         />
         <Info>
-          <Title>Успешно!</Title>
-          <Text>{`Спасибо за отзыв о нашей компании :)`}</Text>
+          <Title>{title}</Title>
+          <Text>{text}</Text>
         </Info>
         <Close
           style={{
