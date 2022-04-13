@@ -3,8 +3,8 @@ import styled from "styled-components";
 import bg from "../../assets/img/bg.svg";
 import SliderSection from "../Slider/Slider";
 import AboutMe from "./AboutMe";
-import GoodWindow from "../UI/GoodWindow";
-import BadWindow from "../UI/BadWindow";
+import GoodWindow from "../UI/goodWindow/GoodWindow";
+import BadWindow from "../UI/badWindow/BadWindow";
 
 const ContentSection = styled.div`
   width: 100%;

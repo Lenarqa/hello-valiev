@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./PasswordRecoveryModal.module.css";
-import Button from "../../UI/Button/Button";
-import MsgWindow from "../../UI/MsgWindow/MsgWindow";
+import Button from "../../UI/button/Button";
+import MsgWindow from "../../UI/msgWindow/MsgWindow";
 import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg";
 import { ReactComponent as ArrowLeftIcon } from "../../../assets/icons/arrowLeft.svg";
 

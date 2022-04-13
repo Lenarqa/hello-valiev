@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import style from "./AuthModal.module.css";
-import Button from "../../UI/Button/Button";
+import Button from "../../UI/button/Button";
 import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg";
 import { ReactComponent as OpenEyeIcon } from "../../../assets/icons/openEye.svg";
 import { ReactComponent as CloseEyeIcon } from "../../../assets/icons/closeEye.svg";
-import MsgWindow from "../../UI/MsgWindow/MsgWindow";
+import MsgWindow from "../../UI/msgWindow/MsgWindow";
 
 interface IAuthModal {
   isFooterErrMsg: boolean;

@@ -1,0 +1,70 @@
+.goodWindow {
+  position: fixed;
+  right: 40px;
+  bottom: 10px;
+  width: 438px;
+  height: 132px;
+  background: #b5ffa2;
+  border-radius: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  position: absolute;
+  left: 24px;
+  top: -42px;
+  z-index: 10;
+}
+
+.info {
+  width: 244px;
+  height: 92px;
+  margin-left: 80px;
+}
+
+.info h2 {
+  font-family: "Factor A";
+  font-weight: 500;
+  font-size: 32px;
+  color: #333333;
+}
+
+.info p {
+  font-family: "Gilroy-Regular";
+  font-weight: 400;
+  font-size: 14px;
+  color: #333333;
+}
+
+.greenBubblesBg {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  overflow: hidden;
+  border-radius: 0 0 0 32px;
+}
+
+.closeIcon {
+  cursor: pointer;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+}
+
+@media (max-width: 490px) {
+  .goodWindow {
+    position: fixed;
+    width: 288px;
+    bottom: 12px;
+  }
+
+  .info {
+    margin-left: 90px;
+  }
+
+  .info h2 {
+    font-size: 24px;
+  }
+}

@@ -4,13 +4,13 @@ import Footer from "../../components/footer/Footer";
 import HeaderAuth from "../../components/header/HeaderAuth";
 import AuthContent from "../../components/authContent/AuthContent";
 import FooterErrorMsg from "../../components/UI/footerErrorMsg/FooterErrorMsg";
-import GoodWindow from "../../components/UI/GoodWindow";
-import BadWindow from "../../components/UI/BadWindow";
+import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
+import BadWindow from "../../components/UI/badWindow/BadWindow";
 
 const Auth: React.FC = () => {
   const [isFooterErrMsg, setIsFooterErrMsg] = useState<boolean>(false);
-  const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(false);
-  const [isShowBadWindow, setIsShowBadWindow] = useState<boolean>(true);
+  const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(true);
+  const [isShowBadWindow, setIsShowBadWindow] = useState<boolean>(false);
 
   const showFooterErrMsgHandler = () => {
     setIsFooterErrMsg(true);
