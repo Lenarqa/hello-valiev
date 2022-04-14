@@ -1,4 +1,5 @@
 import React from "react";
+import style from "./SliderItem.module.css";
 import styled from "styled-components";
 
 const Item = styled.div`
@@ -99,16 +100,16 @@ const SliderItem: React.FC<ISliderItem> = ({ name, imgUrl, date, text }) => {
   }
 
   return (
-    <Item>
-      <Header>
-        <UserInfo>
-          <img src={require(`../../assets/img/users/${imgUrl}`)} alt="photo" />
+    <div className={style.item}>
+      <div className={style.header}>
+        <div className={style.userInfo}>
+          <img src={require(`../../../assets/img/users/${imgUrl}`)} alt="photo" />
           <p>{name}</p>
-        </UserInfo>
+        </div>
         <p>{date}</p>
-      </Header>
-      <Content>{text}</Content>
-    </Item>
+      </div>
+      <div className={style.content}>{text}</div>
+    </div>
   );
 };
 export default SliderItem;

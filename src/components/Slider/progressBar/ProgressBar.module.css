@@ -1,0 +1,40 @@
+.wrapper progress {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #eee;
+}
+
+.wrapper progress[value] {
+  border-radius: 8px;
+  border: 0;
+  height: 4px;
+  overflow: hidden;
+  background: #eee;
+  width: 168px;
+}
+
+.wrapper[data-is-big="false"] progress::-moz-progress-bar {
+  background: #585cc6;
+  border-radius: 8px;
+}
+
+.wrapper[data-is-big="true"] progress::-moz-progress-bar {
+  background: #EB5757;
+  border-radius: 8px;
+}
+
+.wrapper progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 2px;
+}
+
+.wrapper[data-is-big="false"] progress[value]::-webkit-progress-value {
+  background-color: #585cc6;
+  border-radius: 2px;
+}
+
+.wrapper[data-is-big="true"] progress[value]::-webkit-progress-value {
+  background-color: #EB5757;
+  border-radius: 2px;
+}

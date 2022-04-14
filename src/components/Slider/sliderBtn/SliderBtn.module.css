@@ -1,0 +1,63 @@
+.button {
+  width: 56px;
+  height: 56px;
+  background-color: "#ffffff";
+  border: none;
+  margin-right: 16px;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.button div {
+  transform: rotate(45deg);
+  width: 10px;
+  height: 10px;
+  border: 2px solid #333333;
+  border-radius: 1px;
+  border-left: none;
+  border-bottom: none;
+
+  border-top: "";
+  border-right: "";
+  position: relative;
+  transition: all 0.5s ease;
+}
+
+.button div:hover {
+  border-color: rgba(88, 92, 198, 1);
+}
+
+.button div:hover:before {
+  background-color: rgba(88, 92, 198, 1);
+}
+
+.button div:before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 16px;
+  bottom: -5px;
+  right: 4px;
+  transform: rotate(45deg);
+  background-color: #333333;
+  transition: all 0.5s ease;
+}
+
+.button[data-is-reverse="true"] div {
+  border-left: 2px solid #333333;
+  border-bottom: 2px solid #333333;
+  border-top: none;
+  border-right: none;
+}
+
+.button[data-is-reverse="true"] div:before {
+  bottom: -3px;
+  right: 2px;
+}
+
+.button:disabled {
+  background-color: rgba(224, 224, 224, 1);
+}

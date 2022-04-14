@@ -2,8 +2,8 @@ import React from "react";
 import style from "./FileItem.module.css";
 import { ReactComponent as File } from "../../../assets/icons/file.svg";
 import { ReactComponent as Delete } from "../../../assets/icons/delete.svg";
-import LoadingIndicator from "../../Slider/Loading/LoadingIndicator";
-import ProgressBar from "../../Slider/ProgressBar";
+import LoadingIndicator from "../../Slider/loading/LoadingIndicator";
+import ProgressBar from "../../Slider/progressBar/ProgressBar";
 
 interface IFileItem {
   isBigFile: boolean;

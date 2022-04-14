@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import HeaderButton from "../../UI/HeaderButton";
+import HeaderButton from "../../UI/headerButton/HeaderButton";
 import { ReactComponent as Button1 } from "../../../assets/icons/button1.svg";
 import style from "./Header.module.css";
 import useWindowDimensions from "../../../functions/ScreenSize";

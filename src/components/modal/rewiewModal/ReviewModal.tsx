@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import style from "./RewiewModal.module.css";
 import ReactDOM from "react-dom";
-import styled from "styled-components";
-import ButtonAdd from "../../UI/ButtonAdd";
-import HeaderButton from "../../UI/HeaderButton";
+import ButtonAdd from "../../UI/buttonAdd/ButtonAdd";
+import HeaderButton from "../../UI/headerButton/HeaderButton";
 import { ReactComponent as Info } from "../../../assets/icons/info.svg";
 import FileItem from "../fileItem/FileItem";
-import ErrorMsg from "../../UI/ErrorMsg";
+import ErrorMsg from "../../UI/ErrorMsg/ErrorMsg";
 import { FileModel } from "../../../models/models";
 type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import ButtonAdd from "../UI/ButtonAdd";
-import SliderItem from "./SliderItem";
+import ButtonAdd from "../UI/buttonAdd/ButtonAdd";
+import SliderItem from "./sliderItem/SliderItem";
 import { IReview } from "../../models/models";
 import { DUMMY_DATA } from "../../constants/dummyData";
-import SliderBtn from "./SliderBtn";
+import SliderBtn from "./sliderBtn/SliderBtn";
 import ReviewModal from "../modal/rewiewModal/ReviewModal";
 import { ReactComponent as ButtonAddIcon } from "../../assets/icons/buttonAdd.svg";
 
