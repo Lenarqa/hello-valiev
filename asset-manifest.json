@@ -1,11 +1,12 @@
 {
   "files": {
-    "main.css": "/hello-valiev/static/css/main.72333a36.css",
-    "main.js": "/hello-valiev/static/js/main.19449b93.js",
+    "main.css": "/hello-valiev/static/css/main.23442957.css",
+    "main.js": "/hello-valiev/static/js/main.dfccdd66.js",
     "static/media/Me_03.webp": "/hello-valiev/static/media/Me_03.f338e19a92ce3f18bef3.webp",
     "static/media/Gilroy-Regular.ttf": "/hello-valiev/static/media/Gilroy-Regular.b91b0127c56a8e5f9e83.ttf",
     "static/media/FactorAMedium-Regular.ttf": "/hello-valiev/static/media/FactorAMedium-Regular.1a1b89bd931afe1bfa27.ttf",
     "static/media/photo.jpg": "/hello-valiev/static/media/photo.2c778dc9e9b065821fc4.jpg",
+    "static/media/logoAcademy.svg": "/hello-valiev/static/media/logoAcademy.1371781c1786800d2f6be3b54b54a0e0.svg",
     "static/media/animal.svg": "/hello-valiev/static/media/animal.42d6230321a6de0a782e40911285e553.svg",
     "static/media/insta.svg": "/hello-valiev/static/media/insta.aa14806dc391beef8eeaa1bfb0004b9e.svg",
     "static/media/iLink.svg": "/hello-valiev/static/media/iLink.e3757865b93aaee4363746f82a76946c.svg",
@@ -36,11 +37,11 @@
     "static/media/close2.svg": "/hello-valiev/static/media/close2.b736a10d5fbf1920ca83c8e283ecf475.svg",
     "static/media/buttonAdd.svg": "/hello-valiev/static/media/buttonAdd.c9c4d03a3323c6c4bbd6970d03fa28f9.svg",
     "static/media/plus.svg": "/hello-valiev/static/media/plus.75a21b6bf9a3d513b795f0b6ff855b10.svg",
-    "main.72333a36.css.map": "/hello-valiev/static/css/main.72333a36.css.map",
-    "main.19449b93.js.map": "/hello-valiev/static/js/main.19449b93.js.map"
+    "main.23442957.css.map": "/hello-valiev/static/css/main.23442957.css.map",
+    "main.dfccdd66.js.map": "/hello-valiev/static/js/main.dfccdd66.js.map"
   },
   "entrypoints": [
-    "static/css/main.72333a36.css",
-    "static/js/main.19449b93.js"
+    "static/css/main.23442957.css",
+    "static/js/main.dfccdd66.js"
   ]
 }
