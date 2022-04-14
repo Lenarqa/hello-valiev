@@ -1,0 +1,56 @@
+.contentSection {
+  width: 100%;
+  position: relative;
+}
+
+.contentWrapper {
+  padding: 93px 80px 106px 80px;
+}
+
+.bgImg {
+  position: absolute;
+  right: 0;
+  z-index: -1;
+}
+
+.title {
+  width: 1157px;
+  height: 296px;
+  color: #fff;
+  font-size: 124px;
+  color: #fff;
+  font-family: "Factor A";
+  margin-bottom: 88px;
+}
+
+@media (max-width: 1240px) {
+  .title {
+    font-size: 80px;
+  }
+}
+
+@media (max-width: 888px) {
+  .title {
+    font-size: 50px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 590px) {
+  .contentWrapper {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 321px) {
+  .contentWrapper {
+    padding: 0 16px;
+  }
+
+  .title {
+    font-size: 48px;
+    margin-bottom: 64px;
+  }
+}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Footer from "../../components/footer/Footer";
-import HeaderAuth from "../../components/header/HeaderAuth";
+import Footer from "../../components/footer/footer/Footer";
+import HeaderAuth from "../../components/header/headerAuth/HeaderAuth";
 import style from "./PasswordRecovery.module.css";
 import bg from "../../assets/img/bgAuth.svg";
 import PasswordRecoveryModal from "../../components/modal/passwordRecoveryModal/PasswordRecoveryModal";

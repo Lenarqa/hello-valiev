@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import style from "./Auth.module.css";
-import Footer from "../../components/footer/Footer";
-import HeaderAuth from "../../components/header/HeaderAuth";
+import Footer from "../../components/footer/footer/Footer";
+import HeaderAuth from "../../components/header/headerAuth/HeaderAuth";
 import AuthContent from "../../components/authContent/AuthContent";
 import FooterErrorMsg from "../../components/UI/footerErrorMsg/FooterErrorMsg";
 

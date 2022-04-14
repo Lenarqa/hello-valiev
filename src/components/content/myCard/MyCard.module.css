@@ -1,0 +1,142 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  width: 100%;
+  margin-top: -20px;
+  padding: 40px;
+  border-radius: 2px;
+  height: fit-content;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.header p:first-child {
+  font-family: "Factor A";
+  font-weight: 700;
+  font-size: 32px;
+  color: #585cc6;
+}
+
+.header p:last-child {
+  color: #8a8a8a;
+  font-family: "Gilroy";
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.title {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  color: #333333;
+  margin-right: 4px;
+}
+
+.text {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.infoItem {
+    display: flex;
+  margin-right: 40px;
+}
+
+.aboutMeInfo {
+    margin-bottom: 10px;
+}
+
+.aboutMeText {
+    font-family: "Gilroy";
+    color: #333;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0.01em;
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+@media (max-width: 676px) {
+  .header {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .info {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .infoItem {
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 321px) {
+  .card {
+    margin-top: -16px;
+    padding: 16px;
+  }
+
+  .header {
+    align-items: flex-start;
+  }
+
+  .header p:first-child {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+
+  .header p:last-child {
+    font-size: 16px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .text {
+    font-size: 16px;
+  }
+
+  .info {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 16px;
+  }
+  
+  .infoItem {
+    margin-top: 0;
+    margin-bottom: 12px;
+  }
+
+  .aboutMeText {
+    font-size: 16px;
+    line-height: 22px;
+  }
+}

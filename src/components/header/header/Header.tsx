@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import HeaderButton from "../UI/HeaderButton";
-import { ReactComponent as Button1 } from "../../assets/icons/button1.svg";
-
-import useWindowDimensions from "../../functions/ScreenSize";
+import HeaderButton from "../../UI/HeaderButton";
+import { ReactComponent as Button1 } from "../../../assets/icons/button1.svg";
+import style from "./Header.module.css";
+import useWindowDimensions from "../../../functions/ScreenSize";
+import { ReactComponent as ILinkLogo } from "../../../assets/img/logoAcademy.svg";
 
 const StyledHeader = styled.header`
   display: flex;
@@ -81,15 +82,16 @@ const Header: React.FC = () => {
   const { height, width } = useWindowDimensions();
 
   return (
-    <StyledHeader>
-      <PhotoSection>
-        <Img src={require("../../assets/img/photo.jpg")} alt="photo" />
-        <Name>{width < 710 ? "Ленар" : "Ленар Валиев"}</Name>
-      </PhotoSection>
-      <Title>
-        <p>ilink</p>
-        <p>academy</p>
-      </Title>
+    <header className={style.header}>
+      <div className={style.photoSection}>
+        <img
+          className={style.img}
+          src={require("../../../assets/img/photo.jpg")}
+          alt="photo"
+        />
+        <h2 className={style.name}>{width < 710 ? "Ленар" : "Ленар Валиев"}</h2>
+      </div>
+      <ILinkLogo />
       <div>
         {width < 710 ? (
           <Button1
@@ -108,7 +110,7 @@ const Header: React.FC = () => {
           </HeaderButton>
         )}
       </div>
-    </StyledHeader>
+    </header>
   );
 };
 

@@ -1,0 +1,249 @@
+.styledReviewModal {
+  position: absolute;
+  width: 676px;
+  min-height: 443px;
+  background-color: #fff;
+  padding: 24px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-family: "Factor A";
+  font-weight: 500;
+  font-size: 24px;
+  color: #333333;
+}
+
+.btn {
+  border: none;
+  width: 18px;
+  height: 18px;
+  /* background-color: red; */
+  position: relative;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.btn:before {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  content: " ";
+  height: 17px;
+  width: 2px;
+  background-color: #333;
+  transform: rotate(45deg);
+}
+
+.btn:after {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  content: " ";
+  height: 17px;
+  width: 2px;
+  background-color: #333;
+  transform: rotate(-45deg);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+}
+
+.item:last-child {
+  margin-top: 32px;
+  margin-bottom: 0;
+}
+
+.input {
+  transition: all 0.5s ease;
+  font-family: "Gilroy";
+  width: 395px;
+  height: 52px;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  margin-right: 16px;
+  padding: 15px 12px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #8a8a8a;
+}
+
+.input[data-is-error="true"] {
+  border: 1px solid #eb5757;
+}
+
+.textAreaWrapper {
+  position: relative;
+}
+
+.counter {
+  font-family: "Gilroy";
+  width: 30px;
+  height: 14px;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 14px;
+  color: #8a8a8a;
+  position: absolute;
+  right: 16px;
+  bottom: 4px;
+}
+
+.textarea {
+  font-family: "Gilroy";
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  width: 628px;
+  height: 105px;
+  padding: 12px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #8a8a8a;
+  resize: none;
+}
+
+.textarea[data-is-error="true"] {
+  border: 1px solid #eb5757;
+}
+
+.label {
+  font-family: "Factor A";
+  font-size: 16px;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 14px;
+}
+
+.actionText {
+  font-family: "Gilroy";
+  color: #8a8a8a;
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.actions svg {
+  margin: 0 10px 0 18px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  background-color: rgba(0, 0, 0, 0.2);
+
+  filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  -ms-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  -webkit-filter: blur(01px);
+  -moz-filter: blur(10px);
+  -ms-filter: blur(10px);
+  -o-filter: blur(10px);
+  z-index: 100;
+}
+
+.actionsInfo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@media (max-width: 710px) {
+  .styledReviewModal {
+    width: 400px;
+    height: auto;
+    padding: 16px;
+  }
+
+  .textarea {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .styledReviewModal {
+    width: 288px;
+  }
+
+  .content {
+    margin-bottom: 32px;
+  }
+
+  .item {
+    width: 288px;
+    height: auto;
+    margin-bottom: 0px;
+  }
+
+  .item:first-child div {
+    flex-direction: column;
+  }
+
+  .item:last-child {
+    margin-top: 32px;
+  }
+
+  .input {
+    width: 256px;
+    margin-bottom: 12px;
+  }
+
+  .counter {
+    right: 50px;
+    bottom: 20px;
+  }
+
+  .textarea {
+    width: 256px;
+    margin-bottom: 12px;
+  }
+
+  .actionText {
+    font-size: 10px;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+  }
+
+  .actionsInfo {
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 321px) {
+  .styledReviewModal {
+    width: 288px;
+    height: auto;
+    padding: 16px;
+  }
+}

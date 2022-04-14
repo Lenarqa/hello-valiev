@@ -5,7 +5,7 @@ import SliderItem from "./SliderItem";
 import { IReview } from "../../models/models";
 import { DUMMY_DATA } from "../../constants/dummyData";
 import SliderBtn from "./SliderBtn";
-import ReviewModal from "../modal/ReviewModal";
+import ReviewModal from "../modal/rewiewModal/ReviewModal";
 import { ReactComponent as ButtonAddIcon } from "../../assets/icons/buttonAdd.svg";
 
 import useWindowDimensions from "../../functions/ScreenSize";

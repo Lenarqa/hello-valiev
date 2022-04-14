@@ -1,0 +1,46 @@
+.styledFileItem {
+  width: 265px;
+  height: 56px;
+  background: #f5f5f5;
+  border-radius: 2px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+  padding: 14px 12px;
+  margin-top: 12px;
+}
+
+.fileContent {
+  display: flex;
+  flex-direction: column;
+  min-width: 168px;
+  margin-right: 16px;
+}
+
+.title {
+  font-family: "Gilroy";
+  color: #333333;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: -6px;
+}
+
+.fileContent div[data-is-big="true"] {
+  color: #eb5757;
+}
+
+.fileIcon {
+    margin-right: 13px;
+}
+
+.deleteIcon {
+    cursor: pointer;
+}
+
+@media (max-width: 321px) {
+  .styledfileItem {
+    flex-direction: row;
+  }
+}

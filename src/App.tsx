@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import AboutMe from "./pages/aboutMe/AboutMe";
 import Auth from "./pages/auth/Auth";
 import PasswordRecovery from "./pages/passwordRecovery/PasswordRecovery";
