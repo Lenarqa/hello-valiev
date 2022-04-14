@@ -122,11 +122,6 @@ input[data-has-data="true"]:active {
   transform: scaleX(1);
 }
 
-/* .hoverMsg {
-  position: absolute;
-  top: -37px;
-  right: -15px;
-} */
 .hoverMsg {
   position: absolute;
   bottom: 50px;
