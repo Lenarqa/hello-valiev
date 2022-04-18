@@ -1,0 +1,13 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.content {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    flex: 1 1 auto;
+}

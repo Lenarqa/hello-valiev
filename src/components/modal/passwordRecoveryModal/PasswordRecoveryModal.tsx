@@ -7,7 +7,6 @@ import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg
 import { ReactComponent as ArrowLeftIcon } from "../../../assets/icons/arrowLeft.svg";
 
 interface IPasswordRecoveryModal {
-  // hidePswdRecoveryModal: () => void;
   showGoodWindow: (value: boolean) => void;
   showBadWindow: (value: boolean) => void;
 }

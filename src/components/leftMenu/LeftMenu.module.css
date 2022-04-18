@@ -1,0 +1,48 @@
+.container {
+  width: 273px;
+  height: 100%;
+  background-color: #fff;
+  padding: 59px 0px 40px 80px;
+}
+
+.menuItem {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 40px;
+  padding: 11.5px 0;
+  text-decoration: none;
+  color: #8A8A8A;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  font-family: "Factor A";
+}
+
+
+.activeMenuItem {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 40px;
+  padding: 11.5px 0;
+  border-right: 4px solid #585cc6;
+  text-decoration: none;
+  color: #585CC6;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  font-family: "Factor A";
+}
+
+.menuItem svg {
+  margin-right: 12px;
+}
+
+.activeMenuItem svg {
+  margin-right: 12px;
+}
+
+.activeMenuItem svg path {
+  fill: #585CC6;
+}
