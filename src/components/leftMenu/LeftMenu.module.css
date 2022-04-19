@@ -1,8 +1,9 @@
 .container {
+  height: auto;
   width: 273px;
-  height: 100%;
   background-color: #fff;
-  padding: 59px 0px 40px 80px;
+  padding: 59px 0px 0px 80px;
+  border-right: 1px solid #e0e0e0;
 }
 
 .menuItem {
@@ -13,14 +14,13 @@
   margin-bottom: 40px;
   padding: 11.5px 0;
   text-decoration: none;
-  color: #8A8A8A;
+  color: #8a8a8a;
   font-size: 16px;
   font-weight: 700;
   line-height: 20px;
   font-family: "Factor A";
   transition: all 1s ease;
 }
-
 
 .activeMenuItem {
   cursor: pointer;
@@ -29,14 +29,24 @@
   align-items: center;
   margin-bottom: 40px;
   padding: 11.5px 0;
-  border-right: 4px solid #585cc6;
   text-decoration: none;
-  color: #585CC6;
+  color: #585cc6;
   font-size: 16px;
   font-weight: 700;
   line-height: 20px;
   font-family: "Factor A";
   transition: all 1s ease;
+  position: relative;
+}
+
+.activeMenuItem::after {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 4px;
+  height: 100%;
+  background-color: #585cc6;
+  right: -2px;
 }
 
 .menuItem svg {
@@ -50,17 +60,15 @@
 }
 
 .activeMenuItem svg path {
-  fill: #585CC6;
+  fill: #585cc6;
 }
 
 .menuItem:hover,
 .menuItem:hover svg path {
-  color: #797DDF;
-  fill: #797DDF;
+  color: #797ddf;
+  fill: #797ddf;
 }
 
 .menuItem svg path:hover {
-  fill: #797DDF;
+  fill: #797ddf;
 }
-
- 
