@@ -6,6 +6,7 @@
 }
 
 .menuItem {
+  cursor: pointer;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -17,10 +18,12 @@
   font-weight: 700;
   line-height: 20px;
   font-family: "Factor A";
+  transition: all 1s ease;
 }
 
 
 .activeMenuItem {
+  cursor: pointer;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -33,16 +36,31 @@
   font-weight: 700;
   line-height: 20px;
   font-family: "Factor A";
+  transition: all 1s ease;
 }
 
 .menuItem svg {
   margin-right: 12px;
+  transition: all 1s ease;
 }
 
 .activeMenuItem svg {
   margin-right: 12px;
+  transition: all 1s ease;
 }
 
 .activeMenuItem svg path {
   fill: #585CC6;
 }
+
+.menuItem:hover,
+.menuItem:hover svg path {
+  color: #797DDF;
+  fill: #797DDF;
+}
+
+.menuItem svg path:hover {
+  fill: #797DDF;
+}
+
+ 
