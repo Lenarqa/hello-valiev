@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import HeaderAuth from "../../components/header/headerAuth/HeaderAuth";
 import style from "./PasswordRecovery.module.css";
 import bg from "../../assets/img/bgAuth.svg";
 import PasswordRecoveryModal from "../../components/modal/passwordRecoveryModal/PasswordRecoveryModal";
 import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
 import BadWindow from "../../components/UI/badWindow/BadWindow";
 import FooterPswRecovery from "../../components/footer/footerPswRecovery/FooterPswRecovery";
+import Header from "../../components/header/Header";
 
 const PasswordRecovery: React.FC = () => {
   const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(false);
@@ -13,7 +13,7 @@ const PasswordRecovery: React.FC = () => {
 
   return (
     <div className={style.wrapper}>
-      <HeaderAuth />
+      <Header type="auth" />
       <div className={style.content}>
         <PasswordRecoveryModal
           showGoodWindow={setIsShowGoodWindow}

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import style from "./Auth.module.css";
 import Footer from "../../components/footer/footer/Footer";
-import HeaderAuth from "../../components/header/headerAuth/HeaderAuth";
 import AuthContent from "../../components/authContent/AuthContent";
 import FooterErrorMsg from "../../components/UI/footerErrorMsg/FooterErrorMsg";
+import Header from "../../components/header/Header";
 
 const Auth: React.FC = () => {
   const [isFooterErrMsg, setIsFooterErrMsg] = useState<boolean>(false);
 
   return (
     <div className={style.wrapper}>
-      <HeaderAuth />
+      <Header type="auth" />
       <AuthContent
         isFooterErrMsg={isFooterErrMsg}
         showFooterErrMsg={setIsFooterErrMsg}

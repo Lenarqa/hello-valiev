@@ -12,7 +12,7 @@ function App() {
     // проверку на изменение url в строке пока что не делал,
     // поэтому можно изменить путь в url и переместиться на любую страницу
     <Routes>
-      {/* <Route path="*" element={<Auth />} /> */}
+      <Route path="*" element={<Auth />} />
       <Route path="/hello-valiev/about-me" element={<AboutMe />} />
       <Route
         path="/hello-valiev/passwordRecovery"

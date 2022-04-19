@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../../components/header/header/Header";
+import Header from "../../components/header/Header";
 import Content from "../../components/content/Content";
 import Footer from "../../components/footer/footer/Footer";
 
@@ -7,7 +7,7 @@ import Footer from "../../components/footer/footer/Footer";
 const AboutMe: React.FC = () => {
   return (
     <>
-      <Header />
+      <Header type="aboutMe"/>
       <Content />
       <Footer />
     </>
