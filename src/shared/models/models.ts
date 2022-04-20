@@ -4,6 +4,7 @@ export interface IReview {
   imgUrl: string;
   date: string;
   text: string;
+  status: number;
 }
 
 export interface FileModel {

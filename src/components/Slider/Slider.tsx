@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ButtonAdd from "../UI/buttonAdd/ButtonAdd";
-import SliderItem from "./sliderItem/SliderItem";
+import SliderItem from "../reviewItem/ReviewItem";
 import { IReview } from "../../shared/models/models";
 import { REVIEWS } from "../../shared/data/Reviews";
 import SliderBtn from "./sliderBtn/SliderBtn";
 import ReviewModal from "../modal/rewiewModal/ReviewModal";
 import { ReactComponent as ButtonAddIcon } from "../../assets/icons/buttonAdd.svg";
+import { DummyOptionsReview } from "../../shared/data/OptionsReviews";
 
 import useWindowDimensions from "../../functions/ScreenSize";
 
@@ -190,8 +191,9 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
     sliderItemWidth = -300;
   }
 
+  const filteredReviews = REVIEWS.filter((item)=>item.status === DummyOptionsReview[1].id); // Отображаем только отзывы со статусом допущен
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [rewies, setRewiews] = useState<IReview[]>(REVIEWS);
+  const [rewies, setRewiews] = useState<IReview[]>(filteredReviews);
   const [curSlide, setCurSlide] = useState<number>(0);
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
