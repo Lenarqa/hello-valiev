@@ -22,7 +22,7 @@ const Users: React.FC = () => {
   const indexLastParticipant: number = curPage * participantPerPage;
   const indexFirtParticipant: number =
     indexLastParticipant - participantPerPage;
-  const curParticipants: IParticipant[] = participants.slice(
+  const curFilteredParticipants: IParticipant[] = filteredParticipants.slice(
     indexFirtParticipant,
     indexLastParticipant
   );
@@ -72,7 +72,7 @@ const Users: React.FC = () => {
             <h2>СТАТУС</h2>
           </div>
           <div className={style.table}>
-            {filteredParticipants.map((participant) => (
+            {curFilteredParticipants.map((participant) => (
               <ParticipantItem key={participant.id} participant={participant} />
             ))}
           </div>
