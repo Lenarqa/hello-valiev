@@ -12,10 +12,11 @@ interface IPagination {
 
 const Pagination: React.FC<IPagination> = (props) => {
   const pageNumbers: number[] = [];
+  
   const countOfPage = Math.ceil(
     props.totalParticipant / props.participantPerPage
   );
-  
+
   for (let i = 1; i <= countOfPage; i++) {
     pageNumbers.push(i);
   }

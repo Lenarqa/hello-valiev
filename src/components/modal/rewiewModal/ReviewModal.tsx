@@ -6,7 +6,7 @@ import HeaderButton from "../../UI/headerButton/HeaderButton";
 import { ReactComponent as Info } from "../../../assets/icons/info.svg";
 import FileItem from "../fileItem/FileItem";
 import ErrorMsg from "../../UI/ErrorMsg/ErrorMsg";
-import { FileModel } from "../../../models/models";
+import { FileModel } from "../../../shared/models/models";
 type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
 
 interface IReviewModal {

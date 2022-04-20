@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ButtonAdd from "../UI/buttonAdd/ButtonAdd";
 import SliderItem from "./sliderItem/SliderItem";
-import { IReview } from "../../models/models";
+import { IReview } from "../../shared/models/models";
 import { REVIEWS } from "../../shared/data/Reviews";
 import SliderBtn from "./sliderBtn/SliderBtn";
 import ReviewModal from "../modal/rewiewModal/ReviewModal";

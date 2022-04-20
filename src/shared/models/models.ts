@@ -19,5 +19,10 @@ export interface IParticipant {
   name: string;
   imgUrl: string;
   aboutMe: string;
-  status: string;
+  status: number;
+}
+
+export interface IOption {
+  id: number;
+  value: string;
 }

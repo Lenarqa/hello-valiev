@@ -1,4 +1,4 @@
-import { IReview } from "../../models/models";
+import { IReview } from "../models/models";
 
 export const REVIEWS: IReview[] = [
   {

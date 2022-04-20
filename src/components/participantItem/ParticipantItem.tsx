@@ -1,12 +1,16 @@
 import React from "react";
 import style from "./ParticipantItem.module.css";
-import { IParticipant } from "../../models/models";
+import { IOption, IParticipant } from "../../shared/models/models";
+import {DummyOptions} from "../../shared/data/OptionsParticipant";
+
 
 interface IParticipantItem {
   participant: IParticipant;
 }
 
 const ParticipantItem: React.FC<IParticipantItem> = (props) => {
+  const status:IOption | undefined = DummyOptions.find(item => item.id === props.participant.status);
+
   return (
     <div className={style.item}>
       <div className={style.info}>
@@ -17,7 +21,7 @@ const ParticipantItem: React.FC<IParticipantItem> = (props) => {
         <h2>{props.participant.name}</h2>
       </div>
       <div className={style.text}>{props.participant.aboutMe}</div>
-      <div className={style.status} data-status={props.participant.status}>{props.participant.status}</div>
+      <div className={style.status} data-status={status?.id}>{status?.value}</div>
     </div>
   );
 };
