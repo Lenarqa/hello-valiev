@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ButtonAdd from "../UI/buttonAdd/ButtonAdd";
 import SliderItem from "./sliderItem/SliderItem";
 import { IReview } from "../../models/models";
-import { DUMMY_DATA } from "../../constants/dummyData";
+import { REVIEWS } from "../../shared/data/Reviews";
 import SliderBtn from "./sliderBtn/SliderBtn";
 import ReviewModal from "../modal/rewiewModal/ReviewModal";
 import { ReactComponent as ButtonAddIcon } from "../../assets/icons/buttonAdd.svg";
@@ -191,7 +191,7 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
   }
 
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [rewies, setRewiews] = useState<IReview[]>(DUMMY_DATA);
+  const [rewies, setRewiews] = useState<IReview[]>(REVIEWS);
   const [curSlide, setCurSlide] = useState<number>(0);
   const [activeIndex, setActiveIndex] = useState<number>(0);
 

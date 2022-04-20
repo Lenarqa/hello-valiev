@@ -1,6 +1,6 @@
-import { IReview } from "../models/models";
+import { IReview } from "../../models/models";
 
-export const DUMMY_DATA: IReview[] = [
+export const REVIEWS: IReview[] = [
   {
     id: Math.random() * 1e8, //random id
     name: "Буба Бубенцов",

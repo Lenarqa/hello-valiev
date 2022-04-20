@@ -13,3 +13,11 @@ export interface FileModel {
   size: number;
   type: string;
 }
+
+export interface IParticipant {
+  id: number;
+  name: string;
+  imgUrl: string;
+  aboutMe: string;
+  status: string;
+}

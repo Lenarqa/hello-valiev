@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import EmptyScreen from "../../components/UI/emtyScreen/EmptyScreen";
 import style from "./Users.module.css";
 import Select from "../../components/UI/select/Select";
+import { Participants } from "../../shared/data/UsersData";
+import { IParticipant } from "../../models/models";
+import ParticipantItem from "../../components/participantItem/ParticipantItem";
 
 const Users: React.FC = () => {
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
   const [selected, setIsSelected] = useState<string>("");
+  const [participants, setParticipants] = useState<IParticipant []>(Participants);
 
   return (
     <div className={style.container}>
@@ -16,13 +20,16 @@ const Users: React.FC = () => {
           <div className={style.contentHeader}>
               <h2>Участники</h2>
               <Select selected={selected} setSelected={setIsSelected} />
-              {/* <select onChange={filterUsersHandler}>
-                  <option value="все">Все</option>
-                  <option value="Отчислен">Отчислен</option>
-                  <option value="Обучается">Обучается</option>
-                  <option value="Закончил">Закончил</option>
-              </select> */}
-
+          </div>
+          <div className={style.tableHeader}>
+              <h2>ИФ УЧЕНИКА</h2>
+              <h2>КРАТКАЯ ИНФОРМАЦИЯ</h2>
+              <h2>СТАТУС</h2>
+          </div>
+          <div className={style.table}>
+              {participants.map((participant)=>(
+                  <ParticipantItem key={participant.id} participant={participant} />
+              ))}
           </div>
         </div>
       )}

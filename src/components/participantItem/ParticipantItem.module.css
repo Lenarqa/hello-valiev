@@ -1,0 +1,53 @@
+.item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 24px;
+  color: #464e5f;
+  font-family: "Gilroy";
+}
+
+.info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 26%;
+}
+
+
+.item .info img {
+  height: 40px;
+  width: 40px;
+  margin-right: 12px;
+}
+
+.item .info h2 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.text {
+    width: 61%;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 33px;
+  width: 138px;
+  height: 34px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: #61bf4a;
+  background: #f0f9ed;
+  border-radius: 2px;
+}
