@@ -11,7 +11,7 @@ const LeftMenu: React.FC = () => {
           <UserDisableIcon />
           <p>Участники</p>
       </NavLink>
-      <NavLink to={"rewies"} className={({isActive})=> isActive ? style.activeMenuItem : style.menuItem}>
+      <NavLink to={"reviews"} className={({isActive})=> isActive ? style.activeMenuItem : style.menuItem}>
           <ChatIcon />
           <p>Отзывы</p>
       </NavLink>

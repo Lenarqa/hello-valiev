@@ -4,7 +4,7 @@ import Auth from "./pages/auth/Auth";
 import ControlPanel from "./pages/controlPanel/ControlPanel";
 import ControlPanelAboutMe from "./pages/controlPanelAboutMe/ControlPanelAboutMe";
 import PasswordRecovery from "./pages/passwordRecovery/PasswordRecovery";
-import Rewiews from "./pages/rewiews/Rewiews";
+import Rewiews from "./pages/reviews/Reviews";
 import Users from "./pages/users/Users";
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
         element={<ControlPanel />}
       >
         <Route path="users" element={<Users />}/>
-        <Route path="rewies" element={<Rewiews />}/>
+        <Route path="reviews" element={<Rewiews />}/>
         <Route path="aboutMe" element={<ControlPanelAboutMe />}/>
       </Route>
     </Routes>

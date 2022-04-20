@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./ParticipantItem.module.css";
 import { IOption, IParticipant } from "../../shared/models/models";
-import {DummyOptions} from "../../shared/data/OptionsParticipant";
+import {DummyOptionsParticipants} from "../../shared/data/OptionsParticipant";
 
 
 interface IParticipantItem {
@@ -9,7 +9,7 @@ interface IParticipantItem {
 }
 
 const ParticipantItem: React.FC<IParticipantItem> = (props) => {
-  const status:IOption | undefined = DummyOptions.find(item => item.id === props.participant.status);
+  const status:IOption | undefined = DummyOptionsParticipants.find(item => item.id === props.participant.status);
 
   return (
     <div className={style.item}>

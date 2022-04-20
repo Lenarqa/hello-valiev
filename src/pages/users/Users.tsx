@@ -6,11 +6,11 @@ import { Participants } from "../../shared/data/UsersData";
 import { IOption, IParticipant } from "../../shared/models/models";
 import ParticipantItem from "../../components/participantItem/ParticipantItem";
 import Pagination from "../../components/UI/pagination/Pagination";
-import { DummyOptions } from "../../shared/data/OptionsParticipant";
+import { DummyOptionsParticipants } from "../../shared/data/OptionsParticipant";
 
 const Users: React.FC = () => {
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
-  const [selected, setIsSelected] = useState<IOption>(DummyOptions[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
+  const [selected, setIsSelected] = useState<IOption>(DummyOptionsParticipants[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
   const [participants, setParticipants] =
     useState<IParticipant[]>(Participants);
   const [filteredParticipants, setFilteredParticipants] =
@@ -39,9 +39,7 @@ const Users: React.FC = () => {
     setCurPage((prev) => (prev -= 1));
   };
 
-  useEffect(() => {
-      console.log(selected.id);
-      
+  useEffect(() => {      
     if (selected.id !== 1) {
       const filteredItems: IParticipant[] = participants.filter(
         (item) => item.status === selected.id
@@ -55,7 +53,7 @@ const Users: React.FC = () => {
   return (
     <div className={style.container}>
       {isEmptyPage ? (
-        <EmptyScreen text="“Список участников пуст" />
+        <EmptyScreen text="Список участников пуст" />
       ) : (
         <div className={style.content}>
           <div className={style.contentHeader}>
@@ -63,7 +61,7 @@ const Users: React.FC = () => {
             <Select
               selected={selected}
               setSelected={setIsSelected}
-              options={DummyOptions}
+              options={DummyOptionsParticipants}
             />
           </div>
           <div className={style.tableHeader}>

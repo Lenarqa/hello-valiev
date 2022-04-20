@@ -4,6 +4,7 @@ import { IOption } from "../../../shared/models/models";
 import style from "./Select.module.css";
 
 interface ISelect {
+  type?:string;
   selected: IOption;
   setSelected: (value: IOption) => void;
   options: IOption[];
@@ -22,7 +23,7 @@ const Select: React.FC<ISelect> = (props) => {
   };
 
   return (
-    <div className={style.select}>
+    <div className={style.select} data-type={props.type}>
       <div className={style.selectBtn} onClick={setActiveHandler}>
         {props.selected.value}
       </div>
