@@ -17,7 +17,7 @@ const ParticipantItem: React.FC<IParticipantItem> = (props) => {
         <h2>{props.participant.name}</h2>
       </div>
       <div className={style.text}>{props.participant.aboutMe}</div>
-      <div className={style.status}>{props.participant.status}</div>
+      <div className={style.status} data-status={props.participant.status}>{props.participant.status}</div>
     </div>
   );
 };

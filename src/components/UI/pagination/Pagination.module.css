@@ -1,0 +1,82 @@
+.pagination {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+}
+
+.pageItem {
+  cursor: pointer;
+  background-color: #ffffff;
+  padding: 5px 4px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  color: #212b36;
+  margin-right: 8px;
+}
+
+.pageItem[data-active="true"] {
+  color: #585cc6;
+  border: 1px solid #585cc6;
+}
+
+.next,
+.back {
+  position: relative;
+  cursor: pointer;
+  background-color: #ffffff;
+  padding: 5px 4px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-right: 8px;
+  text-decoration: none;
+}
+
+.next::after,
+.back::after {
+  display: block;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  content: "";
+  border-top: 1.5px solid #8a8a8a;
+  border-right: 1.5px solid #8a8a8a;
+}
+
+.next::after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-62%, -50%) rotate(45deg);
+}
+
+.back::after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-38%, -50%) rotate(-135deg);
+}
+
+.next[data-is-disable="true"],
+.back[data-is-disable="true"] {
+  pointer-events: none;
+  background-color: #8a8a8a;
+  opacity: 0.5;
+}
+
+.next[data-is-disable="true"]::after,
+.back[data-is-disable="true"]::after {
+  border-top: 1.5px solid #E0E0E0;
+  border-right: 1.5px solid #E0E0E0;
+}

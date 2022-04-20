@@ -5,6 +5,11 @@
   padding: 24px;
   color: #464e5f;
   font-family: "Gilroy";
+  border-bottom: 1px dashed #E0E0E0;;
+}
+
+.item:last-child {
+  border-bottom: none;
 }
 
 .info {
@@ -50,4 +55,14 @@
   color: #61bf4a;
   background: #f0f9ed;
   border-radius: 2px;
+}
+
+.status[data-status="Отчислен"] {
+    color: #EB5757;
+    background-color: #FDEEEE;
+}
+
+.status[data-status="Закончил"] {
+    color: #8A8A8A;
+    background-color: #F5F5F5;;
 }

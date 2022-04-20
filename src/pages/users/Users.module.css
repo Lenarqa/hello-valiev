@@ -52,3 +52,7 @@
 .tableHeader h2:nth-child(3) {
   width: 15%;
 }
+
+.table {
+  margin-bottom: 29px;
+}
