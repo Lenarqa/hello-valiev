@@ -7,12 +7,16 @@ import { IOption, IReview } from "../../shared/models/models";
 import { REVIEWS } from "../../shared/data/Reviews";
 import ReviewItem from "../../components/reviewItem/ReviewItem";
 import { sortByDate } from "../../shared/lib/sortReviews";
+import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
+import BadWindow from "../../components/UI/badWindow/BadWindow";
 
 const Reviews: React.FC = () => {
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
   const [selected, setIsSelected] = useState<IOption>(DummyOptionsReview[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
   const [reviews, setReviews] = useState<IReview[]>(REVIEWS);
   const [filteredReviews, setFilteredReviews] = useState<IReview[]>(REVIEWS);
+  const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(false);
+  const [isShowBadWindow, setIsShowBadWindow] = useState<boolean>(false);
 
   const onChangeFilterHandler = useCallback((option: IOption): void => {
     const curfilteredReviews: IReview[] = reviews.filter(
@@ -68,8 +72,10 @@ const Reviews: React.FC = () => {
     });
   };
 
-  const updateReviewTextHandler = (updatedReviewText:string, id:number):void => {
-    console.log("saveUpdateReviewText");
+  const updateReviewTextHandler = (
+    updatedReviewText: string,
+    id: number
+  ): boolean => {
     setReviews((prev) => {
       const updatedReview: IReview | undefined = prev.find(
         (review) => review.id === id
@@ -86,7 +92,18 @@ const Reviews: React.FC = () => {
       updatedReview.text = updatedReviewText;
       return [...prevWithoutUpdated, updatedReview];
     });
-  } 
+
+    // временная проверка, если true то выпадает отзыв отправлен успешно
+    // иначе ошибка
+    const updatedReview: IReview | undefined = reviews.find(
+        (review) => review.id === id
+      );
+    if(updatedReview?.text === updatedReviewText) {
+      return true;
+    }else {
+      return false;
+    }
+  };
 
   return (
     <div className={style.container}>
@@ -102,6 +119,8 @@ const Reviews: React.FC = () => {
               setSelected={setIsSelected}
               options={DummyOptionsReview}
               onChange={onChangeFilterHandler}
+              closeGoodWindow={setIsShowGoodWindow}
+              closeBadWindow={setIsShowBadWindow}
             />
           </div>
           <div className={style.rewiews}>
@@ -119,10 +138,26 @@ const Reviews: React.FC = () => {
                 selected={selected}
                 publishHandler={publishHandler}
                 updateReviewText={updateReviewTextHandler}
+                showGoodWindow={setIsShowGoodWindow}
+                showBadWindow={setIsShowBadWindow}
               />
             ))}
           </div>
         </div>
+      )}
+      {isShowGoodWindow && (
+        <GoodWindow
+          title="Отзыв изменен"
+          text="Отзыв успешно отредактирован!"
+          setShowGoodWindow={setIsShowGoodWindow}
+        />
+      )}
+      {isShowBadWindow && (
+        <BadWindow
+          title="Что-то не так..."
+          text="Не получилось отредактировать отзыв. Попробуйте еще раз!"
+          setShowBadWindow={setIsShowBadWindow}
+        />
       )}
     </div>
   );

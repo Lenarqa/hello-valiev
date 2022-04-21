@@ -10,7 +10,9 @@ interface IEditReviewModal {
   rewiewId: number;
   reviewText: string;
   close: () => void;
-  updateReviewText?: (updatedReviewText: string, id: number) => void;
+  updateReviewText?: (updatedReviewText: string, id: number) => boolean;
+  showGoodWindow?: (value: boolean) => void;
+  showBadWindow?: (value: boolean) => void;
 }
 
 const EditReviewModal: React.FC<IEditReviewModal> = (props) => {
@@ -33,9 +35,14 @@ const EditReviewModal: React.FC<IEditReviewModal> = (props) => {
   };
 
   const updateTextHandler = (): void => {
-    if (props.updateReviewText !== undefined) {
-      props.updateReviewText(userReviewText, props.rewiewId);
+    if (
+      props.updateReviewText !== undefined &&
+      props.showGoodWindow !== undefined &&
+      props.showBadWindow !== undefined
+    ) {
+      const updateRes = props.updateReviewText(userReviewText, props.rewiewId);
       props.close();
+      updateRes ? props.showGoodWindow(true) : props.showBadWindow(false);
     }
   };
 

@@ -9,6 +9,8 @@ interface ISelect {
   setSelected: (value: IOption) => void;
   options: IOption[];
   onChange: (option:IOption) => void;
+  closeGoodWindow?: (value: boolean) => void;
+  closeBadWindow?: (value: boolean) => void;
 }
 
 const Select: React.FC<ISelect> = (props) => {
@@ -21,6 +23,10 @@ const Select: React.FC<ISelect> = (props) => {
   const setSelectedHandler = (option: IOption): void => {
     props.onChange(option);
     setIsActive(false);
+    if(props.closeBadWindow !== undefined && props.closeGoodWindow !== undefined) {
+      props.closeBadWindow(false);
+      props.closeGoodWindow(false);
+    }
   };
 
   return (
