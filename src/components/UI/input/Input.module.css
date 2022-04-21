@@ -1,0 +1,53 @@
+.formItem {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.formItem label {
+  margin-bottom: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: "Factor A";
+}
+
+.formItem input {
+  width: 100%;
+  padding: 15px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  font-family: "Gilroy";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  font-style: normal;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.icons {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.hoverMsg {
+  position: absolute;
+  bottom: 50px;
+  right: -16px;
+}

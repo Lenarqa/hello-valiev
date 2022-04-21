@@ -34,3 +34,8 @@
   background-size: 200%;
   transition: 0.5s ease-out;
 }
+
+/* aboutMe header */
+.button[data-type="submitAboutMe"] {
+  margin-bottom: 0;
+}

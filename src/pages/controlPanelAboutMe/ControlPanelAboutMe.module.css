@@ -1,0 +1,91 @@
+.container {
+  width: 100%;
+  height: auto;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  padding: 59px 80px 176px 24px;
+}
+
+.contentHeader {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 24px;
+  margin-bottom: 40px;
+}
+
+.contentHeader h2 {
+  font-family: "Factor A";
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 32px;
+  color: #333333;
+}
+
+.aboutMe {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.headerForm {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.imgSection {
+  display: flex;
+}
+
+.imgSection img {
+  width: 64px;
+  height: 64px;
+  margin-right: 16px;
+}
+
+.changePhoto {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.changePhoto p {
+  font-family: "Factor A";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.0124em;
+  color: #8a8a8a;
+  margin-bottom: 12px;
+}
+
+.headerAction {
+  display: flex;
+}
+
+.headerAction svg {
+  margin-right: 12px;
+}
+
+.headerAction div {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 0.01em;
+  color: #585CC6;
+}
+
+.inputsSection {
+    display: flex;
+    flex-direction: column;
+}
