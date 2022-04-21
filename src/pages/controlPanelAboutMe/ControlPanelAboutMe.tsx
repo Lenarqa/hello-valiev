@@ -27,7 +27,7 @@ const ControlPanelAboutMe: React.FC = () => {
             </div>
             <div className={style.inputsSection}>
                 <div className={style.row}>
-                    <Input />
+                    {/* <Input /> */}
                 </div>
             </div>
         </form>

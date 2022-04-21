@@ -6,6 +6,7 @@ import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg
 import { ReactComponent as OpenEyeIcon } from "../../../assets/icons/openEye.svg";
 import { ReactComponent as CloseEyeIcon } from "../../../assets/icons/closeEye.svg";
 import MsgWindow from "../../UI/msgWindow/MsgWindow";
+import Input from "../../UI/input/Input";
 
 interface IAuthModal {
   isFooterErrMsg: boolean;
@@ -239,39 +240,27 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
 
   const passwordRecoveryModalHandler = () => {
     props.showFooterErrMsg(false);
-    // props.showPasswordRecoveryModal();
     navigate(`/hello-valiev/passwordRecovery`);
   };
 
   return (
     <form className={style.form} onSubmit={submitHandler}>
       <h2>Войти</h2>
-      <div className={style.formItem}>
-        <label htmlFor="login">Логин</label>
-        <div className={style.inputWrapper}>
-          <input
-            id="login"
-            placeholder="Введите логин"
-            onChange={emailValidationHandler}
-            value={email}
-            data-is-error={isEmailError}
-            data-is-unknown-user={props.isFooterErrMsg}
-            data-has-data={!isEmailError && email.trim().length > 0}
-          />
-          <div className={style.icons}>
-            {isEmailError && (
-              <InfoIcon
-                className={style.icon}
-                onMouseOver={emailMouseOverHandler}
-                onMouseOut={emailMouseOutHandler}
-              />
-            )}
-            {isHoverEmail && (
-              <MsgWindow style={style.hoverMsg}>{emailErrorMsg}</MsgWindow>
-            )}
-          </div>
-        </div>
-      </div>
+      <Input
+        labelTitle="Логин"
+        id="login"
+        placeholder="Введите логин"
+        onChange={emailValidationHandler}
+        value={email}
+        dataIsError={isEmailError}
+        dataIsUnknownUser={props.isFooterErrMsg}
+        dataHasData={!isEmailError && email.trim().length > 0}
+        mouseOverHandler={emailMouseOverHandler}
+        mouseOutHandler={emailMouseOutHandler}
+        isHover={isHoverEmail}
+        errorMsg={emailErrorMsg}
+        isError={isEmailError}
+      />
       <div className={style.formItem}>
         <label htmlFor="password">Пароль</label>
         <div className={style.inputWrapper}>
