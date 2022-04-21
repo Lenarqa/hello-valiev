@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ButtonAdd from "../UI/buttonAdd/ButtonAdd";
-import SliderItem from "../reviewItem/ReviewItem";
+import ReviewItem from "../reviewItem/ReviewItem";
 import { IReview } from "../../shared/models/models";
 import { REVIEWS } from "../../shared/data/Reviews";
 import SliderBtn from "./sliderBtn/SliderBtn";
@@ -252,13 +252,13 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
             curSlide={curSlide}
             sliderItemWith={sliderItemWidth}
           >
-            {rewies.map((rewiew) => (
-              <SliderItem
-                key={rewiew.id}
-                name={rewiew.name}
-                date={rewiew.date}
-                imgUrl={rewiew.imgUrl}
-                text={rewiew.text}
+            {rewies.map((review) => (
+              <ReviewItem
+                key={review.id}
+                name={review.name}
+                date={review.date}
+                imgUrl={review.imgUrl}
+                text={review.text}
               />
             ))}
           </Slides>

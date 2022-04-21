@@ -6,15 +6,16 @@
 .content {
   width: 100%;
   height: 100%;
-  padding: 59px 80px 165px 24px;
+  padding: 24px 80px 165px 24px;
 }
 
 .contentHeader {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  margin-bottom: 30px;
+  padding-top: 24px;
+  margin-bottom: 34px;
 }
 
 .contentHeader h2 {
@@ -23,4 +24,10 @@
   font-size: 32px;
   line-height: 32px;
   color: #333333;
+  margin-right: 682px;
+}
+
+.rewiews {
+  display: flex;
+  flex-wrap: wrap;
 }

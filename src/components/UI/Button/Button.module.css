@@ -17,10 +17,20 @@
   transition: 0.5s ease-out;
 }
 
+.button[data-type="cancel"]:hover,
 .button:hover {
   background-position: left;
 }
 
 .button:disabled {
   background: #8a8a8a 100%;
+}
+
+/* type cancel control panel */
+.button[data-type="cancel"] {
+  width: 148px;
+  margin-left: 12px;
+  background: linear-gradient(to left, #EB5757 50%, #f85d5d 50%) right;
+  background-size: 200%;
+  transition: 0.5s ease-out;
 }

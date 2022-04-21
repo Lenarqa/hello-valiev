@@ -1,3 +1,7 @@
+.action {
+  display: none;
+}
+
 .item {
   width: 519px;
   height: 279px;
@@ -86,4 +90,38 @@
   .userInfo p {
     font-size: 16px;
   }
+}
+
+
+
+/* type rewiew control panel */
+.item[data-type="controlPanelReview"] {
+  width: 519px;
+  height: 363px;
+  margin-right: 24px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.item[data-type="controlPanelReview"] .action {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+}
+
+.item[data-type="controlPanelReview"] .action div {
+  margin-right: 80px;
+}
+
+.item[data-type="controlPanelReview"] .action svg {
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.item[data-type="controlPanelReview"] .action svg path {
+  transition: all 0.5s ease;
+}
+
+.item[data-type="controlPanelReview"] .action svg:hover path {
+  fill: rgb(226, 101, 243);
 }

@@ -10,7 +10,6 @@ import MsgWindow from "../../UI/msgWindow/MsgWindow";
 interface IAuthModal {
   isFooterErrMsg: boolean;
   showFooterErrMsg: (value: boolean) => void;
-  // showPasswordRecoveryModal: () => void;
 }
 
 const AuthModal: React.FC<IAuthModal> = (props) => {
