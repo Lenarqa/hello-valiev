@@ -255,6 +255,7 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
             {rewies.map((review) => (
               <ReviewItem
                 key={review.id}
+                id={review.id}
                 name={review.name}
                 date={review.date}
                 imgUrl={review.imgUrl}

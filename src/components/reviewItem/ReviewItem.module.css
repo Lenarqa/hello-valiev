@@ -92,8 +92,6 @@
   }
 }
 
-
-
 /* type rewiew control panel */
 .item[data-type="controlPanelReview"] {
   width: 519px;
@@ -124,4 +122,34 @@
 
 .item[data-type="controlPanelReview"] .action svg:hover path {
   fill: rgb(226, 101, 243);
+}
+
+.item[data-is-canceled="true"] {
+  background-color: #fdeeee;
+}
+
+.item[data-is-cancel="true"] {
+  display: none;
+}
+
+.canceledMsg {
+  position: absolute;
+  bottom: 24px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.canceledMsg svg {
+  margin-right: 15px;
+}
+
+.canceledMsg h2 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 0.01em;
+  color: #EB5757;
 }

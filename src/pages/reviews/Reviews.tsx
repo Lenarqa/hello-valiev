@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import style from "./Reviews.module.css";
 import EmptyScreen from "../../components/UI/emtyScreen/EmptyScreen";
 import Select from "../../components/UI/select/Select";
@@ -13,12 +13,39 @@ const Reviews: React.FC = () => {
   const [selected, setIsSelected] = useState<IOption>(DummyOptionsReview[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
   const [reviews, setReviews] = useState<IReview[]>(REVIEWS);
   const [filteredReviews, setFilteredReviews] = useState<IReview[]>(REVIEWS);
-
-  useEffect(() => {
-    const curfilteredReviews:IReview[] = reviews.filter(item => item.status === selected.id);
+  
+  const onChangeFilterHandler = useCallback((option:IOption): void => {
+    const curfilteredReviews: IReview[] = reviews.filter(
+      (item) => item.status === option?.id
+    );
     const sortedFilteredReviews = sortByDate(curfilteredReviews);
-    setFilteredReviews(curfilteredReviews)
-  }, [selected, reviews]);
+    setFilteredReviews(sortedFilteredReviews);
+    setIsSelected(option)
+  }, []);
+
+  // начальная фильтрация, чтобы когда пользователь заходил на страницу сразу были видны неопубликованные
+  useEffect(()=>{        
+    onChangeFilterHandler(selected);
+  }, [onChangeFilterHandler])
+
+  const cancelHandler = (id: number): void => {
+    setReviews((prev) => {
+      const updatedReview: IReview | undefined = prev.find(
+        (review) => review.id === id
+      );
+      const prevWithoutUpdated: IReview[] = prev.filter(
+        (item) => item.id !== id
+      );
+      
+      // такая ситуация не возможна, но пусть проверка будет
+      if (updatedReview === undefined) {
+        return prev;
+      }
+
+      updatedReview.status = 2;
+      return [...prevWithoutUpdated, updatedReview];
+    });
+  };
 
   return (
     <div className={style.container}>
@@ -33,6 +60,7 @@ const Reviews: React.FC = () => {
               selected={selected}
               setSelected={setIsSelected}
               options={DummyOptionsReview}
+              onChange={onChangeFilterHandler}
             />
           </div>
           <div className={style.rewiews}>
@@ -40,10 +68,14 @@ const Reviews: React.FC = () => {
               <ReviewItem
                 type="controlPanelReview"
                 key={review.id}
+                id={review.id}
                 name={review.name}
                 date={review.date}
                 imgUrl={review.imgUrl}
                 text={review.text}
+                cancelHandler={cancelHandler}
+                status={review.status}
+                selected={selected}
               />
             ))}
           </div>

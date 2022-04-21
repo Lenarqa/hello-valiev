@@ -4,10 +4,11 @@ import { IOption } from "../../../shared/models/models";
 import style from "./Select.module.css";
 
 interface ISelect {
-  type?:string;
+  type?: string;
   selected: IOption;
   setSelected: (value: IOption) => void;
   options: IOption[];
+  onChange: (option:IOption) => void;
 }
 
 const Select: React.FC<ISelect> = (props) => {
@@ -18,19 +19,23 @@ const Select: React.FC<ISelect> = (props) => {
   };
 
   const setSelectedHandler = (option: IOption): void => {
-      props.setSelected(option);      
-      setIsActive(false);
+    props.onChange(option);
+    setIsActive(false);
   };
 
   return (
-    <div className={style.select} data-type={props.type} >
+    <div className={style.select} data-type={props.type}>
       <div className={style.selectBtn} onClick={setActiveHandler}>
         {props.selected.value}
       </div>
       {isActive && (
         <div className={style.selectContent}>
           {props.options.map((option, key) => (
-            <div key={key} className={style.seletcItem} onClick={setSelectedHandler.bind(this, option)} >
+            <div
+              key={key}
+              className={style.seletcItem}
+              onClick={setSelectedHandler.bind(this, option)}
+            >
               {option.value}
             </div>
           ))}

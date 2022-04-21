@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import EmptyScreen from "../../components/UI/emtyScreen/EmptyScreen";
 import style from "./Users.module.css";
 import Select from "../../components/UI/select/Select";
@@ -41,16 +41,17 @@ const Users: React.FC = () => {
     setCurPage((prev) => (prev -= 1));
   };
 
-  useEffect(() => {
-    if (selected.id !== 1) {
+  const onChangeFilterHandler = (option: IOption): void => {
+    if (option.id !== 1) {
       const filteredItems: IParticipant[] = participants.filter(
-        (item) => item.status === selected.id
+        (item) => item.status === option.id
       );
       setFilteredParticipants(filteredItems);
     } else {
       setFilteredParticipants(participants);
     }
-  }, [selected, participants]);
+    setIsSelected(option);
+  };
 
   return (
     <div className={style.container}>
@@ -64,6 +65,7 @@ const Users: React.FC = () => {
               selected={selected}
               setSelected={setIsSelected}
               options={DummyOptionsParticipants}
+              onChange={onChangeFilterHandler}
             />
           </div>
           <div className={style.tableHeader}>
