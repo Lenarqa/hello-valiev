@@ -1,6 +1,6 @@
 .modal {
   width: 676px;
-  height: 325px;
+  min-height: 325px;
   position: absolute;
   background-color: #ffffff;
   padding: 24px;

@@ -14,6 +14,8 @@
   line-height: 22px;
   color: #8a8a8a;
   resize: none;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
 .textarea[data-is-error="true"] {

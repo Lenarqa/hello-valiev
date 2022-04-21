@@ -19,6 +19,7 @@ interface ISliderItem {
   selected?: IOption;
   cancelHandler?: (id: number) => void;
   publishHandler?: (id: number) => void;
+  updateReviewText?: (updatedReviewText:string, id:number) => void;
 }
 
 const ReviewItem: React.FC<ISliderItem> = ({
@@ -32,6 +33,7 @@ const ReviewItem: React.FC<ISliderItem> = ({
   selected,
   cancelHandler,
   publishHandler,
+  updateReviewText
 }) => {
   const [isCanceled, setIsCanseled] = useState<boolean>(false);
   const [isPublish, setIsPublish] = useState<boolean>(false);
@@ -118,7 +120,7 @@ const ReviewItem: React.FC<ISliderItem> = ({
       {isEditRevie && (
         <>
           <Overlay />
-          <EditReviewModal close={closeEditWindowHandler} />
+          <EditReviewModal close={closeEditWindowHandler} rewiewId={id} reviewText={text} updateReviewText={updateReviewText}/>
         </>
       )}
     </>

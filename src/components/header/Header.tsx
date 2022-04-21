@@ -18,6 +18,10 @@ const Header: React.FC<IHeader> = (props) => {
     navigate(`/hello-valiev/controlPanel`);
   };
 
+  const openAboutMePage = ():void => {
+    navigate(`/hello-valiev/about-me`);
+  }
+
   return (
     <header className={style.header} data-type={props.type}>
       <div className={style.photoSection}>
@@ -29,7 +33,7 @@ const Header: React.FC<IHeader> = (props) => {
         <h2 className={style.name}>{width < 710 ? "Ленар" : "Ленар Валиев"}</h2>
       </div>
       <div className={style.controlPanelTitle}>Панель управления</div>
-      <ILinkLogo className={style.ilinkLogo} />
+      <ILinkLogo className={style.ilinkLogo} onClick={openAboutMePage}/>
       <div className={style.actions}>
         {width < 710 ? (
           <ButtonMobile

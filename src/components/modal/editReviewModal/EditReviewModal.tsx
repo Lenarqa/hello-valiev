@@ -1,15 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../UI/button/Button";
 import TextArea from "../../UI/textarea/TextArea";
 import style from "./EditReviewModal.module.css";
+import ErrorMsg from "../../UI/ErrorMsg/ErrorMsg";
+
+type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
 
 interface IEditReviewModal {
+  rewiewId: number;
+  reviewText: string;
   close: () => void;
+  updateReviewText?: (updatedReviewText: string, id: number) => void;
 }
 
 const EditReviewModal: React.FC<IEditReviewModal> = (props) => {
-  const textAreaChangeHandler = ():void => {
-    console.log("Change textarea");
+  const [userReviewText, setUserReviewText] = useState<string>(
+    props.reviewText
+  );
+  const [isErrorRewiew, setIsErrorRewiew] = useState<boolean>(false);
+  const [errorRewiewMsg, setErrorRewiewMsg] = useState<string>("");
+
+  const textAreaChangeHandler: TextAreaChangeEventHandler = (e): void => {
+    if (e.target.value.trim().length <= 0) {
+      setUserReviewText(e.target.value);
+      setIsErrorRewiew(true);
+      setErrorRewiewMsg("Поле не может быть пустым");
+      return;
+    } else if (e.target.value.length < 501) {
+      setUserReviewText(e.target.value);
+      setIsErrorRewiew(false);
+    }
+  };
+
+  const updateTextHandler = (): void => {
+    if (props.updateReviewText !== undefined) {
+      props.updateReviewText(userReviewText, props.rewiewId);
+      props.close();
+    }
   };
 
   return (
@@ -23,13 +50,16 @@ const EditReviewModal: React.FC<IEditReviewModal> = (props) => {
         <TextArea
           placeholder={"Не забудьте написать отзыв."}
           onChangeHandler={textAreaChangeHandler}
-          value={"userRewiew"}
-          msgLenght={0}
-          maxLenght={200}
+          value={userReviewText}
+          msgLenght={userReviewText.length}
+          maxLenght={500} //в шаблоне изначально есть отзывы где текст больше 200 символов, поэтому я увеличил макс-ное кол-во символов до 500
         />
+        {isErrorRewiew && <ErrorMsg>{errorRewiewMsg}</ErrorMsg>}
       </div>
       <div className={style.actions}>
-        <Button>Подтвердить редактирование</Button>
+        <Button isDisable={isErrorRewiew} onClick={updateTextHandler}>
+          Подтвердить редактирование
+        </Button>
         <Button type="cancel" onClick={props.close}>
           Отмена
         </Button>

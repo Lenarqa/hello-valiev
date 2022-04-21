@@ -68,6 +68,26 @@ const Reviews: React.FC = () => {
     });
   };
 
+  const updateReviewTextHandler = (updatedReviewText:string, id:number):void => {
+    console.log("saveUpdateReviewText");
+    setReviews((prev) => {
+      const updatedReview: IReview | undefined = prev.find(
+        (review) => review.id === id
+      );
+
+      const prevWithoutUpdated: IReview[] = prev.filter(
+        (item) => item.id !== id
+      );
+
+      if (updatedReview === undefined) {
+        return prev;
+      }
+
+      updatedReview.text = updatedReviewText;
+      return [...prevWithoutUpdated, updatedReview];
+    });
+  } 
+
   return (
     <div className={style.container}>
       {isEmptyPage ? (
@@ -98,6 +118,7 @@ const Reviews: React.FC = () => {
                 status={review.status}
                 selected={selected}
                 publishHandler={publishHandler}
+                updateReviewText={updateReviewTextHandler}
               />
             ))}
           </div>

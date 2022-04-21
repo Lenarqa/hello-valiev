@@ -68,6 +68,10 @@
   color: #ffffff;
 }
 
+.ilinkLogo {
+  cursor: pointer;
+}
+
 .header[data-type="control-panel"] .ilinkLogo path {
   fill: #fff;
 }
