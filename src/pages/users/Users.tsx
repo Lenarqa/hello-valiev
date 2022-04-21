@@ -10,7 +10,9 @@ import { DummyOptionsParticipants } from "../../shared/data/OptionsParticipant";
 
 const Users: React.FC = () => {
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
-  const [selected, setIsSelected] = useState<IOption>(DummyOptionsParticipants[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
+  const [selected, setIsSelected] = useState<IOption>(
+    DummyOptionsParticipants[0]
+  ); //0 - элемент, это элемент по дефолту отображающийся в селект;
   const [participants, setParticipants] =
     useState<IParticipant[]>(Participants);
   const [filteredParticipants, setFilteredParticipants] =
@@ -39,7 +41,7 @@ const Users: React.FC = () => {
     setCurPage((prev) => (prev -= 1));
   };
 
-  useEffect(() => {      
+  useEffect(() => {
     if (selected.id !== 1) {
       const filteredItems: IParticipant[] = participants.filter(
         (item) => item.status === selected.id

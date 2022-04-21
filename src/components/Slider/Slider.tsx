@@ -191,7 +191,7 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
     sliderItemWidth = -300;
   }
 
-  const filteredReviews = REVIEWS.filter((item)=>item.status === DummyOptionsReview[1].id); // Отображаем только отзывы со статусом допущен
+  const filteredReviews = REVIEWS.filter((item)=>item.status === DummyOptionsReview[2].id); // Отображаем только отзывы со статусом допущен
   const [showModal, setShowModal] = useState<boolean>(false);
   const [rewies, setRewiews] = useState<IReview[]>(filteredReviews);
   const [curSlide, setCurSlide] = useState<number>(0);
