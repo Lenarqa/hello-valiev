@@ -7,15 +7,12 @@ import { IOption, IReview } from "../../shared/models/models";
 import { REVIEWS } from "../../shared/data/Reviews";
 import ReviewItem from "../../components/reviewItem/ReviewItem";
 import { sortByDate } from "../../shared/lib/sortReviews";
-import EditReviewModal from "../../components/modal/editReviewModal/EditReviewModal";
-import Overlay from "../../components/UI/overlay/Overlay";
 
 const Reviews: React.FC = () => {
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
   const [selected, setIsSelected] = useState<IOption>(DummyOptionsReview[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
   const [reviews, setReviews] = useState<IReview[]>(REVIEWS);
   const [filteredReviews, setFilteredReviews] = useState<IReview[]>(REVIEWS);
-  const [isEditRevie, setIsEditReview] = useState<boolean>(false);
 
   const onChangeFilterHandler = useCallback((option: IOption): void => {
     const curfilteredReviews: IReview[] = reviews.filter(
@@ -71,14 +68,6 @@ const Reviews: React.FC = () => {
     });
   };
 
-  const showEditWindowHandler = (): void => {
-    setIsEditReview(true);
-  };
-  
-  const closeEditWindowHandler = (): void => {
-    setIsEditReview(false);
-  };
-
   return (
     <div className={style.container}>
       {isEmptyPage ? (
@@ -109,17 +98,10 @@ const Reviews: React.FC = () => {
                 status={review.status}
                 selected={selected}
                 publishHandler={publishHandler}
-                showEditWindow={showEditWindowHandler}
               />
             ))}
           </div>
         </div>
-      )}
-      {isEditRevie && (
-        <>
-          <Overlay />
-          <EditReviewModal close={closeEditWindowHandler}/>
-        </>
       )}
     </div>
   );

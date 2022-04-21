@@ -92,11 +92,11 @@
   border: 1px solid #eb5757;
 }
 
-.textAreaWrapper {
+/* .textAreaWrapper {
   position: relative;
-}
+} */
 
-.counter {
+/* .counter {
   font-family: "Gilroy";
   width: 30px;
   height: 14px;
@@ -107,9 +107,9 @@
   position: absolute;
   right: 16px;
   bottom: 4px;
-}
+} */
 
-.textarea {
+/* .textarea {
   font-family: "Gilroy";
   border: 1px solid #e0e0e0;
   border-radius: 2px;
@@ -125,7 +125,7 @@
 
 .textarea[data-is-error="true"] {
   border: 1px solid #eb5757;
-}
+} */
 
 .label {
   font-family: "Factor A";
@@ -164,9 +164,9 @@
     padding: 16px;
   }
 
-  .textarea {
+  /* .textarea {
     width: 100%;
-  }
+  } */
 }
 
 @media (max-width: 420px) {
@@ -197,15 +197,15 @@
     margin-bottom: 12px;
   }
 
-  .counter {
+  /* .counter {
     right: 50px;
     bottom: 20px;
-  }
+  } */
 
-  .textarea {
+  /* .textarea {
     width: 256px;
     margin-bottom: 12px;
-  }
+  } */
 
   .actionText {
     font-size: 10px;

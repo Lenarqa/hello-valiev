@@ -8,6 +8,7 @@ import FileItem from "../fileItem/FileItem";
 import ErrorMsg from "../../UI/ErrorMsg/ErrorMsg";
 import { FileModel } from "../../../shared/models/models";
 import Overlay from "../../UI/overlay/Overlay";
+import TextArea from "../../UI/textarea/TextArea";
 type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
 
 interface IReviewModal {
@@ -38,7 +39,7 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
 
   const [disabledBtn, setDisabledBtn] = useState<boolean>(true);
 
-  const changeNameHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const changeNameHandler = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
     setIsErrorSending(false);
     const value = e.currentTarget.value;
@@ -59,7 +60,7 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
     }
   };
 
-  const imgSelectHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const imgSelectHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setIsErrorSending(false);
     if (e.currentTarget.files?.length !== 0) {
       const files = e.currentTarget.files;
@@ -85,16 +86,16 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
     }
   };
 
-  const deleteUserFileHandler = () => {
+  const deleteUserFileHandler = (): void => {
     setUserFile({} as FileModel);
     setShowUsersFile(false);
   };
 
-  const fileUploadHandler = () => {
+  const fileUploadHandler = (): void => {
     document.getElementById("selectImg")?.click();
   };
 
-  const textareaChangeHandler: TextAreaChangeEventHandler = (e) => {
+  const textareaChangeHandler: TextAreaChangeEventHandler = (e): void => {
     if (e.target.value.trim().length <= 0) {
       setIsErrorSending(false);
       setUserRewiew(e.target.value);
@@ -174,16 +175,14 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
           )}
           <div className={style.item}>
             <p className={style.label}>Все ли вам понравилось?</p>
-            <div className={style.textAreaWrapper}>
-              <textarea
-                className={style.textarea}
-                placeholder="Напишите пару слов о вашем опыте."
-                onChange={textareaChangeHandler}
-                value={userRewiew}
-                data-is-error={isErrorRewiew}
-              />
-              <div className={style.counter}>{userRewiew.length}/200</div>
-            </div>
+            <TextArea
+              placeholder={"Напишите пару слов о вашем опыте."}
+              onChangeHandler={textareaChangeHandler}
+              value={userRewiew}
+              dataIsError={isErrorRewiew}
+              msgLenght={userRewiew.length}
+              maxLenght={200}
+            />
             {isErrorRewiew && <ErrorMsg>{errorRewiewMsg}</ErrorMsg>}
           </div>
         </div>
