@@ -17,6 +17,7 @@ interface ISliderItem {
   selected?: IOption;
   cancelHandler?: (id: number) => void;
   publishHandler?: (id: number) => void;
+  showEditWindow?: () => void;
 }
 
 const ReviewItem: React.FC<ISliderItem> = ({
@@ -30,6 +31,7 @@ const ReviewItem: React.FC<ISliderItem> = ({
   selected,
   cancelHandler,
   publishHandler,
+  showEditWindow
 }) => {
   const [isCanceled, setIsCanseled] = useState<boolean>(false);
   const [isPublish, setIsPublish] = useState<boolean>(false);
@@ -39,12 +41,12 @@ const ReviewItem: React.FC<ISliderItem> = ({
   }
 
   //если отзыв ранее отмечен как (отмененный/опубликованный),
-  //то при переходе на другой фильтр убираем стиль, и переносим опубликованный в опубликованный 
+  //то при переходе на другой фильтр убираем стиль, и переносим опубликованный в опубликованный
   //отмененный в отмененный
   useEffect(() => {
-    if (selected!.id === status) {
+    if (selected?.id === status) {
       setIsCanseled(false);
-      setIsPublish(false)
+      setIsPublish(false);
     }
   }, [selected, status]);
 
@@ -76,7 +78,11 @@ const ReviewItem: React.FC<ISliderItem> = ({
         <CloseIcon />
         <h2>Отзыв отклонен</h2>
       </div>
-      <div className={style.action} data-is-canceled={isCanceled} data-is-publish={isPublish}>
+      <div
+        className={style.action}
+        data-is-canceled={isCanceled}
+        data-is-publish={isPublish}
+      >
         <div>
           <Button type="submit" onClick={curPublishHandler}>
             Опубликовать
@@ -85,7 +91,7 @@ const ReviewItem: React.FC<ISliderItem> = ({
             Отклонить
           </Button>
         </div>
-        <EditBtn />
+        <EditBtn onClick={showEditWindow}/>
       </div>
       <div className={style.publishMsg} data-is-publish={isPublish}>
         <PublishIcon />

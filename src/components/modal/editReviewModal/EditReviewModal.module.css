@@ -1,0 +1,57 @@
+.modal {
+  width: 676px;
+  height: 325px;
+  position: absolute;
+  background-color: #FFFFFF;
+  padding: 24px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-family: "Factor A";
+  font-weight: 500;
+  font-size: 24px;
+  color: #333333;
+}
+
+.btn {
+  border: none;
+  width: 18px;
+  height: 18px;
+  position: relative;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.btn:before {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  content: " ";
+  height: 17px;
+  width: 2px;
+  background-color: #8A8A8A;;
+  transform: rotate(45deg);
+}
+
+.btn:after {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  content: " ";
+  height: 17px;
+  width: 2px;
+  background-color: #8A8A8A;
+  transform: rotate(-45deg);
+}

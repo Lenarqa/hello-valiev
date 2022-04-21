@@ -1,0 +1,20 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  
+    background-color: rgba(0, 0, 0, 0.2);
+  
+    filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    -ms-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    -webkit-filter: blur(01px);
+    -moz-filter: blur(10px);
+    -ms-filter: blur(10px);
+    -o-filter: blur(10px);
+    z-index: 100;
+  }
+  

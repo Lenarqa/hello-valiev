@@ -7,47 +7,51 @@ import { IOption, IReview } from "../../shared/models/models";
 import { REVIEWS } from "../../shared/data/Reviews";
 import ReviewItem from "../../components/reviewItem/ReviewItem";
 import { sortByDate } from "../../shared/lib/sortReviews";
+import EditReviewModal from "../../components/modal/editReviewModal/EditReviewModal";
+import Overlay from "../../components/UI/overlay/Overlay";
 
 const Reviews: React.FC = () => {
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
   const [selected, setIsSelected] = useState<IOption>(DummyOptionsReview[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
   const [reviews, setReviews] = useState<IReview[]>(REVIEWS);
   const [filteredReviews, setFilteredReviews] = useState<IReview[]>(REVIEWS);
-  
-  const onChangeFilterHandler = useCallback((option:IOption): void => {
+  const [isEditRevie, setIsEditReview] = useState<boolean>(false);
+
+  const onChangeFilterHandler = useCallback((option: IOption): void => {
     const curfilteredReviews: IReview[] = reviews.filter(
       (item) => item.status === option?.id
     );
     const sortedFilteredReviews = sortByDate(curfilteredReviews);
     setFilteredReviews(sortedFilteredReviews);
-    setIsSelected(option)
+    setIsSelected(option);
   }, []);
 
-  // начальная фильтрация, чтобы когда пользователь заходил на страницу сразу были видны неопубликованные
-  useEffect(()=>{        
+  // начальная фильтрация, чтобы когда пользователь заходил на
+  //страницу сразу были видны неопубликованные
+  useEffect(() => {
     onChangeFilterHandler(selected);
-  }, [onChangeFilterHandler])
+  }, [onChangeFilterHandler]);
 
   const cancelHandler = (id: number): void => {
     setReviews((prev) => {
       const updatedReview: IReview | undefined = prev.find(
         (review) => review.id === id
       );
-      
+
       const prevWithoutUpdated: IReview[] = prev.filter(
         (item) => item.id !== id
       );
-      
+
       // такая ситуация не возможна, но пусть проверка будет
       if (updatedReview === undefined) {
         return prev;
       }
 
-      updatedReview.status = 2;//2 = отклонен
+      updatedReview.status = 2; //2 = отклонен
       return [...prevWithoutUpdated, updatedReview];
     });
   };
-  
+
   const publishHandler = (id: number): void => {
     setReviews((prev) => {
       const updatedReview: IReview | undefined = prev.find(
@@ -57,7 +61,7 @@ const Reviews: React.FC = () => {
       const prevWithoutUpdated: IReview[] = prev.filter(
         (item) => item.id !== id
       );
-      
+
       if (updatedReview === undefined) {
         return prev;
       }
@@ -65,6 +69,14 @@ const Reviews: React.FC = () => {
       updatedReview.status = 3; //3 = опубликован
       return [...prevWithoutUpdated, updatedReview];
     });
+  };
+
+  const showEditWindowHandler = (): void => {
+    setIsEditReview(true);
+  };
+  
+  const closeEditWindowHandler = (): void => {
+    setIsEditReview(false);
   };
 
   return (
@@ -97,10 +109,17 @@ const Reviews: React.FC = () => {
                 status={review.status}
                 selected={selected}
                 publishHandler={publishHandler}
+                showEditWindow={showEditWindowHandler}
               />
             ))}
           </div>
         </div>
+      )}
+      {isEditRevie && (
+        <>
+          <Overlay />
+          <EditReviewModal close={closeEditWindowHandler}/>
+        </>
       )}
     </div>
   );

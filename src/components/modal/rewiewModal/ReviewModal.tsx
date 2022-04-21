@@ -7,6 +7,7 @@ import { ReactComponent as Info } from "../../../assets/icons/info.svg";
 import FileItem from "../fileItem/FileItem";
 import ErrorMsg from "../../UI/ErrorMsg/ErrorMsg";
 import { FileModel } from "../../../shared/models/models";
+import Overlay from "../../UI/overlay/Overlay";
 type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
 
 interface IReviewModal {
@@ -129,7 +130,7 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
 
   return ReactDOM.createPortal(
     <>
-      <div className={style.overlay} />
+      <Overlay />
       <div className={style.styledReviewModal}>
         <div className={style.header}>
           <h2 className={style.title}>Отзыв</h2>
