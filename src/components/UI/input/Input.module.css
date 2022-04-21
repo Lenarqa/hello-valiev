@@ -45,6 +45,12 @@ input[data-has-data="true"]:active {
   outline: 2px solid #585cc6;
 }
 
+.formItem input[data-has-data="false"],
+input[data-has-data="false"]:focus,
+input[data-has-data="false"]:active {
+  outline: 2px solid #eb5757;
+}
+
 .formItem input[data-is-unknown-user="true"],
 .formItem input[data-is-unknown-user="true"]:focus,
 .formItem input[data-is-unknown-user="true"]:active {
@@ -75,4 +81,9 @@ input[data-has-data="true"]:active {
   position: absolute;
   bottom: 50px;
   right: -16px;
+}
+
+/* type controlPanel  */
+.formItem[data-type="controlPanel"] {
+  width: 403px;
 }

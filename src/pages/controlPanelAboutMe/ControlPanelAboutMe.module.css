@@ -89,3 +89,13 @@
     display: flex;
     flex-direction: column;
 }
+
+.row {
+  display: flex;
+  width: 100%;
+}
+
+.row :nth-child(1),
+.row :nth-child(2) {
+  margin-right: 24px;
+}

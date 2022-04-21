@@ -6,7 +6,7 @@ export const MyInfo: IMyInfo = {
   mainImgUrl: "../../../assets/img/Me_03.webp",
   birthday: "25.11.1998",
   city: "Томск",
-  gender: "Mуж",
+  gender: "Mужчина",
   year: 23,
   aboutMeText: `Hello everybody! Меня зовут Ленар, мне 23 года, я
   студент ТУСУРа. Учусь на программиста-экономиста на 1 курсе

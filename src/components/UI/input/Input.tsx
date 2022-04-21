@@ -4,6 +4,7 @@ import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg
 import MsgWindow from "../msgWindow/MsgWindow";
 
 interface IInput {
+    type?:string;
     labelTitle:string;
     id:string;
     placeholder: string;
@@ -21,12 +22,12 @@ interface IInput {
 
 const Input: React.FC<IInput> = (props) => {
   return (
-    <div className={style.formItem}>
+    <div className={style.formItem} data-type={props.type}>
       <label htmlFor={props.id}>{props.labelTitle}</label>
       <div className={style.inputWrapper}>
         <input
           id={props.id}
-          placeholder="Введите логин"
+          placeholder={props.placeholder}
           onChange={props.onChange}
           value={props.value}
           data-is-error={props.dataIsError}
