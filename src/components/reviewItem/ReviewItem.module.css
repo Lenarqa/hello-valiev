@@ -2,6 +2,14 @@
   display: none;
 }
 
+.item .canceledMsg[data-is-canceled="false"] {
+  display: none;
+}
+
+.item .publishMsg[data-is-publish="false"] {
+  display: none;
+}
+
 .item {
   width: 519px;
   height: 279px;
@@ -124,11 +132,20 @@
   fill: rgb(226, 101, 243);
 }
 
+/* cancel */
 .item[data-is-canceled="true"] {
   background-color: #fdeeee;
 }
 
 .item[data-is-cancel="true"] {
+  display: none;
+}
+
+.item .canceledMsg[data-is-canceled="true"] {
+  display: flex;
+}
+
+.item .action[data-is-canceled="true"] {
   display: none;
 }
 
@@ -151,5 +168,37 @@
   font-size: 18px;
   line-height: 18px;
   letter-spacing: 0.01em;
-  color: #EB5757;
+  color: #eb5757;
+}
+/* end cancel */
+
+/* publish  */
+.publishMsg[data-is-publish="true"] {
+  display: flex;
+}
+
+.item .action[data-is-publish="true"] {
+  display: none;
+}
+
+.publishMsg {
+  position: absolute;
+  bottom: 24px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.publishMsg svg {
+  margin-right: 15px;
+}
+
+.publishMsg h2 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 0.01em;
+  color: #61bf4a;
 }

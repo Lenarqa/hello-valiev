@@ -33,6 +33,7 @@ const Reviews: React.FC = () => {
       const updatedReview: IReview | undefined = prev.find(
         (review) => review.id === id
       );
+      
       const prevWithoutUpdated: IReview[] = prev.filter(
         (item) => item.id !== id
       );
@@ -42,7 +43,26 @@ const Reviews: React.FC = () => {
         return prev;
       }
 
-      updatedReview.status = 2;
+      updatedReview.status = 2;//2 = отклонен
+      return [...prevWithoutUpdated, updatedReview];
+    });
+  };
+  
+  const publishHandler = (id: number): void => {
+    setReviews((prev) => {
+      const updatedReview: IReview | undefined = prev.find(
+        (review) => review.id === id
+      );
+
+      const prevWithoutUpdated: IReview[] = prev.filter(
+        (item) => item.id !== id
+      );
+      
+      if (updatedReview === undefined) {
+        return prev;
+      }
+
+      updatedReview.status = 3; //3 = опубликован
       return [...prevWithoutUpdated, updatedReview];
     });
   };
@@ -76,6 +96,7 @@ const Reviews: React.FC = () => {
                 cancelHandler={cancelHandler}
                 status={review.status}
                 selected={selected}
+                publishHandler={publishHandler}
               />
             ))}
           </div>

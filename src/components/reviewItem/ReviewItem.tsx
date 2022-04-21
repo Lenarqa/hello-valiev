@@ -3,6 +3,7 @@ import Button from "../UI/button/Button";
 import style from "./ReviewItem.module.css";
 import { ReactComponent as EditBtn } from "../../assets/icons/editBtn.svg";
 import { ReactComponent as CloseIcon } from "../../assets/icons/сloseIcon.svg";
+import { ReactComponent as PublishIcon } from "../../assets/icons/publishIcon.svg";
 import { IOption } from "../../shared/models/models";
 
 interface ISliderItem {
@@ -15,6 +16,7 @@ interface ISliderItem {
   status?: number;
   selected?: IOption;
   cancelHandler?: (id: number) => void;
+  publishHandler?: (id: number) => void;
 }
 
 const ReviewItem: React.FC<ISliderItem> = ({
@@ -27,17 +29,22 @@ const ReviewItem: React.FC<ISliderItem> = ({
   status,
   selected,
   cancelHandler,
+  publishHandler,
 }) => {
   const [isCanceled, setIsCanseled] = useState<boolean>(false);
+  const [isPublish, setIsPublish] = useState<boolean>(false);
+
   if (imgUrl.trim().length === 0) {
     imgUrl = "User-0.png";
   }
 
-  //если отзыв ранее отмечен как отмененный,
-  //то при переходе на другой статус убираем стиль отмененного
+  //если отзыв ранее отмечен как (отмененный/опубликованный),
+  //то при переходе на другой фильтр убираем стиль, и переносим опубликованный в опубликованный 
+  //отмененный в отмененный
   useEffect(() => {
     if (selected!.id === status) {
       setIsCanseled(false);
+      setIsPublish(false)
     }
   }, [selected, status]);
 
@@ -48,8 +55,11 @@ const ReviewItem: React.FC<ISliderItem> = ({
     }
   };
 
-  const curPublishHandler = ():void => {
-    console.log("Publish");
+  const curPublishHandler = (): void => {
+    if (publishHandler !== undefined) {
+      publishHandler(id);
+      setIsPublish(true);
+    }
   };
 
   return (
@@ -62,22 +72,25 @@ const ReviewItem: React.FC<ISliderItem> = ({
         <p>{date}</p>
       </div>
       <div className={style.content}>{text}</div>
-      {isCanceled ? (
-        <div className={style.canceledMsg}>
-          <CloseIcon />
-          <h2>Отзыв отклонен</h2>
+      <div className={style.canceledMsg} data-is-canceled={isCanceled}>
+        <CloseIcon />
+        <h2>Отзыв отклонен</h2>
+      </div>
+      <div className={style.action} data-is-canceled={isCanceled} data-is-publish={isPublish}>
+        <div>
+          <Button type="submit" onClick={curPublishHandler}>
+            Опубликовать
+          </Button>
+          <Button type="cancel" onClick={curCancelHandler}>
+            Отклонить
+          </Button>
         </div>
-      ) : (
-        <div className={style.action}>
-          <div>
-            <Button type="submit" onClick={curPublishHandler}>Опубликовать</Button>
-            <Button type="cancel" onClick={curCancelHandler}>
-              Отклонить
-            </Button>
-          </div>
-          <EditBtn />
-        </div>
-      )}
+        <EditBtn />
+      </div>
+      <div className={style.publishMsg} data-is-publish={isPublish}>
+        <PublishIcon />
+        <h2>Отзыв опубликован</h2>
+      </div>
     </div>
   );
 };
