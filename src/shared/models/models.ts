@@ -27,3 +27,15 @@ export interface IOption {
   id: number;
   value: string;
 }
+
+export interface IMyInfo {
+  name: string;
+  miniImgUrl: string;
+  mainImgUrl: string;
+  birthday: string;
+  city: string;
+  gender: string;
+  year: number;
+  aboutMeText: string;
+  pet: string;
+}

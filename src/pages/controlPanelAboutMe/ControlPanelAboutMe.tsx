@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./ControlPanelAboutMe.module.css";
 import { ReactComponent as PencilIcon } from "../../assets/icons/pencil.svg";
 import Button from "../../components/UI/button/Button";
 import Input from "../../components/UI/input/Input";
 
 const ControlPanelAboutMe: React.FC = () => {
+  const [name, setName] = useState<string>("");
+  const [isNameError, setIsNameError] = useState<boolean>(false);
+  const [nameErrorMsg, setNameErrorMsg] = useState<string>("");
+  const [isHoverName, setIsHoverName] = useState<boolean>(false);
+
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -12,24 +17,22 @@ const ControlPanelAboutMe: React.FC = () => {
           <h2>Обо мне</h2>
         </div>
         <form className={style.aboutMe}>
-            <div className={style.headerForm}>
-                <div className={style.imgSection}>
-                    <img src={require("../../assets/img/photo.jpg")} alt="photo" />
-                    <div className={style.changePhoto}>
-                        <p>Фото профиля</p>
-                        <div className={style.headerAction}>
-                            <PencilIcon />
-                            <div>Изменить фото</div>
-                        </div>
-                    </div>
+          <div className={style.headerForm}>
+            <div className={style.imgSection}>
+              <img src={require("../../assets/img/photo.jpg")} alt="photo" />
+              <div className={style.changePhoto}>
+                <p>Фото профиля</p>
+                <div className={style.headerAction}>
+                  <PencilIcon />
+                  <div>Изменить фото</div>
                 </div>
-                <Button  type="submitAboutMe">Редактировать</Button>
+              </div>
             </div>
-            <div className={style.inputsSection}>
-                <div className={style.row}>
-                    {/* <Input /> */}
-                </div>
-            </div>
+            <Button type="submitAboutMe">Редактировать</Button>
+          </div>
+          <div className={style.inputsSection}>
+            <div className={style.row}>{/* <Input /> */}</div>
+          </div>
         </form>
       </div>
     </div>
