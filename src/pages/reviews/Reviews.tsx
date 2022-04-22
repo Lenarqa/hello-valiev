@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import style from "./Reviews.module.css";
 import EmptyScreen from "../../components/UI/emtyScreen/EmptyScreen";
 import Select from "../../components/UI/select/Select";
@@ -9,8 +9,16 @@ import ReviewItem from "../../components/reviewItem/ReviewItem";
 import { sortByDate } from "../../shared/lib/sortReviews";
 import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
 import BadWindow from "../../components/UI/badWindow/BadWindow";
+import { ErrorContext } from "../../components/store/ErrorContext";
 
 const Reviews: React.FC = () => {
+  // если в controlPanelAboutMe была ошибка скрываем ее
+  // я еще не разобрался как прокидывать в оутлет пропсы или контекст
+  const errorCtx = useContext(ErrorContext);
+  useEffect(()=>{
+    errorCtx.setIsError(false);
+  }, []);
+  
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
   const [selected, setIsSelected] = useState<IOption>(DummyOptionsReview[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
   const [reviews, setReviews] = useState<IReview[]>(REVIEWS);

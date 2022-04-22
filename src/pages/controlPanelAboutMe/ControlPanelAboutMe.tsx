@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import style from "./ControlPanelAboutMe.module.css";
 import { ReactComponent as PencilIcon } from "../../assets/icons/pencil.svg";
 import Button from "../../components/UI/button/Button";
@@ -12,9 +12,12 @@ import { DummyOptionsPet } from "../../shared/data/OptionsPet";
 import { IOption } from "../../shared/models/models";
 import TextArea from "../../components/UI/textarea/TextArea";
 import ErrorMsg from "../../components/UI/ErrorMsg/ErrorMsg";
+import { ErrorContext } from "../../components/store/ErrorContext";
 type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
 
-const ControlPanelAboutMe: React.FC = () => {
+const ControlPanelAboutMe: React.FC = () => {   
+  // пока нет проверки на загружено ли изображение, только выдаются ошибки
+  const errorCtx = useContext(ErrorContext);  
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<IMyInfo>(MyInfo);
   const [isBtnDisable, setIsBtnDisable] = useState<boolean>(false);
@@ -243,28 +246,31 @@ const ControlPanelAboutMe: React.FC = () => {
   };
 
   const imgSelectHandler = (e: React.FormEvent<HTMLInputElement>): void => {
-    setIsErrorSending(false);
+    errorCtx.setIsError(false);
     if (e.currentTarget.files?.length !== 0) {
       const files: FileList | null = e.currentTarget.files;
+      
       if (files) {
         const fileSize: number = files[0].size / 8 / 1024;
 
         if (fileSize > 5) {
-          setIsErrorSending(true);
-          setErrorSengingMsg("Ошибка загрузки. Размер файла превышает 5Mb.");
+          console.log("big file");
+          
+          errorCtx.setIsError(true);
+          errorCtx.setErrorMsg("Ошибка загрузки. Размер файла превышает 5Mb.");
           return;
         }
 
         const format: string = files[0].name.split(".")[1];
-        if ("format === png" || format === "jpg" || format === "jpeg") {
+        if (format === "png" || format === "jpg" || format === "jpeg") {
           setIsLoadingFile(true);
           setUserImgFile(files[0]);
           setTimeout(() => {
             setIsLoadingFile(false);
           }, 1300);
         } else {
-          setIsErrorSending(true);
-          setErrorSengingMsg(
+          errorCtx.setIsError(true);
+          errorCtx.setErrorMsg(
             "Ошибка загрузки. Допустимы только форматы фото (png, jpg, jpeg)."
           );
           return;
@@ -275,7 +281,6 @@ const ControlPanelAboutMe: React.FC = () => {
 
   // load img
   const loadImgClickHandler = (): void => {
-    console.log("Change");
     document.getElementById("loadImg")?.click();
   };
 
