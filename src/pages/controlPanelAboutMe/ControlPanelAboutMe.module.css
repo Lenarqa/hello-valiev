@@ -39,21 +39,65 @@
   margin-bottom: 32px;
 }
 
+.headerForm[data-is-edit-mode="true"] button {
+  display: none;
+}
+
+.headerForm[data-is-edit-mode="false"] button {
+  display: flex;
+}
+
 .imgSection {
   display: flex;
 }
 
-.imgSection img {
+.imgsContainer {
+  position: relative;
+}
+
+.smallImg {
   width: 64px;
   height: 64px;
   margin-right: 16px;
+  cursor: pointer;
+  position: relative;
+}
+
+.bigImgContainer {
+  position: absolute;
+  display: inline-flex;
+  padding: 12px;
+  background-color: #fff;
+  border-radius: 2px;
+  height: 400px;
+  max-width: 400px;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1001;
+  opacity: 0;
+  transition: all 1s ease;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.bigImgContainer[data-is-hover="false"] {
+  visibility: none;
+}
+
+.bigImgContainer[data-is-hover="true"] {
+  display: inline-flex;
+  opacity: 1;
+}
+
+.bigImg img {
+  width: 100%;
+  height: auto;
 }
 
 .changePhoto {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  cursor: pointer;
 }
 
 .changePhoto p {
@@ -76,6 +120,7 @@
 }
 
 .headerAction div {
+  cursor: pointer;
   font-family: "Gilroy";
   font-style: normal;
   font-weight: 600;
@@ -121,5 +166,30 @@
 .smallAboutMeRow {
   flex-direction: column;
   align-items: flex-start;
+  margin-bottom: 40px;
 }
 
+.imgSection[data-is-edit-mode="false"],
+.inputsSection[data-is-edit-mode="false"] {
+  pointer-events: none;
+}
+
+.imgSection[data-is-edit-mode="true"],
+.inputsSection[data-is-edit-mode="true"] {
+  pointer-events: auto;
+}
+
+.actions {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.actions[data-is-edit-mode="false"] {
+  display: none;
+}
+
+.actions[data-is-edit-mode="true"] {
+  display: flex;
+}

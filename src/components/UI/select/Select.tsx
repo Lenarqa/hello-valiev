@@ -39,7 +39,7 @@ const Select: React.FC<ISelect> = (props) => {
   };
 
   return (
-    <div className={style.select} data-type={props.type}>
+    <div className={style.select} data-type={props.type} data-is-open={isActive}>
       <div className={style.selectBtn} onClick={setActiveHandler}>
         {props.selected.value}
       </div>

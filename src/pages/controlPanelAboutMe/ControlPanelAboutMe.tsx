@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./ControlPanelAboutMe.module.css";
 import { ReactComponent as PencilIcon } from "../../assets/icons/pencil.svg";
 import Button from "../../components/UI/button/Button";
@@ -15,7 +15,10 @@ import ErrorMsg from "../../components/UI/ErrorMsg/ErrorMsg";
 type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
 
 const ControlPanelAboutMe: React.FC = () => {
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<IMyInfo>(MyInfo);
+  const [isBtnDisable, setIsBtnDisable] = useState<boolean>(false);
+  const [isHoverImg, setIsHoverImg] = useState<boolean>(true);
 
   //selected Options city
   const curCity: IOption | undefined = DummyOptionsCity.find(
@@ -60,37 +63,75 @@ const ControlPanelAboutMe: React.FC = () => {
   const [isErrorSmallAboutMe, setIsErrorSmallAboutMe] =
     useState<boolean>(false);
   const [errorSmallAboutMeMsg, setErrorSmallAboutMeMsg] = useState<string>("");
-  
+
   // bigAboutMe
-  const [bigAboutMe, setBigAboutMe] = useState<string>(
-    userInfo.aboutMeText
-  );
-  const [isErrorBigAboutMe, setIsErrorBigAboutMe] =
-    useState<boolean>(false);
+  const [bigAboutMe, setBigAboutMe] = useState<string>(userInfo.aboutMeText);
+  const [isErrorBigAboutMe, setIsErrorBigAboutMe] = useState<boolean>(false);
   const [errorBigAboutMeMsg, setErrorBigAboutMeMsg] = useState<string>("");
 
-  const nameMouseOutHandler = () => {
+  const imgMouseOutHandler = (): void => {
+    console.log("out");
+
+    setIsHoverImg(false);
+  };
+
+  const imgMouseOverHandler = (): void => {
+    console.log("over");
+    setIsHoverImg(true);
+  };
+
+  const nameMouseOutHandler = (): void => {
     setIsHoverName(false);
   };
 
-  const nameMouseOverHandler = () => {
+  const nameMouseOverHandler = (): void => {
     setIsHoverName(true);
   };
 
-  const lastNameMouseOutHandler = () => {
+  const lastNameMouseOutHandler = (): void => {
     setIsHoverLastName(false);
   };
 
-  const lastNameMouseOverHandler = () => {
+  const lastNameMouseOverHandler = (): void => {
     setIsHoverLastName(true);
   };
 
-  const birthdayMouseOutHandler = () => {
+  const birthdayMouseOutHandler = (): void => {
     setIsHoverBirthday(false);
   };
 
-  const birthdayMouseOverHandler = () => {
+  const birthdayMouseOverHandler = (): void => {
     setIsHoverBirthday(true);
+  };
+
+  const startEditModeHandler = (): void => {
+    setIsEditMode(true);
+  };
+
+  const finishEditModeHandler = (): void => {
+    if (
+      !isNameError &&
+      !isLastNameError &&
+      !isBirthdayError &&
+      !isErrorSmallAboutMe &&
+      !isErrorBigAboutMe
+    ) {
+      setUserInfo((prev) => {
+        return {
+          name: name,
+          miniImgUrl: prev.mainImgUrl, //эти два поля остаются прежними, когда будет ответ с сервера я из заменю
+          mainImgUrl: prev.mainImgUrl,
+          birthday: birthday,
+          city: selectedCity.id,
+          gender: selectedGender.id,
+          year: prev.year, //если будет оставаться время то сделаю автоматический подсчет
+          smallAboutMe: smallAboutMe,
+          aboutMeText: bigAboutMe,
+          pet: selectedPet.id,
+        };
+      });
+      setIsEditMode(false);
+    }
   };
 
   // name validation
@@ -187,14 +228,35 @@ const ControlPanelAboutMe: React.FC = () => {
       setIsErrorBigAboutMe(true);
       setErrorBigAboutMeMsg("Поле не может быть пустым");
       return;
-    } else if (e.target.value.length === 499) {
+    } else if (e.target.value.length === 299) {
+      setBigAboutMe(e.target.value);
       setIsErrorBigAboutMe(true);
-      setErrorBigAboutMeMsg("Достигнуто максимальное число символов (500)");
-    } else if (e.target.value.length < 500) {
+      setErrorBigAboutMeMsg("Достигнуто максимальное число символов (300)");
+    } else if (e.target.value.length < 300) {
       setBigAboutMe(e.target.value);
       setIsErrorBigAboutMe(false);
     }
   };
+
+  useEffect(() => {
+    if (
+      isNameError ||
+      isLastNameError ||
+      isBirthdayError ||
+      isErrorSmallAboutMe ||
+      isErrorBigAboutMe
+    ) {
+      setIsBtnDisable(true);
+    } else {
+      setIsBtnDisable(false);
+    }
+  }, [
+    isNameError,
+    isLastNameError,
+    isBirthdayError,
+    isErrorSmallAboutMe,
+    isErrorBigAboutMe,
+  ]);
 
   return (
     <div className={style.container}>
@@ -202,11 +264,28 @@ const ControlPanelAboutMe: React.FC = () => {
         <div className={style.contentHeader}>
           <h2>Обо мне</h2>
         </div>
-        <form className={style.aboutMe}>
-          <div className={style.headerForm}>
+        <div className={style.aboutMe}>
+          <div className={style.headerForm} data-is-edit-mode={isEditMode}>
             <div className={style.imgSection}>
-              <img src={require("../../assets/img/photo.jpg")} alt="photo" />
-              <div className={style.changePhoto}>
+              <div className={style.imgsContainer}>
+                <img
+                  className={style.smallImg}
+                  src={require("../../assets/img/photo.jpg")}
+                  alt="photo"
+                  onMouseOver={imgMouseOverHandler}
+                  onMouseOut={imgMouseOutHandler}
+                />
+                
+                  <div className={style.bigImgContainer} data-is-hover={isHoverImg}>
+                    <img
+                      className={style.bigImg}
+                      src={require("../../assets/img/photo.jpg")}
+                      alt="photo"
+                    />
+                  </div>
+              </div>
+
+              <div className={style.changePhoto} data-is-edit-mode={isEditMode}>
                 <p>Фото профиля</p>
                 <div className={style.headerAction}>
                   <PencilIcon />
@@ -214,9 +293,11 @@ const ControlPanelAboutMe: React.FC = () => {
                 </div>
               </div>
             </div>
-            <Button type="submitAboutMe">Редактировать</Button>
+            <Button type="submitAboutMe" onClick={startEditModeHandler}>
+              Редактировать
+            </Button>
           </div>
-          <div className={style.inputsSection}>
+          <div className={style.inputsSection} data-is-edit-mode={isEditMode}>
             <div className={style.row}>
               <Input
                 type="controlPanel"
@@ -316,12 +397,19 @@ const ControlPanelAboutMe: React.FC = () => {
                 value={bigAboutMe}
                 onChangeHandler={changeBigAboutMeHandler}
               />
-              {isErrorBigAboutMe && (
-                <ErrorMsg>{errorBigAboutMeMsg}</ErrorMsg>
-              )}
+              {isErrorBigAboutMe && <ErrorMsg>{errorBigAboutMeMsg}</ErrorMsg>}
+            </div>
+            <div className={style.actions} data-is-edit-mode={isEditMode}>
+              <Button
+                type="submitAboutMe"
+                onClick={finishEditModeHandler}
+                isDisable={isBtnDisable}
+              >
+                Сохранить изменения
+              </Button>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

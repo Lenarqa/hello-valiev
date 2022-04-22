@@ -22,6 +22,7 @@
   background-position: left;
 }
 
+
 .button:disabled {
   background: #8a8a8a 100%;
 }
@@ -38,4 +39,8 @@
 /* aboutMe header */
 .button[data-type="submitAboutMe"] {
   margin-bottom: 0;
+}
+
+.button[data-type="submitAboutMe"]:disabled {
+  background: #8a8a8a 100%;
 }

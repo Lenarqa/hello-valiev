@@ -19,7 +19,7 @@
   display: none;
 }
 
-.select::after {
+.select[data-is-open="false"]::after {
   content: "";
   position: absolute;
   display: block;
@@ -32,6 +32,19 @@
   transform: translateY(-50%) rotate(136deg);
 }
 
+.select[data-is-open="true"]::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-top: 1.5px solid #8a8a8a;
+  border-right: 1.5px solid #8a8a8a;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-45deg);
+}
+
 .selectContent {
   position: absolute;
   width: 100%;
@@ -40,6 +53,7 @@
   background: #ffffff;
   box-shadow: 0px 1px 7px rgba(0, 0, 0, 0.16);
   border-radius: 2px;
+  z-index: 100;
 }
 
 .selectBtn {
@@ -105,6 +119,7 @@
   background: #ffffff;
   box-shadow: 0px 1px 7px rgba(0, 0, 0, 0.16);
   border-radius: 2px;
+  z-index: 100;
 }
 
 .selectCitySearch {
