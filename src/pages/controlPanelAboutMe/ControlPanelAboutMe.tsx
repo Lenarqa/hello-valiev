@@ -10,6 +10,9 @@ import { DummyOptionsCity } from "../../shared/data/OptionsCity";
 import { DummyOptionsGender } from "../../shared/data/OptionsGender";
 import { DummyOptionsPet } from "../../shared/data/OptionsPet";
 import { IOption } from "../../shared/models/models";
+import TextArea from "../../components/UI/textarea/TextArea";
+import ErrorMsg from "../../components/UI/ErrorMsg/ErrorMsg";
+type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
 
 const ControlPanelAboutMe: React.FC = () => {
   const [userInfo, setUserInfo] = useState<IMyInfo>(MyInfo);
@@ -49,6 +52,22 @@ const ControlPanelAboutMe: React.FC = () => {
   const [isBirthdayError, setIsBirthdayError] = useState<boolean>(false);
   const [BirthdayErrorMsg, setBirthdayErrorMsg] = useState<string>("");
   const [isHoverBirthday, setIsHoverBirthday] = useState<boolean>(false);
+
+  // smallAboutMe
+  const [smallAboutMe, setSmallAboutMe] = useState<string>(
+    userInfo.smallAboutMe
+  );
+  const [isErrorSmallAboutMe, setIsErrorSmallAboutMe] =
+    useState<boolean>(false);
+  const [errorSmallAboutMeMsg, setErrorSmallAboutMeMsg] = useState<string>("");
+  
+  // bigAboutMe
+  const [bigAboutMe, setBigAboutMe] = useState<string>(
+    userInfo.aboutMeText
+  );
+  const [isErrorBigAboutMe, setIsErrorBigAboutMe] =
+    useState<boolean>(false);
+  const [errorBigAboutMeMsg, setErrorBigAboutMeMsg] = useState<string>("");
 
   const nameMouseOutHandler = () => {
     setIsHoverName(false);
@@ -146,6 +165,37 @@ const ControlPanelAboutMe: React.FC = () => {
     }
   };
 
+  // smallAboutMe logic
+  const changeSmallAboutMeHandler: TextAreaChangeEventHandler = (e): void => {
+    if (e.target.value.trim().length <= 0) {
+      setSmallAboutMe(e.target.value);
+      setIsErrorSmallAboutMe(true);
+      setErrorSmallAboutMeMsg("Поле не может быть пустым");
+      return;
+    } else if (e.target.value.length === 99) {
+      setIsErrorSmallAboutMe(true);
+      setErrorSmallAboutMeMsg("Достигнуто максимальное число символов (100)");
+    } else if (e.target.value.length < 100) {
+      setSmallAboutMe(e.target.value);
+      setIsErrorSmallAboutMe(false);
+    }
+  };
+
+  const changeBigAboutMeHandler: TextAreaChangeEventHandler = (e): void => {
+    if (e.target.value.trim().length <= 0) {
+      setBigAboutMe(e.target.value);
+      setIsErrorBigAboutMe(true);
+      setErrorBigAboutMeMsg("Поле не может быть пустым");
+      return;
+    } else if (e.target.value.length === 499) {
+      setIsErrorBigAboutMe(true);
+      setErrorBigAboutMeMsg("Достигнуто максимальное число символов (500)");
+    } else if (e.target.value.length < 500) {
+      setBigAboutMe(e.target.value);
+      setIsErrorBigAboutMe(false);
+    }
+  };
+
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -216,7 +266,7 @@ const ControlPanelAboutMe: React.FC = () => {
             </div>
             <div className={style.row}>
               <div className={style.selectWrapper}>
-                <div className={style.selectTitle}>Город</div>
+                <div className={style.itemTitle}>Город</div>
                 <Select
                   type="city"
                   selected={selectedCity}
@@ -226,7 +276,7 @@ const ControlPanelAboutMe: React.FC = () => {
                 />
               </div>
               <div className={style.selectWrapper}>
-                <div className={style.selectTitle}>Пол</div>
+                <div className={style.itemTitle}>Пол</div>
                 <Select
                   type="bigWidth"
                   selected={selectedGender}
@@ -236,7 +286,7 @@ const ControlPanelAboutMe: React.FC = () => {
                 />
               </div>
               <div className={style.selectWrapper}>
-                <div className={style.selectTitle}>Животное</div>
+                <div className={style.itemTitle}>Животное</div>
                 <Select
                   type="smallWidth"
                   selected={selectedPet}
@@ -245,6 +295,30 @@ const ControlPanelAboutMe: React.FC = () => {
                   onChange={setSelectedPet}
                 />
               </div>
+            </div>
+            <div className={style.smallAboutMeRow}>
+              <div className={style.itemTitle}>Краткая информация</div>
+              <TextArea
+                type="long"
+                placeholder="Напишите краткую информацию о вас"
+                value={smallAboutMe}
+                onChangeHandler={changeSmallAboutMeHandler}
+              />
+              {isErrorSmallAboutMe && (
+                <ErrorMsg>{errorSmallAboutMeMsg}</ErrorMsg>
+              )}
+            </div>
+            <div className={style.bigAboutMeRow}>
+              <div className={style.itemTitle}>О себе</div>
+              <TextArea
+                type="big"
+                placeholder="Напишите что нибудь о себе"
+                value={bigAboutMe}
+                onChangeHandler={changeBigAboutMeHandler}
+              />
+              {isErrorBigAboutMe && (
+                <ErrorMsg>{errorBigAboutMeMsg}</ErrorMsg>
+              )}
             </div>
           </div>
         </form>

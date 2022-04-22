@@ -86,6 +86,7 @@ input[data-has-data="false"]:active {
 .formItem[data-type="controlPanel"]{
   width: 403px;
   margin-right: 24px;
+  margin-bottom: 0;
 }
 
 .formItem[data-type="controlPanel"] .formItem input[data-has-data="true"],

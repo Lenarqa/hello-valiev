@@ -36,6 +36,7 @@ export interface IMyInfo {
   city: number;
   gender: number;
   year: number;
+  smallAboutMe:string;
   aboutMeText: string;
   pet: number;
 }
