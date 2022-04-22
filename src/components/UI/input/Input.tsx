@@ -18,14 +18,17 @@ interface IInput {
     mouseOutHandler: ()=>void;
     isHover: boolean;
     errorMsg: string;
+    inputType?: string;
+    required?:boolean;
 }
 
 const Input: React.FC<IInput> = (props) => {
   return (
-    <div className={style.formItem} data-type={props.type}>
+    <div className={style.formItem} data-type={props.type} data-input-type={props.inputType}>
       <label htmlFor={props.id}>{props.labelTitle}</label>
       <div className={style.inputWrapper}>
         <input
+          type={props.inputType}
           id={props.id}
           placeholder={props.placeholder}
           onChange={props.onChange}
@@ -33,6 +36,7 @@ const Input: React.FC<IInput> = (props) => {
           data-is-error={props.dataIsError}
           data-is-unknown-user={props.dataIsUnknownUser}
           data-has-data={props.dataHasData}
+          required={props.required}
         />
         <div className={style.icons}>
           {props.isError && (

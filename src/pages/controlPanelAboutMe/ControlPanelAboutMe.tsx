@@ -15,11 +15,17 @@ const ControlPanelAboutMe: React.FC = () => {
   const [nameErrorMsg, setNameErrorMsg] = useState<string>("");
   const [isHoverName, setIsHoverName] = useState<boolean>(false);
 
-  // name
+  // lastname
   const [lastName, setLastName] = useState<string>(userInfo.name.split(" ")[0]);
   const [isLastNameError, setIsLastNameError] = useState<boolean>(false);
   const [lastNameErrorMsg, setLastNameErrorMsg] = useState<string>("");
   const [isHoverLastName, setIsHoverLastName] = useState<boolean>(false);
+
+  // birthday
+  const [birthday, setBirthday] = useState<string>(userInfo.birthday);
+  const [isBirthdayError, setIsBirthdayError] = useState<boolean>(false);
+  const [BirthdayErrorMsg, setBirthdayErrorMsg] = useState<string>("");
+  const [isHoverBirthday, setIsHoverBirthday] = useState<boolean>(false);
 
   const nameMouseOutHandler = () => {
     setIsHoverName(false);
@@ -35,6 +41,14 @@ const ControlPanelAboutMe: React.FC = () => {
 
   const lastNameMouseOverHandler = () => {
     setIsHoverLastName(true);
+  };
+
+  const birthdayMouseOutHandler = () => {
+    setIsHoverBirthday(false);
+  };
+
+  const birthdayMouseOverHandler = () => {
+    setIsHoverBirthday(true);
   };
 
   // name validation
@@ -79,6 +93,32 @@ const ControlPanelAboutMe: React.FC = () => {
 
     if (/[^a-zA-Za-яA-Я]/.test(newValue)) {
       setErrorLastName("Фамилия может содержать только кириллицу или латиницу");
+      return;
+    }
+  };
+
+  // birthday validation
+  const setErrorBithday = (errorMsg: string) => {
+    setIsBirthdayError(true);
+    setBirthdayErrorMsg(errorMsg);
+  };
+
+  const birthdayValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    const today: number = Date.now();
+
+    const newValue: string = e.currentTarget.value;
+    const selectDate: number = Date.parse(newValue);
+
+    const newValueFormat: string = `${newValue.split("-")[2]}.${
+      newValue.split("-")[1]
+    }.${newValue.split("-")[0]}`; //dd.mm.yyyy
+
+    setBirthdayErrorMsg("");
+    setBirthday(newValueFormat);
+    setIsBirthdayError(false);
+
+    if (selectDate > today) {
+      setErrorBithday("Дата должна быть не больше сегодняшней даты");
       return;
     }
   };
@@ -129,11 +169,28 @@ const ControlPanelAboutMe: React.FC = () => {
                 value={lastName}
                 dataIsError={isLastNameError}
                 dataHasData={!isLastNameError && lastName.trim().length > 0}
-                mouseOverHandler={lastNameMouseOverHandler}
-                mouseOutHandler={lastNameMouseOutHandler}
+                mouseOverHandler={birthdayMouseOverHandler}
+                mouseOutHandler={birthdayMouseOutHandler}
                 isHover={isHoverLastName}
                 errorMsg={lastNameErrorMsg}
                 isError={isLastNameError}
+              />
+              <Input
+                labelTitle="Дата рождения"
+                inputType="date"
+                id="birthday"
+                placeholder="Введите дату"
+                onChange={birthdayValidationHandler}
+                value={`${birthday.split(".")[2]}-${birthday.split(".")[1]}-${
+                  birthday.split(".")[0]
+                }`}
+                dataIsError={isBirthdayError}
+                mouseOverHandler={birthdayMouseOverHandler}
+                mouseOutHandler={birthdayMouseOutHandler}
+                isHover={isHoverBirthday}
+                errorMsg={BirthdayErrorMsg}
+                isError={isBirthdayError}
+                required={true}
               />
             </div>
           </div>

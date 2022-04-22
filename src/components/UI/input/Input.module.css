@@ -14,12 +14,10 @@
   font-family: "Factor A";
 }
 
-
 .formItem .passwordInput[type="text"] {
-    font-weight: 600;
-    letter-spacing: 0.2em;
-  }
-  
+  font-weight: 600;
+  letter-spacing: 0.2em;
+}
 
 .formItem input {
   width: 100%;
@@ -86,4 +84,10 @@ input[data-has-data="false"]:active {
 /* type controlPanel  */
 .formItem[data-type="controlPanel"] {
   width: 403px;
+}
+
+/* input type date */
+
+.formItem[data-input-type="date"] {
+  width: 209px;
 }
