@@ -5,7 +5,7 @@ import MsgWindow from "../msgWindow/MsgWindow";
 
 interface IInput {
   id: string;
-  value: string;
+  value?: string;
   onChange: (e: React.FormEvent<HTMLInputElement>) => void;
   type?: string;
   labelTitle?: string;

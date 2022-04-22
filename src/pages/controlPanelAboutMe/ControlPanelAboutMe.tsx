@@ -18,7 +18,7 @@ const ControlPanelAboutMe: React.FC = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<IMyInfo>(MyInfo);
   const [isBtnDisable, setIsBtnDisable] = useState<boolean>(false);
-  const [isHoverImg, setIsHoverImg] = useState<boolean>(true);
+  const [isHoverImg, setIsHoverImg] = useState<boolean>(false);
 
   //selected Options city
   const curCity: IOption | undefined = DummyOptionsCity.find(
@@ -69,14 +69,18 @@ const ControlPanelAboutMe: React.FC = () => {
   const [isErrorBigAboutMe, setIsErrorBigAboutMe] = useState<boolean>(false);
   const [errorBigAboutMeMsg, setErrorBigAboutMeMsg] = useState<string>("");
 
-  const imgMouseOutHandler = (): void => {
-    console.log("out");
+  //loading img
+  const [userImgFile, setUserImgFile] = useState<File>();
+  const [userImgUrl, setUserImgUrl] = useState<string>();
+  const [isErrorSending, setIsErrorSending] = useState<boolean>(false);
+  const [errorSendingMsg, setErrorSengingMsg] = useState<string>("");
+  const [isLoadingFile, setIsLoadingFile] = useState<boolean>(false);
 
+  const imgMouseOutHandler = (): void => {
     setIsHoverImg(false);
   };
 
   const imgMouseOverHandler = (): void => {
-    console.log("over");
     setIsHoverImg(true);
   };
 
@@ -238,6 +242,43 @@ const ControlPanelAboutMe: React.FC = () => {
     }
   };
 
+  const imgSelectHandler = (e: React.FormEvent<HTMLInputElement>): void => {
+    setIsErrorSending(false);
+    if (e.currentTarget.files?.length !== 0) {
+      const files: FileList | null = e.currentTarget.files;
+      if (files) {
+        const fileSize: number = files[0].size / 8 / 1024;
+
+        if (fileSize > 5) {
+          setIsErrorSending(true);
+          setErrorSengingMsg("Ошибка загрузки. Размер файла превышает 5Mb.");
+          return;
+        }
+
+        const format: string = files[0].name.split(".")[1];
+        if ("format === png" || format === "jpg" || format === "jpeg") {
+          setIsLoadingFile(true);
+          setUserImgFile(files[0]);
+          setTimeout(() => {
+            setIsLoadingFile(false);
+          }, 1300);
+        } else {
+          setIsErrorSending(true);
+          setErrorSengingMsg(
+            "Ошибка загрузки. Допустимы только форматы фото (png, jpg, jpeg)."
+          );
+          return;
+        }
+      }
+    }
+  };
+
+  // load img
+  const loadImgClickHandler = (): void => {
+    console.log("Change");
+    document.getElementById("loadImg")?.click();
+  };
+
   useEffect(() => {
     if (
       isNameError ||
@@ -258,6 +299,19 @@ const ControlPanelAboutMe: React.FC = () => {
     isErrorBigAboutMe,
   ]);
 
+  // img preview
+  useEffect(() => {
+    if (userImgFile) {
+      const reader: FileReader = new FileReader();
+      reader.onloadend = () => {
+        setUserImgUrl(reader.result as string);
+      };
+      reader.readAsDataURL(userImgFile);
+    } else {
+      setUserImgUrl("../../assets/img/users/User-0.png");
+    }
+  }, [userImgFile]);
+
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -271,25 +325,37 @@ const ControlPanelAboutMe: React.FC = () => {
                 <img
                   className={style.smallImg}
                   src={require("../../assets/img/photo.jpg")}
+                  // src={userImgUrl}
                   alt="photo"
                   onMouseOver={imgMouseOverHandler}
                   onMouseOut={imgMouseOutHandler}
                 />
-                
-                  <div className={style.bigImgContainer} data-is-hover={isHoverImg}>
-                    <img
-                      className={style.bigImg}
-                      src={require("../../assets/img/photo.jpg")}
-                      alt="photo"
-                    />
-                  </div>
-              </div>
 
-              <div className={style.changePhoto} data-is-edit-mode={isEditMode}>
+                <div
+                  className={style.bigImgContainer}
+                  data-is-hover={isHoverImg}
+                >
+                  <img
+                    className={style.bigImg}
+                    src={require("../../assets/img/photo.jpg")}
+                    // src={userImgUrl}
+                    alt="photo"
+                  />
+                </div>
+              </div>
+              <div className={style.changePhoto}>
                 <p>Фото профиля</p>
                 <div className={style.headerAction}>
                   <PencilIcon />
-                  <div>Изменить фото</div>
+                  <div className={style.changePhotoBtn} data-is-edit-mode={isEditMode} onClick={loadImgClickHandler}>Изменить фото</div>
+                  <Input
+                    type="invisible"
+                    id="loadImg"
+                    inputType="file"
+                    onChange={imgSelectHandler}
+                  >
+                    Изменить фото
+                  </Input>
                 </div>
               </div>
             </div>

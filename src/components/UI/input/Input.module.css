@@ -96,6 +96,10 @@ input[data-has-data="false"]:active {
 }
 
 
+/* type invisible */
+.formItem[data-type="invisible"]{
+  display: none;
+}
 
 /* input type date */
 
