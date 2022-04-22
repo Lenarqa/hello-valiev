@@ -1,6 +1,7 @@
-import { log } from "console";
 import React, { useState, useEffect } from "react";
 import { IOption } from "../../../shared/models/models";
+import { ReactComponent as SearchIcon } from "../../../assets/icons/search.svg";
+import Input from "../input/Input";
 import style from "./Select.module.css";
 
 interface ISelect {
@@ -8,13 +9,18 @@ interface ISelect {
   selected: IOption;
   setSelected: (value: IOption) => void;
   options: IOption[];
-  onChange: (option:IOption) => void;
+  onChange: (option: IOption) => void;
   closeGoodWindow?: (value: boolean) => void;
   closeBadWindow?: (value: boolean) => void;
 }
 
 const Select: React.FC<ISelect> = (props) => {
   const [isActive, setIsActive] = useState<boolean>(false);
+  const [findVal, setFindVal] = useState<string>("");
+
+  const onChangeFindHandler = (e: React.FormEvent<HTMLInputElement>): void => {
+    setFindVal(e.currentTarget.value);
+  };
 
   const setActiveHandler = (): void => {
     setIsActive((prev) => !prev);
@@ -23,7 +29,10 @@ const Select: React.FC<ISelect> = (props) => {
   const setSelectedHandler = (option: IOption): void => {
     props.onChange(option);
     setIsActive(false);
-    if(props.closeBadWindow !== undefined && props.closeGoodWindow !== undefined) {
+    if (
+      props.closeBadWindow !== undefined &&
+      props.closeGoodWindow !== undefined
+    ) {
       props.closeBadWindow(false);
       props.closeGoodWindow(false);
     }
@@ -35,17 +44,48 @@ const Select: React.FC<ISelect> = (props) => {
         {props.selected.value}
       </div>
       {isActive && (
-        <div className={style.selectContent}>
-          {props.options.map((option, key) => (
-            <div
-              key={key}
-              className={style.seletcItem}
-              onClick={setSelectedHandler.bind(this, option)}
-            >
-              {option.value}
+        <>
+          <div className={style.selectContent}>
+            {props.options.map((option, key) => (
+              <div
+                key={key}
+                className={style.seletcItem}
+                onClick={setSelectedHandler.bind(this, option)}
+              >
+                {option.value}
+              </div>
+            ))}
+          </div>
+          <div className={style.selectContentCity}>
+            <div className={style.selectCitySearch}>
+              <SearchIcon className={style.findIcon} />
+              <Input
+                type="selectFind"
+                id="selectFind"
+                placeholder="Поиск города"
+                value={findVal}
+                onChange={onChangeFindHandler}
+              />
             </div>
-          ))}
-        </div>
+            {props.options
+              .filter((option) => {
+                if (findVal === "") {
+                  return true;
+                } else if (option.value.includes(findVal)) {
+                  return true;
+                }
+              })
+              .map((option, key) => (
+                <div
+                  key={key}
+                  className={style.seletcItem}
+                  onClick={setSelectedHandler.bind(this, option)}
+                >
+                  {option.value}
+                </div>
+              ))}
+          </div>
+        </>
       )}
     </div>
   );

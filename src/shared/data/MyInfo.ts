@@ -5,8 +5,8 @@ export const MyInfo: IMyInfo = {
   miniImgUrl: "../../assets/img/photo.jpg",
   mainImgUrl: "../../../assets/img/Me_03.webp",
   birthday: "25.11.1998",
-  city: "Томск",
-  gender: "Mужчина",
+  city: 1,
+  gender: 1,
   year: 23,
   aboutMeText: `Hello everybody! Меня зовут Ленар, мне 23 года, я
   студент ТУСУРа. Учусь на программиста-экономиста на 1 курсе
@@ -18,5 +18,5 @@ export const MyInfo: IMyInfo = {
   хотел заниматься, разработка интерфейсов, логика пользовательского
   взаимодействие, движение данных внутри сайта и анимация, все это меня
   очень привлекло.`,
-  pet: "нет",
+  pet: 2,
 };

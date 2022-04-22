@@ -15,6 +15,10 @@
   cursor: pointer;
 }
 
+.selectContentCity {
+  display: none;
+}
+
 .select::after {
   content: "";
   position: absolute;
@@ -80,4 +84,47 @@
 
 .select[data-type="review"]::after {
   right: 12px;
+}
+
+/* aboutMe city type */
+.select[data-type="city"] .selectContent{
+  display: none;
+}
+
+.select[data-type="city"] {
+  width: 403px;
+}
+
+.select[data-type="city"] .selectContentCity{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  background: #ffffff;
+  box-shadow: 0px 1px 7px rgba(0, 0, 0, 0.16);
+  border-radius: 2px;
+}
+
+.selectCitySearch {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.selectCitySearch .findIcon {
+  position: absolute;
+  left: 22px;
+  top: 43%;
+  z-index: 100;
+}
+
+.select[data-type="bigWidth"] {
+  width: 403px;
+}
+
+.select[data-type="smallWidth"] {
+  width: 209px;
+
 }

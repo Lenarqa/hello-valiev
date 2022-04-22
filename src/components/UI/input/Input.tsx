@@ -4,27 +4,31 @@ import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg
 import MsgWindow from "../msgWindow/MsgWindow";
 
 interface IInput {
-    type?:string;
-    labelTitle:string;
-    id:string;
-    placeholder: string;
-    isError: boolean;
-    onChange: (e: React.FormEvent<HTMLInputElement>) => void
-    value:string;
-    dataIsError?:boolean;
-    dataIsUnknownUser?:boolean;
-    dataHasData?:boolean;
-    mouseOverHandler: ()=>void;
-    mouseOutHandler: ()=>void;
-    isHover: boolean;
-    errorMsg: string;
-    inputType?: string;
-    required?:boolean;
+  id: string;
+  value: string;
+  onChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  type?: string;
+  labelTitle?: string;
+  placeholder?: string;
+  isError?: boolean;
+  dataIsError?: boolean;
+  dataIsUnknownUser?: boolean;
+  dataHasData?: boolean;
+  mouseOverHandler?: () => void;
+  mouseOutHandler?: () => void;
+  isHover?: boolean;
+  errorMsg?: string;
+  inputType?: string;
+  required?: boolean;
 }
 
 const Input: React.FC<IInput> = (props) => {
   return (
-    <div className={style.formItem} data-type={props.type} data-input-type={props.inputType}>
+    <div
+      className={style.formItem}
+      data-type={props.type}
+      data-input-type={props.inputType}
+    >
       <label htmlFor={props.id}>{props.labelTitle}</label>
       <div className={style.inputWrapper}>
         <input

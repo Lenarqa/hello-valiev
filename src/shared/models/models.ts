@@ -33,9 +33,9 @@ export interface IMyInfo {
   miniImgUrl: string;
   mainImgUrl: string;
   birthday: string;
-  city: string;
-  gender: string;
+  city: number;
+  gender: number;
   year: number;
   aboutMeText: string;
-  pet: string;
+  pet: number;
 }

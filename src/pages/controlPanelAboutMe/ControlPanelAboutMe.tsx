@@ -5,9 +5,32 @@ import Button from "../../components/UI/button/Button";
 import Input from "../../components/UI/input/Input";
 import { MyInfo } from "../../shared/data/MyInfo";
 import { IMyInfo } from "../../shared/models/models";
+import Select from "../../components/UI/select/Select";
+import { DummyOptionsCity } from "../../shared/data/OptionsCity";
+import { DummyOptionsGender } from "../../shared/data/OptionsGender";
+import { DummyOptionsPet } from "../../shared/data/OptionsPet";
+import { IOption } from "../../shared/models/models";
 
 const ControlPanelAboutMe: React.FC = () => {
   const [userInfo, setUserInfo] = useState<IMyInfo>(MyInfo);
+
+  //selected Options city
+  const curCity: IOption | undefined = DummyOptionsCity.find(
+    (city) => city.id === userInfo.city
+  );
+  const [selectedCity, setSelectedCity] = useState<IOption>(curCity!);
+
+  //selected Options gender
+  const curGender: IOption | undefined = DummyOptionsGender.find(
+    (gender) => gender.id === userInfo.gender
+  );
+  const [selectedGender, setSelectedGender] = useState<IOption>(curGender!);
+
+  //selected Options pet
+  const curPet: IOption | undefined = DummyOptionsPet.find(
+    (pet) => pet.id === userInfo.pet
+  );
+  const [selectedPet, setSelectedPet] = useState<IOption>(curPet!);
 
   // name
   const [name, setName] = useState<string>(userInfo.name.split(" ")[1]);
@@ -153,7 +176,6 @@ const ControlPanelAboutMe: React.FC = () => {
                 onChange={nameValidationHandler}
                 value={name}
                 dataIsError={isNameError}
-                dataHasData={!isNameError && name.trim().length > 0}
                 mouseOverHandler={nameMouseOverHandler}
                 mouseOutHandler={nameMouseOutHandler}
                 isHover={isHoverName}
@@ -168,9 +190,8 @@ const ControlPanelAboutMe: React.FC = () => {
                 onChange={lastNameValidationHandler}
                 value={lastName}
                 dataIsError={isLastNameError}
-                dataHasData={!isLastNameError && lastName.trim().length > 0}
-                mouseOverHandler={birthdayMouseOverHandler}
-                mouseOutHandler={birthdayMouseOutHandler}
+                mouseOverHandler={lastNameMouseOverHandler}
+                mouseOutHandler={lastNameMouseOutHandler}
                 isHover={isHoverLastName}
                 errorMsg={lastNameErrorMsg}
                 isError={isLastNameError}
@@ -192,6 +213,38 @@ const ControlPanelAboutMe: React.FC = () => {
                 isError={isBirthdayError}
                 required={true}
               />
+            </div>
+            <div className={style.row}>
+              <div className={style.selectWrapper}>
+                <div className={style.selectTitle}>Город</div>
+                <Select
+                  type="city"
+                  selected={selectedCity}
+                  setSelected={setSelectedCity}
+                  options={DummyOptionsCity}
+                  onChange={setSelectedCity}
+                />
+              </div>
+              <div className={style.selectWrapper}>
+                <div className={style.selectTitle}>Пол</div>
+                <Select
+                  type="bigWidth"
+                  selected={selectedGender}
+                  setSelected={setSelectedGender}
+                  options={DummyOptionsGender}
+                  onChange={setSelectedGender}
+                />
+              </div>
+              <div className={style.selectWrapper}>
+                <div className={style.selectTitle}>Животное</div>
+                <Select
+                  type="smallWidth"
+                  selected={selectedPet}
+                  setSelected={setSelectedPet}
+                  options={DummyOptionsPet}
+                  onChange={setSelectedPet}
+                />
+              </div>
             </div>
           </div>
         </form>

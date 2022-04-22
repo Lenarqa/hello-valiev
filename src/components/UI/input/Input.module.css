@@ -12,6 +12,7 @@
   font-size: 14px;
   line-height: 20px;
   font-family: "Factor A";
+  color: #333333;
 }
 
 .formItem .passwordInput[type="text"] {
@@ -43,11 +44,11 @@ input[data-has-data="true"]:active {
   outline: 2px solid #585cc6;
 }
 
-.formItem input[data-has-data="false"],
+/* .formItem input[data-has-data="false"],
 input[data-has-data="false"]:focus,
 input[data-has-data="false"]:active {
   outline: 2px solid #eb5757;
-}
+} */
 
 .formItem input[data-is-unknown-user="true"],
 .formItem input[data-is-unknown-user="true"]:focus,
@@ -82,12 +83,34 @@ input[data-has-data="false"]:active {
 }
 
 /* type controlPanel  */
-.formItem[data-type="controlPanel"] {
+.formItem[data-type="controlPanel"]{
   width: 403px;
+  margin-right: 24px;
 }
+
+.formItem[data-type="controlPanel"] .formItem input[data-has-data="true"],
+.formItem[data-type="controlPanel"] input[data-has-data="true"]:focus,
+.formItem[data-type="controlPanel"] input[data-has-data="true"]:active {
+  outline: 2px solid transparent;
+}
+
+
 
 /* input type date */
 
 .formItem[data-input-type="date"] {
   width: 209px;
+}
+
+
+/* input type  */
+.formItem[data-type="selectFind"] {
+  margin: 12px;
+  width: 379px;
+  height: 42px;
+  position: relative;
+}
+
+.formItem[data-type="selectFind"] input {
+  padding: 10px 34px;
 }

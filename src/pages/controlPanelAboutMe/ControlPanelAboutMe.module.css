@@ -82,12 +82,12 @@
   font-size: 18px;
   line-height: 18px;
   letter-spacing: 0.01em;
-  color: #585CC6;
+  color: #585cc6;
 }
 
 .inputsSection {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .row {
@@ -95,7 +95,23 @@
   width: 100%;
 }
 
-.row :nth-child(1),
-.row :nth-child(2) {
+.selectWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
   margin-right: 24px;
+}
+
+.selectTitle {
+  font-family: "Factor A";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+
+  letter-spacing: -0.0124em;
+
+  color: #333333;
+  margin-bottom: 4px;
 }

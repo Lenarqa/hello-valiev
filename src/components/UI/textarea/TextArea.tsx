@@ -6,8 +6,8 @@ interface ITextArea {
     onChangeHandler: (e:any)=>void;//не смог найти тип eventa
     value: string;
     dataIsError?: boolean;
-    msgLenght: number;
-    maxLenght: number
+    msgLenght?: number;
+    maxLenght?: number
 }
 
 const TextArea: React.FC<ITextArea> = (props) => {
