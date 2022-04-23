@@ -12,29 +12,39 @@ import BadWindow from "../../components/UI/badWindow/BadWindow";
 import { PopUpContext } from "../../components/store/PopUpContext";
 
 const Reviews: React.FC = () => {
+  const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
+  const [selected, setIsSelected] = useState<IOption>(DummyOptionsReview[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
+
+  const [reviews, setReviews] = useState<IReview[]>(REVIEWS);
+  const [filteredReviews, setFilteredReviews] = useState<IReview[]>(REVIEWS);
+
+  const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(false);
+  const [isShowBadWindow, setIsShowBadWindow] = useState<boolean>(false);
+
+  // page loading
+  const [curPage, setCurPage] = useState<number>(1);
+  const [isLoadingPage, setisLoadingPage] = useState<boolean>(false);
+
   // если в controlPanelAboutMe была ошибка скрываем ее
-  // я еще не разобрался как прокидывать в оутлет пропсы или контекст
   const popUpCtx = useContext(PopUpContext);
-  useEffect(()=>{
+  useEffect(() => {
     popUpCtx.setIsError(false);
     popUpCtx.setIsOpenBadWindow(false);
     popUpCtx.setIsOpenGoodWindow(false);
+
+    window.addEventListener("scroll", scrollHandler);
+    return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
-  
-  const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
-  const [selected, setIsSelected] = useState<IOption>(DummyOptionsReview[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
-  const [reviews, setReviews] = useState<IReview[]>(REVIEWS);
-  const [filteredReviews, setFilteredReviews] = useState<IReview[]>(REVIEWS);
-  const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(false);
-  const [isShowBadWindow, setIsShowBadWindow] = useState<boolean>(false);
 
   const onChangeFilterHandler = useCallback((option: IOption): void => {
     const curfilteredReviews: IReview[] = reviews.filter(
       (item) => item.status === option?.id
     );
     const sortedFilteredReviews = sortByDate(curfilteredReviews);
+
     setFilteredReviews(sortedFilteredReviews);
     setIsSelected(option);
+    setCurPage(1);
   }, []);
 
   // начальная фильтрация, чтобы когда пользователь заходил на
@@ -106,12 +116,30 @@ const Reviews: React.FC = () => {
     // временная проверка, если true то выпадает отзыв отправлен успешно
     // иначе ошибка
     const updatedReview: IReview | undefined = reviews.find(
-        (review) => review.id === id
-      );
-    if(updatedReview?.text === updatedReviewText) {
+      (review) => review.id === id
+    );
+    if (updatedReview?.text === updatedReviewText) {
       return true;
-    }else {
+    } else {
       return false;
+    }
+  };
+
+  // pagination
+  const nextPageHandler = () => {
+    setCurPage((prev) => prev + 1);
+  };
+
+  const scrollHandler = (event: any): void => {
+    const scrollTop = document.documentElement.scrollTop;
+
+    const offsetHeight = document.documentElement.offsetHeight;
+
+    const windowInnerHeight = window.innerHeight;
+    console.log(curPage);
+
+    if (windowInnerHeight + scrollTop === offsetHeight) {
+      nextPageHandler();
     }
   };
 
@@ -134,24 +162,26 @@ const Reviews: React.FC = () => {
             />
           </div>
           <div className={style.rewiews}>
-            {filteredReviews.map((review) => (
-              <ReviewItem
-                type="controlPanelReview"
-                key={review.id}
-                id={review.id}
-                name={review.name}
-                date={review.date}
-                imgUrl={review.imgUrl}
-                text={review.text}
-                cancelHandler={cancelHandler}
-                status={review.status}
-                selected={selected}
-                publishHandler={publishHandler}
-                updateReviewText={updateReviewTextHandler}
-                showGoodWindow={setIsShowGoodWindow}
-                showBadWindow={setIsShowBadWindow}
-              />
-            ))}
+            {filteredReviews
+              .filter((rewiew, index) => index < 4 * curPage)
+              .map((review) => (
+                <ReviewItem
+                  type="controlPanelReview"
+                  key={review.id}
+                  id={review.id}
+                  name={review.name}
+                  date={review.date}
+                  imgUrl={review.imgUrl}
+                  text={review.text}
+                  cancelHandler={cancelHandler}
+                  status={review.status}
+                  selected={selected}
+                  publishHandler={publishHandler}
+                  updateReviewText={updateReviewTextHandler}
+                  showGoodWindow={setIsShowGoodWindow}
+                  showBadWindow={setIsShowBadWindow}
+                />
+              ))}
           </div>
         </div>
       )}
