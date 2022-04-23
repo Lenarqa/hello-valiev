@@ -10,9 +10,12 @@ import { sortByDate } from "../../shared/lib/sortReviews";
 import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
 import BadWindow from "../../components/UI/badWindow/BadWindow";
 import { PopUpContext } from "../../components/store/PopUpContext";
+import ReviewItemSkeleton from "../../components/reviewItem/skeleton/ReviewsSkeleton";
 
 const Reviews: React.FC = () => {
-  const pageSize:number = 4;
+  const pageSize: number = 4;
+  const [isLoadingPage, setisLoadingPage] = useState<boolean>(true);
+
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
   const [selected, setIsSelected] = useState<IOption>(DummyOptionsReview[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
 
@@ -24,7 +27,6 @@ const Reviews: React.FC = () => {
 
   // page loading
   const [curPage, setCurPage] = useState<number>(1);
-  const [isLoadingPage, setisLoadingPage] = useState<boolean>(false);
 
   // если в controlPanelAboutMe была ошибка скрываем ее
   const popUpCtx = useContext(PopUpContext);
@@ -32,6 +34,11 @@ const Reviews: React.FC = () => {
     popUpCtx.setIsError(false);
     popUpCtx.setIsOpenBadWindow(false);
     popUpCtx.setIsOpenGoodWindow(false);
+
+    setisLoadingPage(true);
+    setTimeout(() => {
+      setisLoadingPage(false);
+    }, 1000);
 
     window.addEventListener("scroll", scrollHandler);
     return () => window.removeEventListener("scroll", scrollHandler);
@@ -127,8 +134,12 @@ const Reviews: React.FC = () => {
   };
 
   // pagination
-  const nextPageHandler = ():void => {
+  const nextPageHandler = (): void => {
     setCurPage((prev) => prev + 1);
+    setisLoadingPage(true);
+    setTimeout(()=>{
+      setisLoadingPage(false);
+    }, 1000)
   };
 
   const scrollHandler = (event: any): void => {
@@ -162,24 +173,31 @@ const Reviews: React.FC = () => {
           <div className={style.rewiews}>
             {filteredReviews
               .filter((rewiew, index) => index < pageSize * curPage)
-              .map((review) => (
-                <ReviewItem
-                  type="controlPanelReview"
-                  key={review.id}
-                  id={review.id}
-                  name={review.name}
-                  date={review.date}
-                  imgUrl={review.imgUrl}
-                  text={review.text}
-                  cancelHandler={cancelHandler}
-                  status={review.status}
-                  selected={selected}
-                  publishHandler={publishHandler}
-                  updateReviewText={updateReviewTextHandler}
-                  showGoodWindow={setIsShowGoodWindow}
-                  showBadWindow={setIsShowBadWindow}
-                />
-              ))}
+              .map((review, index) => {
+                if (!isLoadingPage) {
+                  return (
+                    <ReviewItem
+                      type="controlPanelReview"
+                      key={review.id}
+                      id={review.id}
+                      name={review.name}
+                      date={review.date}
+                      imgUrl={review.imgUrl}
+                      text={review.text}
+                      cancelHandler={cancelHandler}
+                      status={review.status}
+                      selected={selected}
+                      publishHandler={publishHandler}
+                      updateReviewText={updateReviewTextHandler}
+                      showGoodWindow={setIsShowGoodWindow}
+                      showBadWindow={setIsShowBadWindow}
+                    />
+                  );
+                }else {
+                  return <ReviewItemSkeleton key={index} />
+                }
+              })}
+            {/* {isLoadingPage && <ReviewItemSkeleton />} */}
           </div>
         </div>
       )}
