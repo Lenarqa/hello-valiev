@@ -15,7 +15,7 @@ const Header: React.FC<IHeader> = (props) => {
   const navigate = useNavigate();
 
   const openControlPanelHandler = (): void => {
-    navigate(`/hello-valiev/controlPanel`);
+    navigate(`/hello-valiev/controlPanel/users`);
   };
 
   const openAboutMePage = ():void => {

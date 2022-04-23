@@ -35,6 +35,10 @@ const Reviews: React.FC = () => {
     popUpCtx.setIsOpenBadWindow(false);
     popUpCtx.setIsOpenGoodWindow(false);
 
+    if(reviews.length === 0) {
+      setIsEmptyPage(true);
+    }
+
     setisLoadingPage(true);
     setTimeout(() => {
       setisLoadingPage(false);

@@ -131,4 +131,12 @@
   .header[data-type="aboutMe"]  .img {
     margin-right: 8px;
   }
+
+  /* content panel */
+  .header[data-type="control-panel"] {
+    padding: 17px 14px 18px 16px;
+  }
+  .header[data-type="control-panel"] .photoSection{
+    flex-direction: column;
+  }
 }

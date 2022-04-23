@@ -12,6 +12,15 @@ import ParticipantItemSkeleton from "../../components/participantItem/skeleton/P
 
 const Users: React.FC = () => {
   const [isLoadingPage, setIsloadingPage] = useState<boolean>(false);
+  const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
+
+  const [selected, setIsSelected] = useState<IOption>(
+    DummyOptionsParticipants[0]
+  ); //0 - элемент, это элемент по дефолту отображающийся в селект;
+  const [participants, setParticipants] =
+    useState<IParticipant[]>(Participants);
+  const [filteredParticipants, setFilteredParticipants] =
+    useState<IParticipant[]>(Participants);
 
   // если в controlPanelAboutMe была ошибка скрываем ее
   // я еще не разобрался как прокидывать в оутлет контекст
@@ -20,6 +29,10 @@ const Users: React.FC = () => {
     popUpCtx.setIsError(false);
     popUpCtx.setIsOpenBadWindow(false);
     popUpCtx.setIsOpenGoodWindow(false);
+
+    if(participants.length === 0) {
+      setIsEmptyPage(true);
+    }
     
     setIsloadingPage(true);
     setTimeout(()=>{
@@ -27,14 +40,7 @@ const Users: React.FC = () => {
     }, 1000);
   }, []);
 
-  const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
-  const [selected, setIsSelected] = useState<IOption>(
-    DummyOptionsParticipants[0]
-  ); //0 - элемент, это элемент по дефолту отображающийся в селект;
-  const [participants, setParticipants] =
-    useState<IParticipant[]>(Participants);
-  const [filteredParticipants, setFilteredParticipants] =
-    useState<IParticipant[]>(Participants);
+  
 
   //pagination
   const [curPage, setCurPage] = useState<number>(1);
