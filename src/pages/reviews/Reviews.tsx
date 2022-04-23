@@ -12,6 +12,7 @@ import BadWindow from "../../components/UI/badWindow/BadWindow";
 import { PopUpContext } from "../../components/store/PopUpContext";
 
 const Reviews: React.FC = () => {
+  const pageSize:number = 4;
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
   const [selected, setIsSelected] = useState<IOption>(DummyOptionsReview[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
 
@@ -126,17 +127,14 @@ const Reviews: React.FC = () => {
   };
 
   // pagination
-  const nextPageHandler = () => {
+  const nextPageHandler = ():void => {
     setCurPage((prev) => prev + 1);
   };
 
   const scrollHandler = (event: any): void => {
     const scrollTop = document.documentElement.scrollTop;
-
     const offsetHeight = document.documentElement.offsetHeight;
-
     const windowInnerHeight = window.innerHeight;
-    console.log(curPage);
 
     if (windowInnerHeight + scrollTop === offsetHeight) {
       nextPageHandler();
@@ -163,7 +161,7 @@ const Reviews: React.FC = () => {
           </div>
           <div className={style.rewiews}>
             {filteredReviews
-              .filter((rewiew, index) => index < 4 * curPage)
+              .filter((rewiew, index) => index < pageSize * curPage)
               .map((review) => (
                 <ReviewItem
                   type="controlPanelReview"
