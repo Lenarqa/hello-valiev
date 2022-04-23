@@ -8,15 +8,23 @@ import ParticipantItem from "../../components/participantItem/ParticipantItem";
 import Pagination from "../../components/UI/pagination/Pagination";
 import { DummyOptionsParticipants } from "../../shared/data/OptionsParticipant";
 import { PopUpContext } from "../../components/store/PopUpContext";
+import ParticipantItemSkeleton from "../../components/participantItem/skeleton/ParticipantItemSkeleton";
 
 const Users: React.FC = () => {
+  const [isLoadingPage, setIsloadingPage] = useState<boolean>(false);
+
   // если в controlPanelAboutMe была ошибка скрываем ее
   // я еще не разобрался как прокидывать в оутлет контекст
   const popUpCtx = useContext(PopUpContext);
-  useEffect(()=>{
+  useEffect(() => {
     popUpCtx.setIsError(false);
     popUpCtx.setIsOpenBadWindow(false);
     popUpCtx.setIsOpenGoodWindow(false);
+    
+    setIsloadingPage(true);
+    setTimeout(()=>{
+      setIsloadingPage(false);
+    }, 1000);
   }, []);
 
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
@@ -41,14 +49,29 @@ const Users: React.FC = () => {
 
   const changePageHandler = (pageNum: number): void => {
     setCurPage(pageNum);
+
+    setIsloadingPage(true);
+    setTimeout(()=>{
+      setIsloadingPage(false);
+    }, 1000);
   };
 
   const nextPageHandler = (): void => {
     setCurPage((prev) => (prev += 1));
+    
+    setIsloadingPage(true);
+    setTimeout(()=>{
+      setIsloadingPage(false);
+    }, 1000);
   };
 
   const BackPageHandler = (): void => {
     setCurPage((prev) => (prev -= 1));
+    
+    setIsloadingPage(true);
+    setTimeout(()=>{
+      setIsloadingPage(false);
+    }, 1000);
   };
 
   const onChangeFilterHandler = (option: IOption): void => {
@@ -84,9 +107,18 @@ const Users: React.FC = () => {
             <h2>СТАТУС</h2>
           </div>
           <div className={style.table}>
-            {curFilteredParticipants.map((participant) => (
-              <ParticipantItem key={participant.id} participant={participant} />
-            ))}
+            {curFilteredParticipants.map((participant, index) => {
+              if (!isLoadingPage) {
+                return (
+                  <ParticipantItem
+                    key={participant.id}
+                    participant={participant}
+                  />
+                );
+              } else {
+                return <ParticipantItemSkeleton key={index} />;
+              }
+            })}
           </div>
           <Pagination
             curPage={curPage}
