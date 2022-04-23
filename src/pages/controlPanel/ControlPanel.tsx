@@ -4,13 +4,16 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer/footer/Footer";
 import LeftMenu from "../../components/leftMenu/LeftMenu";
 import { Outlet } from "react-router-dom";
-import { ErrorContext } from "../../components/store/ErrorContext";
+import { PopUpContext } from "../../components/store/PopUpContext";
 import FooterErrorMsg from "../../components/UI/footerErrorMsg/FooterErrorMsg";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
+import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
+import BadWindow from "../../components/UI/badWindow/BadWindow";
 
 const ControlPanel: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const errorCtx = useContext(ErrorContext);
+  const popUpContext = useContext(PopUpContext);
+
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
@@ -28,7 +31,23 @@ const ControlPanel: React.FC = () => {
             <LeftMenu />
             <Outlet />
           </div>
-          {errorCtx.isError && <FooterErrorMsg text={errorCtx.isErrorMsg} />}
+          {popUpContext.isError && (
+            <FooterErrorMsg text={popUpContext.isErrorMsg} />
+          )}
+          {popUpContext.isOpenGoodWindow && (
+            <GoodWindow
+              title="Сохранено"
+              text="Данные успешно отредактированы!"
+              setShowGoodWindow={popUpContext.setIsOpenGoodWindow}
+            />
+          )}
+          {popUpContext.isOpenBadWindow && (
+            <BadWindow
+              title="Что-то не так..."
+              text="Не получилось отредактировать данные. Попробуйте еще раз!"
+              setShowBadWindow={popUpContext.setIsOpenBadWindow}
+            />
+          )}
           <Footer />
         </>
       )}

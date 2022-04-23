@@ -3,15 +3,15 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
-import ErrorContexProvider from "./components/store/ErrorContext";
+import PopUpContextProvider from "./components/store/PopUpContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ErrorContexProvider>
+    <PopUpContextProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </ErrorContexProvider>
+    </PopUpContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

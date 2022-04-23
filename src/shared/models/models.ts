@@ -40,3 +40,8 @@ export interface IMyInfo {
   aboutMeText: string;
   pet: number;
 }
+
+export interface IValidationResult {
+  result: boolean,
+  errorMsg:string,
+}

@@ -4,7 +4,7 @@ import { ReactComponent as PencilIcon } from "../../assets/icons/pencil.svg";
 import Button from "../../components/UI/button/Button";
 import Input from "../../components/UI/input/Input";
 import { MyInfo } from "../../shared/data/MyInfo";
-import { IMyInfo } from "../../shared/models/models";
+import { IMyInfo, IValidationResult } from "../../shared/models/models";
 import Select from "../../components/UI/select/Select";
 import { DummyOptionsCity } from "../../shared/data/OptionsCity";
 import { DummyOptionsGender } from "../../shared/data/OptionsGender";
@@ -12,21 +12,36 @@ import { DummyOptionsPet } from "../../shared/data/OptionsPet";
 import { IOption } from "../../shared/models/models";
 import TextArea from "../../components/UI/textarea/TextArea";
 import ErrorMsg from "../../components/UI/ErrorMsg/ErrorMsg";
-import { ErrorContext } from "../../components/store/ErrorContext";
+import { PopUpContext } from "../../components/store/PopUpContext";
+import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
+import {
+  bigAboutMeValidation,
+  lastNameValidation,
+  nameValidation,
+  smallAboutMeValidation,
+} from "../../shared/lib/validation/ControlPanelAboutMe";
 type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
 
 const ControlPanelAboutMe: React.FC = () => {
   // пока нет проверки на загружено ли изображение, только выдаются ошибки
-  const errorCtx = useContext(ErrorContext);
+  const popUpCtx = useContext(PopUpContext);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<IMyInfo>(MyInfo);
   const [isBtnDisable, setIsBtnDisable] = useState<boolean>(false);
   const [isHoverImg, setIsHoverImg] = useState<boolean>(false);
+  const [isUserHaveImg, setIsUserHaveImg] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (userInfo.miniImgUrl !== "") {
+      setIsUserHaveImg(true);
+    }
+  }, []);
 
   //selected Options city
   const curCity: IOption | undefined = DummyOptionsCity.find(
     (city) => city.id === userInfo.city
   );
+
   const [selectedCity, setSelectedCity] = useState<IOption>(curCity!);
 
   //selected Options gender
@@ -74,9 +89,6 @@ const ControlPanelAboutMe: React.FC = () => {
 
   //loading img
   const [userImgFile, setUserImgFile] = useState<File>();
-  const [userImgUrl, setUserImgUrl] = useState<string>();
-  const [isErrorSending, setIsErrorSending] = useState<boolean>(false);
-  const [errorSendingMsg, setErrorSengingMsg] = useState<string>("");
   const [isLoadingFile, setIsLoadingFile] = useState<boolean>(false);
 
   // Out and Over handler
@@ -139,116 +151,92 @@ const ControlPanelAboutMe: React.FC = () => {
           pet: selectedPet.id,
         };
       });
+
+      popUpCtx.setIsOpenGoodWindow(true);
+      // popUpCtx.setIsOpenGoodWindow(true); в случае ошибки
       setIsEditMode(false);
     }
   };
 
   // name validation
-  const setErrorName = (errorMsg: string) => {
-    setIsNameError(true);
-    setNameErrorMsg(errorMsg);
-  };
-
   const nameValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value;
+    const newValue: string = e.currentTarget.value;
     setNameErrorMsg("");
     setName(newValue);
     setIsNameError(false);
 
-    if (newValue.trim().length === 0) {
-      setErrorName("Поле обязатльльно для заполнения");
-      return;
-    }
-
-    if (/[^a-zA-Za-яA-Я]/.test(newValue)) {
-      setErrorName("Имя может содержать только кириллицу или латиницу");
-      return;
+    const res: IValidationResult = nameValidation(newValue);
+    if (res.result) {
+      setIsNameError(true);
+      setNameErrorMsg(res.errorMsg);
     }
   };
 
   // lastName validation
-  const setErrorLastName = (errorMsg: string) => {
-    setIsLastNameError(true);
-    setLastNameErrorMsg(errorMsg);
-  };
-
   const lastNameValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     setLastNameErrorMsg("");
     setLastName(newValue);
     setIsLastNameError(false);
 
-    if (newValue.trim().length === 0) {
-      setErrorLastName("Поле обязатльльно для заполнения");
-      return;
-    }
-
-    if (/[^a-zA-Za-яA-Я]/.test(newValue)) {
-      setErrorLastName("Фамилия может содержать только кириллицу или латиницу");
-      return;
+    const res: IValidationResult = lastNameValidation(newValue);
+    if (res.result) {
+      setIsLastNameError(true);
+      setLastNameErrorMsg(res.errorMsg);
     }
   };
 
   // birthday validation
-  const setErrorBithday = (errorMsg: string) => {
-    setIsBirthdayError(true);
-    setBirthdayErrorMsg(errorMsg);
-  };
-
   const birthdayValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const today: number = Date.now();
-
     const newValue: string = e.currentTarget.value;
     const selectDate: number = Date.parse(newValue);
+
+    setBirthdayErrorMsg("");
+    setIsBirthdayError(false);
 
     const newValueFormat: string = `${newValue.split("-")[2]}.${
       newValue.split("-")[1]
     }.${newValue.split("-")[0]}`; //dd.mm.yyyy
 
-    setBirthdayErrorMsg("");
     setBirthday(newValueFormat);
-    setIsBirthdayError(false);
 
     if (selectDate > today) {
-      setErrorBithday("Дата должна быть не больше сегодняшней даты");
+      setIsBirthdayError(true);
+      setBirthdayErrorMsg("Дата должна быть не больше сегодняшней даты");
       return;
     }
   };
 
   // smallAboutMe logic
   const changeSmallAboutMeHandler: TextAreaChangeEventHandler = (e): void => {
-    if (e.target.value.trim().length <= 0) {
-      setSmallAboutMe(e.target.value);
+    const res: IValidationResult = smallAboutMeValidation(e.target.value);
+
+    if (res.result) {
       setIsErrorSmallAboutMe(true);
-      setErrorSmallAboutMeMsg("Поле не может быть пустым");
-      return;
-    } else if (e.target.value.length === 99) {
-      setIsErrorSmallAboutMe(true);
-      setErrorSmallAboutMeMsg("Достигнуто максимальное число символов (100)");
-    } else if (e.target.value.length < 100) {
-      setSmallAboutMe(e.target.value);
+      setErrorSmallAboutMeMsg(res.errorMsg);
+    }else {
       setIsErrorSmallAboutMe(false);
     }
+
+    setSmallAboutMe(e.target.value);
   };
 
   const changeBigAboutMeHandler: TextAreaChangeEventHandler = (e): void => {
-    if (e.target.value.trim().length <= 0) {
-      setBigAboutMe(e.target.value);
+    const res:IValidationResult = bigAboutMeValidation(e.target.value)
+    
+    if (res.result) {
       setIsErrorBigAboutMe(true);
-      setErrorBigAboutMeMsg("Поле не может быть пустым");
-      return;
-    } else if (e.target.value.length === 299) {
-      setBigAboutMe(e.target.value);
-      setIsErrorBigAboutMe(true);
-      setErrorBigAboutMeMsg("Достигнуто максимальное число символов (300)");
-    } else if (e.target.value.length < 300) {
-      setBigAboutMe(e.target.value);
+      setErrorBigAboutMeMsg(res.errorMsg);
+    }else {
       setIsErrorBigAboutMe(false);
     }
+
+    setBigAboutMe(e.target.value);
   };
 
   const imgSelectHandler = (e: React.FormEvent<HTMLInputElement>): void => {
-    errorCtx.setIsError(false);
+    popUpCtx.setIsError(false);
     if (e.currentTarget.files?.length !== 0) {
       const files: FileList | null = e.currentTarget.files;
 
@@ -259,20 +247,18 @@ const ControlPanelAboutMe: React.FC = () => {
         reader.onloadend = () => {
           const img = new Image();
           img.onload = function (e) {
-            //внутри е.currentTarget есть ширина и высота картинки, 
+            //внутри е.currentTarget есть ширина и высота картинки,
             //но я еще не понял как их оттуда достать.
             const myImg = e.currentTarget as HTMLElement;
             console.log(myImg);
-            
           };
           img.src = window.URL.createObjectURL(files[0]);
         };
         reader.readAsDataURL(files[0]);
-        
 
         if (fileSize > 5) {
-          errorCtx.setIsError(true);
-          errorCtx.setErrorMsg("Ошибка загрузки. Размер файла превышает 5Mb.");
+          popUpCtx.setIsError(true);
+          popUpCtx.setErrorMsg("Ошибка загрузки. Размер файла превышает 5Mb.");
           return;
         }
 
@@ -282,10 +268,10 @@ const ControlPanelAboutMe: React.FC = () => {
           setUserImgFile(files[0]);
           setTimeout(() => {
             setIsLoadingFile(false);
-          }, 1300);
+          }, 1000);
         } else {
-          errorCtx.setIsError(true);
-          errorCtx.setErrorMsg(
+          popUpCtx.setIsError(true);
+          popUpCtx.setErrorMsg(
             "Ошибка загрузки. Допустимы только форматы фото (png, jpg, jpeg)."
           );
           return;
@@ -306,11 +292,11 @@ const ControlPanelAboutMe: React.FC = () => {
       isBirthdayError ||
       isErrorSmallAboutMe ||
       isErrorBigAboutMe ||
-      errorCtx.isError
+      popUpCtx.isError
     ) {
       setIsBtnDisable(true);
     } else {
-      errorCtx.setIsError(false);
+      popUpCtx.setIsError(false);
       setIsBtnDisable(false);
     }
   }, [
@@ -319,7 +305,7 @@ const ControlPanelAboutMe: React.FC = () => {
     isBirthdayError,
     isErrorSmallAboutMe,
     isErrorBigAboutMe,
-    errorCtx.isError, //ошибка изображения
+    popUpCtx.isError, //ошибка изображения
   ]);
 
   return (
@@ -331,22 +317,35 @@ const ControlPanelAboutMe: React.FC = () => {
         <div className={style.aboutMe}>
           <div className={style.headerForm} data-is-edit-mode={isEditMode}>
             <div className={style.imgSection}>
-              <div className={style.imgsContainer}>
-                <img
-                  className={style.smallImg}
-                  src={require("../../assets/img/photo.jpg")}
-                  alt="photo"
-                  onMouseOver={imgMouseOverHandler}
-                  onMouseOut={imgMouseOutHandler}
-                />
-
+              <div
+                className={style.imgsContainer}
+                data-is-loading={isLoadingFile}
+              >
+                {isLoadingFile && <LoadingSpiner type="icon" />}
+                {!isLoadingFile && (
+                  <img
+                    className={style.smallImg}
+                    src={
+                      isUserHaveImg
+                        ? require("../../assets/img/photo.jpg")
+                        : require("../../assets/img/users/User-0.png")
+                    }
+                    alt="photo"
+                    onMouseOver={imgMouseOverHandler}
+                    onMouseOut={imgMouseOutHandler}
+                  />
+                )}
                 <div
                   className={style.bigImgContainer}
                   data-is-hover={isHoverImg}
                 >
                   <img
                     className={style.bigImg}
-                    src={require("../../assets/img/photo.jpg")}
+                    src={
+                      isUserHaveImg
+                        ? require("../../assets/img/photo.jpg")
+                        : require("../../assets/img/users/User-0.png")
+                    }
                     alt="photo"
                   />
                 </div>
@@ -357,7 +356,6 @@ const ControlPanelAboutMe: React.FC = () => {
                   <PencilIcon />
                   <div
                     className={style.changePhotoBtn}
-                    data-is-edit-mode={isEditMode}
                     onClick={loadImgClickHandler}
                   >
                     Изменить фото

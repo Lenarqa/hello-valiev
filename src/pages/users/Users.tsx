@@ -7,14 +7,16 @@ import { IOption, IParticipant } from "../../shared/models/models";
 import ParticipantItem from "../../components/participantItem/ParticipantItem";
 import Pagination from "../../components/UI/pagination/Pagination";
 import { DummyOptionsParticipants } from "../../shared/data/OptionsParticipant";
-import { ErrorContext } from "../../components/store/ErrorContext";
+import { PopUpContext } from "../../components/store/PopUpContext";
 
 const Users: React.FC = () => {
   // если в controlPanelAboutMe была ошибка скрываем ее
   // я еще не разобрался как прокидывать в оутлет контекст
-  const errorCtx = useContext(ErrorContext);
+  const popUpCtx = useContext(PopUpContext);
   useEffect(()=>{
-    errorCtx.setIsError(false);
+    popUpCtx.setIsError(false);
+    popUpCtx.setIsOpenBadWindow(false);
+    popUpCtx.setIsOpenGoodWindow(false);
   }, []);
 
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);

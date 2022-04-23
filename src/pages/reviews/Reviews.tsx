@@ -9,14 +9,16 @@ import ReviewItem from "../../components/reviewItem/ReviewItem";
 import { sortByDate } from "../../shared/lib/sortReviews";
 import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
 import BadWindow from "../../components/UI/badWindow/BadWindow";
-import { ErrorContext } from "../../components/store/ErrorContext";
+import { PopUpContext } from "../../components/store/PopUpContext";
 
 const Reviews: React.FC = () => {
   // если в controlPanelAboutMe была ошибка скрываем ее
   // я еще не разобрался как прокидывать в оутлет пропсы или контекст
-  const errorCtx = useContext(ErrorContext);
+  const popUpCtx = useContext(PopUpContext);
   useEffect(()=>{
-    errorCtx.setIsError(false);
+    popUpCtx.setIsError(false);
+    popUpCtx.setIsOpenBadWindow(false);
+    popUpCtx.setIsOpenGoodWindow(false);
   }, []);
   
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);

@@ -1,8 +1,11 @@
 import React from "react";
 import style from "./LoadingSpiner.module.css";
-const LoadingSpiner: React.FC = () => {
+interface ILoadingSpiner {
+  type?:string;
+}
+const LoadingSpiner: React.FC<ILoadingSpiner> = (props) => {
   return (
-    <div className={style.container}>
+    <div className={style.container} data-type={props.type}>
       <div className={style.box}>
         <div className={style.item1}></div>
         <div className={style.item2}></div>

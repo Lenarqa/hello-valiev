@@ -57,12 +57,24 @@
   position: relative;
 }
 
+.imgsContainer[data-is-loading="true"] {
+  width: 64px;
+  height: 64px;
+  margin-right: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .smallImg {
   width: 64px;
   height: 64px;
   margin-right: 16px;
   cursor: pointer;
   position: relative;
+  background-color: #F5F5F5;
+  border-radius: 2px;
+  border: 1px solid #F5F5F5;
 }
 
 .bigImgContainer {
