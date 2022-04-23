@@ -10,12 +10,13 @@ import { DummyOptionsParticipants } from "../../shared/data/OptionsParticipant";
 import { ErrorContext } from "../../components/store/ErrorContext";
 
 const Users: React.FC = () => {
-    // если в controlPanelAboutMe была ошибка скрываем ее
-  // я еще не разобрался как прокидывать в оутлет пропсы или контекст
+  // если в controlPanelAboutMe была ошибка скрываем ее
+  // я еще не разобрался как прокидывать в оутлет контекст
   const errorCtx = useContext(ErrorContext);
   useEffect(()=>{
     errorCtx.setIsError(false);
   }, []);
+
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
   const [selected, setIsSelected] = useState<IOption>(
     DummyOptionsParticipants[0]

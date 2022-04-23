@@ -15,9 +15,9 @@ import ErrorMsg from "../../components/UI/ErrorMsg/ErrorMsg";
 import { ErrorContext } from "../../components/store/ErrorContext";
 type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
 
-const ControlPanelAboutMe: React.FC = () => {   
+const ControlPanelAboutMe: React.FC = () => {
   // пока нет проверки на загружено ли изображение, только выдаются ошибки
-  const errorCtx = useContext(ErrorContext);  
+  const errorCtx = useContext(ErrorContext);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<IMyInfo>(MyInfo);
   const [isBtnDisable, setIsBtnDisable] = useState<boolean>(false);
@@ -79,6 +79,7 @@ const ControlPanelAboutMe: React.FC = () => {
   const [errorSendingMsg, setErrorSengingMsg] = useState<string>("");
   const [isLoadingFile, setIsLoadingFile] = useState<boolean>(false);
 
+  // Out and Over handler
   const imgMouseOutHandler = (): void => {
     setIsHoverImg(false);
   };
@@ -110,6 +111,7 @@ const ControlPanelAboutMe: React.FC = () => {
   const birthdayMouseOverHandler = (): void => {
     setIsHoverBirthday(true);
   };
+  // End Out and Over handler
 
   const startEditModeHandler = (): void => {
     setIsEditMode(true);
@@ -126,7 +128,7 @@ const ControlPanelAboutMe: React.FC = () => {
       setUserInfo((prev) => {
         return {
           name: name,
-          miniImgUrl: prev.mainImgUrl, //эти два поля остаются прежними, когда будет ответ с сервера я из заменю
+          miniImgUrl: prev.mainImgUrl, //эти два поля остаются прежними, когда будет ответ с сервера нужно будет заменю
           mainImgUrl: prev.mainImgUrl,
           birthday: birthday,
           city: selectedCity.id,
@@ -249,13 +251,26 @@ const ControlPanelAboutMe: React.FC = () => {
     errorCtx.setIsError(false);
     if (e.currentTarget.files?.length !== 0) {
       const files: FileList | null = e.currentTarget.files;
-      
+
       if (files) {
         const fileSize: number = files[0].size / 8 / 1024;
 
+        const reader: FileReader = new FileReader();
+        reader.onloadend = () => {
+          const img = new Image();
+          img.onload = function (e) {
+            //внутри е.currentTarget есть ширина и высота картинки, 
+            //но я еще не понял как их оттуда достать.
+            const myImg = e.currentTarget as HTMLElement;
+            console.log(myImg);
+            
+          };
+          img.src = window.URL.createObjectURL(files[0]);
+        };
+        reader.readAsDataURL(files[0]);
+        
+
         if (fileSize > 5) {
-          console.log("big file");
-          
           errorCtx.setIsError(true);
           errorCtx.setErrorMsg("Ошибка загрузки. Размер файла превышает 5Mb.");
           return;
@@ -290,10 +305,12 @@ const ControlPanelAboutMe: React.FC = () => {
       isLastNameError ||
       isBirthdayError ||
       isErrorSmallAboutMe ||
-      isErrorBigAboutMe
+      isErrorBigAboutMe ||
+      errorCtx.isError
     ) {
       setIsBtnDisable(true);
     } else {
+      errorCtx.setIsError(false);
       setIsBtnDisable(false);
     }
   }, [
@@ -302,20 +319,8 @@ const ControlPanelAboutMe: React.FC = () => {
     isBirthdayError,
     isErrorSmallAboutMe,
     isErrorBigAboutMe,
+    errorCtx.isError, //ошибка изображения
   ]);
-
-  // img preview
-  useEffect(() => {
-    if (userImgFile) {
-      const reader: FileReader = new FileReader();
-      reader.onloadend = () => {
-        setUserImgUrl(reader.result as string);
-      };
-      reader.readAsDataURL(userImgFile);
-    } else {
-      setUserImgUrl("../../assets/img/users/User-0.png");
-    }
-  }, [userImgFile]);
 
   return (
     <div className={style.container}>
@@ -330,7 +335,6 @@ const ControlPanelAboutMe: React.FC = () => {
                 <img
                   className={style.smallImg}
                   src={require("../../assets/img/photo.jpg")}
-                  // src={userImgUrl}
                   alt="photo"
                   onMouseOver={imgMouseOverHandler}
                   onMouseOut={imgMouseOutHandler}
@@ -343,7 +347,6 @@ const ControlPanelAboutMe: React.FC = () => {
                   <img
                     className={style.bigImg}
                     src={require("../../assets/img/photo.jpg")}
-                    // src={userImgUrl}
                     alt="photo"
                   />
                 </div>
@@ -352,7 +355,13 @@ const ControlPanelAboutMe: React.FC = () => {
                 <p>Фото профиля</p>
                 <div className={style.headerAction}>
                   <PencilIcon />
-                  <div className={style.changePhotoBtn} data-is-edit-mode={isEditMode} onClick={loadImgClickHandler}>Изменить фото</div>
+                  <div
+                    className={style.changePhotoBtn}
+                    data-is-edit-mode={isEditMode}
+                    onClick={loadImgClickHandler}
+                  >
+                    Изменить фото
+                  </div>
                   <Input
                     type="invisible"
                     id="loadImg"
