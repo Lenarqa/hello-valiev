@@ -10,6 +10,14 @@
   text-align: center;
 }
 
+.header[data-type="aboutMe"] .photoSection h2:last-child{
+  display: none;
+}
+
+.header[data-type="aboutMe"] .controlPanelTitle{
+  display: none;
+}
+
 .photoSection {
   display: flex;
   align-items: center;
