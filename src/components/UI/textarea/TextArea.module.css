@@ -83,3 +83,14 @@
     bottom: 20px;
   }
 }
+
+@media (max-width: 320px) {
+  .textAreaWrapper[data-type="EditReviewModal"] .textarea{
+    width: 256px;
+    height: 222px;
+  }
+  .counter {
+    right: 20px;
+    bottom: 20px;
+  }
+}

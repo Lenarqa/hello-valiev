@@ -1,3 +1,4 @@
+.button[data-type="editReviewSubmit"],
 .button {
   cursor: pointer;
   padding: 17px 28px;
@@ -17,6 +18,8 @@
   transition: 0.5s ease-out;
 }
 
+.button[data-type="editReviewCancel"]:hover,
+.button[data-type="editReviewSubmit"]:hover,
 .button[data-type="cancel"]:hover,
 .button:hover {
   background-position: left;
@@ -27,7 +30,8 @@
   background: #8a8a8a 100%;
 }
 
-/* type cancel control panel */
+/* type cancel  */
+.button[data-type="editReviewCancel"],
 .button[data-type="cancel"] {
   width: 148px;
   margin-left: 12px;
@@ -43,4 +47,49 @@
 
 .button[data-type="submitAboutMe"]:disabled {
   background: #8a8a8a 100%;
+}
+
+@media (max-width: 320px) {
+  .button[data-type="submit"] {
+    width: 108px;
+    height: 42px;
+    margin-bottom: 0;
+    font-size: 14px;
+    padding: 12px 6px;
+    margin-right: 6px;
+  }
+
+  .button[data-type="editReviewSubmit"] {
+    width: 100%;
+    height: 42px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    padding: 12px 6px;
+    margin-right: 6px;
+  } 
+
+  .button[data-type="cancel"] {
+    width: 102px;
+    height: 42px;
+    margin: 0;
+    font-size: 14px;
+    padding: 12px 6px;
+    margin-right: 6px;
+  } 
+
+  .button[data-type="editReviewCancel"] {
+    width: 100%;
+    height: 42px;
+    margin: 0;
+    font-size: 14px;
+    padding: 12px 6px;
+    margin-right: 6px;
+  } 
+
+  .button[data-type="submitAboutMe"] {
+    width: 100%;
+    font-size: 14px;
+    padding: 12px 92px;
+  }
+
 }

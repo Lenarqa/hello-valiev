@@ -114,7 +114,7 @@ const ReviewItem: React.FC<ISliderItem> = ({
               Отклонить
             </Button>
           </div>
-          <EditBtn onClick={showEditWindowHandler} />
+          <EditBtn className={style.editBtn} onClick={showEditWindowHandler} />
         </div>
         <div className={style.publishMsg} data-is-publish={isPublish}>
           <PublishIcon />

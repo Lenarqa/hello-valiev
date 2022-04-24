@@ -55,6 +55,7 @@ const EditReviewModal: React.FC<IEditReviewModal> = (props) => {
       <div className={style.content}>
         <div className={style.textAreaTitle}>Отзыв</div>
         <TextArea
+          type="EditReviewModal"
           placeholder={"Не забудьте написать отзыв."}
           onChangeHandler={textAreaChangeHandler}
           value={userReviewText}
@@ -64,10 +65,10 @@ const EditReviewModal: React.FC<IEditReviewModal> = (props) => {
         {isErrorRewiew && <ErrorMsg>{errorRewiewMsg}</ErrorMsg>}
       </div>
       <div className={style.actions}>
-        <Button isDisable={isErrorRewiew} onClick={updateTextHandler}>
+        <Button type="editReviewSubmit" isDisable={isErrorRewiew} onClick={updateTextHandler}>
           Подтвердить редактирование
         </Button>
-        <Button type="cancel" onClick={props.close}>
+        <Button type="editReviewCancel" onClick={props.close}>
           Отмена
         </Button>
       </div>

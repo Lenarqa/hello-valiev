@@ -67,7 +67,36 @@
   margin-bottom: 12px;
 }
 
-
 .content {
   margin-bottom: 40px;
+}
+
+@media (max-width: 320px) {
+  .modal {
+    width: 288px;
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 20px;
+    width: 167px;
+  }
+
+  .btn:before {
+    top: -13px;
+    left: 50%;
+  }
+
+  .btn:after{
+    top: -13px;
+  left: 50%;
+  }
+
+  .content {
+    margin-bottom: 32px;
+  }
+  
+  .actions {
+
+  }
 }

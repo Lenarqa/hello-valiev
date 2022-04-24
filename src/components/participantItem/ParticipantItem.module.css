@@ -6,6 +6,7 @@
   color: #464e5f;
   font-family: "Gilroy";
   border-bottom: 1px dashed #e0e0e0;
+  position: relative;
 }
 
 .item:last-child {
@@ -64,4 +65,12 @@
 .status[data-status="4"] {
   color: #8a8a8a;
   background-color: #f5f5f5;
+}
+
+@media (max-width: 320px) {
+  /* .info {
+    width: 26px;
+    position: absolute;
+    z-index: 10;
+  } */
 }

@@ -24,15 +24,18 @@ const Header: React.FC<IHeader> = (props) => {
 
   return (
     <header className={style.header} data-type={props.type}>
-      <div className={style.photoSection}>
-        <img
-          className={style.img}
-          src={require("../../assets/img/photo.jpg")}
-          alt="photo"
-        />
-        <h2 className={style.name}>{width < 710 ? "Ленар" : "Ленар Валиев"}</h2>
+      <div className={style.mobile}>
+        <div className={style.photoSection}>
+          <img
+            className={style.img}
+            src={require("../../assets/img/photo.jpg")}
+            alt="photo"
+          />
+          <h2 className={style.name}>{width < 710 ? "Ленар" : "Ленар Валиев"}</h2>
+          <h2 className={style.name}>{"Ленар Валиев"}</h2>
+        </div>
+        <div className={style.controlPanelTitle}>Панель управления</div>
       </div>
-      <div className={style.controlPanelTitle}>Панель управления</div>
       <ILinkLogo className={style.ilinkLogo} onClick={openAboutMePage}/>
       <div className={style.actions}>
         {width < 710 ? (

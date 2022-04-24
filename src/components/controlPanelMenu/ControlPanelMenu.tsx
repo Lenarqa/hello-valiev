@@ -1,11 +1,11 @@
 import React from "react";
-import style from "./LeftMenu.module.css";
+import style from "./ControlPanelMenu.module.css";
 import { NavLink } from "react-router-dom";
 import { ReactComponent as UserDisableIcon } from "../../assets/icons/userDisable.svg";
 import { ReactComponent as ChatIcon } from "../../assets/icons/chat.svg";
 import { ReactComponent as PaperIcon } from "../../assets/icons/paper.svg";
 
-const LeftMenu: React.FC = () => {
+const ControlPanelMenu: React.FC = () => {
   return <div className={style.container}>
       <NavLink to={"users"} className={({isActive})=> isActive ? style.activeMenuItem : style.menuItem}>
           <UserDisableIcon />
@@ -21,4 +21,4 @@ const LeftMenu: React.FC = () => {
       </NavLink>
   </div>;
 };
-export default LeftMenu;
+export default ControlPanelMenu;

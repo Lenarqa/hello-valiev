@@ -1,3 +1,8 @@
+.leftBtn,
+.rightBtn {
+  display: none;
+}
+
 .container {
   width: 100%;
   height: auto;
@@ -38,7 +43,7 @@
   font-size: 12px;
   line-height: 15px;
   letter-spacing: 0.03em;
-  color: #464E5F;
+  color: #464e5f;
 }
 
 .tableHeader h2 {
@@ -55,4 +60,62 @@
 
 .table {
   margin-bottom: 29px;
+}
+
+@media (max-width: 320px) {
+  .content {
+    padding: 24px 16px 80px 16px;
+  }
+
+  .contentHeader {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .contentHeader h2 {
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .leftBtn {
+    cursor: pointer;
+    position: absolute;
+    content: "";
+    display: block;
+    width: 9px;
+    height: 9px;
+    background-color: #585cc6;
+    right: 0;
+    bottom: 20px;
+    transition: all 1s ease;
+  }
+  .rightBtn {
+    cursor: pointer;
+    position: absolute;
+    content: "";
+    display: block;
+    width: 9px;
+    height: 9px;
+    background-color: #585cc6;
+    right: 19px;
+    bottom: 20px;
+    transition: all 1s ease;
+  }
+
+  .leftBtn:hover,
+  .rightBtn:hover {
+    background-color: #6b6fe6;
+  }
+
+  .table {
+    width: 1000px;
+    margin-bottom: 23px;
+  }
+
+  .tableHeader {
+    width: 1000px;
+  }
 }

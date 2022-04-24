@@ -106,6 +106,8 @@ const Users: React.FC = () => {
               options={DummyOptionsParticipants}
               onChange={onChangeFilterHandler}
             />
+            <div className={style.leftBtn}/>
+            <div className={style.rightBtn}/>
           </div>
           <div className={style.tableHeader}>
             <h2>ИФ УЧЕНИКА</h2>

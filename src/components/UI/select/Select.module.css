@@ -141,5 +141,10 @@
 
 .select[data-type="smallWidth"] {
   width: 209px;
+}
 
+@media (max-width: 320px) {
+  .select[data-type="review"] {
+    width: 100%;
+  }
 }

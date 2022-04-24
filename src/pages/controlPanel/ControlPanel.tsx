@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import style from "./ControlPanel.module.css";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/footer/Footer";
-import LeftMenu from "../../components/leftMenu/LeftMenu";
+import ControlPanelMenu from "../../components/controlPanelMenu/ControlPanelMenu";
 import { Outlet } from "react-router-dom";
 import { PopUpContext } from "../../components/store/PopUpContext";
 import FooterErrorMsg from "../../components/UI/footerErrorMsg/FooterErrorMsg";
@@ -28,7 +28,7 @@ const ControlPanel: React.FC = () => {
       ) : (
         <>
           <div className={style.content}>
-            <LeftMenu />
+            <ControlPanelMenu />
             <Outlet />
           </div>
           {popUpContext.isError && (

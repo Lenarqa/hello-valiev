@@ -59,48 +59,7 @@
   font-size: 24px;
 }
 
-@media (max-width: 590px) {
-  .item {
-    height: auto;
-    padding: 16px 12px;
-  }
-}
-
-@media (max-width: 321px) {
-  .item {
-    width: 100%;
-    height: auto;
-    margin: 0;
-    padding: 16px 12px;
-  }
-
-  .header {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin-bottom: 4px;
-  }
-
-  .content {
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 20px;
-  }
-
-  .userInfo {
-    margin-bottom: 12px;
-  }
-
-  .userInfo img {
-    margin-right: 8px;
-  }
-
-  .userInfo p {
-    font-size: 16px;
-  }
-}
-
-/* type rewiew control panel */
+/* type review control panel */
 .item[data-type="controlPanelReview"] {
   width: 519px;
   height: 363px;
@@ -201,4 +160,84 @@
   line-height: 18px;
   letter-spacing: 0.01em;
   color: #61bf4a;
+}
+
+@media (max-width: 590px) {
+  .item {
+    height: auto;
+    padding: 16px 12px;
+  }
+}
+
+@media (max-width: 320px) {
+  .item {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 16px 12px;
+  }
+
+  .header {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 4px;
+  }
+
+  .content {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .userInfo {
+    margin-bottom: 12px;
+  }
+
+  .userInfo img {
+    margin-right: 8px;
+  }
+
+  .userInfo p {
+    font-size: 16px;
+  }
+
+  /* type review */
+  .item[data-type="controlPanelReview"] {
+    width: 100%;
+    height: auto;
+    margin-right: 0;
+  }
+
+  .item[data-type="controlPanelReview"] .content{
+    margin-bottom: 22px;
+  }
+
+  .publishMsg[data-is-publish="true"] {
+    position: initial;
+  }
+
+  .canceledMsg[data-is-canceled="true"] {
+    position: initial;
+  }
+
+  .item[data-type="controlPanelReview"] .action {
+    position: inherit;
+    flex-direction: row;
+    margin-top: 24px;
+    justify-content: center;
+    align-items: center;
+  }
+  .item[data-type="controlPanelReview"] .action div {
+    /* position: inherit; */
+    display: flex;
+    flex-direction: row;
+    margin-right: 6px;
+  }
+
+  .item[data-type="controlPanelReview"] .editBtn {
+    margin: 0;
+    width: 42px;
+    height: 42px;
+  }
 }

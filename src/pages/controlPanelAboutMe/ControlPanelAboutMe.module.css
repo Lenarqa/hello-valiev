@@ -206,3 +206,27 @@
 .actions[data-is-edit-mode="true"] {
   display: flex;
 }
+
+@media (max-width: 320px) {
+  .content {
+    padding: 26px 16px 80px 16px;
+  }
+
+  .contentHeader {
+    padding-top: 26px;
+    margin-bottom: 16px;
+  }
+
+  .headerForm {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .imgSection {
+    margin-bottom: 20px;
+  }
+  .row {
+    flex-direction: column;
+  }
+}

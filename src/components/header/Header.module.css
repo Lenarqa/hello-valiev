@@ -30,7 +30,11 @@
 /* end header aboutMe */
 
 /* control panel header */
-.controlPanelTitle {
+.header[data-type="control-panel"] .controlPanelTitle {
+  display: none;
+}
+
+.header[data-type="control-panel"] .name:last-child {
   display: none;
 }
 
@@ -108,27 +112,27 @@
 /* end header auth */
 
 @media (max-width: 710px) {
-  .header[data-type="aboutMe"]  {
+  .header[data-type="aboutMe"] {
     padding: 16px 21px;
   }
 }
 
 @media (max-width: 590px) {
-  .header[data-type="aboutMe"]  {
+  .header[data-type="aboutMe"] {
     margin-bottom: 60px;
   }
 }
 
-@media (max-width: 321px) {
-  .header[data-type="aboutMe"]  {
+@media (max-width: 320px) {
+  .header[data-type="aboutMe"] {
     margin-bottom: 43px;
   }
 
-  .header[data-type="aboutMe"]  .name {
+  .header[data-type="aboutMe"] .name {
     font-size: 12px;
   }
 
-  .header[data-type="aboutMe"]  .img {
+  .header[data-type="aboutMe"] .img {
     margin-right: 8px;
   }
 
@@ -136,7 +140,38 @@
   .header[data-type="control-panel"] {
     padding: 17px 14px 18px 16px;
   }
-  .header[data-type="control-panel"] .photoSection{
-    flex-direction: column;
+
+  .header[data-type="control-panel"] .mobile {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .header[data-type="control-panel"] .controlPanelTitle {
+    display: flex;
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 14px;
+    margin-bottom: 8px;
+  }
+
+  .header[data-type="control-panel"] .ilinkLogo {
+    width: 50px;
+    height: 31px;
+  }
+
+  .header[data-type="control-panel"] .photoSection {
+    flex-direction: row;
+    font-size: 12px;
+  }
+
+  .header[data-type="control-panel"] .photoSection h2 {
+    display: none;
+  }
+
+  .header[data-type="control-panel"] .name:last-child {
+    display: flex;
+    font-size: 12px;
   }
 }
