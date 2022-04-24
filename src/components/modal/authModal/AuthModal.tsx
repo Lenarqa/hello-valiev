@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./AuthModal.module.css";
-import Button from "../../UI/button/Button";
+import Button from "../../UI/myButton/Button";
 import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg";
 import { ReactComponent as OpenEyeIcon } from "../../../assets/icons/openEye.svg";
 import { ReactComponent as CloseEyeIcon } from "../../../assets/icons/closeEye.svg";
-import MsgWindow from "../../UI/msgWindow/MsgWindow";
+import MsgWindow from "../../UI/myMsgWindow/MsgWindow";
 import Input from "../../UI/input/Input";
 
 interface IAuthModal {

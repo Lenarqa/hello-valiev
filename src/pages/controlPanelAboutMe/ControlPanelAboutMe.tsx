@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import style from "./ControlPanelAboutMe.module.css";
 import { ReactComponent as PencilIcon } from "../../assets/icons/pencil.svg";
-import Button from "../../components/UI/button/Button";
+import Button from "../../components/UI/myButton/Button";
 import Input from "../../components/UI/input/Input";
 import { MyInfo } from "../../shared/data/MyInfo";
 import { IMyInfo, IValidationResult } from "../../shared/models/models";
@@ -328,7 +328,7 @@ const ControlPanelAboutMe: React.FC = () => {
                     src={
                       isUserHaveImg
                         ? require("../../assets/img/photo.jpg")
-                        : require("../../assets/img/users/User-0.png")
+                        : require("../../assets/img/users/user-0.png")
                     }
                     alt="photo"
                     onMouseOver={imgMouseOverHandler}
@@ -344,7 +344,7 @@ const ControlPanelAboutMe: React.FC = () => {
                     src={
                       isUserHaveImg
                         ? require("../../assets/img/photo.jpg")
-                        : require("../../assets/img/users/User-0.png")
+                        : require("../../assets/img/users/user-0.png")
                     }
                     alt="photo"
                   />

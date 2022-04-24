@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Button from "../UI/button/Button";
+import Button from "../UI/myButton/Button";
 import Overlay from "../UI/overlay/Overlay";
 import EditReviewModal from "../modal/editReviewModal/EditReviewModal";
 import style from "./ReviewItem.module.css";
@@ -44,7 +44,7 @@ const ReviewItem: React.FC<ISliderItem> = ({
   const [isEditRevie, setIsEditReview] = useState<boolean>(false);
 
   if (imgUrl.trim().length === 0) {
-    imgUrl = "User-0.png";
+    imgUrl = "user-0.png";
   }
 
   //если отзыв ранее отмечен как (отмененный/опубликованный),

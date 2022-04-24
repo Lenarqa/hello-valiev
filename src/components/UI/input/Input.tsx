@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./Input.module.css";
 import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg";
-import MsgWindow from "../msgWindow/MsgWindow";
+import MsgWindow from "../myMsgWindow/MsgWindow";
 
 interface IInput {
   id: string;
