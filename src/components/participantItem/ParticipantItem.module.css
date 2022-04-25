@@ -37,13 +37,14 @@
   display: flex;
   width: 100%;
   justify-content: flex-start;
+  justify-content: center;
 }
 
 .text {
   display: flex;
   justify-content: flex-start;
   align-items: start;
-  width: 74%;
+  width: 83%;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -93,6 +94,7 @@
 
   .item[data-type="scrollable"] .movingBlock {
     position: absolute;
+    justify-content: flex-start;
   }
 
   .item[data-type="scrollable"] .text {
