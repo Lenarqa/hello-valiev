@@ -41,10 +41,12 @@
 }
 
 /* aboutMe header */
+.button[data-type="submitAboutMeControlPanel"],
 .button[data-type="submitAboutMe"] {
   margin-bottom: 0;
 }
 
+.button[data-type="submitAboutMeControlPanel"]:disabled,
 .button[data-type="submitAboutMe"]:disabled {
   background: #8a8a8a 100%;
 }
@@ -86,10 +88,15 @@
     margin-right: 6px;
   } 
 
+  .button[data-type="submitAboutMeControlPanel"],
   .button[data-type="submitAboutMe"] {
     width: 100%;
     font-size: 14px;
     padding: 12px 92px;
   }
 
+  .button[data-type="submitAboutMeControlPanel"]{
+    padding: 12px;
+    text-align: center;
+  }
 }

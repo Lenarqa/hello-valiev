@@ -46,9 +46,9 @@
   padding: 10px 12px;
 }
 
-.textAreaWrapper[data-type="long"] .counter {
+/* .textAreaWrapper[data-type="long"] .counter {
   display: none;
-}
+} */
 
 /* type big */
 .textAreaWrapper[data-type="big"] {
@@ -61,9 +61,9 @@
   padding: 15px 12px;
 }
 
-.textAreaWrapper[data-type="big"] .counter {
+/* .textAreaWrapper[data-type="big"] .counter {
   display: none;
-}
+} */
 
 
 @media (max-width: 710px) {
@@ -92,5 +92,9 @@
   .counter {
     right: 20px;
     bottom: 20px;
+  }
+
+  .textAreaWrapper[data-type="big"] .textarea {
+    height: 268px;
   }
 }

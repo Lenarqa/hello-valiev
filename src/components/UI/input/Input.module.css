@@ -119,3 +119,16 @@ input[data-has-data="false"]:active {
 .formItem[data-type="selectFind"] input {
   padding: 10px 34px;
 }
+
+@media (max-width: 320px) {
+  .formItem[data-type="controlPanel"]{
+    width: 100%;
+    margin-right: 0px;
+    margin-bottom: 20px;
+  }
+
+  .formItem[data-input-type="date"] {
+    width: 100%;
+    margin-bottom: 0;
+  }
+}

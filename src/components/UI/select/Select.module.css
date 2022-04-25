@@ -147,4 +147,17 @@
   .select[data-type="review"] {
     width: 100%;
   }
+
+  .select[data-type="city"] {
+    width: 100%;
+  }
+
+  .select[data-type="bigWidth"] {
+    width: 100%;
+  }
+
+  .select[data-type="smallWidth"]{
+    width: 100%;
+  }
+
 }

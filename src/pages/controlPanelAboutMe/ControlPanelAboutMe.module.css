@@ -5,8 +5,6 @@
 }
 
 .content {
-  /* width: 100%;
-  height: 100%; */
   flex: 1 1 auto;
   padding: 59px 80px 176px 24px;
 }
@@ -226,7 +224,30 @@
   .imgSection {
     margin-bottom: 20px;
   }
+
+  .inputsSection {
+    width: 100%;
+  }
+
   .row {
     flex-direction: column;
+    height: auto;
+    width: 100%;
+  }
+
+  .selectWrapper {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .bigImgContainer {
+    width: 300px;
+    height: 300px;
+    left: -6px;
+    transform: translateX(0);
+  }
+
+  .bigAboutMeRow {
+    margin-bottom: 24px;
   }
 }

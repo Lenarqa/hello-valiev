@@ -215,7 +215,7 @@ const ControlPanelAboutMe: React.FC = () => {
     if (res.result) {
       setIsErrorSmallAboutMe(true);
       setErrorSmallAboutMeMsg(res.errorMsg);
-    }else {
+    } else {
       setIsErrorSmallAboutMe(false);
     }
 
@@ -223,12 +223,12 @@ const ControlPanelAboutMe: React.FC = () => {
   };
 
   const changeBigAboutMeHandler: TextAreaChangeEventHandler = (e): void => {
-    const res:IValidationResult = bigAboutMeValidation(e.target.value)
-    
+    const res: IValidationResult = bigAboutMeValidation(e.target.value);
+
     if (res.result) {
       setIsErrorBigAboutMe(true);
       setErrorBigAboutMeMsg(res.errorMsg);
-    }else {
+    } else {
       setIsErrorBigAboutMe(false);
     }
 
@@ -459,6 +459,8 @@ const ControlPanelAboutMe: React.FC = () => {
               <div className={style.itemTitle}>Краткая информация</div>
               <TextArea
                 type="long"
+                msgLenght={smallAboutMe.length}
+                maxLenght={99}
                 placeholder="Напишите краткую информацию о вас"
                 value={smallAboutMe}
                 onChangeHandler={changeSmallAboutMeHandler}
@@ -472,6 +474,8 @@ const ControlPanelAboutMe: React.FC = () => {
               <TextArea
                 type="big"
                 placeholder="Напишите что нибудь о себе"
+                msgLenght={smallAboutMe.length}
+                maxLenght={500}
                 value={bigAboutMe}
                 onChangeHandler={changeBigAboutMeHandler}
               />
@@ -479,7 +483,7 @@ const ControlPanelAboutMe: React.FC = () => {
             </div>
             <div className={style.actions} data-is-edit-mode={isEditMode}>
               <Button
-                type="submitAboutMe"
+                type="submitAboutMeControlPanel"
                 onClick={finishEditModeHandler}
                 isDisable={isBtnDisable}
               >
