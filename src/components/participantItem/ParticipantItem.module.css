@@ -33,8 +33,17 @@
   line-height: 17px;
 }
 
+.movingBlock {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+}
+
 .text {
-  width: 61%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: start;
+  width: 74%;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -68,9 +77,25 @@
 }
 
 @media (max-width: 320px) {
-  /* .info {
-    width: 26px;
+  .item {
+    padding: 0 16px;
+  }
+  .info {
+    width: 17%;
+    position: sticky;
+    left: 0;
+    overflow: hidden;
+    background-color: #fff;
+    z-index: 1000;
+    height: 66px;
+  }
+
+
+  .item[data-type="scrollable"] .movingBlock {
     position: absolute;
-    z-index: 10;
-  } */
+  }
+
+  .item[data-type="scrollable"] .text {
+    width: 20%;
+  }
 }

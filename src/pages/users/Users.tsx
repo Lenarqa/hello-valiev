@@ -119,6 +119,7 @@ const Users: React.FC = () => {
               if (!isLoadingPage) {
                 return (
                   <ParticipantItem
+                    type="scrollable"
                     key={participant.id}
                     participant={participant}
                   />
