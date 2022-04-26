@@ -13,7 +13,7 @@ const ParticipantItem: React.FC<IParticipantItem> = (props) => {
   const status:IOption | undefined = DummyOptionsParticipants.find(item => item.id === props.participant.status);
 
   return (
-    <div className={style.item} data-type={props.type}>
+    <div className={style.table} data-type={props.type}>
       <div className={style.info}>
         <img
           src={require(`../../assets/img/participant/${props.participant.imgUrl}`)}

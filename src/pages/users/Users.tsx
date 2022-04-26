@@ -9,6 +9,7 @@ import Pagination from "../../components/UI/pagination/Pagination";
 import { DummyOptionsParticipants } from "../../shared/data/OptionsParticipant";
 import { PopUpContext } from "../../components/store/PopUpContext";
 import ParticipantItemSkeleton from "../../components/participantItem/skeleton/ParticipantItemSkeleton";
+import UsersTable from "../../components/usersTable/UsersTable";
 
 const Users: React.FC = () => {
   const [isLoadingPage, setIsloadingPage] = useState<boolean>(false);
@@ -109,13 +110,15 @@ const Users: React.FC = () => {
             <div className={style.leftBtn}/>
             <div className={style.rightBtn}/>
           </div>
-          <div className={style.tableHeader}>
+          {/* <div className={style.tableHeader}>
             <h2>ИФ УЧЕНИКА</h2>
             <h2>КРАТКАЯ ИНФОРМАЦИЯ</h2>
             <h2>СТАТУС</h2>
-          </div>
-          <div className={style.table}>
-            {curFilteredParticipants.map((participant, index) => {
+          </div> */}
+          <UsersTable filteredParticipants={curFilteredParticipants}/>
+          {/* <div className={style.table}>
+            {
+            curFilteredParticipants.map((participant, index) => {
               if (!isLoadingPage) {
                 return (
                   <ParticipantItem
@@ -123,12 +126,12 @@ const Users: React.FC = () => {
                     key={participant.id}
                     participant={participant}
                   />
-                );
+                );      
               } else {
                 return <ParticipantItemSkeleton key={index} />;
               }
             })}
-          </div>
+          </div> */}
           <Pagination
             curPage={curPage}
             participantPerPage={participantPerPage}
