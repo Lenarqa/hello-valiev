@@ -4,7 +4,6 @@ import style from "./Users.module.css";
 import Select from "../../components/UI/select/Select";
 import { Participants } from "../../shared/data/UsersData";
 import { IOption, IParticipant } from "../../shared/models/models";
-import ParticipantItem from "../../components/participantItem/ParticipantItem";
 import Pagination from "../../components/UI/pagination/Pagination";
 import { DummyOptionsParticipants } from "../../shared/data/OptionsParticipant";
 import { PopUpContext } from "../../components/store/PopUpContext";
@@ -41,7 +40,6 @@ const Users: React.FC = () => {
     setTimeout(() => {
       setIsloadingPage(false);
     }, 1000);
-
   }, []);
 
   //pagination
@@ -108,31 +106,22 @@ const Users: React.FC = () => {
               options={DummyOptionsParticipants}
               onChange={onChangeFilterHandler}
             />
-            <div className={style.leftBtn} data-is-active={isScrollLeft}/>
-            <div className={style.rightBtn} data-is-active={isScrollLeft}/>
+            <div className={style.leftBtn} data-is-active={isScrollLeft} />
+            <div className={style.rightBtn} data-is-active={isScrollLeft} />
           </div>
-          {/* <div className={style.tableHeader}>
-            <h2>ИФ УЧЕНИКА</h2>
-            <h2>КРАТКАЯ ИНФОРМАЦИЯ</h2>
-            <h2>СТАТУС</h2>
-          </div> */}
-          <UsersTable filteredParticipants={curFilteredParticipants} setIsLeft={setIsScrollLeft}/>
-          {/* <div className={style.table}>
-            {
-            curFilteredParticipants.map((participant, index) => {
-              if (!isLoadingPage) {
-                return (
-                  <ParticipantItem
-                    type="scrollable"
-                    key={participant.id}
-                    participant={participant}
-                  />
-                );      
-              } else {
-                return <ParticipantItemSkeleton key={index} />;
-              }
-            })}
-          </div> */}
+          {!isLoadingPage && (
+            <UsersTable
+              filteredParticipants={curFilteredParticipants}
+              setIsLeft={setIsScrollLeft}
+            />
+          )}
+          {isLoadingPage && (
+            <div className={style.table}>
+              {curFilteredParticipants.map((participant, index) => (
+                <ParticipantItemSkeleton key={index} />
+              ))}
+            </div>
+          )}
           <Pagination
             curPage={curPage}
             participantPerPage={participantPerPage}

@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import { IParticipant } from "../../shared/models/models";
-// import ParticipantItem from "../participantItem/ParticipantItem";
 import style from "./UsersTable.module.css";
 import { DummyOptionsParticipants } from "../../shared/data/OptionsParticipant";
 import { IOption } from "../../shared/models/models";
-import { tab } from "@testing-library/user-event/dist/tab";
 
 interface IUserTable {
   filteredParticipants: IParticipant[];
@@ -32,7 +30,7 @@ const UsersTable: React.FC<IUserTable> = (props) => {
           <h2 className={style.colHeader}>ИФ УЧЕНИКА</h2>
 
           {props.filteredParticipants.map((item) => (
-            <div className={style.info}>
+            <div className={style.info} key={item.id}>
               <img
                 src={require(`../../assets/img/participant/${item.imgUrl}`)}
                 alt="participantImg"
@@ -42,9 +40,9 @@ const UsersTable: React.FC<IUserTable> = (props) => {
           ))}
         </div>
         <div className={style.column}>
-          <h2 className={style.colHeader}>КРАТКАЯ ИНФОРМАЦИЯ</h2>
+          <h2 className={style.colHeader} >КРАТКАЯ ИНФОРМАЦИЯ</h2>
           {props.filteredParticipants.map((item) => (
-            <div className={style.text}>{item.aboutMe}</div>
+            <div className={style.text} key={item.id}>{item.aboutMe}</div>
           ))}
         </div>
         <div className={style.column}>
@@ -62,13 +60,6 @@ const UsersTable: React.FC<IUserTable> = (props) => {
             );
           })}
         </div>
-        {/* {props.filteredParticipants.map((item) => (
-          <>
-            <div className={style.column}>{item.name}</div>
-            <div className={style.column}>{item.aboutMe}</div>
-            <div className={style.column}>{item.status}</div>
-          </>
-        ))} */}
       </div>
     </div>
   );

@@ -40,10 +40,12 @@
 }
 
 .info h2 {
+  font-family: "Gilroy";
   font-style: normal;
   font-weight: 700;
-  font-size: 14px;
-  line-height: 17px;
+  font-size: 12px;
+  line-height: 15px;
+  color: #464E5F;
 }
 
 .text {
@@ -57,6 +59,8 @@
   line-height: 17px;
   height: 66px;
   width: 100%;
+  color: #464e5f;
+  font-family: "Gilroy";
 }
 
 .statusWrapper {
@@ -71,7 +75,6 @@
   justify-content: flex-start;
   align-items: center;
   background-color: #f5f5f5;
-  border-radius: 6px;
   padding: 15px 0px 13px 24px;
   font-family: "Gilroy";
   font-style: normal;
@@ -83,6 +86,7 @@
 }
 
 .status {
+  font-family: 'Gilroy';  
   display: flex;
   justify-content: center;
   align-items: center;
