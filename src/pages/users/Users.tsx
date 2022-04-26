@@ -12,6 +12,8 @@ import ParticipantItemSkeleton from "../../components/participantItem/skeleton/P
 import UsersTable from "../../components/usersTable/UsersTable";
 
 const Users: React.FC = () => {
+  const [isScrollLeft, setIsScrollLeft] = useState<boolean>(true);
+
   const [isLoadingPage, setIsloadingPage] = useState<boolean>(false);
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
 
@@ -31,17 +33,16 @@ const Users: React.FC = () => {
     popUpCtx.setIsOpenBadWindow(false);
     popUpCtx.setIsOpenGoodWindow(false);
 
-    if(participants.length === 0) {
+    if (participants.length === 0) {
       setIsEmptyPage(true);
     }
-    
+
     setIsloadingPage(true);
-    setTimeout(()=>{
+    setTimeout(() => {
       setIsloadingPage(false);
     }, 1000);
-  }, []);
 
-  
+  }, []);
 
   //pagination
   const [curPage, setCurPage] = useState<number>(1);
@@ -58,25 +59,25 @@ const Users: React.FC = () => {
     setCurPage(pageNum);
 
     setIsloadingPage(true);
-    setTimeout(()=>{
+    setTimeout(() => {
       setIsloadingPage(false);
     }, 1000);
   };
 
   const nextPageHandler = (): void => {
     setCurPage((prev) => (prev += 1));
-    
+
     setIsloadingPage(true);
-    setTimeout(()=>{
+    setTimeout(() => {
       setIsloadingPage(false);
     }, 1000);
   };
 
   const BackPageHandler = (): void => {
     setCurPage((prev) => (prev -= 1));
-    
+
     setIsloadingPage(true);
-    setTimeout(()=>{
+    setTimeout(() => {
       setIsloadingPage(false);
     }, 1000);
   };
@@ -107,15 +108,15 @@ const Users: React.FC = () => {
               options={DummyOptionsParticipants}
               onChange={onChangeFilterHandler}
             />
-            <div className={style.leftBtn}/>
-            <div className={style.rightBtn}/>
+            <div className={style.leftBtn} data-is-active={isScrollLeft}/>
+            <div className={style.rightBtn} data-is-active={isScrollLeft}/>
           </div>
           {/* <div className={style.tableHeader}>
             <h2>ИФ УЧЕНИКА</h2>
             <h2>КРАТКАЯ ИНФОРМАЦИЯ</h2>
             <h2>СТАТУС</h2>
           </div> */}
-          <UsersTable filteredParticipants={curFilteredParticipants}/>
+          <UsersTable filteredParticipants={curFilteredParticipants} setIsLeft={setIsScrollLeft}/>
           {/* <div className={style.table}>
             {
             curFilteredParticipants.map((participant, index) => {

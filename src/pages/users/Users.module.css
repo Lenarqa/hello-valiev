@@ -67,7 +67,6 @@
     padding: 24px 0 80px 0;
   }
 
-
   .contentHeader {
     padding: 0 16px;
     position: relative;
@@ -97,7 +96,7 @@
     width: 9px;
     height: 9px;
     background-color: #585cc6;
-    right: 16px;
+    right: 37px;
     bottom: 20px;
     transition: all 1s ease;
   }
@@ -110,15 +109,31 @@
     width: 9px;
     height: 9px;
     background-color: #585cc6;
-    right: 37px;
+    right: 16px;
     bottom: 20px;
     transition: all 1s ease;
   }
 
-  .leftBtn:hover,
+  .leftBtn[data-is-active="true"] {
+    background-color: #585cc6;
+  }
+
+  .rightBtn[data-is-active="true"] {
+    background-color: #e0e0e0;
+  }
+
+  .leftBtn[data-is-active="false"] {
+    background-color: #e0e0e0;
+  }
+
+  .rightBtn[data-is-active="false"] {
+    background-color: #585cc6;
+  }
+
+  /* .leftBtn:hover,
   .rightBtn:hover {
     background-color: #6b6fe6;
-  }
+  } */
 
   /* .table {
     width: 1000px;

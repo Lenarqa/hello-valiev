@@ -1,17 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { IParticipant } from "../../shared/models/models";
-import ParticipantItem from "../participantItem/ParticipantItem";
+// import ParticipantItem from "../participantItem/ParticipantItem";
 import style from "./UsersTable.module.css";
 import { DummyOptionsParticipants } from "../../shared/data/OptionsParticipant";
 import { IOption } from "../../shared/models/models";
+import { tab } from "@testing-library/user-event/dist/tab";
 
 interface IUserTable {
   filteredParticipants: IParticipant[];
+  setIsLeft: (val: boolean) => void;
 }
 
 const UsersTable: React.FC<IUserTable> = (props) => {
+  useEffect(() => {
+    const table = document.getElementById("tableStyle");
+    if (table) {
+      table.addEventListener("scroll", (e) => {
+        if (table.scrollLeft > 140) {
+          props.setIsLeft(false);
+        } else {
+          props.setIsLeft(true);
+        }
+      });
+    }
+  }, []);
+
   return (
-    <div className={style.tableStyle}>
+    <div className={style.tableStyle} id="tableStyle">
       <div className={style.table}>
         <div className={style.column}>
           <h2 className={style.colHeader}>ИФ УЧЕНИКА</h2>
