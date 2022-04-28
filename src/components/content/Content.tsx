@@ -25,7 +25,13 @@ const Content: React.FC = () => {
           setShowGoodWindow={setShowGoodWindow}
         />
       )}
-      {showBadWindow && <BadWindow title="Что-то не так..." text="Не получилось отправить отзыв. Попробуйте еще раз!" setShowBadWindow={setShowBadWindow} />}
+      {showBadWindow && (
+        <BadWindow
+          title="Что-то не так..."
+          text="Не получилось отправить отзыв. Попробуйте еще раз!"
+          setShowBadWindow={setShowBadWindow}
+        />
+      )}
     </div>
   );
 };
