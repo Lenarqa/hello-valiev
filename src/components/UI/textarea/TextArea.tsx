@@ -9,6 +9,7 @@ interface ITextArea {
   dataIsError?: boolean;
   msgLenght?: number;
   maxLenght?: number;
+  dataIsEdit?: boolean; 
 }
 
 const TextArea: React.FC<ITextArea> = (props) => {
@@ -20,6 +21,7 @@ const TextArea: React.FC<ITextArea> = (props) => {
         onChange={props.onChangeHandler}
         value={props.value}
         data-is-error={props.dataIsError}
+        data-is-edit={props.dataIsEdit}
       />
       <div className={style.counter}>
         {props.msgLenght}/{props.maxLenght}

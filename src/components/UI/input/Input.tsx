@@ -20,6 +20,7 @@ interface IInput {
   errorMsg?: string;
   inputType?: string;
   required?: boolean;
+  dataIsEdit?:boolean;
 }
 
 const Input: React.FC<IInput> = (props) => {
@@ -40,6 +41,7 @@ const Input: React.FC<IInput> = (props) => {
           data-is-error={props.dataIsError}
           data-is-unknown-user={props.dataIsUnknownUser}
           data-has-data={props.dataHasData}
+          data-is-edit={props.dataIsEdit}
           required={props.required}
         />
         <div className={style.icons}>

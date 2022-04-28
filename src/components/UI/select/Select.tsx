@@ -7,8 +7,9 @@ import style from "./Select.module.css";
 interface ISelect {
   type?: string;
   selected: IOption;
-  setSelected: (value: IOption) => void;
   options: IOption[];
+  dataIsEdit?: boolean;
+  setSelected: (value: IOption) => void;
   onChange: (option: IOption) => void;
   closeGoodWindow?: (value: boolean) => void;
   closeBadWindow?: (value: boolean) => void;
@@ -39,8 +40,8 @@ const Select: React.FC<ISelect> = (props) => {
   };
 
   return (
-    <div className={style.select} data-type={props.type} data-is-open={isActive}>
-      <div className={style.selectBtn} onClick={setActiveHandler}>
+    <div className={style.select} data-type={props.type} data-is-open={isActive} data-is-edit={props.dataIsEdit}>
+      <div className={style.selectBtn} onClick={setActiveHandler} >
         {props.selected.value}
       </div>
       {isActive && (

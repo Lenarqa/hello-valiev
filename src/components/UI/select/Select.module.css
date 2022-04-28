@@ -101,7 +101,7 @@
 }
 
 /* aboutMe city type */
-.select[data-type="city"] .selectContent{
+.select[data-type="city"] .selectContent {
   display: none;
 }
 
@@ -109,7 +109,7 @@
   width: 403px;
 }
 
-.select[data-type="city"] .selectContentCity{
+.select[data-type="city"] .selectContentCity {
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -139,6 +139,10 @@
   width: 403px;
 }
 
+.select[data-is-edit="false"] {
+  color: #8a8a8a;
+}
+
 .select[data-type="smallWidth"] {
   width: 209px;
 }
@@ -156,8 +160,7 @@
     width: 100%;
   }
 
-  .select[data-type="smallWidth"]{
+  .select[data-type="smallWidth"] {
     width: 100%;
   }
-
 }

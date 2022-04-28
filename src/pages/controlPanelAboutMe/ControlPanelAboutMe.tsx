@@ -209,7 +209,9 @@ const ControlPanelAboutMe: React.FC = () => {
   };
 
   // smallAboutMe logic
-  const changeSmallAboutMeHandler: TextAreaChangeEventHandler = (e): void => {
+  const changeSmallAboutMeHandler: React.ChangeEventHandler<
+    HTMLTextAreaElement
+  > = (e): void => {
     const res: IValidationResult = smallAboutMeValidation(e.target.value);
 
     if (res.result) {
@@ -222,7 +224,9 @@ const ControlPanelAboutMe: React.FC = () => {
     setSmallAboutMe(e.target.value);
   };
 
-  const changeBigAboutMeHandler: TextAreaChangeEventHandler = (e): void => {
+  const changeBigAboutMeHandler: React.ChangeEventHandler<
+    HTMLTextAreaElement
+  > = (e): void => {
     const res: IValidationResult = bigAboutMeValidation(e.target.value);
 
     if (res.result) {
@@ -390,6 +394,7 @@ const ControlPanelAboutMe: React.FC = () => {
                 isHover={isHoverName}
                 errorMsg={nameErrorMsg}
                 isError={isNameError}
+                dataIsEdit={isEditMode}
               />
               <Input
                 type="controlPanel"
@@ -404,6 +409,7 @@ const ControlPanelAboutMe: React.FC = () => {
                 isHover={isHoverLastName}
                 errorMsg={lastNameErrorMsg}
                 isError={isLastNameError}
+                dataIsEdit={isEditMode}
               />
               <Input
                 labelTitle="Дата рождения"
@@ -421,6 +427,7 @@ const ControlPanelAboutMe: React.FC = () => {
                 errorMsg={BirthdayErrorMsg}
                 isError={isBirthdayError}
                 required={true}
+                dataIsEdit={isEditMode}
               />
             </div>
             <div className={style.row}>
@@ -432,6 +439,7 @@ const ControlPanelAboutMe: React.FC = () => {
                   setSelected={setSelectedCity}
                   options={DummyOptionsCity}
                   onChange={setSelectedCity}
+                  dataIsEdit={isEditMode}
                 />
               </div>
               <div className={style.selectWrapper}>
@@ -442,6 +450,7 @@ const ControlPanelAboutMe: React.FC = () => {
                   setSelected={setSelectedGender}
                   options={DummyOptionsGender}
                   onChange={setSelectedGender}
+                  dataIsEdit={isEditMode}
                 />
               </div>
               <div className={style.selectWrapper}>
@@ -452,6 +461,7 @@ const ControlPanelAboutMe: React.FC = () => {
                   setSelected={setSelectedPet}
                   options={DummyOptionsPet}
                   onChange={setSelectedPet}
+                  dataIsEdit={isEditMode}
                 />
               </div>
             </div>
@@ -464,6 +474,7 @@ const ControlPanelAboutMe: React.FC = () => {
                 placeholder="Напишите краткую информацию о вас"
                 value={smallAboutMe}
                 onChangeHandler={changeSmallAboutMeHandler}
+                dataIsEdit={isEditMode}
               />
               {isErrorSmallAboutMe && (
                 <ErrorMsg>{errorSmallAboutMeMsg}</ErrorMsg>
@@ -474,10 +485,11 @@ const ControlPanelAboutMe: React.FC = () => {
               <TextArea
                 type="big"
                 placeholder="Напишите что нибудь о себе"
-                msgLenght={smallAboutMe.length}
+                msgLenght={bigAboutMe.length}
                 maxLenght={500}
                 value={bigAboutMe}
                 onChangeHandler={changeBigAboutMeHandler}
+                dataIsEdit={isEditMode}
               />
               {isErrorBigAboutMe && <ErrorMsg>{errorBigAboutMeMsg}</ErrorMsg>}
             </div>
@@ -496,4 +508,5 @@ const ControlPanelAboutMe: React.FC = () => {
     </div>
   );
 };
+
 export default ControlPanelAboutMe;

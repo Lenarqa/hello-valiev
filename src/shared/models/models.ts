@@ -45,3 +45,8 @@ export interface IValidationResult {
   result: boolean,
   errorMsg:string,
 }
+
+export interface IUser {
+  email: string,
+  password: string,
+}

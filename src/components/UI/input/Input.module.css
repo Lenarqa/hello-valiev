@@ -102,9 +102,12 @@ input[data-has-data="false"]:active {
 }
 
 /* input type date */
-
 .formItem[data-input-type="date"] {
   width: 209px;
+}
+
+.formItem input[data-is-edit="false"] {
+  color: #8A8A8A;
 }
 
 

@@ -201,7 +201,6 @@ const Reviews: React.FC = () => {
                   return <ReviewItemSkeleton key={index} />
                 }
               })}
-            {/* {isLoadingPage && <ReviewItemSkeleton />} */}
           </div>
         </div>
       )}

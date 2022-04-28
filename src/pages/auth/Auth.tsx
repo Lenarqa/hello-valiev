@@ -7,6 +7,7 @@ import Header from "../../components/header/Header";
 
 const Auth: React.FC = () => {
   const [isFooterErrMsg, setIsFooterErrMsg] = useState<boolean>(false);
+  const [footerErrMsg, setFooterErrMsg] = useState<string>("")
 
   return (
     <div className={style.wrapper}>
@@ -14,9 +15,10 @@ const Auth: React.FC = () => {
       <AuthContent
         isFooterErrMsg={isFooterErrMsg}
         showFooterErrMsg={setIsFooterErrMsg}
+        setFooterErrMsg={setFooterErrMsg}
       />
       {isFooterErrMsg && (
-        <FooterErrorMsg text="Такого пользователя не существует" />
+        <FooterErrorMsg text={footerErrMsg} />
       )}
       <Footer />
     </div>
