@@ -5,6 +5,8 @@ import style from "./Header.module.css";
 import useWindowDimensions from "../../functions/ScreenSize";
 import { ReactComponent as ILinkLogo } from "../../assets/img/logoAcademy.svg";
 import { useNavigate } from "react-router-dom";
+import { useStore } from "effector-react";
+import {userStore} from "../../shared/effector/userInfo";
 
 interface IHeader {
   type: string;
@@ -13,6 +15,7 @@ interface IHeader {
 const Header: React.FC<IHeader> = (props) => {
   const { height, width } = useWindowDimensions();
   const navigate = useNavigate();
+  const userInfo = useStore(userStore.$userInfo);
 
   const openControlPanelHandler = (): void => {
     navigate(`/hello-valiev/controlPanel/users`);
@@ -28,11 +31,13 @@ const Header: React.FC<IHeader> = (props) => {
         <div className={style.photoSection}>
           <img
             className={style.img}
-            src={require("../../assets/img/photo.jpg")}
+            // src={require("../../assets/img/photo.jpg")}
+            src={`https://academtest.ilink.dev/images/${userInfo?.mainImgUrl}`}
             alt="photo"
           />
-          <h2 className={style.name}>{width < 710 ? "Ленар" : "Ленар Валиев"}</h2>
-          <h2 className={style.name}>{"Ленар Валиев"}</h2>
+          <h2 className={style.name}>{width < 710 ? `${userInfo?.name.split(" ")[0]}` : `${userInfo?.name}`}</h2>
+          {/* <h2 className={style.name}>{"Ленар Валиев"}</h2> */}
+          <h2 className={style.name}>{userInfo?.name}</h2>
         </div>
         <div className={style.controlPanelTitle}>Панель управления</div>
       </div>

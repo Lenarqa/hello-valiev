@@ -64,7 +64,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       props.setFooterErrMsg("Неправильный пароль!");
       props.showFooterErrMsg(true);
     } else if (auth.accessToken) {
-      localStorage.setItem("auth", auth);
+      localStorage.setItem("auth", JSON.stringify(auth));
       props.showFooterErrMsg(false);
       navigate(`/hello-valiev/about-me`);
     } else if(auth?.statusCode){

@@ -20,7 +20,6 @@ import {
   nameValidation,
   smallAboutMeValidation,
 } from "../../shared/lib/validation/ControlPanelAboutMe";
-type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
 
 const ControlPanelAboutMe: React.FC = () => {
   // пока нет проверки на загружено ли изображение, только выдаются ошибки
