@@ -15,7 +15,7 @@ import {
   emailValidation,
   passwordValidation,
 } from "../../../shared/lib/validation/AuthValidation";
-import { IValidationResult } from "../../../shared/models/models";
+import { IErrorRequest, IUser, IValidationResult } from "../../../shared/models/models";
 
 import { authStore } from "../../../shared/effector/auth";
 import { useStore } from "effector-react";
@@ -57,7 +57,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
 
   useEffect(() => {
     if (auth?.statusCode === 500) {
-      console.log(auth)
+      // console.log(auth)
       props.setFooterErrMsg("Такого пользователя не существует");
       props.showFooterErrMsg(true);
     } else if (auth?.statusCode === 400) {
@@ -143,13 +143,13 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       passwordValidationRegEx.test(password)
     ) {
       authStore.getToken({ email: email, password: password });
-      if (auth?.statusCode === 500) {
-        props.showFooterErrMsg(true);
-      } else {
-        localStorage.setItem("auth", auth);
-        props.showFooterErrMsg(false);
-        navigate(`/hello-valiev/about-me`);
-      }
+      // if (auth?.statusCode === 500) {
+      //   props.showFooterErrMsg(true);
+      // } else {
+      //   localStorage.setItem("auth", auth);
+      //   props.showFooterErrMsg(false);
+      //   navigate(`/hello-valiev/about-me`);
+      // }
     }
   };
 

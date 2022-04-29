@@ -1,3 +1,4 @@
+import { IErrorRequest } from './../models/models';
 import { serializeUser } from "./../serializers/serializeUser";
 import { IUser } from "../models/models";
 import { createEffect, forward, createEvent, restore } from "effector";

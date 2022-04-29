@@ -36,7 +36,7 @@ const Reviews: React.FC = () => {
   const popUpCtx = useContext(PopUpContext);
 
   const authToken = useStore(authStore.$token);
-  const fethingReviews = useStore(userRevievsStore.$userReviews);
+  const fethingReviews:IReview[] | undefined = useStore(userRevievsStore.$userReviews);
   const isLoadingReviews = useStore(userRevievsStore.$isLoadingReviews);
 
   useEffect(() => {

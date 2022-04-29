@@ -1,9 +1,11 @@
-// import { IReview } from "./../../models/models";
+import { IReview } from "../models/models";
 
-export const serializeReview = (reviewsArr: any[]) => {
+export const serializeReview = (reviewsArr: any[]):IReview[] => {
   console.log(reviewsArr);
-  const reviews = reviewsArr.map((review) => {
+
+  const reviews:IReview[] = reviewsArr.map((review) => {
     const date: Date = new Date(review.createdAt);
+    
     const publishDate: string = `${date.getDate()}.${
       date.getMonth() + 1
     }.${date.getFullYear()}`;
@@ -18,13 +20,13 @@ export const serializeReview = (reviewsArr: any[]) => {
       name: review.authorName,
       imgUrl: review.authorImage,
       date: publishDate,
+      title: review.title, //используем это поле при отправке запроса на добавление отзыва, хотя нигде нет импута для него.
       text: review.text,
       status: review.status,
-      updatedAt: updateDate,
-      title: review.title, //используем это поле при отправке запроса на добавление отзыва, хотя нигде нет импута для него.
+      updateAt: updateDate,
       version: review.version,
     };
   });
-
-  console.log(reviews);
+  console.log(reviews)
+  return reviews;
 };

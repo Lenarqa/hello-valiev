@@ -1,3 +1,4 @@
+import { IReview } from '../models/models';
 import { serializeReview } from './../serializers/serializeReview';
 import { createEffect, forward, createEvent, restore } from "effector";
 
@@ -28,7 +29,7 @@ forward({
   to: getUserReviewsFx,
 });
 
-const $userReviews = restore(getUserReviewsFx, null);
+const $userReviews = restore(getUserReviewsFx, []);
 
 const $isLoadingReviews = getUserReviewsFx.pending;
 

@@ -54,3 +54,9 @@ export interface IUser {
   email: string,
   password: string,
 }
+
+export interface IErrorRequest {
+  statusCode: number, 
+  message: string, 
+  error: string, 
+}

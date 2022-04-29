@@ -91,6 +91,7 @@ const ReviewItem: React.FC<ISliderItem> = ({
           <div className={style.userInfo}>
             <img
               src={require(`../../assets/img/users/${imgUrl}`)}
+              // src={`https://academtest.ilink.dev/images/${imgUrl}`}
               alt="photo"
             />
             <p>{name}</p>
