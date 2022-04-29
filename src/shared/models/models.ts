@@ -1,10 +1,13 @@
 export interface IReview {
-  id: number;
+  id: string;
   name: string;
-  imgUrl: string;
+  imgUrl: string | null;
   date: string;
   text: string;
-  status: number;
+  title: string;
+  status: string;
+  updateAt: string;
+  version:number;
 }
 
 export interface FileModel {
@@ -24,11 +27,12 @@ export interface IParticipant {
 }
 
 export interface IOption {
-  id: number;
+  id: number | string;
   value: string;
 }
 
 export interface IMyInfo {
+  id: string;
   name: string;
   miniImgUrl: string;
   mainImgUrl: string;

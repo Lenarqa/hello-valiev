@@ -28,6 +28,7 @@ const Select: React.FC<ISelect> = (props) => {
   };
 
   const setSelectedHandler = (option: IOption): void => {
+    console.log("select")
     props.onChange(option);
     setIsActive(false);
     if (

@@ -6,19 +6,26 @@ import Content from "../../components/content/Content";
 import Footer from "../../components/footer/footer/Footer";
 import { authStore } from "../../shared/effector/auth";
 import { userStore } from "../../shared/effector/userInfo";
+import { userRevievsStore } from "../../shared/effector/reviews";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 
 const AboutMe: React.FC = () => {
   const authToken = useStore(authStore.$token);
   const isLoadingUserInfo = useStore(userStore.$isLoading);
+  
+  const reviews = useStore(userRevievsStore.$userReviews);//для того чтобы отображать в будущем опубликованные отзывы в слайдере
+  const isLoadingReviews = useStore(userRevievsStore.$isLoadingReviews);
 
   useEffect(() => {
     userStore.getUserInfo(authToken.accessToken);
+    // ниже, задел на то что нужно будет отображать опубликованные отзывы пользователю в слайдере
+    // сейчас там пустышки из 
+    userRevievsStore.getUserReviewsFx(authToken.accessToken);
   }, []);
 
   return (
     <>
-      {isLoadingUserInfo ? (
+      {isLoadingUserInfo && isLoadingReviews ? (
         <div className={style.spinerWrapper}>
           <LoadingSpiner />
         </div>

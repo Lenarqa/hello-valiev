@@ -17,6 +17,7 @@ const getTokenFx = createEffect(async (user: IUser) => {
   })
     .then((response) => response.text())
     .then((response) => JSON.parse(response));
+    console.log(response)
   return response;
 });
 
@@ -28,32 +29,6 @@ forward({
 const $token = restore(getTokenFx, "");
 
 const $isLoading = getTokenFx.pending;
-
-// // get about me Info
-// const getUserInfo = createEvent<string>();
-
-// const getUserInfoFx = createEffect(async (token: string) => {
-//   const localToken = localStorage.getItem("auth");
-//   if (localToken) {
-//     const localTokenObj = JSON.parse(localToken);
-//     const response = await fetch(
-//       "https://academtest.ilink.dev/user/getUserProfile",
-//       {
-//         method: "GET",
-//         // headers: { authorization:"Bearer " + token },
-//         headers: { authorization: "Bearer " + localTokenObj.accessToken },
-//       }
-//     )
-//       .then((response) => response.text())
-//       .then((response) => JSON.parse(response));
-//     serializeUser(response);
-//   }
-// });
-
-// forward({
-//   from: getUserInfo,
-//   to: getUserInfoFx,
-// });
 
 export const authStore = {
   $token,

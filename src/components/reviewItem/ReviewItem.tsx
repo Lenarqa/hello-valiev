@@ -10,16 +10,16 @@ import { IOption } from "../../shared/models/models";
 
 interface ISliderItem {
   type?: string;
-  id: number;
+  id: string;
   name: string;
-  imgUrl: string;
+  imgUrl: string | null;
   date: string;
   text: string;
-  status?: number;
+  status?: string;
   selected?: IOption;
-  cancelHandler?: (id: number) => void;
-  publishHandler?: (id: number) => void;
-  updateReviewText?: (updatedReviewText: string, id: number) => boolean;
+  cancelHandler?: (id: string) => void;
+  publishHandler?: (id: string) => void;
+  updateReviewText?: (updatedReviewText: string, id: string) => boolean;
   showGoodWindow?: (value: boolean) => void;
   showBadWindow?: (value: boolean) => void;
 }
@@ -43,7 +43,7 @@ const ReviewItem: React.FC<ISliderItem> = ({
   const [isPublish, setIsPublish] = useState<boolean>(false);
   const [isEditRevie, setIsEditReview] = useState<boolean>(false);
 
-  if (imgUrl.trim().length === 0) {
+  if (!imgUrl) {
     imgUrl = "user-0.png";
   }
 

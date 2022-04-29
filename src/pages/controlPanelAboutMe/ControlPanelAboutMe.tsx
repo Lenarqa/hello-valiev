@@ -138,16 +138,17 @@ const ControlPanelAboutMe: React.FC = () => {
     ) {
       setUserInfo((prev) => {
         return {
+          id: prev.id,
           name: name,
           miniImgUrl: prev.mainImgUrl, //эти два поля остаются прежними, когда будет ответ с сервера нужно будет заменю
           mainImgUrl: prev.mainImgUrl,
           birthday: birthday,
-          city: selectedCity.id,
-          gender: selectedGender.id,
+          city: selectedCity.id as number,
+          gender: selectedGender.id as number,
           year: prev.year, //если будет оставаться время то сделаю автоматический подсчет
           smallAboutMe: smallAboutMe,
           aboutMeText: bigAboutMe,
-          pet: selectedPet.id,
+          pet: selectedPet.id as number,
         };
       });
 

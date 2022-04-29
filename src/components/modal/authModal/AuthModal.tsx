@@ -68,7 +68,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       props.showFooterErrMsg(false);
       navigate(`/hello-valiev/about-me`);
     } else if(auth?.statusCode){
-      props.setFooterErrMsg(auth?.message);
+      props.setFooterErrMsg("Что то пошло не так! " + auth?.message);
       props.showFooterErrMsg(true);
     }
   }, [auth]);

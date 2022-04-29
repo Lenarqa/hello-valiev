@@ -1,6 +1,7 @@
 import { IMyInfo } from "../models/models";
 
 export const MyInfo: IMyInfo = {
+  id:"123sdafsa123zxfzxc",
   name: "Валиев Ленар",
   miniImgUrl: "../../assets/img/photo.jpg",
   mainImgUrl: "../../../assets/img/Me_03.webp",

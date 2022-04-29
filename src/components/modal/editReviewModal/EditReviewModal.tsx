@@ -7,10 +7,10 @@ import ErrorMsg from "../../UI/ErrorMsg/ErrorMsg";
 type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
 
 interface IEditReviewModal {
-  rewiewId: number;
+  rewiewId: string;
   reviewText: string;
   close: () => void;
-  updateReviewText?: (updatedReviewText: string, id: number) => boolean;
+  updateReviewText?: (updatedReviewText: string, id: string) => boolean;
   showGoodWindow?: (value: boolean) => void;
   showBadWindow?: (value: boolean) => void;
 }

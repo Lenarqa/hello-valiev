@@ -29,7 +29,7 @@ export const serializeUser = (infoObj: any) => {
   const pet: number = infoObj.hasPet ? 1 : 2;
 
   // city  
-  let city: number = 0; //1 - томск дефолт
+  let city: number | string = 0; //1 - томск дефолт
   for (let i = 0; i < DummyOptionsCity.length; i++) {
     if (infoObj.cityOfResidence === translit(DummyOptionsCity[i].value)) {
       city = DummyOptionsCity[i].id;
@@ -37,14 +37,13 @@ export const serializeUser = (infoObj: any) => {
     }
   }
 
-  console.log(city);
-
   const userItem: IMyInfo = {
+    id: infoObj.id,
     name: `${infoObj.firstName} ${infoObj.lastName}`,
     miniImgUrl: infoObj.profileImage,
     mainImgUrl: infoObj.profileImage,
     birthday: userBirthday,
-    city: city,
+    city: city as number,
     gender: gender,
     year: age,
     smallAboutMe: smallAmoutMe,
