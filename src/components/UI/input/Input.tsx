@@ -48,13 +48,9 @@ const Input: React.FC<IInput> = (props) => {
           {props.isError && (
             <InfoIcon
               className={style.icon}
-              onMouseOver={props.mouseOverHandler}
-              onMouseOut={props.mouseOutHandler}
             />
           )}
-          {props.isHover && (
             <MsgWindow style={style.hoverMsg}>{props.errorMsg}</MsgWindow>
-          )}
         </div>
       </div>
     </div>

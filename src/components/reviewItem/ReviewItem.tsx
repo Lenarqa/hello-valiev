@@ -43,8 +43,11 @@ const ReviewItem: React.FC<ISliderItem> = ({
   const [isPublish, setIsPublish] = useState<boolean>(false);
   const [isEditRevie, setIsEditReview] = useState<boolean>(false);
 
+  let reviewImg;
   if (!imgUrl) {
-    imgUrl = "user-0.png";
+    reviewImg = require(`../../assets/img/users/user-0.png`);
+  }else {
+    reviewImg = `https://academtest.ilink.dev/images/${imgUrl}`;
   }
 
   //если отзыв ранее отмечен как (отмененный/опубликованный),
@@ -90,8 +93,8 @@ const ReviewItem: React.FC<ISliderItem> = ({
         <div className={style.header}>
           <div className={style.userInfo}>
             <img
-              src={require(`../../assets/img/users/${imgUrl}`)}
-              // src={`https://academtest.ilink.dev/images/${imgUrl}`}
+              // src={require(`../../assets/img/users/${imgUrl}`)} //for tests delete this later
+              src={reviewImg}
               alt="photo"
             />
             <p>{name}</p>

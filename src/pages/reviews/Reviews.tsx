@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+} from "react";
 import { useStore } from "effector-react";
 import style from "./Reviews.module.css";
 import EmptyScreen from "../../components/UI/emtyScreen/EmptyScreen";
@@ -17,14 +23,23 @@ import { authStore } from "../../shared/effector/auth";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 
 const Reviews: React.FC = () => {
+  const authToken = useStore(authStore.$token);
+  const fethingReviews: IReview[] | undefined = useStore(
+    userRevievsStore.$userReviews
+  );
+
   const pageSize: number = 4;
   const [isLoadingPage, setisLoadingPage] = useState<boolean>(false);
 
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
   const [selected, setIsSelected] = useState<IOption>(DummyOptionsReview[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
 
-  const [reviews, setReviews] = useState<IReview[]>(REVIEWS);
-  const [filteredReviews, setFilteredReviews] = useState<IReview[]>(REVIEWS);
+  const [reviews, setReviews] = useState<IReview[]>(
+    fethingReviews as IReview[]
+  );
+  const [filteredReviews, setFilteredReviews] = useState<IReview[]>(
+    fethingReviews as IReview[]
+  );
 
   const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(false);
   const [isShowBadWindow, setIsShowBadWindow] = useState<boolean>(false);
@@ -35,8 +50,6 @@ const Reviews: React.FC = () => {
   // если в controlPanelAboutMe была ошибка скрываем ее
   const popUpCtx = useContext(PopUpContext);
 
-  const authToken = useStore(authStore.$token);
-  const fethingReviews:IReview[] | undefined = useStore(userRevievsStore.$userReviews);
   const isLoadingReviews = useStore(userRevievsStore.$isLoadingReviews);
 
   useEffect(() => {
@@ -50,14 +63,15 @@ const Reviews: React.FC = () => {
 
     onChangeFilterHandler(selected);
 
-    window.addEventListener("scroll", scrollHandler);
+    document.addEventListener("scroll", scrollHandler);
 
     userRevievsStore.getUserReviewsFx(authToken.accessToken);
 
-    return () => window.removeEventListener("scroll", scrollHandler);
+    return () => document.removeEventListener("scroll", scrollHandler);
   }, []);
 
-  const onChangeFilterHandler = (option: IOption): void => { //useCallback(
+  const onChangeFilterHandler = useCallback((option: IOption): void => {
+    console.log("change");
     const curfilteredReviews: IReview[] = reviews.filter(
       (item) => item.status === option?.id
     );
@@ -67,13 +81,13 @@ const Reviews: React.FC = () => {
     setIsSelected(option);
     setFilteredReviews(sortedFilteredReviews);
     setCurPage(1);
-  }//, []);
+  }, []);
 
   // начальная фильтрация, чтобы когда пользователь заходил на
-  //страницу сразу были видны неопубликованные
-  // useEffect(() => {
-  //   onChangeFilterHandler(selected);
-  // }, [onChangeFilterHandler]);
+  // страницу сразу были видны неопубликованные
+  useEffect(() => {
+    onChangeFilterHandler(selected);
+  }, [onChangeFilterHandler, selected]);
 
   const cancelHandler = (id: string): void => {
     setReviews((prev) => {
@@ -147,31 +161,26 @@ const Reviews: React.FC = () => {
     }
   };
 
-  // pagination
-  const nextPageHandler = (): void => {
-    setCurPage((prev) => prev + 1);
-    setisLoadingPage(true);
-    setTimeout(() => {
-      setisLoadingPage(false);
-    }, 1000);
-  };
-
   const scrollHandler = (event: any): void => {
     const scrollTop = document.documentElement.scrollTop;
-    const offsetHeight = document.documentElement.offsetHeight;
-    const windowInnerHeight = window.innerHeight;
+    const clientHeight = document.documentElement.clientHeight;
+    const scrollHeight = document.documentElement.scrollHeight;
 
-    console.log("--------------")
-    console.log("curPage = " + curPage);
-    console.log("filteredReviews.length = " + filteredReviews.length);
-    console.log("page < " + Math.ceil(filteredReviews.length / pageSize))
-    console.log("--------------")
-
+    // if (curPage === Math.ceil(filteredReviews.length / pageSize)) {
+    //   console.log("its all data");
+    //   return;
+    // }
+    console.log(filteredReviews);
+    console.log(curPage);
     if (
-      windowInnerHeight + scrollTop === offsetHeight &&
-      curPage < Math.ceil(filteredReviews.length / pageSize)
+      scrollTop + clientHeight === scrollHeight
     ) {
-      nextPageHandler();
+      console.log("reached bottom");
+      setisLoadingPage(true);
+      setCurPage((prev) => prev + 1);
+      setTimeout(() => {
+        setisLoadingPage(false);
+      }, 500);
     }
   };
 

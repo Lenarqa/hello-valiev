@@ -111,6 +111,7 @@ input[data-has-data="false"]:active {
 }
 
 
+
 /* input type  */
 .formItem[data-type="selectFind"] {
   margin: 12px;
@@ -134,4 +135,13 @@ input[data-has-data="false"]:active {
     width: 100%;
     margin-bottom: 0;
   }
+}
+
+
+.hoverMsg {
+  display: none;
+}
+
+.icon:hover + .hoverMsg{
+  display: block;
 }

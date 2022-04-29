@@ -120,14 +120,6 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     setIsVisiblePassword((prev) => !prev);
   };
 
-  const emailMouseOutHandler = () => {
-    setIsHoverEmail(false);
-  };
-
-  const emailMouseOverHandler = () => {
-    setIsHoverEmail(true);
-  };
-
   const passwordMouseOutHandler = () => {
     setIsHoverPassword(false);
   };
@@ -143,13 +135,13 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       passwordValidationRegEx.test(password)
     ) {
       authStore.getToken({ email: email, password: password });
-      // if (auth?.statusCode === 500) {
-      //   props.showFooterErrMsg(true);
-      // } else {
-      //   localStorage.setItem("auth", auth);
-      //   props.showFooterErrMsg(false);
-      //   navigate(`/hello-valiev/about-me`);
-      // }
+      if (auth?.statusCode === 500) {
+        props.showFooterErrMsg(true);
+      } else {
+        localStorage.setItem("auth", auth);
+        props.showFooterErrMsg(false);
+        navigate(`/hello-valiev/about-me`);
+      }
     }
   };
 
@@ -174,8 +166,6 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
             dataIsError={isEmailError}
             dataIsUnknownUser={props.isFooterErrMsg}
             dataHasData={!isEmailError && email.trim().length > 0}
-            mouseOverHandler={emailMouseOverHandler}
-            mouseOutHandler={emailMouseOutHandler}
             isHover={isHoverEmail}
             errorMsg={emailErrorMsg}
             isError={isEmailError}

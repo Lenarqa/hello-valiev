@@ -98,30 +98,6 @@ const ControlPanelAboutMe: React.FC = () => {
   const imgMouseOverHandler = (): void => {
     setIsHoverImg(true);
   };
-
-  const nameMouseOutHandler = (): void => {
-    setIsHoverName(false);
-  };
-
-  const nameMouseOverHandler = (): void => {
-    setIsHoverName(true);
-  };
-
-  const lastNameMouseOutHandler = (): void => {
-    setIsHoverLastName(false);
-  };
-
-  const lastNameMouseOverHandler = (): void => {
-    setIsHoverLastName(true);
-  };
-
-  const birthdayMouseOutHandler = (): void => {
-    setIsHoverBirthday(false);
-  };
-
-  const birthdayMouseOverHandler = (): void => {
-    setIsHoverBirthday(true);
-  };
   // End Out and Over handler
 
   const startEditModeHandler = (): void => {
@@ -389,8 +365,6 @@ const ControlPanelAboutMe: React.FC = () => {
                 onChange={nameValidationHandler}
                 value={name}
                 dataIsError={isNameError}
-                mouseOverHandler={nameMouseOverHandler}
-                mouseOutHandler={nameMouseOutHandler}
                 isHover={isHoverName}
                 errorMsg={nameErrorMsg}
                 isError={isNameError}
@@ -404,8 +378,6 @@ const ControlPanelAboutMe: React.FC = () => {
                 onChange={lastNameValidationHandler}
                 value={lastName}
                 dataIsError={isLastNameError}
-                mouseOverHandler={lastNameMouseOverHandler}
-                mouseOutHandler={lastNameMouseOutHandler}
                 isHover={isHoverLastName}
                 errorMsg={lastNameErrorMsg}
                 isError={isLastNameError}
@@ -421,8 +393,6 @@ const ControlPanelAboutMe: React.FC = () => {
                   birthday.split(".")[0]
                 }`}
                 dataIsError={isBirthdayError}
-                mouseOverHandler={birthdayMouseOverHandler}
-                mouseOutHandler={birthdayMouseOutHandler}
                 isHover={isHoverBirthday}
                 errorMsg={BirthdayErrorMsg}
                 isError={isBirthdayError}
