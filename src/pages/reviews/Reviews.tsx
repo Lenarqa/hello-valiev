@@ -28,7 +28,6 @@ const Reviews: React.FC = () => {
     userRevievsStore.$userReviews
   );
 
-  const pageSize: number = 4;
   const [isLoadingPage, setisLoadingPage] = useState<boolean>(false);
 
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
@@ -61,7 +60,7 @@ const Reviews: React.FC = () => {
       setIsEmptyPage(true);
     }
 
-    onChangeFilterHandler(selected);
+    // onChangeFilterHandler(selected);
 
     document.addEventListener("scroll", scrollHandler);
 
@@ -78,8 +77,8 @@ const Reviews: React.FC = () => {
 
     const sortedFilteredReviews = sortByDate(curfilteredReviews);
 
-    setIsSelected(option);
     setFilteredReviews(sortedFilteredReviews);
+    setIsSelected(option);
     setCurPage(1);
   }, []);
 
@@ -87,7 +86,7 @@ const Reviews: React.FC = () => {
   // страницу сразу были видны неопубликованные
   useEffect(() => {
     onChangeFilterHandler(selected);
-  }, [onChangeFilterHandler, selected]);
+  }, [onChangeFilterHandler]);
 
   const cancelHandler = (id: string): void => {
     setReviews((prev) => {
@@ -161,26 +160,23 @@ const Reviews: React.FC = () => {
     }
   };
 
+  const nextPageHandler = () => {
+    setCurPage((prev) => prev + 1);
+  };
+
   const scrollHandler = (event: any): void => {
+    // const scrollTop = document.documentElement.scrollTop;
+    // const offsetHeight = document.documentElement.offsetHeight;
+    // const windowInnerHeight = window.innerHeight;
+
     const scrollTop = document.documentElement.scrollTop;
     const clientHeight = document.documentElement.clientHeight;
     const scrollHeight = document.documentElement.scrollHeight;
-
-    // if (curPage === Math.ceil(filteredReviews.length / pageSize)) {
-    //   console.log("its all data");
-    //   return;
-    // }
-    console.log(filteredReviews);
     console.log(curPage);
-    if (
-      scrollTop + clientHeight === scrollHeight
-    ) {
-      console.log("reached bottom");
-      setisLoadingPage(true);
-      setCurPage((prev) => prev + 1);
-      setTimeout(() => {
-        setisLoadingPage(false);
-      }, 500);
+
+    // windowInnerHeight + scrollTop === offsetHeight
+    if (scrollTop + clientHeight >= scrollHeight * 0.99) { //неправильно считает дно страницы
+      nextPageHandler();
     }
   };
 
@@ -210,7 +206,7 @@ const Reviews: React.FC = () => {
               </div>
               <div className={style.rewiews}>
                 {filteredReviews
-                  .filter((rewiew, index) => index < pageSize * curPage)
+                  .filter((rewiew, index) => index < 4 * curPage)
                   .map((review, index) => {
                     if (!isLoadingPage) {
                       return (
