@@ -15,6 +15,7 @@ import Input from "../../UI/input/Input";
 import { caphaStore } from "../../../shared/effector/capha";
 import { authStore } from "../../../shared/effector/auth";
 import LoadingSpiner from "../../UI/loadingSpiner/LoadingSpiner";
+import Button from "../../UI/myButton/Button";
 
 interface IReviewModal {
   close: () => void;
@@ -49,13 +50,17 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
   const [disabledBtn, setDisabledBtn] = useState<boolean>(true);
 
   useEffect(() => {
-    console.log("hello");
     caphaStore.getCapha(authToken.accessToken);
   }, []);
 
   const capha = useStore(caphaStore.$capha);
   const isLoadingCapha = useStore(caphaStore.$isLoadingCapha);
   const authToken = useStore(authStore.$token);
+
+  let caphaImg = "";
+  if(capha !== null) {
+    caphaImg = capha.base64Image;
+  }
 
   const changeNameHandler = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
@@ -131,6 +136,7 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
 
   const sendDataHandler = () => {
     if (
+      !isErrorCapha &&
       !isErrorName &&
       !isErrorFile &&
       !isErrorRewiew &&
@@ -151,6 +157,7 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
 
   const changeCaphaHandler = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
+    setIsErrorSending(false);
     setIsErrorCapha(false);
     const value = e.currentTarget.value;
     if(value.length === 0) {
@@ -228,15 +235,16 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
                   onChange={changeCaphaHandler}
                   placeholder="0000"
                   value={userCapha}
+                  dataIsError={isErrorCapha}
                   isError={isErrorCapha}
                   errorMsg={errorCaphaMsg}
                 />
                 <div className={style.caphaWrapper}>
-                  {isLoadingCapha ? (
+                  {(isLoadingCapha) ? (
                     <LoadingSpiner type="icon"/>
                   ) : (
                     <img
-                      src={capha.base64Image}
+                      src={caphaImg}
                       alt="capha"
                       className={style.caphaImg}
                     />
@@ -253,7 +261,7 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
           </div>
         </div>
         <div className={style.actions}>
-          <HeaderButton onClick={sendDataHandler}>Отправить отзыв</HeaderButton>
+          <Button type="reviews" onClick={sendDataHandler}>Отправить отзыв</Button>
           <div className={style.actionsInfo}>
             <InfoIcon />
             <p className={style.actionText}>

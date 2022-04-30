@@ -18,9 +18,15 @@
   scrollbar-width: none;
 }
 
-.textarea[data-is-error="true"] {
-  border: 1px solid #eb5757;
+.textarea[data-is-error="true"],
+.textarea[data-is-error="true"]:focus,
+.textarea[data-is-error="true"]:active {
+  outline: 2px solid #eb5757;
 }
+
+/* .textarea[data-is-error="true"] {
+  border: 1px solid #eb5757;
+} */
 
 .textarea[data-is-edit="false"] {
   color: #8A8A8A;

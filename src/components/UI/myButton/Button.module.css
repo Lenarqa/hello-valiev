@@ -29,6 +29,9 @@
 .button:disabled {
   background: #8a8a8a 100%;
 }
+.button[data-type="reviews"] {
+  margin-bottom: 0;
+}
 
 /* type cancel  */
 .button[data-type="editReviewCancel"],
