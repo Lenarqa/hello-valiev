@@ -3,13 +3,14 @@ import style from "./RewiewModal.module.css";
 import ReactDOM from "react-dom";
 import ButtonAdd from "../../UI/buttonAdd/ButtonAdd";
 import HeaderButton from "../../UI/headerButton/HeaderButton";
-import { ReactComponent as Info } from "../../../assets/icons/info.svg";
+import { ReactComponent as InfoIcon } from "../../../assets/icons/info.svg";
+import { ReactComponent as ReloadIcon } from "../../../assets/icons/reload.svg";
 import FileItem from "../fileItem/FileItem";
 import ErrorMsg from "../../UI/ErrorMsg/ErrorMsg";
 import { FileModel } from "../../../shared/models/models";
 import Overlay from "../../UI/overlay/Overlay";
 import TextArea from "../../UI/textarea/TextArea";
-type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
+import Input from "../../UI/input/Input";
 
 interface IReviewModal {
   close: () => void;
@@ -95,7 +96,7 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
     document.getElementById("selectImg")?.click();
   };
 
-  const textareaChangeHandler: TextAreaChangeEventHandler = (e): void => {
+  const textareaChangeHandler: React.ChangeEventHandler<HTMLTextAreaElement> = (e): void => {
     if (e.target.value.trim().length <= 0) {
       setIsErrorSending(false);
       setUserRewiew(e.target.value);
@@ -129,6 +130,8 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
     }
   };
 
+  const onChangeCaphaHandler = () => {};
+
   return ReactDOM.createPortal(
     <>
       <Overlay />
@@ -139,17 +142,14 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
         </div>
         <div className={style.content}>
           <div className={style.item}>
-            <div>
-              <p className={style.label}>Как вас зовут?</p>
-            </div>
-            <div style={{ display: "flex" }}>
-              <input
-                className={style.input}
-                placeholder="Имя Фамилия"
-                type="text"
-                value={userName}
+            <p className={style.label}>Как вас зовут?</p>
+            <div className={style.itemContent}>
+              <Input
+                id="userName"
+                type="userName"
                 onChange={changeNameHandler}
-                data-is-error={isErrorName}
+                value={userName}
+                dataIsError={isErrorName}
               />
               <input
                 id="selectImg"
@@ -163,16 +163,16 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
             </div>
             {isErrorName && <ErrorMsg>{errorNameMsg}</ErrorMsg>}
             {isErrorFile && <ErrorMsg>{errorFileMsg}</ErrorMsg>}
+            {showUsersFile && (
+              <FileItem
+                isBigFile={isBigFile}
+                name={userFile?.name}
+                isLoading={isLoadingFile}
+                setIsLoading={setIsLoadingFile}
+                deleteUserFile={deleteUserFileHandler}
+              />
+            )}
           </div>
-          {showUsersFile && (
-            <FileItem
-              isBigFile={isBigFile}
-              name={userFile?.name}
-              isLoading={isLoadingFile}
-              setIsLoading={setIsLoadingFile}
-              deleteUserFile={deleteUserFileHandler}
-            />
-          )}
           <div className={style.item}>
             <p className={style.label}>Все ли вам понравилось?</p>
             <TextArea
@@ -185,11 +185,28 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
             />
             {isErrorRewiew && <ErrorMsg>{errorRewiewMsg}</ErrorMsg>}
           </div>
+          <div className={style.item}>
+            <div>
+              <p className={style.label}>Введите код с картинки:</p>
+              <div className={style.caphaSection}>
+                <Input
+                  type="caphaInput"
+                  id="capha"
+                  onChange={onChangeCaphaHandler}
+                  placeholder="0000"
+                />
+                <img src="" alt="capha" className={style.caphaImg}/>
+                <div className={style.iconWrapper}>
+                  <ReloadIcon className={style.reloadIcon} />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div className={style.actions}>
           <HeaderButton onClick={sendDataHandler}>Отправить отзыв</HeaderButton>
           <div className={style.actionsInfo}>
-            <Info />
+            <InfoIcon />
             <p className={style.actionText}>
               Все отзывы проходят модерацию в течение 2 часов
             </p>

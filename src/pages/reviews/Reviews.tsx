@@ -70,7 +70,6 @@ const Reviews: React.FC = () => {
   }, []);
 
   const onChangeFilterHandler = useCallback((option: IOption): void => {
-    console.log("change");
     const curfilteredReviews: IReview[] = reviews.filter(
       (item) => item.status === option?.id
     );
@@ -98,7 +97,6 @@ const Reviews: React.FC = () => {
         (item) => item.id !== id
       );
 
-      // такая ситуация не возможна, но пусть проверка будет
       if (updatedReview === undefined) {
         return prev;
       }
@@ -165,17 +163,11 @@ const Reviews: React.FC = () => {
   };
 
   const scrollHandler = (event: any): void => {
-    // const scrollTop = document.documentElement.scrollTop;
-    // const offsetHeight = document.documentElement.offsetHeight;
-    // const windowInnerHeight = window.innerHeight;
-
     const scrollTop = document.documentElement.scrollTop;
     const clientHeight = document.documentElement.clientHeight;
     const scrollHeight = document.documentElement.scrollHeight;
-    console.log(curPage);
 
-    // windowInnerHeight + scrollTop === offsetHeight
-    if (scrollTop + clientHeight >= scrollHeight * 0.99) { //неправильно считает дно страницы
+    if (scrollTop + clientHeight >= scrollHeight * 0.99) {
       nextPageHandler();
     }
   };
