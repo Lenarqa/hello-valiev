@@ -96,10 +96,19 @@
   align-items: center;
 }
 
+.caphaWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 165px;
+  height: 52px;
+  overflow: hidden;
+}
+
 .caphaImg {
   margin-right: 16px;
   border-radius: 2px;
-  overflow: hidden;
   width: 165px;
   height: 52px;
   text-align: center;

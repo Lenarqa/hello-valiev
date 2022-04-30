@@ -57,7 +57,6 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
 
   useEffect(() => {
     if (auth?.statusCode === 500) {
-      // console.log(auth)
       props.setFooterErrMsg("Такого пользователя не существует");
       props.showFooterErrMsg(true);
     } else if (auth?.statusCode === 400) {

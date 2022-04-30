@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./RewiewModal.module.css";
 import ReactDOM from "react-dom";
+import { useStore } from "effector-react";
 import ButtonAdd from "../../UI/buttonAdd/ButtonAdd";
 import HeaderButton from "../../UI/headerButton/HeaderButton";
 import { ReactComponent as InfoIcon } from "../../../assets/icons/info.svg";
@@ -11,6 +12,9 @@ import { FileModel } from "../../../shared/models/models";
 import Overlay from "../../UI/overlay/Overlay";
 import TextArea from "../../UI/textarea/TextArea";
 import Input from "../../UI/input/Input";
+import { caphaStore } from "../../../shared/effector/capha";
+import { authStore } from "../../../shared/effector/auth";
+import LoadingSpiner from "../../UI/loadingSpiner/LoadingSpiner";
 
 interface IReviewModal {
   close: () => void;
@@ -38,7 +42,20 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
   const [showUsersFile, setShowUsersFile] = useState<boolean>(false);
   const [isBigFile, setIsBigFile] = useState<boolean>(false);
 
+  const [userCapha, setUserCapha] = useState<string>("");
+  const [isErrorCapha, setIsErrorCapha] = useState<boolean>(false);
+  const [errorCaphaMsg, setErrorCaphaMsg] = useState<string>("");
+
   const [disabledBtn, setDisabledBtn] = useState<boolean>(true);
+
+  useEffect(() => {
+    console.log("hello");
+    caphaStore.getCapha(authToken.accessToken);
+  }, []);
+
+  const capha = useStore(caphaStore.$capha);
+  const isLoadingCapha = useStore(caphaStore.$isLoadingCapha);
+  const authToken = useStore(authStore.$token);
 
   const changeNameHandler = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
@@ -96,7 +113,9 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
     document.getElementById("selectImg")?.click();
   };
 
-  const textareaChangeHandler: React.ChangeEventHandler<HTMLTextAreaElement> = (e): void => {
+  const textareaChangeHandler: React.ChangeEventHandler<HTMLTextAreaElement> = (
+    e
+  ): void => {
     if (e.target.value.trim().length <= 0) {
       setIsErrorSending(false);
       setUserRewiew(e.target.value);
@@ -130,7 +149,21 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
     }
   };
 
-  const onChangeCaphaHandler = () => {};
+  const changeCaphaHandler = (e: React.FormEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    setIsErrorCapha(false);
+    const value = e.currentTarget.value;
+    if(value.length === 0) {
+      setIsErrorCapha(true);
+      setErrorCaphaMsg("Это поле не может быть пустым!");
+    }
+    setUserCapha(value.replace(/[^\d]/g, ""));
+  };
+
+  const refreshCaphaHandler = () => {
+    console.log("refreshCaphaHandler");
+    caphaStore.getCapha(authToken.accessToken);
+  };
 
   return ReactDOM.createPortal(
     <>
@@ -192,11 +225,27 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
                 <Input
                   type="caphaInput"
                   id="capha"
-                  onChange={onChangeCaphaHandler}
+                  onChange={changeCaphaHandler}
                   placeholder="0000"
+                  value={userCapha}
+                  isError={isErrorCapha}
+                  errorMsg={errorCaphaMsg}
                 />
-                <img src="" alt="capha" className={style.caphaImg}/>
-                <div className={style.iconWrapper}>
+                <div className={style.caphaWrapper}>
+                  {isLoadingCapha ? (
+                    <LoadingSpiner type="icon"/>
+                  ) : (
+                    <img
+                      src={capha.base64Image}
+                      alt="capha"
+                      className={style.caphaImg}
+                    />
+                  )}
+                </div>
+                <div
+                  className={style.iconWrapper}
+                  onClick={refreshCaphaHandler}
+                >
                   <ReloadIcon className={style.reloadIcon} />
                 </div>
               </div>

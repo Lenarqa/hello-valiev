@@ -2,7 +2,6 @@ import { IReview } from '../models/models';
 import { serializeReview } from './../serializers/serializeReview';
 import { createEffect, forward, createEvent, restore } from "effector";
 
-// get about me Info
 const getUserReviews = createEvent<string>();
 
 const getUserReviewsFx = createEffect(async (token: string) => {
