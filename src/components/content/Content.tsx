@@ -5,8 +5,13 @@ import SliderSection from "../Slider/Slider";
 import AboutMe from "./aboutMe/AboutMe";
 import GoodWindow from "../UI/goodWindow/GoodWindow";
 import BadWindow from "../UI/badWindow/BadWindow";
+import { ITostData } from "../../shared/models/models";
 
 const Content: React.FC = () => {
+  const [tostData, setTostData] = useState<ITostData>({
+    title: "Что-то не так...",
+    msg: "Не получилось отправить отзыв. Попробуйте еще раз!",
+  } as ITostData);
   const [showGoodWindow, setShowGoodWindow] = useState<boolean>(false);
   const [showBadWindow, setShowBadWindow] = useState<boolean>(false);
 
@@ -17,7 +22,11 @@ const Content: React.FC = () => {
         <div className={style.title}>Добро пожаловать в академию!</div>
         <AboutMe />
       </div>
-      <SliderSection setShowGoodWindow={setShowGoodWindow} />
+      <SliderSection
+        setShowGoodWindow={setShowGoodWindow}
+        setShowBadWindow={setShowBadWindow}
+        setTostData={setTostData}
+      />
       {showGoodWindow && (
         <GoodWindow
           title="Успешно!"
@@ -27,8 +36,8 @@ const Content: React.FC = () => {
       )}
       {showBadWindow && (
         <BadWindow
-          title="Что-то не так..."
-          text="Не получилось отправить отзыв. Попробуйте еще раз!"
+          title={tostData.title}
+          text={tostData.msg}
           setShowBadWindow={setShowBadWindow}
         />
       )}

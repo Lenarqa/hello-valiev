@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ButtonAdd from "../UI/buttonAdd/ButtonAdd";
 import ReviewItem from "../reviewItem/ReviewItem";
-import { IReview } from "../../shared/models/models";
+import { IReview, ITostData } from "../../shared/models/models";
 import { REVIEWS } from "../../shared/data/Reviews";
 import SliderBtn from "./sliderBtn/SliderBtn";
 import ReviewModal from "../modal/rewiewModal/ReviewModal";
@@ -172,6 +172,8 @@ const ActionSection = styled.div`
 
 interface ISliderSection {
   setShowGoodWindow: (value: boolean) => void;
+  setShowBadWindow: (value: boolean) => void;
+  setTostData: (value: ITostData) => void;
 }
 
 const SliderSection: React.FC<ISliderSection> = (props) => {
@@ -297,6 +299,8 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
             setShowModal(false);
           }}
           setShowGoodWindow={props.setShowGoodWindow}
+          setShowBadWindow={props.setShowBadWindow}
+          setTostData={props.setTostData}
         />
       )}
     </StyledSliderSection>

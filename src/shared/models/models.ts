@@ -7,7 +7,15 @@ export interface IReview {
   title: string;
   status: string;
   updateAt: string;
-  version:number;
+  version: number;
+}
+
+export interface IReviewPost {
+  authorName: string;
+  title: string;
+  text: string;
+  captchaKey: string;
+  captchaValue: string;
 }
 
 export interface FileModel {
@@ -40,23 +48,28 @@ export interface IMyInfo {
   city: number;
   gender: number;
   year: number;
-  smallAboutMe:string;
+  smallAboutMe: string;
   aboutMeText: string;
   pet: number;
 }
 
 export interface IValidationResult {
-  result: boolean,
-  errorMsg:string,
+  result: boolean;
+  errorMsg: string;
 }
 
 export interface IUser {
-  email: string,
-  password: string,
+  email: string;
+  password: string;
 }
 
 export interface IErrorRequest {
-  statusCode: number, 
-  message: string, 
-  error: string, 
+  statusCode: number;
+  message: string;
+  error: string;
+}
+
+export interface ITostData {
+  title: string;
+  msg: string;
 }

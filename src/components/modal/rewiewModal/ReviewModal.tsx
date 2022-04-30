@@ -8,21 +8,24 @@ import { ReactComponent as InfoIcon } from "../../../assets/icons/info.svg";
 import { ReactComponent as ReloadIcon } from "../../../assets/icons/reload.svg";
 import FileItem from "../fileItem/FileItem";
 import ErrorMsg from "../../UI/ErrorMsg/ErrorMsg";
-import { FileModel } from "../../../shared/models/models";
+import { FileModel, IReview, IReviewPost, ITostData } from "../../../shared/models/models";
 import Overlay from "../../UI/overlay/Overlay";
 import TextArea from "../../UI/textarea/TextArea";
 import Input from "../../UI/input/Input";
 import { caphaStore } from "../../../shared/effector/capha";
 import { authStore } from "../../../shared/effector/auth";
+import { addReviewStore } from "../../../shared/effector/addReview";
 import LoadingSpiner from "../../UI/loadingSpiner/LoadingSpiner";
 import Button from "../../UI/myButton/Button";
 
 interface IReviewModal {
   close: () => void;
   setShowGoodWindow: (value: boolean) => void;
+  setShowBadWindow: (value: boolean) => void;
+  setTostData: (value:ITostData)=> void;
 }
 
-const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
+const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow, setShowBadWindow, setTostData }) => {
   const [userName, setUserName] = useState<string>("");
   const [userFile, setUserFile] = useState<FileModel>();
   const [userRewiew, setUserRewiew] = useState<string>("");
@@ -57,10 +60,26 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
   const isLoadingCapha = useStore(caphaStore.$isLoadingCapha);
   const authToken = useStore(authStore.$token);
 
+  const isLoadingAddReview = useStore(addReviewStore.$isLoadingAddReview);
+  const sendReview = useStore(addReviewStore.$sendReview);
+
   let caphaImg = "";
-  if(capha !== null) {
+  if (capha !== null) {
     caphaImg = capha.base64Image;
   }
+
+  useEffect(()=>{
+    if(sendReview) {
+      console.log(sendReview);
+      if (sendReview?.status === 400) {
+        setTostData({title: "Что-то не так...", msg: "Ошибка в капче!"})
+        setShowBadWindow(true);
+      } else if (sendReview?.status === 500) {
+        setTostData({title: "Что-то не так...", msg: "Произошла ошибка попробуйте позже."})
+        setShowBadWindow(true);
+      }
+    }
+  },[sendReview])
 
   const changeNameHandler = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
@@ -143,12 +162,24 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
       userName.trim().length > 0 &&
       userRewiew.trim().length > 0
     ) {
-      alert(
-        `ФИО - ${userName} \n Наименование фала - ${userFile?.name} \n Отзыв пользователя - ${userRewiew}`
-      );
+      // alert(
+      //   `ФИО - ${userName} \n Наименование фала - ${userFile?.name} \n Отзыв пользователя - ${userRewiew}`
+      // );
+      if (!userFile?.name) {
+        const review: IReviewPost = {
+          authorName: userName,
+          title: "defautl Title",
+          text: userRewiew,
+          captchaKey: capha.key,
+          captchaValue: userCapha,
+        };
+
+        addReviewStore.sendReview(review);
+      }
+
       setIsErrorSending(false);
-      setShowGoodWindow(true);
-      close();
+      // setShowGoodWindow(true);
+      // close();
     } else {
       setIsErrorSending(true);
       setErrorSengingMsg("Не все поля заполнены");
@@ -160,7 +191,7 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
     setIsErrorSending(false);
     setIsErrorCapha(false);
     const value = e.currentTarget.value;
-    if(value.length === 0) {
+    if (value.length === 0) {
       setIsErrorCapha(true);
       setErrorCaphaMsg("Это поле не может быть пустым!");
     }
@@ -176,100 +207,111 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow }) => {
     <>
       <Overlay />
       <div className={style.styledReviewModal}>
-        <div className={style.header}>
-          <h2 className={style.title}>Отзыв</h2>
-          <button className={style.btn} onClick={close} />
-        </div>
-        <div className={style.content}>
-          <div className={style.item}>
-            <p className={style.label}>Как вас зовут?</p>
-            <div className={style.itemContent}>
-              <Input
-                id="userName"
-                type="userName"
-                onChange={changeNameHandler}
-                value={userName}
-                dataIsError={isErrorName}
-              />
-              <input
-                id="selectImg"
-                type="file"
-                style={{ display: "none" }}
-                onChange={imgSelectHandler}
-              />
-              <ButtonAdd onClick={fileUploadHandler} isDisabled={disabledBtn}>
-                Загрузить фото
-              </ButtonAdd>
+        {isLoadingAddReview ? (
+          <LoadingSpiner />
+        ) : (
+          <>
+            <div className={style.header}>
+              <h2 className={style.title}>Отзыв</h2>
+              <button className={style.btn} onClick={close} />
             </div>
-            {isErrorName && <ErrorMsg>{errorNameMsg}</ErrorMsg>}
-            {isErrorFile && <ErrorMsg>{errorFileMsg}</ErrorMsg>}
-            {showUsersFile && (
-              <FileItem
-                isBigFile={isBigFile}
-                name={userFile?.name}
-                isLoading={isLoadingFile}
-                setIsLoading={setIsLoadingFile}
-                deleteUserFile={deleteUserFileHandler}
-              />
-            )}
-          </div>
-          <div className={style.item}>
-            <p className={style.label}>Все ли вам понравилось?</p>
-            <TextArea
-              placeholder={"Напишите пару слов о вашем опыте."}
-              onChangeHandler={textareaChangeHandler}
-              value={userRewiew}
-              dataIsError={isErrorRewiew}
-              msgLenght={userRewiew.length}
-              maxLenght={200}
-            />
-            {isErrorRewiew && <ErrorMsg>{errorRewiewMsg}</ErrorMsg>}
-          </div>
-          <div className={style.item}>
-            <div>
-              <p className={style.label}>Введите код с картинки:</p>
-              <div className={style.caphaSection}>
-                <Input
-                  type="caphaInput"
-                  id="capha"
-                  onChange={changeCaphaHandler}
-                  placeholder="0000"
-                  value={userCapha}
-                  dataIsError={isErrorCapha}
-                  isError={isErrorCapha}
-                  errorMsg={errorCaphaMsg}
-                />
-                <div className={style.caphaWrapper}>
-                  {(isLoadingCapha) ? (
-                    <LoadingSpiner type="icon"/>
-                  ) : (
-                    <img
-                      src={caphaImg}
-                      alt="capha"
-                      className={style.caphaImg}
-                    />
-                  )}
+            <div className={style.content}>
+              <div className={style.item}>
+                <p className={style.label}>Как вас зовут?</p>
+                <div className={style.itemContent}>
+                  <Input
+                    id="userName"
+                    type="userName"
+                    onChange={changeNameHandler}
+                    value={userName}
+                    dataIsError={isErrorName}
+                  />
+                  <input
+                    id="selectImg"
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={imgSelectHandler}
+                  />
+                  <ButtonAdd
+                    onClick={fileUploadHandler}
+                    isDisabled={disabledBtn}
+                  >
+                    Загрузить фото
+                  </ButtonAdd>
                 </div>
-                <div
-                  className={style.iconWrapper}
-                  onClick={refreshCaphaHandler}
-                >
-                  <ReloadIcon className={style.reloadIcon} />
+                {isErrorName && <ErrorMsg>{errorNameMsg}</ErrorMsg>}
+                {isErrorFile && <ErrorMsg>{errorFileMsg}</ErrorMsg>}
+                {showUsersFile && (
+                  <FileItem
+                    isBigFile={isBigFile}
+                    name={userFile?.name}
+                    isLoading={isLoadingFile}
+                    setIsLoading={setIsLoadingFile}
+                    deleteUserFile={deleteUserFileHandler}
+                  />
+                )}
+              </div>
+              <div className={style.item}>
+                <p className={style.label}>Все ли вам понравилось?</p>
+                <TextArea
+                  placeholder={"Напишите пару слов о вашем опыте."}
+                  onChangeHandler={textareaChangeHandler}
+                  value={userRewiew}
+                  dataIsError={isErrorRewiew}
+                  msgLenght={userRewiew.length}
+                  maxLenght={200}
+                />
+                {isErrorRewiew && <ErrorMsg>{errorRewiewMsg}</ErrorMsg>}
+              </div>
+              <div className={style.item}>
+                <div>
+                  <p className={style.label}>Введите код с картинки:</p>
+                  <div className={style.caphaSection}>
+                    <Input
+                      type="caphaInput"
+                      id="capha"
+                      onChange={changeCaphaHandler}
+                      placeholder="0000"
+                      value={userCapha}
+                      dataIsError={isErrorCapha}
+                      isError={isErrorCapha}
+                      errorMsg={errorCaphaMsg}
+                    />
+                    <div className={style.caphaWrapper}>
+                      {isLoadingCapha ? (
+                        <LoadingSpiner type="icon" />
+                      ) : (
+                        <img
+                          src={caphaImg}
+                          alt="capha"
+                          className={style.caphaImg}
+                        />
+                      )}
+                    </div>
+                    <div
+                      className={style.iconWrapper}
+                      onClick={refreshCaphaHandler}
+                    >
+                      <ReloadIcon className={style.reloadIcon} />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div className={style.actions}>
-          <Button type="reviews" onClick={sendDataHandler}>Отправить отзыв</Button>
-          <div className={style.actionsInfo}>
-            <InfoIcon />
-            <p className={style.actionText}>
-              Все отзывы проходят модерацию в течение 2 часов
-            </p>
-          </div>
-        </div>
-        {isErrorSending && <ErrorMsg>{errorSendingMsg}</ErrorMsg>}
+            <div className={style.actions}>
+              <Button type="reviews" onClick={sendDataHandler}>
+                Отправить отзыв
+              </Button>
+              <div className={style.actionsInfo}>
+                <InfoIcon />
+                <p className={style.actionText}>
+                  Все отзывы проходят модерацию в течение 2 часов
+                </p>
+              </div>
+            </div>
+            {isErrorSending && <ErrorMsg>{errorSendingMsg}</ErrorMsg>}
+          </>
+        )}
       </div>
     </>,
     document.getElementById("portal") as Element
