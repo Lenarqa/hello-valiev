@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useStore } from "effector-react";
 import styled from "styled-components";
 import ButtonAdd from "../UI/buttonAdd/ButtonAdd";
 import ReviewItem from "../reviewItem/ReviewItem";
@@ -9,6 +10,7 @@ import ReviewModal from "../modal/rewiewModal/ReviewModal";
 import { ReactComponent as ButtonAddIcon } from "../../assets/icons/buttonAdd.svg";
 import { DummyOptionsReview } from "../../shared/data/OptionsReviews";
 import { addReviewStore } from "../../shared/effector/addReview";
+import { userRevievsStore } from "../../shared/effector/reviews";
 
 import useWindowDimensions from "../../functions/ScreenSize";
 
@@ -194,6 +196,8 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
     sliderItemWidth = -300;
   }
 
+  const fethingReviews = useStore(userRevievsStore.$userReviews);
+
   const filteredReviews = REVIEWS.filter((item)=>item.status === DummyOptionsReview[2].id); // Отображаем только отзывы со статусом допущен
   const [showModal, setShowModal] = useState<boolean>(false);
   const [rewies, setRewiews] = useState<IReview[]>(filteredReviews);
@@ -202,6 +206,14 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
 
   const [disableLeftBtn, setDisableLeftBtn] = useState<boolean>(true);
   const [disableRightBtn, setDisableRightBtn] = useState<boolean>(false);
+
+  useEffect(()=>{
+    if(fethingReviews !== undefined && fethingReviews?.length > 0){
+      console.log(fethingReviews)
+      console.log(fethingReviews[fethingReviews.length-1])
+      setRewiews(prev => [fethingReviews[fethingReviews.length-1], ...prev]);
+    }
+  },[fethingReviews])
 
   const openModalHandler = () =>{
     // перед открытием чистим стор эффектора

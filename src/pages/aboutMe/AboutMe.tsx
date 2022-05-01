@@ -18,9 +18,7 @@ const AboutMe: React.FC = () => {
 
   useEffect(() => {
     userStore.getUserInfo(authToken.accessToken);
-    // ниже, задел на то что нужно будет отображать опубликованные отзывы пользователю в слайдере
-    // сейчас там пустышки из 
-    userRevievsStore.getUserReviewsFx(authToken.accessToken);
+    userRevievsStore.getUserReviews(authToken.accessToken);
   }, []);
 
   return (

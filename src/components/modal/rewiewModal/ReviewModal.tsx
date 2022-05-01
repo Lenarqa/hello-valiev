@@ -18,6 +18,7 @@ import Input from "../../UI/input/Input";
 import { caphaStore } from "../../../shared/effector/capha";
 import { authStore } from "../../../shared/effector/auth";
 import { addReviewStore } from "../../../shared/effector/addReview";
+import { userRevievsStore } from "../../../shared/effector/reviews";
 import LoadingSpiner from "../../UI/loadingSpiner/LoadingSpiner";
 import Button from "../../UI/myButton/Button";
 
@@ -101,6 +102,7 @@ const ReviewModal: React.FC<IReviewModal> = ({
           close();
         }else {
           setShowGoodWindow(true);
+          userRevievsStore.getUserReviews(authToken.accessToken);
           close();
         }
       } 
@@ -190,7 +192,6 @@ const ReviewModal: React.FC<IReviewModal> = ({
       userName.trim().length > 0 &&
       userRewiew.trim().length > 0
     ) {
-      console.log("Click");
       const review: IReviewPost = {
         authorName: userName,
         title: "defautl Title",

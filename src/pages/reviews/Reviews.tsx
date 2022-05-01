@@ -3,7 +3,6 @@ import React, {
   useContext,
   useEffect,
   useState,
-  useRef,
 } from "react";
 import { useStore } from "effector-react";
 import style from "./Reviews.module.css";
@@ -11,7 +10,6 @@ import EmptyScreen from "../../components/UI/emtyScreen/EmptyScreen";
 import Select from "../../components/UI/select/Select";
 import { DummyOptionsReview } from "../../shared/data/OptionsReviews";
 import { IOption, IReview } from "../../shared/models/models";
-import { REVIEWS } from "../../shared/data/Reviews";
 import ReviewItem from "../../components/reviewItem/ReviewItem";
 import { sortByDate } from "../../shared/lib/sortReviews";
 import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
@@ -60,11 +58,9 @@ const Reviews: React.FC = () => {
       setIsEmptyPage(true);
     }
 
-    // onChangeFilterHandler(selected);
-
     document.addEventListener("scroll", scrollHandler);
 
-    userRevievsStore.getUserReviewsFx(authToken.accessToken);
+    userRevievsStore.getUserReviews(authToken.accessToken);
 
     return () => document.removeEventListener("scroll", scrollHandler);
   }, []);

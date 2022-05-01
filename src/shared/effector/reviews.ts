@@ -33,7 +33,7 @@ const $userReviews = restore(getUserReviewsFx, []);
 const $isLoadingReviews = getUserReviewsFx.pending;
 
 export const userRevievsStore = {
-  getUserReviewsFx,
+  getUserReviews,
   $userReviews,
   $isLoadingReviews,
 };
