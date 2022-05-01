@@ -22,9 +22,28 @@
 }
 
 .icon {
-  margin-right: 12px; 
+  margin-right: 12px;
 }
 
 .button:disabled {
   background: #8a8a8a;
+}
+
+@media (max-width: 420px) {
+  .button[data-type="addImg"] {
+    padding: 12px 13px;
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 18px;
+    width: 149px;
+    height: 42px;
+  }
+
+  .button[data-type="addImg"] .icon {
+    margin-right: 11px;
+    width: 9.5px;
+    height: 9.5px;
+  }
 }
