@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/hello-valiev/static/css/main.d2dd414c.css",
-    "main.js": "/hello-valiev/static/js/main.3d465790.js",
+    "main.css": "/hello-valiev/static/css/main.50be7667.css",
+    "main.js": "/hello-valiev/static/js/main.acd637e8.js",
     "static/media/Gilroy-Regular.ttf": "/hello-valiev/static/media/Gilroy-Regular.b91b0127c56a8e5f9e83.ttf",
     "static/media/FactorAMedium-Regular.ttf": "/hello-valiev/static/media/FactorAMedium-Regular.1a1b89bd931afe1bfa27.ttf",
     "static/media/photo.jpg": "/hello-valiev/static/media/photo.2c778dc9e9b065821fc4.jpg",
@@ -44,11 +44,11 @@
     "static/media/close2.svg": "/hello-valiev/static/media/close2.b736a10d5fbf1920ca83c8e283ecf475.svg",
     "static/media/buttonAdd.svg": "/hello-valiev/static/media/buttonAdd.c9c4d03a3323c6c4bbd6970d03fa28f9.svg",
     "static/media/plus.svg": "/hello-valiev/static/media/plus.75a21b6bf9a3d513b795f0b6ff855b10.svg",
-    "main.d2dd414c.css.map": "/hello-valiev/static/css/main.d2dd414c.css.map",
-    "main.3d465790.js.map": "/hello-valiev/static/js/main.3d465790.js.map"
+    "main.50be7667.css.map": "/hello-valiev/static/css/main.50be7667.css.map",
+    "main.acd637e8.js.map": "/hello-valiev/static/js/main.acd637e8.js.map"
   },
   "entrypoints": [
-    "static/css/main.d2dd414c.css",
-    "static/js/main.3d465790.js"
+    "static/css/main.50be7667.css",
+    "static/js/main.acd637e8.js"
   ]
 }
