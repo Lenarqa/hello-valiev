@@ -36,8 +36,7 @@ const Header = styled.div`
   margin-bottom: 56px;
 
   @media (max-width: 420px) {
-    flex-direction: column;
-    margin-bottom: 10px;
+    
   }
 
   @media (max-width: 321px) {
@@ -50,7 +49,7 @@ const Title = styled.h2`
   color: #333333;
   font-family: "Factor A";
 
-  @media (max-width: 321px) {
+  @media (max-width: 420px) {
     font-size: 32px;
   }
 `;

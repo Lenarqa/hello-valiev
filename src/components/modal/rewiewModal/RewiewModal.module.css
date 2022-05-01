@@ -95,7 +95,7 @@
 .caphaSection {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .caphaWrapper {
@@ -114,6 +114,11 @@
   width: 165px;
   height: 52px;
   text-align: center;
+}
+
+.caphaActions {
+  display: flex;
+  width: 100%;
 }
 
 .iconWrapper {
@@ -178,6 +183,19 @@
     height: auto;
     padding: 16px;
   }
+
+  .caphaSection {
+    width: 100%;
+    flex-direction: column-reverse;
+  }
+
+  .caphaActions {
+    margin-bottom: 16px;
+  }
+
+  .inputWrapper{
+    width: 100%;
+  }
 }
 
 @media (max-width: 420px) {
@@ -197,6 +215,7 @@
 
   .item:first-child div {
     flex-direction: column;
+    align-items: start;
   }
 
   .item:last-child {

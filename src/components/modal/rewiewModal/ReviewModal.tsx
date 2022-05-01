@@ -87,7 +87,10 @@ const ReviewModal: React.FC<IReviewModal> = ({
         setTostData({ title: "Что-то не так...", msg: "Ошибка в капче!" });
         setShowBadWindow(true);
         close();
-      } else if (sendReviewError?.status === 500 || sendReviewError?.statusCode) {
+      } else if (
+        sendReviewError?.status === 500 ||
+        sendReviewError?.statusCode
+      ) {
         setTostData({
           title: "Что-то не так...",
           msg: "Произошла ошибка попробуйте позже.",
@@ -103,11 +106,11 @@ const ReviewModal: React.FC<IReviewModal> = ({
           setShowBadWindow(true);
           close();
         }
-      }else {
+      } else {
         setShowGoodWindow(true);
         userRevievsStore.getUserReviews(authToken.accessToken);
         close();
-      } 
+      }
     }
   }, [sendReviewError, sendPhotoError]);
 
@@ -185,7 +188,7 @@ const ReviewModal: React.FC<IReviewModal> = ({
     }
   };
 
-  const sendDataHandler = () => {
+  const sendDataHandler = (): void => {
     if (
       !isErrorCapha &&
       !isErrorName &&
@@ -222,8 +225,7 @@ const ReviewModal: React.FC<IReviewModal> = ({
     setUserCapha(value.replace(/[^\d]/g, ""));
   };
 
-  const refreshCaphaHandler = () => {
-    console.log("refreshCaphaHandler");
+  const refreshCaphaHandler = (): void => {
     caphaStore.getCapha(authToken.accessToken);
   };
 
@@ -288,9 +290,9 @@ const ReviewModal: React.FC<IReviewModal> = ({
                 {isErrorRewiew && <ErrorMsg>{errorRewiewMsg}</ErrorMsg>}
               </div>
               <div className={style.item}>
-                <div>
-                  <p className={style.label}>Введите код с картинки:</p>
-                  <div className={style.caphaSection}>
+                <div className={style.caphaSection}>
+                  <div className={style.inputWrapper}>
+                    <p className={style.label}>Введите код с картинки:</p>
                     <Input
                       type="caphaInput"
                       id="capha"
@@ -301,6 +303,8 @@ const ReviewModal: React.FC<IReviewModal> = ({
                       isError={isErrorCapha}
                       errorMsg={errorCaphaMsg}
                     />
+                  </div>
+                  <div className={style.caphaActions}>
                     <div className={style.caphaWrapper}>
                       {isLoadingCapha ? (
                         <LoadingSpiner type="icon" />
