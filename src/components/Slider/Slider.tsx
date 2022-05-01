@@ -8,6 +8,7 @@ import SliderBtn from "./sliderBtn/SliderBtn";
 import ReviewModal from "../modal/rewiewModal/ReviewModal";
 import { ReactComponent as ButtonAddIcon } from "../../assets/icons/buttonAdd.svg";
 import { DummyOptionsReview } from "../../shared/data/OptionsReviews";
+import { addReviewStore } from "../../shared/effector/addReview";
 
 import useWindowDimensions from "../../functions/ScreenSize";
 
@@ -202,6 +203,13 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
   const [disableLeftBtn, setDisableLeftBtn] = useState<boolean>(true);
   const [disableRightBtn, setDisableRightBtn] = useState<boolean>(false);
 
+  const openModalHandler = () =>{
+    // перед открытием чистим стор эффектора
+    addReviewStore.setSendReviewError();
+    addReviewStore.setUserPhoto(null);
+    setShowModal(true);
+  }
+
   useEffect(() => {
     if (curSlide === 0) {
       setDisableLeftBtn(true);
@@ -238,11 +246,11 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
           <Title>Отзывы</Title>
           {width < 700 ? (
             <ButtonAddIcon
-              onClick={() => setShowModal(true)}
+              onClick={openModalHandler}
               style={{ height: 42, width: 42 }}
             />
           ) : (
-            <ButtonAdd onClick={() => setShowModal(true)}>
+            <ButtonAdd onClick={openModalHandler}>
               Добавить отзыв
             </ButtonAdd>
           )}

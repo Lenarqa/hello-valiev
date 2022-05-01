@@ -73,3 +73,8 @@ export interface ITostData {
   title: string;
   msg: string;
 }
+
+export interface IPostImg {
+  reviewID: string;
+  photo: File;
+}

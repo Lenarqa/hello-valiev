@@ -8,7 +8,7 @@ import { ReactComponent as InfoIcon } from "../../../assets/icons/info.svg";
 import { ReactComponent as ReloadIcon } from "../../../assets/icons/reload.svg";
 import FileItem from "../fileItem/FileItem";
 import ErrorMsg from "../../UI/ErrorMsg/ErrorMsg";
-import { FileModel, IReview, IReviewPost, ITostData } from "../../../shared/models/models";
+import { FileModel, IPostImg, IReview, IReviewPost, ITostData } from "../../../shared/models/models";
 import Overlay from "../../UI/overlay/Overlay";
 import TextArea from "../../UI/textarea/TextArea";
 import Input from "../../UI/input/Input";
@@ -61,7 +61,7 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow, setShow
   const authToken = useStore(authStore.$token);
 
   const isLoadingAddReview = useStore(addReviewStore.$isLoadingAddReview);
-  const sendReview = useStore(addReviewStore.$sendReview);
+  const sendReviewError = useStore(addReviewStore.$sendReviewError);
 
   let caphaImg = "";
   if (capha !== null) {
@@ -69,17 +69,24 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow, setShow
   }
 
   useEffect(()=>{
-    if(sendReview) {
-      console.log(sendReview);
-      if (sendReview?.status === 400) {
+    if(sendReviewError) {
+      // console.log(sendReviewError);
+      if (sendReviewError?.status === 400) {
         setTostData({title: "Что-то не так...", msg: "Ошибка в капче!"})
         setShowBadWindow(true);
-      } else if (sendReview?.status === 500) {
+        close();
+        addReviewStore.setSendReviewError();//чтобы при повторном открытии окна отзыва не отображалась ошибка
+      } else if (sendReviewError?.status === 500) {
         setTostData({title: "Что-то не так...", msg: "Произошла ошибка попробуйте позже."})
         setShowBadWindow(true);
+        addReviewStore.setSendReviewError();
+        close();
+      }else {
+        setShowGoodWindow(true);
+        close();
       }
     }
-  },[sendReview])
+  },[sendReviewError])
 
   const changeNameHandler = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
@@ -120,7 +127,9 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow, setShow
           setErrorFileMsg("Может быть загружено только одно изображение.");
           return;
         }
-        setUserFile(files[0]);
+        
+        // setUserFile(files[0]);
+        addReviewStore.setUserPhoto(files[0]);
         setIsLoadingFile(true);
         setShowUsersFile(true);
         setIsErrorFile(false);
@@ -162,9 +171,6 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow, setShow
       userName.trim().length > 0 &&
       userRewiew.trim().length > 0
     ) {
-      // alert(
-      //   `ФИО - ${userName} \n Наименование фала - ${userFile?.name} \n Отзыв пользователя - ${userRewiew}`
-      // );
       if (!userFile?.name) {
         const review: IReviewPost = {
           authorName: userName,
@@ -177,9 +183,12 @@ const ReviewModal: React.FC<IReviewModal> = ({ close, setShowGoodWindow, setShow
         addReviewStore.sendReview(review);
       }
 
+      // if(userFile?.name) {
+      //   addReviewStore.sendPhoto({reviewID: "b5df162b-7053-400c-a2e2-af1c46eaf11e", photo: userFile} as IPostImg)
+      // }
+
       setIsErrorSending(false);
       // setShowGoodWindow(true);
-      // close();
     } else {
       setIsErrorSending(true);
       setErrorSengingMsg("Не все поля заполнены");
