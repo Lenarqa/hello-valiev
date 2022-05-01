@@ -81,6 +81,8 @@ const ReviewModal: React.FC<IReviewModal> = ({
 
   useEffect(() => {
     if (sendReviewError) {
+      console.log(sendReviewError);
+      console.log(sendPhotoError);
       if (sendReviewError?.status === 400) {
         setTostData({ title: "Что-то не так...", msg: "Ошибка в капче!" });
         setShowBadWindow(true);
@@ -100,11 +102,11 @@ const ReviewModal: React.FC<IReviewModal> = ({
           });
           setShowBadWindow(true);
           close();
-        }else {
-          setShowGoodWindow(true);
-          userRevievsStore.getUserReviews(authToken.accessToken);
-          close();
         }
+      }else {
+        setShowGoodWindow(true);
+        userRevievsStore.getUserReviews(authToken.accessToken);
+        close();
       } 
     }
   }, [sendReviewError, sendPhotoError]);
