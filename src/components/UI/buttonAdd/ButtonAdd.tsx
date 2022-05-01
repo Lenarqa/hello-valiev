@@ -10,7 +10,7 @@ interface IButtonAdd {
 const ButtonAdd: React.FC<IButtonAdd> = (props) => {
   return (
     <button className={style.button} onClick={props.onClick} disabled={props.isDisabled}>
-      <img src={plus} style={{ marginRight: 12 }} />
+      <img src={plus} className={style.icon} />
       {props.children}
     </button>
   );

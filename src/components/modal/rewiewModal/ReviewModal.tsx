@@ -140,8 +140,9 @@ const ReviewModal: React.FC<IReviewModal> = ({
     if (e.currentTarget.files?.length !== 0) {
       const files = e.currentTarget.files;
       if (files) {
-        const fileSize: number = files[0].size / 8 / 1024;
-
+        console.log(files[0].size);
+        const fileSize: number = files[0].size / 8 / 1024 / 1024;
+        console.log(fileSize);
         if (fileSize > 5) {
           setIsBigFile(true);
         } else {
@@ -169,6 +170,8 @@ const ReviewModal: React.FC<IReviewModal> = ({
   };
 
   const fileUploadHandler = (): void => {
+    console.log("Click");
+    
     document.getElementById("selectImg")?.click();
   };
 

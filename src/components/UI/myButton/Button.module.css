@@ -43,6 +43,10 @@
   transition: 0.5s ease-out;
 }
 
+.button[data-type="header"] {
+  margin-bottom: 0;
+}
+
 /* aboutMe header */
 .button[data-type="submitAboutMeControlPanel"],
 .button[data-type="submitAboutMe"] {

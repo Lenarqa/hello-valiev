@@ -1,5 +1,4 @@
 import React from "react";
-import HeaderButton from "../UI/headerButton/HeaderButton";
 import { ReactComponent as ButtonMobile } from "../../assets/icons/button1.svg";
 import style from "./Header.module.css";
 import useWindowDimensions from "../../functions/ScreenSize";
@@ -7,6 +6,7 @@ import { ReactComponent as ILinkLogo } from "../../assets/img/logoAcademy.svg";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "effector-react";
 import { userStore } from "../../shared/effector/userInfo";
+import Button from "../UI/myButton/Button";
 
 interface IHeader {
   type: string;
@@ -52,9 +52,9 @@ const Header: React.FC<IHeader> = (props) => {
             onClick={openControlPanelHandler}
           />
         ) : (
-          <HeaderButton onClick={openControlPanelHandler}>
+          <Button type="header" onClick={openControlPanelHandler}>
             Панель управления
-          </HeaderButton>
+          </Button>
         )}
       </div>
     </header>

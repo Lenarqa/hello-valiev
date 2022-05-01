@@ -12,8 +12,7 @@ import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 const AboutMe: React.FC = () => {
   const authToken = useStore(authStore.$token);
   const isLoadingUserInfo = useStore(userStore.$isLoading);
-  
-  const reviews = useStore(userRevievsStore.$userReviews);//для того чтобы отображать в будущем опубликованные отзывы в слайдере
+
   const isLoadingReviews = useStore(userRevievsStore.$isLoadingReviews);
 
   useEffect(() => {
