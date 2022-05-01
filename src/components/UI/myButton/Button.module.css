@@ -54,6 +54,34 @@
   background: #8a8a8a 100%;
 }
 
+.button[data-type="authModalBtn"] {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #585cc6;
+  transition: all 1s ease;
+}
+
+.button[data-type="authModalBtn"]::after {
+  display: block;
+  content: "";
+  border-bottom: solid 1px #797ddf;
+  transform: scaleX(0);
+  transition: all 250ms ease-in-out;
+}
+
+.button[data-type="authModalBtn"]:hover::after {
+  transform: scaleX(1);
+}
+
 @media (max-width: 320px) {
   .button[data-type="submit"] {
     width: 108px;
@@ -101,5 +129,8 @@
   .button[data-type="submitAboutMeControlPanel"]{
     padding: 12px;
     text-align: center;
+  }
+  .button[data-type="authModalBtn"] {
+    margin: 16px;
   }
 }

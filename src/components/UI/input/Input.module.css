@@ -44,12 +44,6 @@ input[data-has-data="true"]:active {
   outline: 2px solid #585cc6;
 }
 
-/* .formItem input[data-has-data="false"],
-input[data-has-data="false"]:focus,
-input[data-has-data="false"]:active {
-  outline: 2px solid #eb5757;
-} */
-
 .formItem input[data-is-unknown-user="true"],
 .formItem input[data-is-unknown-user="true"]:focus,
 .formItem input[data-is-unknown-user="true"]:active {
@@ -82,12 +76,11 @@ input[data-has-data="false"]:active {
   right: -16px;
 }
 
-
 .hoverMsg {
   display: none;
 }
 
-.icon:hover + .hoverMsg{
+.icon:hover + .hoverMsg {
   display: block;
 }
 
@@ -104,8 +97,20 @@ input[data-has-data="false"]:active {
   margin-right: 16px;
 }
 
+.formItem[data-type="password"] {
+  margin-bottom: 0;
+}
+
+.formItem[data-type="password"] input {
+  color: #333333;
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+}
+
 /* type controlPanel  */
-.formItem[data-type="controlPanel"]{
+.formItem[data-type="controlPanel"] {
   width: 403px;
   margin-right: 24px;
   margin-bottom: 0;
@@ -117,9 +122,8 @@ input[data-has-data="false"]:active {
   outline: 2px solid transparent;
 }
 
-
 /* type invisible */
-.formItem[data-type="invisible"]{
+.formItem[data-type="invisible"] {
   display: none;
 }
 
@@ -129,10 +133,8 @@ input[data-has-data="false"]:active {
 }
 
 .formItem input[data-is-edit="false"] {
-  color: #8A8A8A;
+  color: #8a8a8a;
 }
-
-
 
 /* input type  */
 .formItem[data-type="selectFind"] {
@@ -147,7 +149,7 @@ input[data-has-data="false"]:active {
 }
 
 @media (max-width: 320px) {
-  .formItem[data-type="controlPanel"]{
+  .formItem[data-type="controlPanel"] {
     width: 100%;
     margin-right: 0px;
     margin-bottom: 20px;
@@ -158,4 +160,3 @@ input[data-has-data="false"]:active {
     margin-bottom: 0;
   }
 }
-

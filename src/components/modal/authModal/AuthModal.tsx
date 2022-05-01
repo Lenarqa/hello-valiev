@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./AuthModal.module.css";
 import Button from "../../UI/myButton/Button";
-import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg";
 import { ReactComponent as OpenEyeIcon } from "../../../assets/icons/openEye.svg";
 import { ReactComponent as CloseEyeIcon } from "../../../assets/icons/closeEye.svg";
-import MsgWindow from "../../UI/myMsgWindow/MsgWindow";
 import Input from "../../UI/input/Input";
 import {
   EmailValidationRegEx,
@@ -15,7 +13,7 @@ import {
   emailValidation,
   passwordValidation,
 } from "../../../shared/lib/validation/AuthValidation";
-import { IErrorRequest, IUser, IValidationResult } from "../../../shared/models/models";
+import { IValidationResult } from "../../../shared/models/models";
 
 import { authStore } from "../../../shared/effector/auth";
 import { useStore } from "effector-react";
@@ -32,13 +30,11 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
   const [email, setEmail] = useState<string>("");
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [emailErrorMsg, setEmailErrorMsg] = useState<string>("");
-  const [isHoverEmail, setIsHoverEmail] = useState<boolean>(false);
 
   const [password, setPassword] = useState<string>("");
   const [isPasswordError, setIsPasswordError] = useState<boolean>(false);
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
   const [passwordErrorMsg, setPasswordErrorMsg] = useState<string>("");
-  const [isHoverPassword, setIsHoverPassword] = useState<boolean>(false);
 
   const [btnIsDisable, setBtnIsDisable] = useState<boolean>(true);
 
@@ -66,13 +62,15 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       localStorage.setItem("auth", JSON.stringify(auth));
       props.showFooterErrMsg(false);
       navigate(`/hello-valiev/about-me`);
-    } else if(auth?.statusCode){
+    } else if (auth?.statusCode) {
       props.setFooterErrMsg("Что то пошло не так! " + auth?.message);
       props.showFooterErrMsg(true);
     }
   }, [auth]);
 
-  const emailValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const emailValidationHandler = (
+    e: React.FormEvent<HTMLInputElement>
+  ): void => {
     const newValue = e.currentTarget.value;
     setEmailErrorMsg("");
     setEmail(newValue);
@@ -87,13 +85,11 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       setEmailErrorMsg(res.errorMsg);
       return;
     }
-
-    if (EmailValidationRegEx.test(newValue)) {
-      setIsHoverEmail(false);
-    }
   };
 
-  const passwordValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const passwordValidationHandler = (
+    e: React.FormEvent<HTMLInputElement>
+  ): void => {
     const newValue = e.currentTarget.value;
     setPasswordErrorMsg("");
     setPassword(newValue);
@@ -107,27 +103,13 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       setPasswordErrorMsg(res.errorMsg);
       return;
     }
-
-    // когда пользователь оставляет мышку поверх infoIcon и иконка исчезает
-    // чтобы не оставалось окно с описанием ошибки без сообщения, выключаем ховер
-    if (passwordValidationRegEx.test(newValue)) {
-      setIsHoverPassword(false);
-    }
   };
 
-  const showPasswordHandler = () => {
+  const showPasswordHandler = (): void => {
     setIsVisiblePassword((prev) => !prev);
   };
 
-  const passwordMouseOutHandler = () => {
-    setIsHoverPassword(false);
-  };
-
-  const passwordMouseOverHandler = () => {
-    setIsHoverPassword(true);
-  };
-
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (
       EmailValidationRegEx.test(email) &&
@@ -144,7 +126,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     }
   };
 
-  const passwordRecoveryModalHandler = () => {
+  const passwordRecoveryModalHandler = (): void => {
     props.showFooterErrMsg(false);
     navigate(`/hello-valiev/passwordRecovery`);
   };
@@ -165,69 +147,53 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
             dataIsError={isEmailError}
             dataIsUnknownUser={props.isFooterErrMsg}
             dataHasData={!isEmailError && email.trim().length > 0}
-            isHover={isHoverEmail}
             errorMsg={emailErrorMsg}
             isError={isEmailError}
           />
           <div className={style.formItem}>
             <label htmlFor="password">Пароль</label>
             <div className={style.inputWrapper}>
-              <input
-                data-is-error={isPasswordError}
+              <Input
+                type="password"
+                dataIsError={isPasswordError}
                 data-is-unknown-user={props.isFooterErrMsg}
-                data-has-data={!isPasswordError && password.trim().length > 0}
+                dataHasData={!isPasswordError && password.trim().length > 0}
                 id="password"
                 placeholder="Введите пароль"
-                type={isVisiblePassword ? "text" : "password"}
+                inputType={isVisiblePassword ? "text" : "password"}
                 onChange={passwordValidationHandler}
+                isError={isPasswordError}
+                errorMsg={passwordErrorMsg}
                 value={password}
               />
-              <div className={style.icons}>
-                {isVisiblePassword ? (
-                  <CloseEyeIcon
-                    className={style.icon}
-                    onClick={showPasswordHandler}
-                  />
-                ) : (
-                  <OpenEyeIcon
-                    className={style.icon}
-                    onClick={showPasswordHandler}
-                  />
-                )}
-                {isPasswordError && !props.isFooterErrMsg && (
-                  <InfoIcon
-                    className={style.icon}
-                    onMouseOver={passwordMouseOverHandler}
-                    onMouseOut={passwordMouseOutHandler}
-                  />
-                )}
-                {isHoverPassword && (
-                  <MsgWindow style={style.hoverMsg}>
-                    {passwordErrorMsg}
-                  </MsgWindow>
-                )}
-              </div>
+              {isVisiblePassword ? (
+                <CloseEyeIcon
+                  data-is-error={isPasswordError}
+                  className={style.icon}
+                  onClick={showPasswordHandler}
+                />
+              ) : (
+                <OpenEyeIcon
+                  data-is-error={isPasswordError}
+                  className={style.icon}
+                  onClick={showPasswordHandler}
+                />
+              )}
             </div>
           </div>
           <Button
-            type="submit"
-            style={style.enterBtn}
-            isDisable={btnIsDisable}
-            // onClick={() => submitHandler.bind(this)}
             onClick={() =>
               authStore.getToken({ email: email, password: password })
             }
+            type="submit"
+            style={style.enterBtn}
+            isDisable={btnIsDisable}
           >
             Войти
           </Button>
-          {/* не забыть заменить кнопку!! */}
-          <button
-            type="button"
-            className={style.btn}
-            onClick={passwordRecoveryModalHandler}
-          >
+          <Button type="authModalBtn" onClick={passwordRecoveryModalHandler}>
             Забыли пароль?
-          </button>
+          </Button>
         </>
       )}
     </form>

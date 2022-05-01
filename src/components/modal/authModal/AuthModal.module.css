@@ -82,7 +82,8 @@ input[data-has-data="true"]:active {
   position: absolute;
   right: 0;
   top: 0;
-  height: 100%;
+  width: 20px;
+  height: 108%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,36 +91,18 @@ input[data-has-data="true"]:active {
 }
 
 .icon {
+  position: absolute;
   cursor: pointer;
+  right: 17px;
+  top: 22px;
+}
+
+.icon[data-is-error="true"] {
+  right: 45px;
 }
 
 .icons :nth-child(2) {
   margin-left: 14px;
-}
-
-.btn {
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  font-family: "Gilroy";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  color: #585cc6;
-  transition: all 1s ease;
-}
-
-.btn::after {
-  display: block;
-  content: "";
-  border-bottom: solid 1px #797ddf;
-  transform: scaleX(0);
-  transition: all 250ms ease-in-out;
-}
-
-.btn:hover::after {
-  transform: scaleX(1);
 }
 
 .hoverMsg {
