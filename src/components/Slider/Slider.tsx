@@ -207,6 +207,7 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
     // перед открытием чистим стор эффектора
     addReviewStore.setSendReviewError();
     addReviewStore.setUserPhoto(null);
+    addReviewStore.setSendPhotoError();
     setShowModal(true);
   }
 

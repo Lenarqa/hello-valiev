@@ -9,6 +9,7 @@ import {
   restore,
 } from "effector";
 
+// sendReview
 const sendReview = createEvent<IReviewPost>();
 
 const sendReviewFx = createEffect(async (review: IReviewPost) => {
@@ -45,27 +46,26 @@ $sendReviewError.on(setSendReviewError, (_, state) => null);
 
 const $isLoadingAddReview = sendReviewFx.pending;
 
+// sendPhoto
 const sendPhoto = createEvent<string>();
 const sendPhotoFx = createEffect(async (id: string) => {
-  console.log("----------------------------");
   console.log("sendPhotoFx ");
-
   const curPhoto = $cutUserPhoto.getState();
-  const formData = new FormData();
-  if(curPhoto){
-      formData.append("authorImage", curPhoto);
-    
-      const response = await fetch(
-        `https://academtest.ilink.dev/reviews/updatePhoto/${id}`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      )
-        .then((response) => response.text())
-        .then((response) => JSON.parse(response));
-      console.log(response);
-      return response;
+  if (curPhoto) {
+    const formData = new FormData();
+    formData.append("authorImage", curPhoto);
+
+    const response = await fetch(
+      `https://academtest.ilink.dev/reviews/updatePhoto/${id}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
+      .then((response) => response.text())
+      .then((response) => JSON.parse(response));
+      console.log(response)
+    return response;
   }
 });
 
@@ -74,19 +74,18 @@ forward({
   to: sendPhotoFx,
 });
 
+const $sendPhotoError = restore(sendPhotoFx, null);
+const $isLoadingPostPhoto = sendPhotoFx.pending;
+
+const setSendPhotoError = createEvent();
+$sendPhotoError.on(setSendPhotoError, (_, state) => null);
+
 // set user Photo
 const setUserPhoto = createEvent<File | null>();
 const $cutUserPhoto = createStore<File | null>(null).on(
   setUserPhoto,
   (_, state) => state
 );
-
-const $sendPhotoGood = createStore<string>("Hello boys");
-
-const sayHello = createEffect((text: string) => {
-  console.log(text);
-  console.log($cutUserPhoto.getState());
-});
 
 sample({
   clock: sendReviewFx.doneData,
@@ -102,4 +101,7 @@ export const addReviewStore = {
   setSendReviewError,
   sendPhoto,
   setUserPhoto,
+  $sendPhotoError,
+  $isLoadingPostPhoto,
+  setSendPhotoError,
 };
