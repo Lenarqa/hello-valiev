@@ -208,9 +208,12 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
 
   useEffect(()=>{
     if(fethingReviews !== undefined && fethingReviews?.length > 0){
-      console.log(fethingReviews)
-      console.log(fethingReviews[fethingReviews.length-1])
-      setRewiews(prev => [fethingReviews[fethingReviews.length-1], ...prev]);
+      if(fethingReviews[fethingReviews.length-1].id === rewies[0].id){
+        return;
+      }else{
+
+        setRewiews(prev => [fethingReviews[fethingReviews.length-1], ...prev]);
+      }
     }
   },[fethingReviews])
 

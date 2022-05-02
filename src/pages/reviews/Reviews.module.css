@@ -12,7 +12,7 @@
 .contentHeader {
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   padding-top: 24px;
   margin-bottom: 34px;
@@ -24,12 +24,13 @@
   font-size: 32px;
   line-height: 32px;
   color: #333333;
-  margin-right: 682px;
 }
 
 .rewiews {
   display: flex;
   flex-wrap: wrap;
+  /* width: 100%; */
+  width: 100%;
 }
 
 .spinerWrapper {

@@ -137,14 +137,18 @@
 /* end cancel */
 
 /* publish  */
+
+.publishMsg[data-status="approved"],
 .publishMsg[data-is-publish="true"] {
   display: flex;
 }
 
+.publishMsg[data-status="approved"],
 .item .action[data-is-publish="true"] {
   display: none;
 }
 
+.publishMsg[data-status="approved"],
 .publishMsg {
   position: absolute;
   bottom: 24px;

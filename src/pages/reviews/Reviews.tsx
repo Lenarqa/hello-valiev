@@ -26,7 +26,7 @@ const Reviews: React.FC = () => {
     userRevievsStore.$userReviews
   );
 
-  const [isLoadingPage, setisLoadingPage] = useState<boolean>(false);
+  const [isLoadingPage, setisLoadingPage] = useState<boolean>(true);
 
   const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
   const [selected, setIsSelected] = useState<IOption>(DummyOptionsReview[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
@@ -60,7 +60,11 @@ const Reviews: React.FC = () => {
 
     document.addEventListener("scroll", scrollHandler);
 
-    userRevievsStore.getUserReviews(authToken.accessToken);
+    // userRevievsStore.getUserReviews(authToken.accessToken);
+
+    setTimeout(() => {
+      setisLoadingPage(false);
+    }, 500);
 
     return () => document.removeEventListener("scroll", scrollHandler);
   }, []);
@@ -156,6 +160,10 @@ const Reviews: React.FC = () => {
 
   const nextPageHandler = () => {
     setCurPage((prev) => prev + 1);
+    setisLoadingPage(true);
+    setTimeout(() => {
+      setisLoadingPage(false);
+    }, 500);
   };
 
   const scrollHandler = (event: any): void => {

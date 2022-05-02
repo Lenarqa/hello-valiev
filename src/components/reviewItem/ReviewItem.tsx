@@ -88,12 +88,12 @@ const ReviewItem: React.FC<ISliderItem> = ({
         className={style.item}
         data-type={type}
         data-is-canceled={isCanceled}
-        data-is-publish={isPublish}
+        // data-is-publish={isPublish}
+        data-status={status}
       >
         <div className={style.header}>
           <div className={style.userInfo}>
             <img
-              // src={require(`../../assets/img/users/${imgUrl}`)} //for tests delete this later
               src={reviewImg}
               alt="photo"
             />
