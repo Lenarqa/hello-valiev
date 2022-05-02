@@ -117,6 +117,7 @@ const Users: React.FC = () => {
           )}
           {isLoadingPage && (
             <div className={style.table}>
+              <div className={style.headerSkeleton}></div>
               {curFilteredParticipants.map((participant, index) => (
                 <ParticipantItemSkeleton key={index} />
               ))}
