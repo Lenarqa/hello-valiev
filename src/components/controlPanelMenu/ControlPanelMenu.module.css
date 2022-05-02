@@ -72,8 +72,20 @@
 .menuItem svg path:hover {
   fill: #797ddf;
 }
+/* 
+@media (max-width: 950px) {
+  .container {
+    padding: 24px 16px 8px 16px;
+    min-width: 180px;
+  }
 
-@media (max-width: 320px) {
+  .menuItem {
+    width: 100%;
+  }
+} */
+
+
+@media (max-width: 810px) {
   .container {
     padding: 24px 16px 8px 16px;
     display: flex;

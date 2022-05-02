@@ -13,7 +13,7 @@
     flex: 1 1 auto;
 }
 
-@media (max-width: 320px) {
+@media (max-width: 810px) {
   
   .content {
     flex-direction: column;

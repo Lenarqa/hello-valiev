@@ -39,7 +39,7 @@
   align-items: center;
   /* height: 66px; */
   padding: 24px 0;
-  border-bottom: 1px dashed #E0E0E0;
+  border-bottom: 1px dashed #e0e0e0;
 }
 
 .info:last-child {
@@ -58,24 +58,24 @@
   font-weight: 700;
   font-size: 14px;
   line-height: 15px;
-  color: #464E5F;
+  color: #464e5f;
 }
 
 .text {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 83%;
+  /* width: 83%; */
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
   height: 88px;
   padding: 24px 0;
-  width: 100%;
+  /* width: 100%; */
   color: #464e5f;
   font-family: "Gilroy";
-  border-bottom: 1px dashed #E0E0E0;
+  border-bottom: 1px dashed #e0e0e0;
 }
 
 .text:last-child {
@@ -89,7 +89,7 @@
   /* height: 66px; */
   height: 88px;
   padding: 24px 0;
-  border-bottom: 1px dashed #E0E0E0;
+  border-bottom: 1px dashed #e0e0e0;
 }
 
 .statusWrapper:last-child {
@@ -112,7 +112,7 @@
 }
 
 .status {
-  font-family: 'Gilroy';  
+  font-family: "Gilroy";
   display: flex;
   justify-content: center;
   align-items: center;
@@ -138,7 +138,19 @@
   background-color: #f5f5f5;
 }
 
-@media (max-width: 320px) {
+@media (max-width: 1150px) {
+  .status {
+    width: 100%;
+  }
+}
+
+@media (max-width: 750px) {
+  .table .column:first-child {
+    width: 27%;
+  }
+}
+
+@media (max-width: 550px) {
   .table {
     width: 600px;
   }
