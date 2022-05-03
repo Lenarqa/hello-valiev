@@ -31,7 +31,6 @@ const Header: React.FC<IHeader> = (props) => {
         <div className={style.photoSection}>
           <img
             className={style.img}
-            // src={require("../../assets/img/photo.jpg")}
             src={`https://academtest.ilink.dev/images/${userInfo?.mainImgUrl}`}
             alt="photo"
           />

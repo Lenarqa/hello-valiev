@@ -10,11 +10,11 @@
   text-align: center;
 }
 
-.header[data-type="aboutMe"] .photoSection h2:last-child{
+.header[data-type="aboutMe"] .photoSection h2:last-child {
   display: none;
 }
 
-.header[data-type="aboutMe"] .controlPanelTitle{
+.header[data-type="aboutMe"] .controlPanelTitle {
   display: none;
 }
 
@@ -115,7 +115,7 @@
   margin-bottom: 44px;
 }
 
-.header[data-type="auth"] .controlPanelTitle{
+.header[data-type="auth"] .controlPanelTitle {
   display: none;
 }
 
@@ -132,9 +132,38 @@
 }
 /* end header auth */
 
+@media (max-width: 1400px) {
+  .header[data-type="control-panel"] .mobile {
+    display: flex;
+    justify-content: space-between;
+    width: 65%;
+  }
+  .header[data-type="control-panel"] .photoSection {
+    margin-right: 0;
+  }
+}
+
 @media (max-width: 710px) {
   .header[data-type="aboutMe"] {
     padding: 16px 21px;
+  }
+
+  .header[data-type="control-panel"] .mobile {
+    display: flex;
+    width: auto;
+    flex-direction: column-reverse;
+  }
+  .header[data-type="control-panel"] .controlPanelTitle {
+    display: flex;
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 14px;
+    margin-bottom: 8px;
+  }
+  .header[data-type="control-panel"] {
+    padding: 17px 14px 18px 16px;
   }
 }
 
@@ -155,26 +184,6 @@
 
   .header[data-type="aboutMe"] .img {
     margin-right: 8px;
-  }
-
-  /* content panel */
-  .header[data-type="control-panel"] {
-    padding: 17px 14px 18px 16px;
-  }
-
-  .header[data-type="control-panel"] .mobile {
-    display: flex;
-    flex-direction: column-reverse;
-  }
-
-  .header[data-type="control-panel"] .controlPanelTitle {
-    display: flex;
-    font-family: "Gilroy";
-    font-style: normal;
-    font-weight: 800;
-    font-size: 16px;
-    line-height: 14px;
-    margin-bottom: 8px;
   }
 
   .header[data-type="control-panel"] .ilinkLogo {
