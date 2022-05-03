@@ -1,9 +1,6 @@
-import { IErrorRequest } from './../models/models';
-import { serializeUser } from "./../serializers/serializeUser";
 import { IUser } from "../models/models";
 import { createEffect, forward, createEvent, restore } from "effector";
 
-//get auth token
 const getToken = createEvent<IUser>();
 
 const getTokenFx = createEffect(async (user: IUser) => {
@@ -18,7 +15,6 @@ const getTokenFx = createEffect(async (user: IUser) => {
   })
     .then((response) => response.text())
     .then((response) => JSON.parse(response));
-    console.log(response)
   return response;
 });
 

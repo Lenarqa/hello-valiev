@@ -1,17 +1,14 @@
 import { createEffect, forward, createEvent, restore } from "effector";
 
-const getCapha = createEvent<string>();
+const getCapha = createEvent();
 
-const getCaphaFx = createEffect(async (token: string) => {
-  const localToken = localStorage.getItem("auth");
-
-  if (localToken) {
-    const localTokenObj = JSON.parse(localToken);
-    const response = await fetch("https://academtest.ilink.dev/reviews/getCaptcha")
-      .then((response) => response.text())
-      .then((response) => JSON.parse(response));
-    return response;
-  }
+const getCaphaFx = createEffect(async () => {
+  const response = await fetch(
+    "https://academtest.ilink.dev/reviews/getCaptcha"
+  )
+    .then((response) => response.text())
+    .then((response) => JSON.parse(response));
+  return response;
 });
 
 forward({

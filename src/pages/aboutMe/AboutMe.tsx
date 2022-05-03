@@ -8,6 +8,7 @@ import { authStore } from "../../shared/effector/auth";
 import { userStore } from "../../shared/effector/userInfo";
 import { userRevievsStore } from "../../shared/effector/reviews";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
+import { IReview, IUser } from "../../shared/models/models";
 
 const AboutMe: React.FC = () => {
   const authToken = useStore(authStore.$token);
@@ -16,8 +17,8 @@ const AboutMe: React.FC = () => {
   const isLoadingReviews = useStore(userRevievsStore.$isLoadingReviews);
 
   useEffect(() => {
-    userStore.getUserInfo(authToken.accessToken);
-    userRevievsStore.getUserReviews(authToken.accessToken);
+    userStore.getUserInfo({} as IUser);
+    userRevievsStore.getUserReviews([]);
   }, []);
 
   return (

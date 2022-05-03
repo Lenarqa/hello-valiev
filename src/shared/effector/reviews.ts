@@ -2,9 +2,9 @@ import { IReview } from '../models/models';
 import { serializeReview } from './../serializers/serializeReview';
 import { createEffect, forward, createEvent, restore } from "effector";
 
-const getUserReviews = createEvent<string>();
+const getUserReviews = createEvent<IReview[]>();
 
-const getUserReviewsFx = createEffect(async (token: string) => {
+const getUserReviewsFx = createEffect(async () => {
   const localToken = localStorage.getItem("auth");
 
   if (localToken) {

@@ -62,7 +62,7 @@ const ReviewModal: React.FC<IReviewModal> = ({
   const [disabledBtn, setDisabledBtn] = useState<boolean>(true);
 
   useEffect(() => {
-    caphaStore.getCapha(authToken.accessToken);
+    caphaStore.getCapha();
   }, []);
 
   const capha = useStore(caphaStore.$capha);
@@ -81,8 +81,6 @@ const ReviewModal: React.FC<IReviewModal> = ({
 
   useEffect(() => {
     if (sendReviewError) {
-      console.log(sendReviewError);
-      console.log(sendPhotoError);
       if (sendReviewError?.status === 400) {
         setTostData({ title: "Что-то не так...", msg: "Ошибка в капче!" });
         setShowBadWindow(true);
@@ -108,7 +106,7 @@ const ReviewModal: React.FC<IReviewModal> = ({
         }
       } else {
         setShowGoodWindow(true);
-        userRevievsStore.getUserReviews(authToken.accessToken);
+        userRevievsStore.getUserReviews([]);
         close();
       }
     }
@@ -225,7 +223,7 @@ const ReviewModal: React.FC<IReviewModal> = ({
   };
 
   const refreshCaphaHandler = (): void => {
-    caphaStore.getCapha(authToken.accessToken);
+    caphaStore.getCapha();
   };
 
   return ReactDOM.createPortal(

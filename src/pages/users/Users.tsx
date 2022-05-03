@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useStore } from "effector-react";
 import EmptyScreen from "../../components/UI/emtyScreen/EmptyScreen";
 import style from "./Users.module.css";
 import Select from "../../components/UI/select/Select";
@@ -9,6 +10,7 @@ import { DummyOptionsParticipants } from "../../shared/data/OptionsParticipant";
 import { PopUpContext } from "../../components/store/PopUpContext";
 import ParticipantItemSkeleton from "../../components/participantItem/skeleton/ParticipantItemSkeleton";
 import UsersTable from "../../components/usersTable/UsersTable";
+import { usersStore } from "../../shared/effector/users";
 
 const Users: React.FC = () => {
   const [isScrollLeft, setIsScrollLeft] = useState<boolean>(true);
@@ -27,7 +29,12 @@ const Users: React.FC = () => {
   // если в controlPanelAboutMe была ошибка скрываем ее
   // я еще не разобрался как прокидывать в оутлет контекст
   const popUpCtx = useContext(PopUpContext);
+
+  const fethingUsers = useStore(usersStore.$users);
+
   useEffect(() => {
+
+    usersStore.getUsers();
     popUpCtx.setIsError(false);
     popUpCtx.setIsOpenBadWindow(false);
     popUpCtx.setIsOpenGoodWindow(false);

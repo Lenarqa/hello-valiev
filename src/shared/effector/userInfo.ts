@@ -2,11 +2,9 @@ import { serializeUser } from "./../serializers/serializeUser";
 import { IUser } from "../models/models";
 import { createEffect, forward, createEvent, restore } from "effector";
 
+const getUserInfo = createEvent<IUser>();
 
-// get about me Info
-const getUserInfo = createEvent<string>();
-
-const getUserInfoFx = createEffect(async (token: string) => {
+const getUserInfoFx = createEffect(async () => {
   const localToken = localStorage.getItem("auth");
 
   if (localToken) {
@@ -15,7 +13,6 @@ const getUserInfoFx = createEffect(async (token: string) => {
       "https://academtest.ilink.dev/user/getUserProfile",
       {
         method: "GET",
-        // headers: { authorization:"Bearer " + token },
         headers: { authorization: "Bearer " + localTokenObj.accessToken },
       }
     )
