@@ -1,8 +1,14 @@
+import { IMyInfo } from "./../models/models";
 import { serializeUser } from "./../serializers/serializeUser";
-import { IUser } from "../models/models";
-import { createEffect, forward, createEvent, restore } from "effector";
+import {
+  createEffect,
+  forward,
+  createEvent,
+  restore,
+  createStore,
+} from "effector";
 
-const getUserInfo = createEvent<IUser>();
+const getUserInfo = createEvent<IMyInfo>();
 
 const getUserInfoFx = createEffect(async () => {
   const localToken = localStorage.getItem("auth");
@@ -18,7 +24,7 @@ const getUserInfoFx = createEffect(async () => {
     )
       .then((response) => response.text())
       .then((response) => JSON.parse(response));
-      return serializeUser(response);
+    return serializeUser(response);
   }
 });
 
@@ -31,8 +37,15 @@ const $userInfo = restore(getUserInfoFx, null);
 
 const $isLoading = getUserInfoFx.pending;
 
+const setUserInfo = createEvent<IMyInfo>();
+
+$userInfo.on(setUserInfo, (_, state) => state);
+
+// forward({ from: setUserInfo, to: $userInfo });
+
 export const userStore = {
   getUserInfo,
   $userInfo,
   $isLoading,
+  setUserInfo
 };

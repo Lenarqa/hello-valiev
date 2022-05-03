@@ -1,12 +1,12 @@
 import React from "react";
-import { ReactComponent as ButtonMobile } from "../../assets/icons/button1.svg";
 import style from "./Header.module.css";
 import useWindowDimensions from "../../functions/ScreenSize";
+import Button from "../UI/myButton/Button";
+import { ReactComponent as ButtonMobile } from "../../assets/icons/button1.svg";
 import { ReactComponent as ILinkLogo } from "../../assets/img/logoAcademy.svg";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "effector-react";
 import { userStore } from "../../shared/effector/userInfo";
-import Button from "../UI/myButton/Button";
 
 interface IHeader {
   type: string;

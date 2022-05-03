@@ -2,7 +2,7 @@ import { DummyOptionsCity } from "./../data/OptionsCity";
 import { IMyInfo } from "./../models/models";
 
 export const serializeUser = (infoObj: any) => {
-  console.log(infoObj);
+  // console.log(infoObj);
   const birthday: Date = new Date(infoObj.birthDate);
   const userBirthday: string = `${birthday.getDate()}.${
     birthday.getMonth() + 1
@@ -50,6 +50,8 @@ export const serializeUser = (infoObj: any) => {
     aboutMeText: infoObj.aboutMe,
     pet: pet,
   };
+
+  console.log(userItem)
 
   return userItem;
 };

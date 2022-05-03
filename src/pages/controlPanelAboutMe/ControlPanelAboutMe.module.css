@@ -79,6 +79,11 @@
   display: inline-flex;
 }
 
+.smallImg:hover + .bigImgContainer img {
+  width: 100%;
+  height: auto;
+}
+
 .bigImgContainer {
   display: none;
   position: absolute;

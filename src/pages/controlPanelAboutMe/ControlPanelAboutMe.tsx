@@ -1,27 +1,30 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useStore } from "effector-react";
 import style from "./ControlPanelAboutMe.module.css";
-import { ReactComponent as PencilIcon } from "../../assets/icons/pencil.svg";
 import Button from "../../components/UI/myButton/Button";
+import Select from "../../components/UI/select/Select";
 import Input from "../../components/UI/input/Input";
+import TextArea from "../../components/UI/textarea/TextArea";
+import ErrorMsg from "../../components/UI/ErrorMsg/ErrorMsg";
+import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
+import { ReactComponent as PencilIcon } from "../../assets/icons/pencil.svg";
 import { MyInfo } from "../../shared/data/MyInfo";
 import { IMyInfo, IValidationResult } from "../../shared/models/models";
-import Select from "../../components/UI/select/Select";
 import { DummyOptionsCity } from "../../shared/data/OptionsCity";
 import { DummyOptionsGender } from "../../shared/data/OptionsGender";
 import { DummyOptionsPet } from "../../shared/data/OptionsPet";
 import { IOption } from "../../shared/models/models";
-import TextArea from "../../components/UI/textarea/TextArea";
-import ErrorMsg from "../../components/UI/ErrorMsg/ErrorMsg";
 import { PopUpContext } from "../../components/store/PopUpContext";
-import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 import {
   bigAboutMeValidation,
   lastNameValidation,
   nameValidation,
   smallAboutMeValidation,
 } from "../../shared/lib/validation/ControlPanelAboutMe";
+import { userStore } from "../../shared/effector/userInfo";
 
 const ControlPanelAboutMe: React.FC = () => {
+  const userInfoEffector = useStore(userStore.$userInfo);
   const popUpCtx = useContext(PopUpContext);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<IMyInfo>(MyInfo);
@@ -29,7 +32,11 @@ const ControlPanelAboutMe: React.FC = () => {
   const [isUserHaveImg, setIsUserHaveImg] = useState<boolean>(false);
 
   useEffect(() => {
-    if (userInfo.miniImgUrl !== "") {
+    // if (userInfo.miniImgUrl !== "") {
+    //   setIsUserHaveImg(true);
+    // }
+    console.log(userInfoEffector)
+    if (userInfoEffector?.mainImgUrl !== "") {
       setIsUserHaveImg(true);
     }
   }, []);
@@ -54,33 +61,30 @@ const ControlPanelAboutMe: React.FC = () => {
   const [selectedPet, setSelectedPet] = useState<IOption>(curPet!);
 
   // name
-  const [name, setName] = useState<string>(userInfo.name.split(" ")[1]);
+  const [name, setName] = useState<string>(userInfoEffector!.name.split(" ")[0]);
   const [isNameError, setIsNameError] = useState<boolean>(false);
   const [nameErrorMsg, setNameErrorMsg] = useState<string>("");
-  const [isHoverName, setIsHoverName] = useState<boolean>(false);
 
   // lastname
-  const [lastName, setLastName] = useState<string>(userInfo.name.split(" ")[0]);
+  const [lastName, setLastName] = useState<string>(userInfoEffector!.name.split(" ")[1]);
   const [isLastNameError, setIsLastNameError] = useState<boolean>(false);
   const [lastNameErrorMsg, setLastNameErrorMsg] = useState<string>("");
-  const [isHoverLastName, setIsHoverLastName] = useState<boolean>(false);
 
   // birthday
-  const [birthday, setBirthday] = useState<string>(userInfo.birthday);
+  const [birthday, setBirthday] = useState<string>(userInfoEffector!.birthday);
   const [isBirthdayError, setIsBirthdayError] = useState<boolean>(false);
   const [BirthdayErrorMsg, setBirthdayErrorMsg] = useState<string>("");
-  const [isHoverBirthday, setIsHoverBirthday] = useState<boolean>(false);
 
   // smallAboutMe
   const [smallAboutMe, setSmallAboutMe] = useState<string>(
-    userInfo.smallAboutMe
+    userInfoEffector!.smallAboutMe
   );
   const [isErrorSmallAboutMe, setIsErrorSmallAboutMe] =
     useState<boolean>(false);
   const [errorSmallAboutMeMsg, setErrorSmallAboutMeMsg] = useState<string>("");
 
   // bigAboutMe
-  const [bigAboutMe, setBigAboutMe] = useState<string>(userInfo.aboutMeText);
+  const [bigAboutMe, setBigAboutMe] = useState<string>(userInfoEffector!.aboutMeText);
   const [isErrorBigAboutMe, setIsErrorBigAboutMe] = useState<boolean>(false);
   const [errorBigAboutMeMsg, setErrorBigAboutMeMsg] = useState<string>("");
 
@@ -100,23 +104,24 @@ const ControlPanelAboutMe: React.FC = () => {
       !isErrorSmallAboutMe &&
       !isErrorBigAboutMe
     ) {
-      setUserInfo((prev) => {
-        return {
-          id: prev.id,
-          name: name,
-          miniImgUrl: prev.mainImgUrl, //эти два поля остаются прежними, когда будет ответ с сервера нужно будет заменю
-          mainImgUrl: prev.mainImgUrl,
-          birthday: birthday,
-          city: selectedCity.id as number,
-          gender: selectedGender.id as number,
-          year: prev.year, //если будет оставаться время то сделаю автоматический подсчет
-          smallAboutMe: smallAboutMe,
-          aboutMeText: bigAboutMe,
-          pet: selectedPet.id as number,
-        };
-      });
+      // тест
+      const newUserInfoData:IMyInfo = {
+        id: userInfoEffector?.id as string,
+        name: lastName + " " + name,
+        miniImgUrl: userInfoEffector?.mainImgUrl as string,
+        mainImgUrl: userInfoEffector?.mainImgUrl as string,
+        birthday: birthday,
+        city: selectedCity.id as number,
+        gender: selectedGender.id as number,
+        year: userInfoEffector?.year as number,
+        smallAboutMe: smallAboutMe,
+        aboutMeText: bigAboutMe,
+        pet: selectedPet.id as number,
+      } 
 
+      userStore.setUserInfo(newUserInfoData);//пока нет запроса меняем локально
       popUpCtx.setIsOpenGoodWindow(true);
+
       // popUpCtx.setIsOpenGoodWindow(true); в случае ошибки
       setIsEditMode(false);
     }
@@ -295,7 +300,7 @@ const ControlPanelAboutMe: React.FC = () => {
                     className={style.smallImg}
                     src={
                       isUserHaveImg
-                        ? require("../../assets/img/photo.jpg")
+                        ? `https://academtest.ilink.dev/images/${userInfoEffector?.mainImgUrl}`
                         : require("../../assets/img/users/user-0.png")
                     }
                     alt="photo"
@@ -308,7 +313,7 @@ const ControlPanelAboutMe: React.FC = () => {
                     className={style.bigImg}
                     src={
                       isUserHaveImg
-                        ? require("../../assets/img/photo.jpg")
+                        ? `https://academtest.ilink.dev/images/${userInfoEffector?.mainImgUrl}`
                         : require("../../assets/img/users/user-0.png")
                     }
                     alt="photo"
@@ -350,7 +355,6 @@ const ControlPanelAboutMe: React.FC = () => {
                 onChange={nameValidationHandler}
                 value={name}
                 dataIsError={isNameError}
-                isHover={isHoverName}
                 errorMsg={nameErrorMsg}
                 isError={isNameError}
                 dataIsEdit={isEditMode}
@@ -363,7 +367,6 @@ const ControlPanelAboutMe: React.FC = () => {
                 onChange={lastNameValidationHandler}
                 value={lastName}
                 dataIsError={isLastNameError}
-                isHover={isHoverLastName}
                 errorMsg={lastNameErrorMsg}
                 isError={isLastNameError}
                 dataIsEdit={isEditMode}
@@ -378,7 +381,6 @@ const ControlPanelAboutMe: React.FC = () => {
                   birthday.split(".")[0]
                 }`}
                 dataIsError={isBirthdayError}
-                isHover={isHoverBirthday}
                 errorMsg={BirthdayErrorMsg}
                 isError={isBirthdayError}
                 required={true}
@@ -441,7 +443,7 @@ const ControlPanelAboutMe: React.FC = () => {
                 type="big"
                 placeholder="Напишите что нибудь о себе"
                 msgLenght={bigAboutMe.length}
-                maxLenght={500}
+                maxLenght={600}//у меня информация о профиле с бэка 597 символов, поэтому увеличил с 300 до 600
                 value={bigAboutMe}
                 onChangeHandler={changeBigAboutMeHandler}
                 dataIsEdit={isEditMode}
