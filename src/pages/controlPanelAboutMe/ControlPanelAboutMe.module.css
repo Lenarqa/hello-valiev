@@ -147,6 +147,7 @@
 .inputsSection {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .smallAboutMeRow,
@@ -211,11 +212,27 @@
   display: flex;
 }
 
-@media (max-width: 320px) {
+@media (max-width: 1370px) {
+  .row {
+    justify-content: start;
+  }
+
+  .selectWrapper {
+    width: 33%;
+    margin-right: 12px;
+  }
+  .selectWrapper:last-child {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 600px) {
   .content {
     padding: 26px 16px 80px 16px;
   }
-
+  .imgSection {
+    margin-bottom: 6px;
+  }
   .contentHeader {
     padding-top: 26px;
     margin-bottom: 16px;
@@ -225,6 +242,12 @@
     display: flex;
     align-items: start;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 320px) {
+  .imgSection {
+    margin-bottom: 0px;
   }
 
   .imgSection {
@@ -242,6 +265,7 @@
   }
 
   .selectWrapper {
+    width: 100%;
     margin-right: 0;
     margin-bottom: 20px;
   }

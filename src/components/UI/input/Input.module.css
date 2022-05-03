@@ -148,6 +148,13 @@ input[data-has-data="true"]:active {
   padding: 10px 34px;
 }
 
+@media (max-width: 1370px) {
+  .formItem[data-type="controlPanel"] {
+    width: 33%;
+    margin-right: 12px;
+  }
+}
+
 @media (max-width: 720px) {
   .formItem[data-type="caphaInput"] {
     width: 100%;

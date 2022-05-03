@@ -147,7 +147,7 @@
   width: 209px;
 }
 
-@media (max-width: 320px) {
+@media (max-width: 1370px) {
   .select[data-type="review"] {
     width: 100%;
   }
