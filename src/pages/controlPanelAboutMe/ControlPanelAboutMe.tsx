@@ -22,12 +22,10 @@ import {
 } from "../../shared/lib/validation/ControlPanelAboutMe";
 
 const ControlPanelAboutMe: React.FC = () => {
-  // пока нет проверки на загружено ли изображение, только выдаются ошибки
   const popUpCtx = useContext(PopUpContext);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<IMyInfo>(MyInfo);
   const [isBtnDisable, setIsBtnDisable] = useState<boolean>(false);
-  const [isHoverImg, setIsHoverImg] = useState<boolean>(false);
   const [isUserHaveImg, setIsUserHaveImg] = useState<boolean>(false);
 
   useEffect(() => {
@@ -89,16 +87,6 @@ const ControlPanelAboutMe: React.FC = () => {
   //loading img
   const [userImgFile, setUserImgFile] = useState<File>();
   const [isLoadingFile, setIsLoadingFile] = useState<boolean>(false);
-
-  // Out and Over handler
-  const imgMouseOutHandler = (): void => {
-    setIsHoverImg(false);
-  };
-
-  const imgMouseOverHandler = (): void => {
-    setIsHoverImg(true);
-  };
-  // End Out and Over handler
 
   const startEditModeHandler = (): void => {
     setIsEditMode(true);
@@ -311,13 +299,10 @@ const ControlPanelAboutMe: React.FC = () => {
                         : require("../../assets/img/users/user-0.png")
                     }
                     alt="photo"
-                    onMouseOver={imgMouseOverHandler}
-                    onMouseOut={imgMouseOutHandler}
                   />
                 )}
                 <div
                   className={style.bigImgContainer}
-                  data-is-hover={isHoverImg}
                 >
                   <img
                     className={style.bigImg}
