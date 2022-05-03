@@ -32,10 +32,6 @@ const ControlPanelAboutMe: React.FC = () => {
   const [isUserHaveImg, setIsUserHaveImg] = useState<boolean>(false);
 
   useEffect(() => {
-    // if (userInfo.miniImgUrl !== "") {
-    //   setIsUserHaveImg(true);
-    // }
-    console.log(userInfoEffector)
     if (userInfoEffector?.mainImgUrl !== "") {
       setIsUserHaveImg(true);
     }

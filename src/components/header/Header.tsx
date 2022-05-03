@@ -25,19 +25,27 @@ const Header: React.FC<IHeader> = (props) => {
     navigate(`/hello-valiev/about-me`);
   };
 
+  let reviewImg;
+  if (!userInfo?.mainImgUrl) {
+    reviewImg = require(`../../assets/img/users/user-0.png`);
+  }else {
+    reviewImg = `https://academtest.ilink.dev/images/${userInfo?.mainImgUrl}`;
+  }
+
   return (
     <header className={style.header} data-type={props.type}>
       <div className={style.mobile}>
         <div className={style.photoSection}>
           <img
             className={style.img}
-            src={`https://academtest.ilink.dev/images/${userInfo?.mainImgUrl}`}
+            // src={`https://academtest.ilink.dev/images/${userInfo?.mainImgUrl}`}
+            src={reviewImg}
             alt="photo"
           />
           <h2 className={style.name}>
-            {width < 710
+            {userInfo?.name ? width < 710
               ? `${userInfo?.name.split(" ")[0]}`
-              : `${userInfo?.name}`}
+              : `${userInfo?.name}` : `¯\\_(ツ)_/¯`}
           </h2>
           <h2 className={style.name}>{userInfo?.name}</h2>
         </div>

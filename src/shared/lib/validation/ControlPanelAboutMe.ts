@@ -73,7 +73,7 @@ export const bigAboutMeValidation = (newValue: string): IValidationResult => {
     return res;
   }
 
-  if (newValue.length >= 299) {
+  if (newValue.length >= 599) { 
     res.result = true;
     res.errorMsg = "Достигнуто максимальное число символов (300)";
   }
