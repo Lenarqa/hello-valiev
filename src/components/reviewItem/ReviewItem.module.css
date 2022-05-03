@@ -171,11 +171,103 @@
   color: #61bf4a;
 }
 
+@media (max-width: 1470px) {
+  .item[data-type="controlPanelReview"] {
+    max-width: 519px;
+    width: 45%;
+    height: auto;
+  }
+
+  .item[data-type="controlPanelReview"] .action {
+    position: inherit;
+    flex-direction: row;
+    margin-top: 24px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .item[data-type="controlPanelReview"] .action div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-right: 20px;
+  }
+
+  .item[data-type="controlPanelReview"] .action div button {
+    width: 108px;
+    height: 42px;
+    font-size: 14px;
+    padding: 6px 12px;
+    margin: 0;
+  }
+
+  .item[data-type="controlPanelReview"] .action div button:first-child {
+    width: 120px;
+    margin-bottom: 12px;
+  }
+
+  .item[data-type="controlPanelReview"] .editBtn {
+    margin: 0;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media (max-width: 1040px) {
+  .item[data-type="controlPanelReview"] {
+    width: 100%;
+    height: auto;
+  }
+
+  .item[data-type="controlPanelReview"] .action div {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+    margin-right: 20px;
+  }
+
+  .item[data-type="controlPanelReview"] .action div button:first-child {
+    margin-right: 12px;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .item[data-type="controlPanelReview"] {
+    margin-right: 0;
+  }
+}
+
 @media (max-width: 590px) {
   .item {
     height: auto;
     padding: 16px 12px;
   }
+
+  .item[data-type="controlPanelReview"] {
+    width: 288px;
+    height: auto;
+  }
+
+  .item[data-type="controlPanelReview"] .action {
+    justify-content: start;
+  }
+
+  .item[data-type="controlPanelReview"] .action div {
+    margin-right: 6px;
+  }
+
+  .item[data-type="controlPanelReview"] .action div button {
+    font-size: 12px;
+  }
+
+  .item[data-type="controlPanelReview"] .action div button:first-child {
+    margin-right: 6px;
+    width: 102px;
+  }
+
 }
 
 @media (max-width: 320px) {
@@ -218,7 +310,7 @@
     margin-right: 0;
   }
 
-  .item[data-type="controlPanelReview"] .content{
+  .item[data-type="controlPanelReview"] .content {
     margin-bottom: 22px;
   }
 
@@ -237,8 +329,8 @@
     justify-content: center;
     align-items: center;
   }
-  .item[data-type="controlPanelReview"] .action div {
-    /* position: inherit; */
+
+   .item[data-type="controlPanelReview"] .action div {
     display: flex;
     flex-direction: row;
     margin-right: 6px;
@@ -248,5 +340,5 @@
     margin: 0;
     width: 42px;
     height: 42px;
-  }
+  } 
 }

@@ -88,7 +88,6 @@ const ReviewItem: React.FC<ISliderItem> = ({
         className={style.item}
         data-type={type}
         data-is-canceled={isCanceled}
-        // data-is-publish={isPublish}
         data-status={status}
       >
         <div className={style.header}>
