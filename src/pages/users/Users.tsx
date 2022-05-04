@@ -21,25 +21,25 @@ const Users: React.FC = () => {
   const [selected, setIsSelected] = useState<IOption>(
     DummyOptionsParticipants[0]
   ); //0 - элемент, это элемент по дефолту отображающийся в селект;
-  const [participants, setParticipants] =
-    useState<IParticipant[]>(Participants);
-  const [filteredParticipants, setFilteredParticipants] =
-    useState<IParticipant[]>(Participants);
+  // const [participants, setParticipants] =
+  //   useState<IParticipant[]>(Participants);
 
   // если в controlPanelAboutMe была ошибка скрываем ее
   // я еще не разобрался как прокидывать в оутлет контекст
   const popUpCtx = useContext(PopUpContext);
-
   const fethingUsers = useStore(usersStore.$users);
 
   useEffect(() => {
-
-    usersStore.getUsers();
+    usersStore.getUsers([]);
     popUpCtx.setIsError(false);
     popUpCtx.setIsOpenBadWindow(false);
     popUpCtx.setIsOpenGoodWindow(false);
 
-    if (participants.length === 0) {
+    // if (participants.length === 0) {
+    //   setIsEmptyPage(true);
+    // }
+
+    if (fethingUsers?.length === 0) {
       setIsEmptyPage(true);
     }
 
@@ -49,12 +49,21 @@ const Users: React.FC = () => {
     }, 1000);
   }, []);
 
+  const isLoadingUsers = useStore(usersStore.$isLoadingUsers);
+
+  const [filteredParticipants, setFilteredParticipants] = useState<
+    IParticipant[]
+  >(fethingUsers as IParticipant[]);
+  console.log(fethingUsers);
+
   //pagination
   const [curPage, setCurPage] = useState<number>(1);
-  const [participantPerPage, setParticipantPerPage] = useState<number>(6);
+  const participantPerPage: number = 6;
   const indexLastParticipant: number = curPage * participantPerPage;
+
   const indexFirtParticipant: number =
     indexLastParticipant - participantPerPage;
+
   const curFilteredParticipants: IParticipant[] = filteredParticipants.slice(
     indexFirtParticipant,
     indexLastParticipant
@@ -88,13 +97,21 @@ const Users: React.FC = () => {
   };
 
   const onChangeFilterHandler = (option: IOption): void => {
-    if (option.id !== 1) {
-      const filteredItems: IParticipant[] = participants.filter(
+    if (option.id !== "all") {
+      const filteredItems: IParticipant[] = fethingUsers!.filter(
         (item) => item.status === option.id
       );
+      setIsloadingPage(true);
+      setTimeout(() => {
+        setIsloadingPage(false);
+      }, 1000);
       setFilteredParticipants(filteredItems);
     } else {
-      setFilteredParticipants(participants);
+      setIsloadingPage(true);
+      setTimeout(() => {
+        setIsloadingPage(false);
+      }, 1000);
+      setFilteredParticipants(fethingUsers as IParticipant[]);
     }
     setIsSelected(option);
   };
@@ -116,13 +133,13 @@ const Users: React.FC = () => {
             <div className={style.leftBtn} data-is-active={isScrollLeft} />
             <div className={style.rightBtn} data-is-active={isScrollLeft} />
           </div>
-          {!isLoadingPage && (
+          {!isLoadingUsers && !isLoadingPage && (
             <UsersTable
               filteredParticipants={curFilteredParticipants}
               setIsLeft={setIsScrollLeft}
             />
           )}
-          {isLoadingPage && (
+          {(isLoadingUsers || isLoadingPage) && (
             <div className={style.table}>
               <div className={style.headerSkeleton}></div>
               {curFilteredParticipants.map((participant, index) => (
@@ -130,14 +147,16 @@ const Users: React.FC = () => {
               ))}
             </div>
           )}
-          <Pagination
-            curPage={curPage}
-            participantPerPage={participantPerPage}
-            totalParticipant={filteredParticipants.length}
-            changePageHandler={changePageHandler}
-            nextPageHandler={nextPageHandler}
-            backPageHandler={BackPageHandler}
-          />
+          {curFilteredParticipants.length !== 0 && (
+            <Pagination
+              curPage={curPage}
+              participantPerPage={participantPerPage}
+              totalParticipant={filteredParticipants.length}
+              changePageHandler={changePageHandler}
+              nextPageHandler={nextPageHandler}
+              backPageHandler={BackPageHandler}
+            />
+          )}
         </div>
       )}
     </div>

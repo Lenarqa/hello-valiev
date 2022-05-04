@@ -27,11 +27,11 @@ export interface FileModel {
 }
 
 export interface IParticipant {
-  id: number;
+  id: string;
   name: string;
   imgUrl: string;
   aboutMe: string;
-  status: number;
+  status: string;
 }
 
 export interface IOption {

@@ -1,7 +1,9 @@
+import { IParticipant } from './../models/models';
+import { serializeUsers } from './../serializers/serializeUsers';
 import { createEffect, forward, createEvent, restore } from "effector";
 
 // в процессе
-const getUsers = createEvent();
+const getUsers = createEvent<IParticipant[]>();
 
 const getUsersFx = createEffect(async () => {
   const localToken = localStorage.getItem("auth");
@@ -18,7 +20,7 @@ const getUsersFx = createEffect(async () => {
       .then((response) => response.text())
       .then((response) => JSON.parse(response));
       console.log(response);
-    //   return serializeReview(response);
+      return serializeUsers(response);
   }
 });
 
@@ -27,7 +29,7 @@ forward({
   to: getUsersFx,
 });
 
-const $users = restore(getUsers, null);
+const $users = restore(getUsersFx, []);
 
 const $isLoadingUsers = getUsersFx.pending;
 

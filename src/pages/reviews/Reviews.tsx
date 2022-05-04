@@ -17,11 +17,10 @@ import BadWindow from "../../components/UI/badWindow/BadWindow";
 import { PopUpContext } from "../../components/store/PopUpContext";
 import ReviewItemSkeleton from "../../components/reviewItem/skeleton/ReviewsSkeleton";
 import { userRevievsStore } from "../../shared/effector/reviews";
-import { authStore } from "../../shared/effector/auth";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 
 const Reviews: React.FC = () => {
-  const authToken = useStore(authStore.$token);
+
   const fethingReviews: IReview[] | undefined = useStore(
     userRevievsStore.$userReviews
   );
