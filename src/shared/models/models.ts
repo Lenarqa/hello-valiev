@@ -78,3 +78,8 @@ export interface IPostImg {
   reviewID: string;
   photo: File;
 }
+
+export interface IChangeReviewText {
+  id: string, 
+  text:string,
+}

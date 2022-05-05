@@ -9,7 +9,7 @@ import style from "./Reviews.module.css";
 import EmptyScreen from "../../components/UI/emtyScreen/EmptyScreen";
 import Select from "../../components/UI/select/Select";
 import { DummyOptionsReview } from "../../shared/data/OptionsReviews";
-import { IOption, IReview } from "../../shared/models/models";
+import { IChangeReviewText, IOption, IReview } from "../../shared/models/models";
 import ReviewItem from "../../components/reviewItem/ReviewItem";
 import { sortByDate } from "../../shared/lib/sortReviews";
 import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
@@ -128,33 +128,36 @@ const Reviews: React.FC = () => {
     updatedReviewText: string,
     id: string
   ): boolean => {
-    setReviews((prev) => {
-      const updatedReview: IReview | undefined = prev.find(
-        (review) => review.id === id
-      );
+    const reviewData:IChangeReviewText = {id: id, text: updatedReviewText}; 
+    userRevievsStore.changeReviewText(reviewData);
+    // setReviews((prev) => {
+    //   const updatedReview: IReview | undefined = prev.find(
+    //     (review) => review.id === id
+    //   );
 
-      const prevWithoutUpdated: IReview[] = prev.filter(
-        (item) => item.id !== id
-      );
+    //   const prevWithoutUpdated: IReview[] = prev.filter(
+    //     (item) => item.id !== id
+    //   );
 
-      if (updatedReview === undefined) {
-        return prev;
-      }
+    //   if (updatedReview === undefined) {
+    //     return prev;
+    //   }
 
-      updatedReview.text = updatedReviewText;
-      return [...prevWithoutUpdated, updatedReview];
-    });
+    //   updatedReview.text = updatedReviewText;
+    //   return [...prevWithoutUpdated, updatedReview];
+    // });
 
-    // временная проверка, если true то выпадает отзыв отправлен успешно
-    // иначе ошибка
-    const updatedReview: IReview | undefined = reviews.find(
-      (review) => review.id === id
-    );
-    if (updatedReview?.text === updatedReviewText) {
-      return true;
-    } else {
-      return false;
-    }
+    // // временная проверка, если true то выпадает отзыв отправлен успешно
+    // // иначе ошибка
+    // const updatedReview: IReview | undefined = reviews.find(
+    //   (review) => review.id === id
+    // );
+    // if (updatedReview?.text === updatedReviewText) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    return true;
   };
 
   const nextPageHandler = () => {

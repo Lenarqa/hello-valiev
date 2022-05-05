@@ -4,8 +4,6 @@ import TextArea from "../../UI/textarea/TextArea";
 import style from "./EditReviewModal.module.css";
 import ErrorMsg from "../../UI/ErrorMsg/ErrorMsg";
 
-type TextAreaChangeEventHandler = React.ChangeEventHandler<HTMLTextAreaElement>;
-
 interface IEditReviewModal {
   rewiewId: string;
   reviewText: string;
@@ -22,7 +20,7 @@ const EditReviewModal: React.FC<IEditReviewModal> = (props) => {
   const [isErrorRewiew, setIsErrorRewiew] = useState<boolean>(false);
   const [errorRewiewMsg, setErrorRewiewMsg] = useState<string>("");
 
-  const textAreaChangeHandler: TextAreaChangeEventHandler = (e): void => {
+  const textAreaChangeHandler: React.ChangeEventHandler<HTMLTextAreaElement> = (e): void => {
     if (e.target.value.trim().length <= 0) {
       setUserReviewText(e.target.value);
       setIsErrorRewiew(true);
