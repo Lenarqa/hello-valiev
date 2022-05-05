@@ -28,9 +28,11 @@ const UsersTable: React.FC<IUserTable> = (props) => {
       <div className={style.table}>
         <div className={style.column}>
           <h2 className={style.colHeader}>ИФ УЧЕНИКА</h2>
+
           {props.filteredParticipants.map((item) => (
             <div className={style.info} key={item.id}>
               <img
+                // src={require(`../../assets/img/participant/${item.imgUrl}`)}
                 src={`https://academtest.ilink.dev/images/${item.imgUrl}`}
                 alt="participantImg"
               />
@@ -39,11 +41,9 @@ const UsersTable: React.FC<IUserTable> = (props) => {
           ))}
         </div>
         <div className={style.column}>
-          <h2 className={style.colHeader}>КРАТКАЯ ИНФОРМАЦИЯ</h2>
+          <h2 className={style.colHeader} >КРАТКАЯ ИНФОРМАЦИЯ</h2>
           {props.filteredParticipants.map((item) => (
-            <div className={style.text} key={item.id}>
-              {item.aboutMe}
-            </div>
+            <div className={style.text} key={item.id}>{item.aboutMe}</div>
           ))}
         </div>
         <div className={style.column}>

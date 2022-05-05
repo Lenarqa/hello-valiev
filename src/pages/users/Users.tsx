@@ -35,14 +35,6 @@ const Users: React.FC = () => {
     popUpCtx.setIsOpenBadWindow(false);
     popUpCtx.setIsOpenGoodWindow(false);
 
-    // if (participants.length === 0) {
-    //   setIsEmptyPage(true);
-    // }
-
-    if (fethingUsers?.length === 0) {
-      setIsEmptyPage(true);
-    }
-
     setIsloadingPage(true);
     setTimeout(() => {
       setIsloadingPage(false);
@@ -68,6 +60,10 @@ const Users: React.FC = () => {
     indexFirtParticipant,
     indexLastParticipant
   );
+
+  // if (fethingUsers?.length === 0) {
+  //     setIsEmptyPage(true);
+  //   }
 
   const changePageHandler = (pageNum: number): void => {
     setCurPage(pageNum);
@@ -142,7 +138,7 @@ const Users: React.FC = () => {
           {(isLoadingUsers || isLoadingPage) && (
             <div className={style.table}>
               <div className={style.headerSkeleton}></div>
-              {curFilteredParticipants.map((participant, index) => (
+              {[1,2,3,4,5,6].map((participant, index) => (
                 <ParticipantItemSkeleton key={index} />
               ))}
             </div>

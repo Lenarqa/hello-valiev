@@ -20,6 +20,27 @@ import { userRevievsStore } from "../../shared/effector/reviews";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 
 const Reviews: React.FC = () => {
+  const popUpCtx = useContext(PopUpContext);
+
+  useEffect(() => {
+    popUpCtx.setIsError(false);
+    popUpCtx.setIsOpenBadWindow(false);
+    popUpCtx.setIsOpenGoodWindow(false);
+
+    if (reviews.length === 0) {
+      setIsEmptyPage(true);
+    }
+
+    document.addEventListener("scroll", scrollHandler);
+
+    userRevievsStore.getUserReviews([]);
+
+    setTimeout(() => {
+      setisLoadingPage(false);
+    }, 500);
+
+    return () => document.removeEventListener("scroll", scrollHandler);
+  }, []);
 
   const fethingReviews: IReview[] | undefined = useStore(
     userRevievsStore.$userReviews
@@ -44,29 +65,8 @@ const Reviews: React.FC = () => {
   const [curPage, setCurPage] = useState<number>(1);
 
   // если в controlPanelAboutMe была ошибка скрываем ее
-  const popUpCtx = useContext(PopUpContext);
 
   const isLoadingReviews = useStore(userRevievsStore.$isLoadingReviews);
-
-  useEffect(() => {
-    popUpCtx.setIsError(false);
-    popUpCtx.setIsOpenBadWindow(false);
-    popUpCtx.setIsOpenGoodWindow(false);
-
-    if (reviews.length === 0) {
-      setIsEmptyPage(true);
-    }
-
-    document.addEventListener("scroll", scrollHandler);
-
-    // userRevievsStore.getUserReviews(authToken.accessToken);
-
-    setTimeout(() => {
-      setisLoadingPage(false);
-    }, 500);
-
-    return () => document.removeEventListener("scroll", scrollHandler);
-  }, []);
 
   const onChangeFilterHandler = useCallback((option: IOption): void => {
     const curfilteredReviews: IReview[] = reviews.filter(
