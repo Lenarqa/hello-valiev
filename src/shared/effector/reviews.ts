@@ -5,8 +5,9 @@ import { createEffect, forward, createEvent, restore, sample } from "effector";
 
 const getUserReviews = createEvent<IReview[]>();
 
-const getUserReviewsFx = createEffect(async () => {
+const getUserReviewsFx = createEffect(async () => {  
   const localToken = localStorage.getItem("auth");
+  // console.log("getUserReviews")
 
   if (localToken) {
     const localTokenObj = JSON.parse(localToken);
@@ -41,9 +42,6 @@ const changeReviewTextFx = createEffect(
 
     if (localToken) {
       const localTokenObj = JSON.parse(localToken);
-      console.log(localToken);
-      console.log(reviewData.id);
-      console.log(reviewData.text);
       const response = await fetch(
         `https://academtest.ilink.dev/reviews/updateInfo/${reviewData.id}`,
         {
@@ -58,11 +56,13 @@ const changeReviewTextFx = createEffect(
         .then((response) => response.text())
         .then((response) => JSON.parse(response));
 
-      console.log(response);
+      // console.log(response);
       return response;
     }
   }
 );
+
+const $isLoadingReviewChangeText = changeReviewTextFx.pending;
 
 forward({
   from: changeReviewText,
@@ -71,14 +71,55 @@ forward({
 
 sample({
   clock: changeReviewTextFx.doneData,
-  // source: $sendReviewError,
-  // fn: (review, _) => review.id,
   target: getUserReviews,
+})
+
+// change status
+const changeReviewStatus = createEvent<IChangeReviewText>();
+const changeReviewStatusFx = createEffect(
+  async (reviewData: IChangeReviewText) => {
+    const localToken = localStorage.getItem("auth");
+
+    if (localToken) {
+      const localTokenObj = JSON.parse(localToken);
+      const response = await fetch(
+        `https://academtest.ilink.dev/reviews/updateStatus/${reviewData.id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "authorization": `Bearer ${localTokenObj.accessToken}`,
+          },
+          body: "status=" + encodeURIComponent(reviewData.text),
+        }
+      )
+        .then((response) => response.text())
+        .then((response) => JSON.parse(response));
+
+      console.log(response);
+      return response;
+    }
+  }
+)
+
+const $isLoadingReviewChangeStatus = changeReviewStatusFx.pending;
+
+forward({
+  from: changeReviewStatus,
+  to: changeReviewStatusFx,
 });
+
+sample({
+  clock: changeReviewStatusFx.doneData,
+  target: getUserReviews,
+})
 
 export const userRevievsStore = {
   getUserReviews,
   $userReviews,
   $isLoadingReviews,
   changeReviewText,
+  $isLoadingReviewChangeText,
+  changeReviewStatus,
+  $isLoadingReviewChangeStatus,
 };

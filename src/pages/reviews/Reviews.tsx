@@ -33,6 +33,8 @@ const Reviews: React.FC = () => {
 
     document.addEventListener("scroll", scrollHandler);
 
+    // console.log("Work use effect");
+    
     userRevievsStore.getUserReviews([]);
 
     setTimeout(() => {
@@ -67,6 +69,8 @@ const Reviews: React.FC = () => {
   // если в controlPanelAboutMe была ошибка скрываем ее
 
   const isLoadingReviews = useStore(userRevievsStore.$isLoadingReviews);
+  const isLoadingText = useStore(userRevievsStore.$isLoadingReviewChangeText);
+  const isLoadingStatus = useStore(userRevievsStore.$isLoadingReviewChangeStatus);
 
   const onChangeFilterHandler = useCallback((option: IOption): void => {
     const curfilteredReviews: IReview[] = reviews.filter(
@@ -87,41 +91,45 @@ const Reviews: React.FC = () => {
   }, [onChangeFilterHandler]);
 
   const cancelHandler = (id: string): void => {
-    setReviews((prev) => {
-      const updatedReview: IReview | undefined = prev.find(
-        (review) => review.id === id
-      );
+    const reviewData:IChangeReviewText = {id: id, text: "declined"}; 
+    userRevievsStore.changeReviewStatus(reviewData);
+    // setReviews((prev) => {
+    //   const updatedReview: IReview | undefined = prev.find(
+    //     (review) => review.id === id
+    //   );
 
-      const prevWithoutUpdated: IReview[] = prev.filter(
-        (item) => item.id !== id
-      );
+    //   const prevWithoutUpdated: IReview[] = prev.filter(
+    //     (item) => item.id !== id
+    //   );
 
-      if (updatedReview === undefined) {
-        return prev;
-      }
+    //   if (updatedReview === undefined) {
+    //     return prev;
+    //   }
 
-      updatedReview.status = "declined"; //отклонен
-      return [...prevWithoutUpdated, updatedReview];
-    });
+    //   updatedReview.status = "declined"; //отклонен
+    //   return [...prevWithoutUpdated, updatedReview];
+    // });
   };
 
   const publishHandler = (id: string): void => {
-    setReviews((prev) => {
-      const updatedReview: IReview | undefined = prev.find(
-        (review) => review.id === id
-      );
+    const reviewData:IChangeReviewText = {id: id, text: "approved"}; 
+    userRevievsStore.changeReviewStatus(reviewData);
+    // setReviews((prev) => {
+    //   const updatedReview: IReview | undefined = prev.find(
+    //     (review) => review.id === id
+    //   );
 
-      const prevWithoutUpdated: IReview[] = prev.filter(
-        (item) => item.id !== id
-      );
+    //   const prevWithoutUpdated: IReview[] = prev.filter(
+    //     (item) => item.id !== id
+    //   );
 
-      if (updatedReview === undefined) {
-        return prev;
-      }
+    //   if (updatedReview === undefined) {
+    //     return prev;
+    //   }
 
-      updatedReview.status = "approved"; //опубликован
-      return [...prevWithoutUpdated, updatedReview];
-    });
+    //   updatedReview.status = "approved"; //опубликован
+    //   return [...prevWithoutUpdated, updatedReview];
+    // });
   };
 
   const updateReviewTextHandler = (
@@ -180,7 +188,7 @@ const Reviews: React.FC = () => {
 
   return (
     <div className={style.container}>
-      {isLoadingReviews ? (
+      {(isLoadingReviews || isLoadingText || isLoadingStatus) ? (
         <div className={style.spinerWrapper}>
           <LoadingSpiner />
         </div>

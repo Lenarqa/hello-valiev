@@ -3,7 +3,6 @@ import { useStore } from "effector-react";
 import EmptyScreen from "../../components/UI/emtyScreen/EmptyScreen";
 import style from "./Users.module.css";
 import Select from "../../components/UI/select/Select";
-import { Participants } from "../../shared/data/UsersData";
 import { IOption, IParticipant } from "../../shared/models/models";
 import Pagination from "../../components/UI/pagination/Pagination";
 import { DummyOptionsParticipants } from "../../shared/data/OptionsParticipant";
@@ -21,94 +20,72 @@ const Users: React.FC = () => {
   const [selected, setIsSelected] = useState<IOption>(
     DummyOptionsParticipants[0]
   ); //0 - элемент, это элемент по дефолту отображающийся в селект;
-  // const [participants, setParticipants] =
-  //   useState<IParticipant[]>(Participants);
 
   // если в controlPanelAboutMe была ошибка скрываем ее
-  // я еще не разобрался как прокидывать в оутлет контекст
   const popUpCtx = useContext(PopUpContext);
-  const fethingUsers = useStore(usersStore.$users);
 
-  useEffect(() => {
-    usersStore.getUsers([]);
-    popUpCtx.setIsError(false);
-    popUpCtx.setIsOpenBadWindow(false);
-    popUpCtx.setIsOpenGoodWindow(false);
+  const filteredUsers: IParticipant[] | undefined = useStore(
+    usersStore.$filteredUsers
+  );
 
-    setIsloadingPage(true);
-    setTimeout(() => {
-      setIsloadingPage(false);
-    }, 1000);
-  }, []);
+  const fethingUsers: IParticipant[] | undefined = useStore(usersStore.$users);
+  const isLoadingFilteredUsers: boolean = useStore(usersStore.$isLoadingUsers);
+  const curPage: number = useStore(usersStore.$curPage);
 
-  const isLoadingUsers = useStore(usersStore.$isLoadingUsers);
-
-  const [filteredParticipants, setFilteredParticipants] = useState<
-    IParticipant[]
-  >(fethingUsers as IParticipant[]);
-  console.log(fethingUsers);
-
-  //pagination
-  const [curPage, setCurPage] = useState<number>(1);
+  // pagination
   const participantPerPage: number = 6;
   const indexLastParticipant: number = curPage * participantPerPage;
 
   const indexFirtParticipant: number =
     indexLastParticipant - participantPerPage;
 
-  const curFilteredParticipants: IParticipant[] = filteredParticipants.slice(
+  const curFilteredParticipants: IParticipant[] = filteredUsers!.slice(
     indexFirtParticipant,
     indexLastParticipant
   );
+  const isLoadingUsers: boolean = useStore(usersStore.$isLoadingUsers);
 
-  // if (fethingUsers?.length === 0) {
-  //     setIsEmptyPage(true);
-  //   }
+  useEffect(() => {
+    usersStore.getUsers([]);
+    popUpCtx.setIsError(false);
+    popUpCtx.setIsOpenBadWindow(false);
+    popUpCtx.setIsOpenGoodWindow(false);
+  }, []);
+
+  useEffect(() => {
+    if (!isLoadingFilteredUsers) {
+      usersStore.filterUsers(selected);
+    }
+  }, [selected, isLoadingUsers]);
 
   const changePageHandler = (pageNum: number): void => {
-    setCurPage(pageNum);
+    usersStore.setCurPage(pageNum);
 
     setIsloadingPage(true);
     setTimeout(() => {
       setIsloadingPage(false);
-    }, 1000);
+    }, 500);
   };
 
   const nextPageHandler = (): void => {
-    setCurPage((prev) => (prev += 1));
-
+    usersStore.setCurPage(1000000000);
     setIsloadingPage(true);
     setTimeout(() => {
       setIsloadingPage(false);
-    }, 1000);
+    }, 500);
   };
 
   const BackPageHandler = (): void => {
-    setCurPage((prev) => (prev -= 1));
+    usersStore.setCurPage(-1000000000);
 
     setIsloadingPage(true);
     setTimeout(() => {
       setIsloadingPage(false);
-    }, 1000);
+    }, 500);
   };
 
   const onChangeFilterHandler = (option: IOption): void => {
-    if (option.id !== "all") {
-      const filteredItems: IParticipant[] = fethingUsers!.filter(
-        (item) => item.status === option.id
-      );
-      setIsloadingPage(true);
-      setTimeout(() => {
-        setIsloadingPage(false);
-      }, 1000);
-      setFilteredParticipants(filteredItems);
-    } else {
-      setIsloadingPage(true);
-      setTimeout(() => {
-        setIsloadingPage(false);
-      }, 1000);
-      setFilteredParticipants(fethingUsers as IParticipant[]);
-    }
+    usersStore.filterUsers(option);
     setIsSelected(option);
   };
 
@@ -129,25 +106,25 @@ const Users: React.FC = () => {
             <div className={style.leftBtn} data-is-active={isScrollLeft} />
             <div className={style.rightBtn} data-is-active={isScrollLeft} />
           </div>
-          {!isLoadingUsers && !isLoadingPage && (
+          {!isLoadingPage && (
             <UsersTable
               filteredParticipants={curFilteredParticipants}
               setIsLeft={setIsScrollLeft}
             />
           )}
-          {(isLoadingUsers || isLoadingPage) && (
+          {(isLoadingPage || isLoadingFilteredUsers) && (
             <div className={style.table}>
               <div className={style.headerSkeleton}></div>
-              {[1,2,3,4,5,6].map((participant, index) => (
+              {[1, 2, 3, 4, 5, 6].map((participant, index) => (
                 <ParticipantItemSkeleton key={index} />
               ))}
             </div>
           )}
-          {curFilteredParticipants.length !== 0 && (
+          {filteredUsers!.length !== 0 && (
             <Pagination
               curPage={curPage}
-              participantPerPage={participantPerPage}
-              totalParticipant={filteredParticipants.length}
+              participantPerPage={6}
+              totalParticipant={fethingUsers!.length}
               changePageHandler={changePageHandler}
               nextPageHandler={nextPageHandler}
               backPageHandler={BackPageHandler}

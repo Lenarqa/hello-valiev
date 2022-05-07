@@ -9,12 +9,16 @@ import FooterErrorMsg from "../../components/UI/footerErrorMsg/FooterErrorMsg";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
 import BadWindow from "../../components/UI/badWindow/BadWindow";
+import { usersStore } from "../../shared/effector/users";
 
 const ControlPanel: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  // const [isLoadingUsers, setIsLoadingUsers] = useState<boolean>(true);
+
   const popUpContext = useContext(PopUpContext);
 
   useEffect(() => {
+    // usersStore.getUsers([]);
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);

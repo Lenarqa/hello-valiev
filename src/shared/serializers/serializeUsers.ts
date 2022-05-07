@@ -1,7 +1,6 @@
 import { IParticipant } from "../models/models";
 
 export const serializeUsers = (usersArray: any[]): IParticipant[] => {
-    // console.log(usersArray);
     const users:IParticipant[] = usersArray.map(user => {
         
         const serializedUser: IParticipant = {
@@ -13,6 +12,5 @@ export const serializeUsers = (usersArray: any[]): IParticipant[] => {
         };
         return serializedUser;
     })
-    console.log(users);
   return users;
 };

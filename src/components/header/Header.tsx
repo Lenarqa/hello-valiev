@@ -7,7 +7,7 @@ import { ReactComponent as ILinkLogo } from "../../assets/img/logoAcademy.svg";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "effector-react";
 import { userStore } from "../../shared/effector/userInfo";
-import { usersStore } from "../../shared/effector/users";
+
 
 interface IHeader {
   type: string;
@@ -19,7 +19,7 @@ const Header: React.FC<IHeader> = (props) => {
   const userInfo = useStore(userStore.$userInfo);
 
   const openControlPanelHandler = (): void => {
-    usersStore.getUsers([]);//delete this later
+    // usersStore.getUsers([]);//delete this later
     navigate(`/hello-valiev/controlPanel/users`);
   };
 
