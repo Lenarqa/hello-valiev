@@ -84,6 +84,7 @@ const Users: React.FC = () => {
   const onChangeFilterHandler = (option: IOption): void => {
     usersStore.filterUsers(option);
     setIsSelected(option);
+    usersStore.setCurPage(1);
     loadingPage();
   };
 
@@ -113,7 +114,7 @@ const Users: React.FC = () => {
           {(isLoadingPage || isLoadingFilteredUsers) && (
             <div className={style.table}>
               <div className={style.headerSkeleton}></div>
-              {[1, 2, 3, 4, 5, 6].map((participant, index) => (
+              {filteredUsers!.map((participant, index) => (
                 <ParticipantItemSkeleton key={index} />
               ))}
             </div>

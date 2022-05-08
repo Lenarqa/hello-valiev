@@ -27,13 +27,11 @@ const Reviews: React.FC = () => {
     popUpCtx.setIsOpenBadWindow(false);
     popUpCtx.setIsOpenGoodWindow(false);
 
-    if (reviews.length === 0) {
-      setIsEmptyPage(true);
-    }
+    // if (reviews.length === 0) {
+      // setIsEmptyPage(true);
+    // }
 
     document.addEventListener("scroll", scrollHandler);
-
-    // console.log("Work use effect");
     
     userRevievsStore.getUserReviews([]);
 
@@ -93,43 +91,11 @@ const Reviews: React.FC = () => {
   const cancelHandler = (id: string): void => {
     const reviewData:IChangeReviewText = {id: id, text: "declined"}; 
     userRevievsStore.changeReviewStatus(reviewData);
-    // setReviews((prev) => {
-    //   const updatedReview: IReview | undefined = prev.find(
-    //     (review) => review.id === id
-    //   );
-
-    //   const prevWithoutUpdated: IReview[] = prev.filter(
-    //     (item) => item.id !== id
-    //   );
-
-    //   if (updatedReview === undefined) {
-    //     return prev;
-    //   }
-
-    //   updatedReview.status = "declined"; //отклонен
-    //   return [...prevWithoutUpdated, updatedReview];
-    // });
   };
 
   const publishHandler = (id: string): void => {
     const reviewData:IChangeReviewText = {id: id, text: "approved"}; 
     userRevievsStore.changeReviewStatus(reviewData);
-    // setReviews((prev) => {
-    //   const updatedReview: IReview | undefined = prev.find(
-    //     (review) => review.id === id
-    //   );
-
-    //   const prevWithoutUpdated: IReview[] = prev.filter(
-    //     (item) => item.id !== id
-    //   );
-
-    //   if (updatedReview === undefined) {
-    //     return prev;
-    //   }
-
-    //   updatedReview.status = "approved"; //опубликован
-    //   return [...prevWithoutUpdated, updatedReview];
-    // });
   };
 
   const updateReviewTextHandler = (
@@ -138,33 +104,6 @@ const Reviews: React.FC = () => {
   ): boolean => {
     const reviewData:IChangeReviewText = {id: id, text: updatedReviewText}; 
     userRevievsStore.changeReviewText(reviewData);
-    // setReviews((prev) => {
-    //   const updatedReview: IReview | undefined = prev.find(
-    //     (review) => review.id === id
-    //   );
-
-    //   const prevWithoutUpdated: IReview[] = prev.filter(
-    //     (item) => item.id !== id
-    //   );
-
-    //   if (updatedReview === undefined) {
-    //     return prev;
-    //   }
-
-    //   updatedReview.text = updatedReviewText;
-    //   return [...prevWithoutUpdated, updatedReview];
-    // });
-
-    // // временная проверка, если true то выпадает отзыв отправлен успешно
-    // // иначе ошибка
-    // const updatedReview: IReview | undefined = reviews.find(
-    //   (review) => review.id === id
-    // );
-    // if (updatedReview?.text === updatedReviewText) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
     return true;
   };
 

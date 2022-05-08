@@ -1,7 +1,7 @@
 .modal {
   width: 676px;
   min-height: 325px;
-  position: absolute;
+  position: fixed;
   background-color: #ffffff;
   padding: 24px;
   top: 50%;
