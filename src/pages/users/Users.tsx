@@ -43,6 +43,7 @@ const Users: React.FC = () => {
     indexFirtParticipant,
     indexLastParticipant
   );
+
   const isLoadingUsers: boolean = useStore(usersStore.$isLoadingUsers);
 
   useEffect(() => {
@@ -58,35 +59,32 @@ const Users: React.FC = () => {
     }
   }, [selected, isLoadingUsers]);
 
-  const changePageHandler = (pageNum: number): void => {
-    usersStore.setCurPage(pageNum);
-
+  const loadingPage = (): void => {
     setIsloadingPage(true);
     setTimeout(() => {
       setIsloadingPage(false);
     }, 500);
+  };
+
+  const changePageHandler = (pageNum: number): void => {
+    usersStore.setCurPage(pageNum);
+    loadingPage();
   };
 
   const nextPageHandler = (): void => {
     usersStore.setCurPage(1000000000);
-    setIsloadingPage(true);
-    setTimeout(() => {
-      setIsloadingPage(false);
-    }, 500);
+    loadingPage();
   };
 
   const BackPageHandler = (): void => {
     usersStore.setCurPage(-1000000000);
-
-    setIsloadingPage(true);
-    setTimeout(() => {
-      setIsloadingPage(false);
-    }, 500);
+    loadingPage();
   };
 
   const onChangeFilterHandler = (option: IOption): void => {
     usersStore.filterUsers(option);
     setIsSelected(option);
+    loadingPage();
   };
 
   return (
@@ -135,4 +133,5 @@ const Users: React.FC = () => {
     </div>
   );
 };
+
 export default Users;
