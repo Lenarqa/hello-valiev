@@ -18,7 +18,7 @@ import Input from "../../UI/input/Input";
 import { caphaStore } from "../../../shared/effector/capha";
 import { authStore } from "../../../shared/effector/auth";
 import { addReviewStore } from "../../../shared/effector/addReview";
-import { userRevievsStore } from "../../../shared/effector/reviews";
+import { userReviewsStore } from "../../../shared/effector/reviews";
 import LoadingSpiner from "../../UI/loadingSpiner/LoadingSpiner";
 import Button from "../../UI/myButton/Button";
 
@@ -106,7 +106,7 @@ const ReviewModal: React.FC<IReviewModal> = ({
         }
       } else {
         setShowGoodWindow(true);
-        userRevievsStore.getUserReviews([]);
+        userReviewsStore.getUserReviews([]);
         close();
       }
     }

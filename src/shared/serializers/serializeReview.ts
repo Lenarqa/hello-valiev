@@ -1,11 +1,9 @@
 import { IReview } from "../models/models";
 
-export const serializeReview = (reviewsArr: any[]):IReview[] => {
-  console.log(reviewsArr);
-
-  const reviews:IReview[] = reviewsArr.map((review) => {
+export const serializeReview = (reviewsArr: any[]): IReview[] => {
+  const reviews: IReview[] = reviewsArr.map((review) => {
     const date: Date = new Date(review.createdAt);
-    
+
     const publishDate: string = `${date.getDate()}.${
       date.getMonth() + 1
     }.${date.getFullYear()}`;
@@ -27,6 +25,6 @@ export const serializeReview = (reviewsArr: any[]):IReview[] => {
       version: review.version,
     };
   });
-  console.log(reviews)
+
   return reviews;
 };

@@ -1,14 +1,14 @@
+import { sortByDate } from './../lib/sortReviews/index';
 import { IChangeReviewText } from "./../models/models";
 import { IReview } from "../models/models";
 import { serializeReview } from "./../serializers/serializeReview";
 import { createEffect, forward, createEvent, restore, sample } from "effector";
+import { IOption } from "./../models/models";
 
+// get reviews
 const getUserReviews = createEvent<IReview[]>();
-
 const getUserReviewsFx = createEffect(async () => {  
   const localToken = localStorage.getItem("auth");
-  // console.log("getUserReviews")
-
   if (localToken) {
     const localTokenObj = JSON.parse(localToken);
     const response = await fetch(
@@ -34,8 +34,42 @@ const $userReviews = restore(getUserReviewsFx, []);
 
 const $isLoadingReviews = getUserReviewsFx.pending;
 
+// filter reviews
+const filterReviews = createEvent<IOption>();
+
+const filterReviewsFx = createEffect((option: IOption) => {
+  const fethingReviews = $userReviews.getState();
+
+  if (option.id !== "all") {
+    const filteredItems: IReview[] = fethingReviews!.filter(
+      (item) => item.status === option.id
+    );
+
+    const sortedFilteredReviews:IReview[] = sortByDate(filteredItems);
+ 
+    return sortedFilteredReviews;
+  }
+
+  const reviews:IReview[] | undefined = $userReviews.getState();
+  
+  if(reviews) {
+    const sortedReviews:IReview[] = sortByDate(reviews);
+    return sortedReviews;
+  }
+});
+
+const $isLoadingFilteredUsers = filterReviewsFx.pending;
+forward({
+  from: filterReviews,
+  to: filterReviewsFx,
+});
+
+const $filteredReviews = restore(filterReviewsFx, []);
+// end filter reviews
+
 // update review text
 const changeReviewText = createEvent<IChangeReviewText>();
+
 const changeReviewTextFx = createEffect(
   async (reviewData: IChangeReviewText) => {
     const localToken = localStorage.getItem("auth");
@@ -69,10 +103,14 @@ forward({
   to: changeReviewTextFx,
 });
 
+const $changeTextRes = restore(changeReviewTextFx, {} as IReview);
+
 sample({
   clock: changeReviewTextFx.doneData,
   target: getUserReviews,
 })
+
+//end change review text
 
 // change status
 const changeReviewStatus = createEvent<IChangeReviewText>();
@@ -114,7 +152,7 @@ sample({
   target: getUserReviews,
 })
 
-export const userRevievsStore = {
+export const userReviewsStore = {
   getUserReviews,
   $userReviews,
   $isLoadingReviews,
@@ -122,4 +160,8 @@ export const userRevievsStore = {
   $isLoadingReviewChangeText,
   changeReviewStatus,
   $isLoadingReviewChangeStatus,
+  filterReviews, 
+  $filteredReviews,
+  $isLoadingFilteredUsers,
+  $changeTextRes
 };

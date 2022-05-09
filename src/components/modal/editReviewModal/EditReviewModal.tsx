@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../UI/myButton/Button";
 import TextArea from "../../UI/textarea/TextArea";
 import style from "./EditReviewModal.module.css";
 import ErrorMsg from "../../UI/ErrorMsg/ErrorMsg";
+import { useStore } from "effector-react";
+import { userReviewsStore } from "../../../shared/effector/reviews";
+import LoadingSpiner from "../../UI/loadingSpiner/LoadingSpiner";
 
 interface IEditReviewModal {
   rewiewId: string;
@@ -19,8 +22,11 @@ const EditReviewModal: React.FC<IEditReviewModal> = (props) => {
   );
   const [isErrorRewiew, setIsErrorRewiew] = useState<boolean>(false);
   const [errorRewiewMsg, setErrorRewiewMsg] = useState<string>("");
+  const isLoadingText = useStore(userReviewsStore.$isLoadingReviewChangeText);
 
-  const textAreaChangeHandler: React.ChangeEventHandler<HTMLTextAreaElement> = (e): void => {
+  const textAreaChangeHandler: React.ChangeEventHandler<HTMLTextAreaElement> = (
+    e
+  ): void => {
     if (e.target.value.trim().length <= 0) {
       setUserReviewText(e.target.value);
       setIsErrorRewiew(true);
@@ -39,37 +45,54 @@ const EditReviewModal: React.FC<IEditReviewModal> = (props) => {
       props.showBadWindow !== undefined
     ) {
       const updateRes = props.updateReviewText(userReviewText, props.rewiewId);
-      props.close();
-      updateRes ? props.showGoodWindow(true) : props.showBadWindow(false);
+      console.log(updateRes);
+      // if(!isLoadingText){
+      //   // props.close();
+      // }
+      //выводить окно успеха неудачи
+      // if (updateRes) {
+      //   props.close();
+      // }
+      // updateRes ? props.showGoodWindow(true) : props.showBadWindow(false);
     }
   };
 
   return (
     <div className={style.modal}>
-      <div className={style.header}>
-        <h2 className={style.title}>Редактирование отзыва</h2>
-        <button className={style.btn} onClick={props.close} />
-      </div>
-      <div className={style.content}>
-        <div className={style.textAreaTitle}>Отзыв</div>
-        <TextArea
-          type="EditReviewModal"
-          placeholder={"Не забудьте написать отзыв."}
-          onChangeHandler={textAreaChangeHandler}
-          value={userReviewText}
-          msgLenght={userReviewText.length}
-          maxLenght={500} //в шаблоне изначально есть отзывы где текст больше 200 символов, поэтому я увеличил макс-ное кол-во символов до 500
-        />
-        {isErrorRewiew && <ErrorMsg>{errorRewiewMsg}</ErrorMsg>}
-      </div>
-      <div className={style.actions}>
-        <Button type="editReviewSubmit" isDisable={isErrorRewiew} onClick={updateTextHandler}>
-          Подтвердить редактирование
-        </Button>
-        <Button type="editReviewCancel" onClick={props.close}>
-          Отмена
-        </Button>
-      </div>
+      {isLoadingText ? (
+        <LoadingSpiner />
+      ) : (
+        <>
+          <div className={style.header}>
+            <h2 className={style.title}>Редактирование отзыва</h2>
+            <button className={style.btn} onClick={props.close} />
+          </div>
+          <div className={style.content}>
+            <div className={style.textAreaTitle}>Отзыв</div>
+            <TextArea
+              type="EditReviewModal"
+              placeholder={"Не забудьте написать отзыв."}
+              onChangeHandler={textAreaChangeHandler}
+              value={userReviewText}
+              msgLenght={userReviewText.length}
+              maxLenght={600} //в шаблоне изначально есть отзывы где текст больше 200 символов, поэтому я увеличил макс-ное кол-во символов до 500
+            />
+            {isErrorRewiew && <ErrorMsg>{errorRewiewMsg}</ErrorMsg>}
+          </div>
+          <div className={style.actions}>
+            <Button
+              type="editReviewSubmit"
+              isDisable={isErrorRewiew}
+              onClick={updateTextHandler}
+            >
+              Подтвердить редактирование
+            </Button>
+            <Button type="editReviewCancel" onClick={props.close}>
+              Отмена
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 };

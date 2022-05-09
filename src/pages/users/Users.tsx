@@ -12,6 +12,9 @@ import UsersTable from "../../components/usersTable/UsersTable";
 import { usersStore } from "../../shared/effector/users";
 
 const Users: React.FC = () => {
+  // если в controlPanelAboutMe была ошибка скрываем ее
+  const popUpCtx = useContext(PopUpContext);
+  
   const [isScrollLeft, setIsScrollLeft] = useState<boolean>(true);
 
   const [isLoadingPage, setIsloadingPage] = useState<boolean>(false);
@@ -21,8 +24,6 @@ const Users: React.FC = () => {
     DummyOptionsParticipants[0]
   ); //0 - элемент, это элемент по дефолту отображающийся в селект;
 
-  // если в controlPanelAboutMe была ошибка скрываем ее
-  const popUpCtx = useContext(PopUpContext);
 
   const filteredUsers: IParticipant[] | undefined = useStore(
     usersStore.$filteredUsers

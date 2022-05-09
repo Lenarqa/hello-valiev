@@ -1,26 +1,43 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useStore } from "effector-react";
 import style from "./Reviews.module.css";
 import EmptyScreen from "../../components/UI/emtyScreen/EmptyScreen";
 import Select from "../../components/UI/select/Select";
 import { DummyOptionsReview } from "../../shared/data/OptionsReviews";
-import { IChangeReviewText, IOption, IReview } from "../../shared/models/models";
+import {
+  IChangeReviewText,
+  IOption,
+  IReview,
+} from "../../shared/models/models";
 import ReviewItem from "../../components/reviewItem/ReviewItem";
-import { sortByDate } from "../../shared/lib/sortReviews";
 import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
 import BadWindow from "../../components/UI/badWindow/BadWindow";
 import { PopUpContext } from "../../components/store/PopUpContext";
 import ReviewItemSkeleton from "../../components/reviewItem/skeleton/ReviewsSkeleton";
-import { userRevievsStore } from "../../shared/effector/reviews";
+import { userReviewsStore } from "../../shared/effector/reviews";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 
 const Reviews: React.FC = () => {
   const popUpCtx = useContext(PopUpContext);
+
+  const changeTextRes = useStore(userReviewsStore.$changeTextRes);
+  const isLoadingReviews = useStore(userReviewsStore.$isLoadingReviews);
+  const isLoadingText = useStore(userReviewsStore.$isLoadingReviewChangeText);
+  const [showEditReview, setShowEditReview] = useState<boolean>(false);
+  const isLoadingStatus = useStore(
+    userReviewsStore.$isLoadingReviewChangeStatus
+  );
+  const isLoadingFilteredReviews = useStore(
+    userReviewsStore.$isLoadingFilteredUsers
+  );
+  const filteredReviews: IReview[] | undefined = useStore(
+    userReviewsStore.$filteredReviews
+  );
+  const [isLoadingPage, setisLoadingPage] = useState<boolean>(true);
+
+  const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
+  //0 - элемент, это элемент по дефолту отображающийся в селект;
+  const [selected, setIsSelected] = useState<IOption>(DummyOptionsReview[0]);
 
   useEffect(() => {
     popUpCtx.setIsError(false);
@@ -28,12 +45,12 @@ const Reviews: React.FC = () => {
     popUpCtx.setIsOpenGoodWindow(false);
 
     // if (reviews.length === 0) {
-      // setIsEmptyPage(true);
+    // setIsEmptyPage(true);
     // }
 
     document.addEventListener("scroll", scrollHandler);
-    
-    userRevievsStore.getUserReviews([]);
+
+    userReviewsStore.getUserReviews([]);
 
     setTimeout(() => {
       setisLoadingPage(false);
@@ -42,21 +59,21 @@ const Reviews: React.FC = () => {
     return () => document.removeEventListener("scroll", scrollHandler);
   }, []);
 
-  const fethingReviews: IReview[] | undefined = useStore(
-    userRevievsStore.$userReviews
-  );
-
-  const [isLoadingPage, setisLoadingPage] = useState<boolean>(true);
-
-  const [isEmptyPage, setIsEmptyPage] = useState<boolean>(false);
-  const [selected, setIsSelected] = useState<IOption>(DummyOptionsReview[0]); //0 - элемент, это элемент по дефолту отображающийся в селект;
-
-  const [reviews, setReviews] = useState<IReview[]>(
-    fethingReviews as IReview[]
-  );
-  const [filteredReviews, setFilteredReviews] = useState<IReview[]>(
-    fethingReviews as IReview[]
-  );
+  useEffect(() => {
+    if (!isLoadingReviews) {
+      userReviewsStore.filterReviews(selected);
+    }
+  }, [selected, isLoadingReviews]);
+  
+  useEffect(() => {
+    console.log(changeTextRes);
+    if(changeTextRes.text){
+      setIsShowGoodWindow(true);
+    }else if(changeTextRes.error){
+      setIsShowBadWindow(true);
+    }
+    
+  }, [changeTextRes]);
 
   const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(false);
   const [isShowBadWindow, setIsShowBadWindow] = useState<boolean>(false);
@@ -64,20 +81,7 @@ const Reviews: React.FC = () => {
   // page loading
   const [curPage, setCurPage] = useState<number>(1);
 
-  // если в controlPanelAboutMe была ошибка скрываем ее
-
-  const isLoadingReviews = useStore(userRevievsStore.$isLoadingReviews);
-  const isLoadingText = useStore(userRevievsStore.$isLoadingReviewChangeText);
-  const isLoadingStatus = useStore(userRevievsStore.$isLoadingReviewChangeStatus);
-
   const onChangeFilterHandler = useCallback((option: IOption): void => {
-    const curfilteredReviews: IReview[] = reviews.filter(
-      (item) => item.status === option?.id
-    );
-
-    const sortedFilteredReviews = sortByDate(curfilteredReviews);
-
-    setFilteredReviews(sortedFilteredReviews);
     setIsSelected(option);
     setCurPage(1);
   }, []);
@@ -89,21 +93,25 @@ const Reviews: React.FC = () => {
   }, [onChangeFilterHandler]);
 
   const cancelHandler = (id: string): void => {
-    const reviewData:IChangeReviewText = {id: id, text: "declined"}; 
-    userRevievsStore.changeReviewStatus(reviewData);
+    const reviewData: IChangeReviewText = { id: id, text: "declined" };
+    userReviewsStore.changeReviewStatus(reviewData);
   };
 
   const publishHandler = (id: string): void => {
-    const reviewData:IChangeReviewText = {id: id, text: "approved"}; 
-    userRevievsStore.changeReviewStatus(reviewData);
+    const reviewData: IChangeReviewText = { id: id, text: "approved" };
+    userReviewsStore.changeReviewStatus(reviewData);
   };
 
   const updateReviewTextHandler = (
     updatedReviewText: string,
     id: string
   ): boolean => {
-    const reviewData:IChangeReviewText = {id: id, text: updatedReviewText}; 
-    userRevievsStore.changeReviewText(reviewData);
+    const reviewData: IChangeReviewText = { id: id, text: updatedReviewText };
+    userReviewsStore.changeReviewText(reviewData);
+    console.log(changeTextRes);
+    if(!isLoadingText) {
+      setShowEditReview(true);
+    }
     return true;
   };
 
@@ -127,7 +135,7 @@ const Reviews: React.FC = () => {
 
   return (
     <div className={style.container}>
-      {(isLoadingReviews || isLoadingText || isLoadingStatus) ? (
+      {isLoadingFilteredReviews ? (
         <div className={style.spinerWrapper}>
           <LoadingSpiner />
         </div>
@@ -150,7 +158,7 @@ const Reviews: React.FC = () => {
                 />
               </div>
               <div className={style.rewiews}>
-                {filteredReviews
+                {filteredReviews!
                   .filter((rewiew, index) => index < 4 * curPage)
                   .map((review, index) => {
                     if (!isLoadingPage) {
@@ -170,6 +178,8 @@ const Reviews: React.FC = () => {
                           updateReviewText={updateReviewTextHandler}
                           showGoodWindow={setIsShowGoodWindow}
                           showBadWindow={setIsShowBadWindow}
+                          showEditReviewModal={showEditReview}
+                          setShowEditReview={setShowEditReview}
                         />
                       );
                     } else {

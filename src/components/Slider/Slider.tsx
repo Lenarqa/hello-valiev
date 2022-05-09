@@ -10,7 +10,7 @@ import ReviewModal from "../modal/rewiewModal/ReviewModal";
 import { ReactComponent as ButtonAddIcon } from "../../assets/icons/buttonAdd.svg";
 import { DummyOptionsReview } from "../../shared/data/OptionsReviews";
 import { addReviewStore } from "../../shared/effector/addReview";
-import { userRevievsStore } from "../../shared/effector/reviews";
+import { userReviewsStore } from "../../shared/effector/reviews";
 
 import useWindowDimensions from "../../functions/ScreenSize";
 
@@ -195,7 +195,7 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
     sliderItemWidth = -300;
   }
 
-  const fethingReviews = useStore(userRevievsStore.$userReviews);
+  const fethingReviews = useStore(userReviewsStore.$userReviews);
 
   const filteredReviews = REVIEWS.filter((item)=>item.status === DummyOptionsReview[2].id); // Отображаем только отзывы со статусом допущен
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -211,7 +211,6 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
       if(fethingReviews[fethingReviews.length-1].id === rewies[0].id){
         return;
       }else{
-
         setRewiews(prev => [fethingReviews[fethingReviews.length-1], ...prev]);
       }
     }

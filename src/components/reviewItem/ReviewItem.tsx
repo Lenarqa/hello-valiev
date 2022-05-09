@@ -7,6 +7,8 @@ import { ReactComponent as EditBtn } from "../../assets/icons/editBtn.svg";
 import { ReactComponent as CloseIcon } from "../../assets/icons/сloseIcon.svg";
 import { ReactComponent as PublishIcon } from "../../assets/icons/publishIcon.svg";
 import { IOption } from "../../shared/models/models";
+import { userReviewsStore } from "../../shared/effector/reviews";
+import { useStore } from "effector-react";
 
 interface ISliderItem {
   type?: string;
@@ -17,6 +19,8 @@ interface ISliderItem {
   text: string;
   status?: string;
   selected?: IOption;
+  showEditReviewModal?: boolean;
+  setShowEditReview?: (value: boolean) => void;
   cancelHandler?: (id: string) => void;
   publishHandler?: (id: string) => void;
   updateReviewText?: (updatedReviewText: string, id: string) => boolean;
@@ -38,15 +42,24 @@ const ReviewItem: React.FC<ISliderItem> = ({
   updateReviewText,
   showGoodWindow,
   showBadWindow,
+  showEditReviewModal,
+  setShowEditReview,
 }) => {
   const [isCanceled, setIsCanseled] = useState<boolean>(false);
   const [isPublish, setIsPublish] = useState<boolean>(false);
   const [isEditRevie, setIsEditReview] = useState<boolean>(false);
+  const isLoadingText = useStore(userReviewsStore.$isLoadingReviewChangeText);
+
+  useEffect(()=>{
+    if(!isLoadingText){
+      setIsEditReview(false)
+    }
+  },[isLoadingText]);
 
   let reviewImg;
   if (!imgUrl) {
     reviewImg = require(`../../assets/img/users/user-0.png`);
-  }else {
+  } else {
     reviewImg = `https://academtest.ilink.dev/images/${imgUrl}`;
   }
 
@@ -75,11 +88,19 @@ const ReviewItem: React.FC<ISliderItem> = ({
   };
 
   const showEditWindowHandler = (): void => {
+    console.log("show");
+
     setIsEditReview(true);
+    // if(setShowEditReview){
+    //   setShowEditReview(true);
+    // }
   };
 
   const closeEditWindowHandler = (): void => {
     setIsEditReview(false);
+    // if(setShowEditReview){
+    //   setShowEditReview(false);
+    // }
   };
 
   return (
@@ -92,10 +113,7 @@ const ReviewItem: React.FC<ISliderItem> = ({
       >
         <div className={style.header}>
           <div className={style.userInfo}>
-            <img
-              src={reviewImg}
-              alt="photo"
-            />
+            <img src={reviewImg} alt="photo" />
             <p>{name}</p>
           </div>
           <p>{date}</p>
@@ -128,6 +146,7 @@ const ReviewItem: React.FC<ISliderItem> = ({
       {isEditRevie && (
         <>
           <Overlay />
+          
           <EditReviewModal
             close={closeEditWindowHandler}
             rewiewId={id}

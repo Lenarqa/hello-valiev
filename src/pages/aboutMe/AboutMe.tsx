@@ -6,13 +6,13 @@ import Content from "../../components/content/Content";
 import Footer from "../../components/footer/footer/Footer";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 import { userStore } from "../../shared/effector/userInfo";
-import { userRevievsStore } from "../../shared/effector/reviews";
+import { userReviewsStore } from "../../shared/effector/reviews";
 import { IMyInfo } from "../../shared/models/models";
 
 const AboutMe: React.FC = () => {
   const userInfo = useStore(userStore.$userInfo);
   const isLoadingUserInfo = useStore(userStore.$isLoading);
-  const isLoadingReviews = useStore(userRevievsStore.$isLoadingReviews);
+  const isLoadingReviews = useStore(userReviewsStore.$isLoadingReviews);
 
   useEffect(() => {
     // тут временная провека пока не реализован запрос на редактирование профиля, 
@@ -23,7 +23,7 @@ const AboutMe: React.FC = () => {
     }else {
       userStore.getUserInfo({} as IMyInfo);
     }
-    userRevievsStore.getUserReviews([]);
+    userReviewsStore.getUserReviews([]);
   }, []);
 
   return (

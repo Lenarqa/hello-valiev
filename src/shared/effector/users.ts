@@ -9,7 +9,7 @@ import {
   createStore,
 } from "effector";
 
-// в процессе
+// get users
 const getUsers = createEvent<IParticipant[]>();
 
 const getUsersFx = createEffect(async () => {
@@ -39,8 +39,9 @@ const $isLoadingUsers = getUsersFx.pending;
 const setUsers = createEvent<IParticipant[]>();
 
 $users.on(setUsers, (_, state) => state);
+// end get users
 
-// filterUsers
+// filter Users
 const filterUsers = createEvent<IOption>();
 const filterUsersFx = createEffect((option: IOption) => {
   const fethingUsers = $users.getState();
@@ -53,16 +54,8 @@ const filterUsersFx = createEffect((option: IOption) => {
       (item) => item.status === option.id
     );
 
-    // const curFilteredParticipants: IParticipant[] = filteredItems.slice(
-    //   indexFirtParticipant,
-    //   indexLastParticipant
-    // );
     return filteredItems;
   }
-  // const curFilteredParticipants: IParticipant[] = $users.getState()!.slice(
-  //   indexFirtParticipant,
-  //   indexLastParticipant
-  // );
   return $users.getState();
 });
 
@@ -74,13 +67,13 @@ forward({
 });
 
 const $filteredUsers = restore(filterUsersFx, []);
+// end filter Users
 
+// cur page
 const $curPage = createStore<number>(1);
 const setCurPage = createEvent<number>();
 
 $curPage.on(setCurPage, (state, num) => {
-  console.log(state);
-  console.log(num);
   if(num !== 1000000000 && num !== -1000000000 ) {
     return num;
   }
@@ -90,7 +83,7 @@ $curPage.on(setCurPage, (state, num) => {
     return state - 1;
   }
 });
-
+// end cur page
 
 export const usersStore = {
   getUsers,
