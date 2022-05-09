@@ -1,4 +1,4 @@
-import { sortByDate } from './../lib/sortReviews/index';
+import { sortByDate } from "./../lib/sortReviews/index";
 import { IChangeReviewText } from "./../models/models";
 import { IReview } from "../models/models";
 import { serializeReview } from "./../serializers/serializeReview";
@@ -7,7 +7,7 @@ import { IOption } from "./../models/models";
 
 // get reviews
 const getUserReviews = createEvent<IReview[]>();
-const getUserReviewsFx = createEffect(async () => {  
+const getUserReviewsFx = createEffect(async () => {
   const localToken = localStorage.getItem("auth");
   if (localToken) {
     const localTokenObj = JSON.parse(localToken);
@@ -45,15 +45,15 @@ const filterReviewsFx = createEffect((option: IOption) => {
       (item) => item.status === option.id
     );
 
-    const sortedFilteredReviews:IReview[] = sortByDate(filteredItems);
- 
+    const sortedFilteredReviews: IReview[] = sortByDate(filteredItems);
+
     return sortedFilteredReviews;
   }
 
-  const reviews:IReview[] | undefined = $userReviews.getState();
-  
-  if(reviews) {
-    const sortedReviews:IReview[] = sortByDate(reviews);
+  const reviews: IReview[] | undefined = $userReviews.getState();
+
+  if (reviews) {
+    const sortedReviews: IReview[] = sortByDate(reviews);
     return sortedReviews;
   }
 });
@@ -82,15 +82,13 @@ const changeReviewTextFx = createEffect(
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            "authorization": `Bearer ${localTokenObj.accessToken}`,
+            authorization: `Bearer ${localTokenObj.accessToken}`,
           },
           body: "text=" + encodeURIComponent(reviewData.text),
         }
       )
         .then((response) => response.text())
         .then((response) => JSON.parse(response));
-
-      // console.log(response);
       return response;
     }
   }
@@ -104,12 +102,13 @@ forward({
 });
 
 const $changeTextRes = restore(changeReviewTextFx, {} as IReview);
+const clearChangeTextRes = createEvent<IReview>();
+$changeTextRes.on(clearChangeTextRes, (_, state) => state);
 
 sample({
   clock: changeReviewTextFx.doneData,
   target: getUserReviews,
-})
-
+});
 //end change review text
 
 // change status
@@ -126,19 +125,20 @@ const changeReviewStatusFx = createEffect(
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            "authorization": `Bearer ${localTokenObj.accessToken}`,
+            authorization: `Bearer ${localTokenObj.accessToken}`,
           },
           body: "status=" + encodeURIComponent(reviewData.text),
         }
       )
         .then((response) => response.text())
         .then((response) => JSON.parse(response));
-
       console.log(response);
       return response;
     }
   }
-)
+);
+
+
 
 const $isLoadingReviewChangeStatus = changeReviewStatusFx.pending;
 
@@ -150,7 +150,7 @@ forward({
 sample({
   clock: changeReviewStatusFx.doneData,
   target: getUserReviews,
-})
+});
 
 export const userReviewsStore = {
   getUserReviews,
@@ -160,8 +160,9 @@ export const userReviewsStore = {
   $isLoadingReviewChangeText,
   changeReviewStatus,
   $isLoadingReviewChangeStatus,
-  filterReviews, 
+  filterReviews,
   $filteredReviews,
   $isLoadingFilteredUsers,
-  $changeTextRes
+  $changeTextRes,
+  clearChangeTextRes
 };

@@ -44,16 +44,7 @@ const EditReviewModal: React.FC<IEditReviewModal> = (props) => {
       props.showGoodWindow !== undefined &&
       props.showBadWindow !== undefined
     ) {
-      const updateRes = props.updateReviewText(userReviewText, props.rewiewId);
-      console.log(updateRes);
-      // if(!isLoadingText){
-      //   // props.close();
-      // }
-      //выводить окно успеха неудачи
-      // if (updateRes) {
-      //   props.close();
-      // }
-      // updateRes ? props.showGoodWindow(true) : props.showBadWindow(false);
+      props.updateReviewText(userReviewText, props.rewiewId);
     }
   };
 

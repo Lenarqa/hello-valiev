@@ -44,11 +44,11 @@ const Reviews: React.FC = () => {
     popUpCtx.setIsOpenBadWindow(false);
     popUpCtx.setIsOpenGoodWindow(false);
 
-    // if (reviews.length === 0) {
-    // setIsEmptyPage(true);
-    // }
-
     document.addEventListener("scroll", scrollHandler);
+
+    if(changeTextRes){
+      userReviewsStore.clearChangeTextRes({} as IReview);
+    }
 
     userReviewsStore.getUserReviews([]);
 
@@ -66,13 +66,17 @@ const Reviews: React.FC = () => {
   }, [selected, isLoadingReviews]);
   
   useEffect(() => {
-    console.log(changeTextRes);
     if(changeTextRes.text){
       setIsShowGoodWindow(true);
+      return;
     }else if(changeTextRes.error){
       setIsShowBadWindow(true);
+      return;
     }
-    
+    if(changeTextRes){
+      setIsShowGoodWindow(false);
+      setIsShowGoodWindow(false);
+    }
   }, [changeTextRes]);
 
   const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(false);
@@ -108,7 +112,7 @@ const Reviews: React.FC = () => {
   ): boolean => {
     const reviewData: IChangeReviewText = { id: id, text: updatedReviewText };
     userReviewsStore.changeReviewText(reviewData);
-    console.log(changeTextRes);
+
     if(!isLoadingText) {
       setShowEditReview(true);
     }
@@ -178,8 +182,6 @@ const Reviews: React.FC = () => {
                           updateReviewText={updateReviewTextHandler}
                           showGoodWindow={setIsShowGoodWindow}
                           showBadWindow={setIsShowBadWindow}
-                          showEditReviewModal={showEditReview}
-                          setShowEditReview={setShowEditReview}
                         />
                       );
                     } else {

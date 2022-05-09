@@ -19,8 +19,6 @@ interface ISliderItem {
   text: string;
   status?: string;
   selected?: IOption;
-  showEditReviewModal?: boolean;
-  setShowEditReview?: (value: boolean) => void;
   cancelHandler?: (id: string) => void;
   publishHandler?: (id: string) => void;
   updateReviewText?: (updatedReviewText: string, id: string) => boolean;
@@ -42,8 +40,6 @@ const ReviewItem: React.FC<ISliderItem> = ({
   updateReviewText,
   showGoodWindow,
   showBadWindow,
-  showEditReviewModal,
-  setShowEditReview,
 }) => {
   const [isCanceled, setIsCanseled] = useState<boolean>(false);
   const [isPublish, setIsPublish] = useState<boolean>(false);
@@ -88,19 +84,15 @@ const ReviewItem: React.FC<ISliderItem> = ({
   };
 
   const showEditWindowHandler = (): void => {
-    console.log("show");
-
     setIsEditReview(true);
-    // if(setShowEditReview){
-    //   setShowEditReview(true);
-    // }
+    if(showBadWindow && showGoodWindow){
+      showBadWindow(false);
+      showGoodWindow(false);
+    }
   };
 
   const closeEditWindowHandler = (): void => {
     setIsEditReview(false);
-    // if(setShowEditReview){
-    //   setShowEditReview(false);
-    // }
   };
 
   return (
@@ -146,7 +138,6 @@ const ReviewItem: React.FC<ISliderItem> = ({
       {isEditRevie && (
         <>
           <Overlay />
-          
           <EditReviewModal
             close={closeEditWindowHandler}
             rewiewId={id}
