@@ -21,7 +21,7 @@ const AboutMe: React.FC = () => {
     if(userInfo?.id) {
       return;
     }else {
-      userStore.getUserInfo({} as IMyInfo);
+      userStore.getUserInfo();
     }
     userReviewsStore.getUserReviews([]);
   }, []);

@@ -1,4 +1,4 @@
-import { IReviewPost, IPostImg } from "./../models/models";
+import { IReviewPost } from "./../models/models";
 
 import {
   sample,

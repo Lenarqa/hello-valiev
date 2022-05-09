@@ -8,7 +8,7 @@ import TextArea from "../../components/UI/textarea/TextArea";
 import ErrorMsg from "../../components/UI/ErrorMsg/ErrorMsg";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 import { ReactComponent as PencilIcon } from "../../assets/icons/pencil.svg";
-import { MyInfo } from "../../shared/data/MyInfo";
+// import { MyInfo } from "../../shared/data/MyInfo";
 import { IMyInfo, IValidationResult } from "../../shared/models/models";
 import { DummyOptionsCity } from "../../shared/data/OptionsCity";
 import { DummyOptionsGender } from "../../shared/data/OptionsGender";
@@ -24,63 +24,75 @@ import {
 import { userStore } from "../../shared/effector/userInfo";
 
 const ControlPanelAboutMe: React.FC = () => {
-  const userInfoEffector = useStore(userStore.$userInfo);
+  const userInfoStore = useStore(userStore.$userInfo);
+  const isLoadingUserInfo = useStore(userStore.$isLoading);
   const popUpCtx = useContext(PopUpContext);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [userInfo, setUserInfo] = useState<IMyInfo>(MyInfo);
+  // const [userInfo, setUserInfo] = useState<IMyInfo>(MyInfo);
   const [isBtnDisable, setIsBtnDisable] = useState<boolean>(false);
   const [isUserHaveImg, setIsUserHaveImg] = useState<boolean>(false);
 
   useEffect(() => {
-    if (userInfoEffector?.mainImgUrl !== "") {
+    userStore.getUserInfo();
+  }, []);
+
+  useEffect(()=>{
+    if (userInfoStore?.mainImgUrl !== "") {
       setIsUserHaveImg(true);
     }
-  }, []);
+  },[userInfoStore])
 
   //selected Options city
   const curCity: IOption | undefined = DummyOptionsCity.find(
-    (city) => city.id === userInfo.city
+    // (city) => city.id === userInfo.city
+    (city) => city.id === userInfoStore?.city
   );
 
   const [selectedCity, setSelectedCity] = useState<IOption>(curCity!);
 
   //selected Options gender
   const curGender: IOption | undefined = DummyOptionsGender.find(
-    (gender) => gender.id === userInfo.gender
+    // (gender) => gender.id === userInfo.gender
+    (gender) => gender.id === userInfoStore?.gender
   );
   const [selectedGender, setSelectedGender] = useState<IOption>(curGender!);
 
   //selected Options pet
   const curPet: IOption | undefined = DummyOptionsPet.find(
-    (pet) => pet.id === userInfo.pet
+    // (pet) => pet.id === userInfo.pet
+    (pet) => pet.id === userInfoStore?.pet
   );
   const [selectedPet, setSelectedPet] = useState<IOption>(curPet!);
 
   // name
-  const [name, setName] = useState<string>(userInfoEffector!.name.split(" ")[0]);
+  const [name, setName] = useState<string>(userInfoStore!.name.split(" ")[0]);
   const [isNameError, setIsNameError] = useState<boolean>(false);
   const [nameErrorMsg, setNameErrorMsg] = useState<string>("");
 
   // lastname
-  const [lastName, setLastName] = useState<string>(userInfoEffector!.name.split(" ")[1]);
+  const [lastName, setLastName] = useState<string>(
+    userInfoStore!.name.split(" ")[1]
+  );
   const [isLastNameError, setIsLastNameError] = useState<boolean>(false);
   const [lastNameErrorMsg, setLastNameErrorMsg] = useState<string>("");
 
   // birthday
-  const [birthday, setBirthday] = useState<string>(userInfoEffector!.birthday);
+  const [birthday, setBirthday] = useState<string>(userInfoStore!.birthday);
   const [isBirthdayError, setIsBirthdayError] = useState<boolean>(false);
   const [BirthdayErrorMsg, setBirthdayErrorMsg] = useState<string>("");
 
   // smallAboutMe
   const [smallAboutMe, setSmallAboutMe] = useState<string>(
-    userInfoEffector!.smallAboutMe
+    userInfoStore!.smallAboutMe
   );
   const [isErrorSmallAboutMe, setIsErrorSmallAboutMe] =
     useState<boolean>(false);
   const [errorSmallAboutMeMsg, setErrorSmallAboutMeMsg] = useState<string>("");
 
   // bigAboutMe
-  const [bigAboutMe, setBigAboutMe] = useState<string>(userInfoEffector!.aboutMeText);
+  const [bigAboutMe, setBigAboutMe] = useState<string>(
+    userInfoStore!.aboutMeText
+  );
   const [isErrorBigAboutMe, setIsErrorBigAboutMe] = useState<boolean>(false);
   const [errorBigAboutMeMsg, setErrorBigAboutMeMsg] = useState<string>("");
 
@@ -101,21 +113,21 @@ const ControlPanelAboutMe: React.FC = () => {
       !isErrorBigAboutMe
     ) {
       // тест
-      const newUserInfoData:IMyInfo = {
-        id: userInfoEffector?.id as string,
+      const newUserInfoData: IMyInfo = {
+        id: userInfoStore?.id as string,
         name: lastName + " " + name,
-        miniImgUrl: userInfoEffector?.mainImgUrl as string,
-        mainImgUrl: userInfoEffector?.mainImgUrl as string,
+        miniImgUrl: userInfoStore?.mainImgUrl as string,
+        mainImgUrl: userInfoStore?.mainImgUrl as string,
         birthday: birthday,
         city: selectedCity.id as number,
         gender: selectedGender.id as number,
-        year: userInfoEffector?.year as number,
+        year: userInfoStore?.year as number,
         smallAboutMe: smallAboutMe,
         aboutMeText: bigAboutMe,
         pet: selectedPet.id as number,
-      } 
+      };
 
-      userStore.setUserInfo(newUserInfoData);//пока нет запроса меняем локально
+      userStore.setUserInfo(newUserInfoData); //пока нет запроса меняем локально
       popUpCtx.setIsOpenGoodWindow(true);
 
       // popUpCtx.setIsOpenGoodWindow(true); в случае ошибки
@@ -219,12 +231,12 @@ const ControlPanelAboutMe: React.FC = () => {
             //внутри е.currentTarget есть ширина и высота картинки,
             //но я еще не понял как их оттуда достать.
             const myImg = e.currentTarget as HTMLElement;
-            console.log(myImg);
+            // console.log(myImg);
           };
           img.src = window.URL.createObjectURL(files[0]);
         };
         reader.readAsDataURL(files[0]);
-
+        
         if (fileSize > 5) {
           popUpCtx.setIsError(true);
           popUpCtx.setErrorMsg("Ошибка загрузки. Размер файла превышает 5Mb.");
@@ -234,7 +246,9 @@ const ControlPanelAboutMe: React.FC = () => {
         const format: string = files[0].name.split(".")[1];
         if (format === "png" || format === "jpg" || format === "jpeg") {
           setIsLoadingFile(true);
-          setUserImgFile(files[0]);
+          // setUserImgFile(files[0]);
+          userStore.setUserPhoto(files[0]);
+          userStore.sendUserPhoto();
           setTimeout(() => {
             setIsLoadingFile(false);
           }, 1000);
@@ -279,185 +293,194 @@ const ControlPanelAboutMe: React.FC = () => {
 
   return (
     <div className={style.container}>
-      <div className={style.content}>
-        <div className={style.contentHeader}>
-          <h2>Обо мне</h2>
-        </div>
-        <div className={style.aboutMe}>
-          <div className={style.headerForm} data-is-edit-mode={isEditMode}>
-            <div className={style.imgSection}>
-              <div
-                className={style.imgsContainer}
-                data-is-loading={isLoadingFile}
-              >
-                {isLoadingFile && <LoadingSpiner type="icon" />}
-                {!isLoadingFile && (
-                  <img
-                    className={style.smallImg}
-                    src={
-                      isUserHaveImg
-                        ? `https://academtest.ilink.dev/images/${userInfoEffector?.mainImgUrl}`
-                        : require("../../assets/img/users/user-0.png")
-                    }
-                    alt="photo"
-                  />
-                )}
-                <div
-                  className={style.bigImgContainer}
-                >
-                  <img
-                    className={style.bigImg}
-                    src={
-                      isUserHaveImg
-                        ? `https://academtest.ilink.dev/images/${userInfoEffector?.mainImgUrl}`
-                        : require("../../assets/img/users/user-0.png")
-                    }
-                    alt="photo"
-                  />
-                </div>
-              </div>
-              <div className={style.changePhoto}>
-                <p>Фото профиля</p>
-                <div className={style.headerAction}>
-                  <PencilIcon />
+      {isLoadingUserInfo ? (
+        <LoadingSpiner />
+      ) : (
+        <>
+          <div className={style.content}>
+            <div className={style.contentHeader}>
+              <h2>Обо мне</h2>
+            </div>
+            <div className={style.aboutMe}>
+              <div className={style.headerForm} data-is-edit-mode={isEditMode}>
+                <div className={style.imgSection}>
                   <div
-                    className={style.changePhotoBtn}
-                    onClick={loadImgClickHandler}
+                    className={style.imgsContainer}
+                    data-is-loading={isLoadingFile}
                   >
-                    Изменить фото
+                    {isLoadingFile && <LoadingSpiner type="icon" />}
+                    {!isLoadingFile && (
+                      <img
+                        className={style.smallImg}
+                        src={
+                          isUserHaveImg
+                            ? `https://academtest.ilink.dev/images/${userInfoStore?.mainImgUrl}`
+                            : require("../../assets/img/users/user-0.png")
+                        }
+                        alt="photo"
+                      />
+                    )}
+                    <div className={style.bigImgContainer}>
+                      <img
+                        className={style.bigImg}
+                        src={
+                          isUserHaveImg
+                            ? `https://academtest.ilink.dev/images/${userInfoStore?.mainImgUrl}`
+                            : require("../../assets/img/users/user-0.png")
+                        }
+                        alt="photo"
+                      />
+                    </div>
                   </div>
+                  <div className={style.changePhoto}>
+                    <p>Фото профиля</p>
+                    <div className={style.headerAction}>
+                      <PencilIcon />
+                      <div
+                        className={style.changePhotoBtn}
+                        onClick={loadImgClickHandler}
+                      >
+                        Изменить фото
+                      </div>
+                      <Input
+                        type="invisible"
+                        id="loadImg"
+                        inputType="file"
+                        onChange={imgSelectHandler}
+                      >
+                        Изменить фото
+                      </Input>
+                    </div>
+                  </div>
+                </div>
+                <Button type="submitAboutMe" onClick={startEditModeHandler}>
+                  Редактировать
+                </Button>
+              </div>
+              <div
+                className={style.inputsSection}
+                data-is-edit-mode={isEditMode}
+              >
+                <div className={style.row}>
                   <Input
-                    type="invisible"
-                    id="loadImg"
-                    inputType="file"
-                    onChange={imgSelectHandler}
+                    type="controlPanel"
+                    labelTitle="Имя"
+                    id="name"
+                    placeholder="Введите имя"
+                    onChange={nameValidationHandler}
+                    value={name}
+                    dataIsError={isNameError}
+                    errorMsg={nameErrorMsg}
+                    isError={isNameError}
+                    dataIsEdit={isEditMode}
+                  />
+                  <Input
+                    type="controlPanel"
+                    labelTitle="Фамилия"
+                    id="lastName"
+                    placeholder="Введите фамилию"
+                    onChange={lastNameValidationHandler}
+                    value={lastName}
+                    dataIsError={isLastNameError}
+                    errorMsg={lastNameErrorMsg}
+                    isError={isLastNameError}
+                    dataIsEdit={isEditMode}
+                  />
+                  <Input
+                    labelTitle="Дата рождения"
+                    inputType="date"
+                    id="birthday"
+                    placeholder="Введите дату"
+                    onChange={birthdayValidationHandler}
+                    value={`${birthday.split(".")[2]}-${
+                      birthday.split(".")[1]
+                    }-${birthday.split(".")[0]}`}
+                    dataIsError={isBirthdayError}
+                    errorMsg={BirthdayErrorMsg}
+                    isError={isBirthdayError}
+                    required={true}
+                    dataIsEdit={isEditMode}
+                  />
+                </div>
+                <div className={style.row}>
+                  <div className={style.selectWrapper}>
+                    <div className={style.itemTitle}>Город</div>
+                    <Select
+                      type="city"
+                      selected={selectedCity}
+                      setSelected={setSelectedCity}
+                      options={DummyOptionsCity}
+                      onChange={setSelectedCity}
+                      dataIsEdit={isEditMode}
+                    />
+                  </div>
+                  <div className={style.selectWrapper}>
+                    <div className={style.itemTitle}>Пол</div>
+                    <Select
+                      type="bigWidth"
+                      selected={selectedGender}
+                      setSelected={setSelectedGender}
+                      options={DummyOptionsGender}
+                      onChange={setSelectedGender}
+                      dataIsEdit={isEditMode}
+                    />
+                  </div>
+                  <div className={style.selectWrapper}>
+                    <div className={style.itemTitle}>Животное</div>
+                    <Select
+                      type="smallWidth"
+                      selected={selectedPet}
+                      setSelected={setSelectedPet}
+                      options={DummyOptionsPet}
+                      onChange={setSelectedPet}
+                      dataIsEdit={isEditMode}
+                    />
+                  </div>
+                </div>
+                <div className={style.smallAboutMeRow}>
+                  <div className={style.itemTitle}>Краткая информация</div>
+                  <TextArea
+                    type="long"
+                    msgLenght={smallAboutMe.length}
+                    maxLenght={99}
+                    placeholder="Напишите краткую информацию о вас"
+                    value={smallAboutMe}
+                    onChangeHandler={changeSmallAboutMeHandler}
+                    dataIsEdit={isEditMode}
+                  />
+                  {isErrorSmallAboutMe && (
+                    <ErrorMsg>{errorSmallAboutMeMsg}</ErrorMsg>
+                  )}
+                </div>
+                <div className={style.bigAboutMeRow}>
+                  <div className={style.itemTitle}>О себе</div>
+                  <TextArea
+                    type="big"
+                    placeholder="Напишите что нибудь о себе"
+                    msgLenght={bigAboutMe.length}
+                    maxLenght={600} //у меня информация о профиле с бэка 597 символов, поэтому увеличил с 300 до 600
+                    value={bigAboutMe}
+                    onChangeHandler={changeBigAboutMeHandler}
+                    dataIsEdit={isEditMode}
+                  />
+                  {isErrorBigAboutMe && (
+                    <ErrorMsg>{errorBigAboutMeMsg}</ErrorMsg>
+                  )}
+                </div>
+                <div className={style.actions} data-is-edit-mode={isEditMode}>
+                  <Button
+                    type="submitAboutMeControlPanel"
+                    onClick={finishEditModeHandler}
+                    isDisable={isBtnDisable}
                   >
-                    Изменить фото
-                  </Input>
+                    Сохранить изменения
+                  </Button>
                 </div>
               </div>
             </div>
-            <Button type="submitAboutMe" onClick={startEditModeHandler}>
-              Редактировать
-            </Button>
           </div>
-          <div className={style.inputsSection} data-is-edit-mode={isEditMode}>
-            <div className={style.row}>
-              <Input
-                type="controlPanel"
-                labelTitle="Имя"
-                id="name"
-                placeholder="Введите имя"
-                onChange={nameValidationHandler}
-                value={name}
-                dataIsError={isNameError}
-                errorMsg={nameErrorMsg}
-                isError={isNameError}
-                dataIsEdit={isEditMode}
-              />
-              <Input
-                type="controlPanel"
-                labelTitle="Фамилия"
-                id="lastName"
-                placeholder="Введите фамилию"
-                onChange={lastNameValidationHandler}
-                value={lastName}
-                dataIsError={isLastNameError}
-                errorMsg={lastNameErrorMsg}
-                isError={isLastNameError}
-                dataIsEdit={isEditMode}
-              />
-              <Input
-                labelTitle="Дата рождения"
-                inputType="date"
-                id="birthday"
-                placeholder="Введите дату"
-                onChange={birthdayValidationHandler}
-                value={`${birthday.split(".")[2]}-${birthday.split(".")[1]}-${
-                  birthday.split(".")[0]
-                }`}
-                dataIsError={isBirthdayError}
-                errorMsg={BirthdayErrorMsg}
-                isError={isBirthdayError}
-                required={true}
-                dataIsEdit={isEditMode}
-              />
-            </div>
-            <div className={style.row}>
-              <div className={style.selectWrapper}>
-                <div className={style.itemTitle}>Город</div>
-                <Select
-                  type="city"
-                  selected={selectedCity}
-                  setSelected={setSelectedCity}
-                  options={DummyOptionsCity}
-                  onChange={setSelectedCity}
-                  dataIsEdit={isEditMode}
-                />
-              </div>
-              <div className={style.selectWrapper}>
-                <div className={style.itemTitle}>Пол</div>
-                <Select
-                  type="bigWidth"
-                  selected={selectedGender}
-                  setSelected={setSelectedGender}
-                  options={DummyOptionsGender}
-                  onChange={setSelectedGender}
-                  dataIsEdit={isEditMode}
-                />
-              </div>
-              <div className={style.selectWrapper}>
-                <div className={style.itemTitle}>Животное</div>
-                <Select
-                  type="smallWidth"
-                  selected={selectedPet}
-                  setSelected={setSelectedPet}
-                  options={DummyOptionsPet}
-                  onChange={setSelectedPet}
-                  dataIsEdit={isEditMode}
-                />
-              </div>
-            </div>
-            <div className={style.smallAboutMeRow}>
-              <div className={style.itemTitle}>Краткая информация</div>
-              <TextArea
-                type="long"
-                msgLenght={smallAboutMe.length}
-                maxLenght={99}
-                placeholder="Напишите краткую информацию о вас"
-                value={smallAboutMe}
-                onChangeHandler={changeSmallAboutMeHandler}
-                dataIsEdit={isEditMode}
-              />
-              {isErrorSmallAboutMe && (
-                <ErrorMsg>{errorSmallAboutMeMsg}</ErrorMsg>
-              )}
-            </div>
-            <div className={style.bigAboutMeRow}>
-              <div className={style.itemTitle}>О себе</div>
-              <TextArea
-                type="big"
-                placeholder="Напишите что нибудь о себе"
-                msgLenght={bigAboutMe.length}
-                maxLenght={600}//у меня информация о профиле с бэка 597 символов, поэтому увеличил с 300 до 600
-                value={bigAboutMe}
-                onChangeHandler={changeBigAboutMeHandler}
-                dataIsEdit={isEditMode}
-              />
-              {isErrorBigAboutMe && <ErrorMsg>{errorBigAboutMeMsg}</ErrorMsg>}
-            </div>
-            <div className={style.actions} data-is-edit-mode={isEditMode}>
-              <Button
-                type="submitAboutMeControlPanel"
-                onClick={finishEditModeHandler}
-                isDisable={isBtnDisable}
-              >
-                Сохранить изменения
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };
