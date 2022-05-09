@@ -109,7 +109,6 @@ sample({
   clock: changeReviewTextFx.doneData,
   target: getUserReviews,
 });
-//end change review text
 
 // change status
 const changeReviewStatus = createEvent<IChangeReviewText>();
@@ -138,9 +137,8 @@ const changeReviewStatusFx = createEffect(
   }
 );
 
-
-
 const $isLoadingReviewChangeStatus = changeReviewStatusFx.pending;
+const $changeReviewStatusRes = restore(changeReviewStatusFx, {} as IReview);
 
 forward({
   from: changeReviewStatus,
@@ -164,5 +162,6 @@ export const userReviewsStore = {
   $filteredReviews,
   $isLoadingFilteredUsers,
   $changeTextRes,
-  clearChangeTextRes
+  clearChangeTextRes,
+  $changeReviewStatusRes
 };

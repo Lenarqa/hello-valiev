@@ -8,6 +8,7 @@ import {
   IChangeReviewText,
   IOption,
   IReview,
+  ITostData,
 } from "../../shared/models/models";
 import ReviewItem from "../../components/reviewItem/ReviewItem";
 import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
@@ -20,13 +21,10 @@ import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 const Reviews: React.FC = () => {
   const popUpCtx = useContext(PopUpContext);
 
+  const [tostData, setTostData] = useState<ITostData>();
   const changeTextRes = useStore(userReviewsStore.$changeTextRes);
   const isLoadingReviews = useStore(userReviewsStore.$isLoadingReviews);
-  const isLoadingText = useStore(userReviewsStore.$isLoadingReviewChangeText);
-  const [showEditReview, setShowEditReview] = useState<boolean>(false);
-  const isLoadingStatus = useStore(
-    userReviewsStore.$isLoadingReviewChangeStatus
-  );
+  const changeStatusRes = useStore(userReviewsStore.$changeReviewStatusRes);
   const isLoadingFilteredReviews = useStore(
     userReviewsStore.$isLoadingFilteredUsers
   );
@@ -46,7 +44,7 @@ const Reviews: React.FC = () => {
 
     document.addEventListener("scroll", scrollHandler);
 
-    if(changeTextRes){
+    if (changeTextRes) {
       userReviewsStore.clearChangeTextRes({} as IReview);
     }
 
@@ -64,20 +62,53 @@ const Reviews: React.FC = () => {
       userReviewsStore.filterReviews(selected);
     }
   }, [selected, isLoadingReviews]);
-  
+
   useEffect(() => {
-    if(changeTextRes.text){
+    if (changeTextRes.text) {
+      setTostData({
+        title: "Отзыв изменен",
+        msg: "Отзыв успешно отредактирован!",
+      });
       setIsShowGoodWindow(true);
       return;
-    }else if(changeTextRes.error){
+    } else if (changeTextRes.error) {
+      setTostData({
+        title: "Что-то не так...",
+        msg: "Не получилось отредактировать отзыв. Попробуйте еще раз!",
+      });
       setIsShowBadWindow(true);
       return;
     }
-    if(changeTextRes){
+    if (changeTextRes) {
       setIsShowGoodWindow(false);
       setIsShowGoodWindow(false);
     }
   }, [changeTextRes]);
+
+  useEffect(()=>{
+    console.log(changeStatusRes);
+    if(changeStatusRes.status === "declined") {
+      setTostData({
+        title: "Отзыв отклонен",
+        msg: "Отзыв успешно отклонен!",
+      });
+      setIsShowGoodWindow(true);
+      return;
+    }else if (changeStatusRes.status === "approved") {
+      setTostData({
+        title: "Отзыв опубликован",
+        msg: "Отзыв успешно опубликован!",
+      });
+      setIsShowGoodWindow(true);
+      return;
+    }else if(changeStatusRes.error) {
+      setTostData({
+        title: "Что то пощло не так",
+        msg: "Ой ой что то не так!",
+      });
+      setIsShowBadWindow(true);
+    }
+  },[changeStatusRes])
 
   const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(false);
   const [isShowBadWindow, setIsShowBadWindow] = useState<boolean>(false);
@@ -112,10 +143,6 @@ const Reviews: React.FC = () => {
   ): boolean => {
     const reviewData: IChangeReviewText = { id: id, text: updatedReviewText };
     userReviewsStore.changeReviewText(reviewData);
-
-    if(!isLoadingText) {
-      setShowEditReview(true);
-    }
     return true;
   };
 
@@ -139,7 +166,7 @@ const Reviews: React.FC = () => {
 
   return (
     <div className={style.container}>
-      {isLoadingFilteredReviews ? (
+      {isLoadingFilteredReviews || isLoadingReviews ? (
         <div className={style.spinerWrapper}>
           <LoadingSpiner />
         </div>
@@ -195,15 +222,15 @@ const Reviews: React.FC = () => {
       )}
       {isShowGoodWindow && (
         <GoodWindow
-          title="Отзыв изменен"
-          text="Отзыв успешно отредактирован!"
+          title={tostData!.title}
+          text={tostData!.msg}
           setShowGoodWindow={setIsShowGoodWindow}
         />
       )}
       {isShowBadWindow && (
         <BadWindow
-          title="Что-то не так..."
-          text="Не получилось отредактировать отзыв. Попробуйте еще раз!"
+          title={tostData!.title}
+          text={tostData!.msg}
           setShowBadWindow={setIsShowBadWindow}
         />
       )}
