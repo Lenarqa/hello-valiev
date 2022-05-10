@@ -8,7 +8,6 @@ import TextArea from "../../components/UI/textarea/TextArea";
 import ErrorMsg from "../../components/UI/ErrorMsg/ErrorMsg";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 import { ReactComponent as PencilIcon } from "../../assets/icons/pencil.svg";
-// import { MyInfo } from "../../shared/data/MyInfo";
 import { IMyInfo, IValidationResult } from "../../shared/models/models";
 import { DummyOptionsCity } from "../../shared/data/OptionsCity";
 import { DummyOptionsGender } from "../../shared/data/OptionsGender";
@@ -22,29 +21,46 @@ import {
   smallAboutMeValidation,
 } from "../../shared/lib/validation/ControlPanelAboutMe";
 import { userStore } from "../../shared/effector/userInfo";
+import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
 
 const ControlPanelAboutMe: React.FC = () => {
   const userInfoStore = useStore(userStore.$userInfo);
   const isLoadingUserInfo = useStore(userStore.$isLoading);
+  const chanhedUserPhotoRes = useStore(userStore.$chanhedUserPhotoRes);
   const popUpCtx = useContext(PopUpContext);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   // const [userInfo, setUserInfo] = useState<IMyInfo>(MyInfo);
   const [isBtnDisable, setIsBtnDisable] = useState<boolean>(false);
   const [isUserHaveImg, setIsUserHaveImg] = useState<boolean>(false);
 
+  const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(false);
+  const [isShowBadWindow, setIsShowBadWindow] = useState<boolean>(false);
+
   useEffect(() => {
     userStore.getUserInfo();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (userInfoStore?.mainImgUrl !== "") {
       setIsUserHaveImg(true);
     }
-  },[userInfoStore])
+  }, [userInfoStore]);
+
+  useEffect(() => {
+    if(chanhedUserPhotoRes) {
+      if (chanhedUserPhotoRes?.profileImage) {
+        setIsShowGoodWindow(true);
+      } else if(chanhedUserPhotoRes?.error){
+        popUpCtx.setIsError(true);
+          popUpCtx.setErrorMsg(
+            "При отправке изображения произошла какая то ошибка!"
+          );
+      }
+    }
+  }, [chanhedUserPhotoRes]);
 
   //selected Options city
   const curCity: IOption | undefined = DummyOptionsCity.find(
-    // (city) => city.id === userInfo.city
     (city) => city.id === userInfoStore?.city
   );
 
@@ -52,14 +68,12 @@ const ControlPanelAboutMe: React.FC = () => {
 
   //selected Options gender
   const curGender: IOption | undefined = DummyOptionsGender.find(
-    // (gender) => gender.id === userInfo.gender
     (gender) => gender.id === userInfoStore?.gender
   );
   const [selectedGender, setSelectedGender] = useState<IOption>(curGender!);
 
   //selected Options pet
   const curPet: IOption | undefined = DummyOptionsPet.find(
-    // (pet) => pet.id === userInfo.pet
     (pet) => pet.id === userInfoStore?.pet
   );
   const [selectedPet, setSelectedPet] = useState<IOption>(curPet!);
@@ -236,7 +250,7 @@ const ControlPanelAboutMe: React.FC = () => {
           img.src = window.URL.createObjectURL(files[0]);
         };
         reader.readAsDataURL(files[0]);
-        
+
         if (fileSize > 5) {
           popUpCtx.setIsError(true);
           popUpCtx.setErrorMsg("Ошибка загрузки. Размер файла превышает 5Mb.");
@@ -479,6 +493,20 @@ const ControlPanelAboutMe: React.FC = () => {
               </div>
             </div>
           </div>
+          {isShowGoodWindow && (
+            <GoodWindow
+              title="Успешно"
+              text="Фото изменено"
+              setShowGoodWindow={setIsShowGoodWindow}
+            />
+          )}
+          {isShowBadWindow && (
+            <GoodWindow
+              title="Ошибка"
+              text="Что то пошло не так"
+              setShowGoodWindow={setIsShowBadWindow}
+            />
+          )}
         </>
       )}
     </div>

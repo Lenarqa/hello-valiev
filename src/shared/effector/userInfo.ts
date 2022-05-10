@@ -58,7 +58,6 @@ const sendUserPhotoFx = createEffect(async () => {
   if (localToken) {
     const localTokenObj = JSON.parse(localToken);
     const curPhoto = $curUserPhoto.getState();
-    // console.log(curPhoto);
 
     if (curPhoto) {
       const formData = new FormData();
@@ -82,6 +81,8 @@ const sendUserPhotoFx = createEffect(async () => {
   }
 });
 
+const $chanhedUserPhotoRes = restore(sendUserPhotoFx, null);
+
 forward({
   from: sendUserPhoto,
   to: sendUserPhotoFx,
@@ -104,4 +105,5 @@ export const userStore = {
   $isLoadingUserPhoto,
   setUserPhoto,
   $curUserPhoto,
+  $chanhedUserPhotoRes
 };
