@@ -141,7 +141,8 @@ const ControlPanelAboutMe: React.FC = () => {
         pet: selectedPet.id as number,
       };
 
-      userStore.setUserInfo(newUserInfoData); //пока нет запроса меняем локально
+      // userStore.setUserInfo(newUserInfoData); //пока нет запроса меняем локально
+      userStore.sendUserInfo(newUserInfoData);
       popUpCtx.setIsOpenGoodWindow(true);
 
       // popUpCtx.setIsOpenGoodWindow(true); в случае ошибки

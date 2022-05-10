@@ -2,7 +2,7 @@ import { DummyOptionsCity } from "./../data/OptionsCity";
 import { IMyInfo } from "./../models/models";
 
 export const serializeUser = (infoObj: any) => {
-  // console.log(infoObj);
+  console.log(infoObj);
   const birthday: Date = new Date(infoObj.birthDate);
   const userBirthday: string = `${birthday.getDate()}.${
     birthday.getMonth() + 1
@@ -28,7 +28,8 @@ export const serializeUser = (infoObj: any) => {
   // pet
   const pet: number = infoObj.hasPet ? 1 : 2;
 
-  // city  
+  console.log(infoObj.cityOfResidence);
+  // city
   let city: number | string = 0; //1 - томск дефолт
   for (let i = 0; i < DummyOptionsCity.length; i++) {
     if (infoObj.cityOfResidence === translit(DummyOptionsCity[i].value)) {
@@ -51,7 +52,7 @@ export const serializeUser = (infoObj: any) => {
     pet: pet,
   };
 
-  console.log(userItem)
+  console.log(userItem);
 
   return userItem;
 };
@@ -76,4 +77,26 @@ function translit(str: string) {
     }
   }
   return res;
+}
+
+export function rusToTranslit(text: string, engToRus?: boolean) {
+  const rus =
+      "щ   ш  ч  ц  ю  я  ё  ж  ъ  ы  э  а б в г д е з и й к л м н о п р с т у ф х ь".split(
+        / +/g
+      ),
+    eng =
+      "shh sh ch cz yu ya yo zh `` y' e` a b v g d e z i j k l m n o p r s t u f x `".split(
+        / +/g
+      );
+
+  let x;
+  for (x = 0; x < rus.length; x++) {
+    text = text
+      .split(engToRus ? eng[x] : rus[x])
+      .join(engToRus ? rus[x] : eng[x]);
+    text = text
+      .split(engToRus ? eng[x].toUpperCase() : rus[x].toUpperCase())
+      .join(engToRus ? rus[x].toUpperCase() : eng[x].toUpperCase());
+  }
+  return text;
 }
