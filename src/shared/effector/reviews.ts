@@ -20,7 +20,7 @@ const getUserReviewsFx = createEffect(async () => {
     )
       .then((response) => response.text())
       .then((response) => JSON.parse(response));
-
+      console.log(response);
     return serializeReview(response);
   }
 });
@@ -131,7 +131,6 @@ const changeReviewStatusFx = createEffect(
       )
         .then((response) => response.text())
         .then((response) => JSON.parse(response));
-      console.log(response);
       return response;
     }
   }

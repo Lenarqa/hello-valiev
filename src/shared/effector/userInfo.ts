@@ -1,6 +1,6 @@
-import { DummyOptionsCity } from "./../data/OptionsCity";
+
 import { IMyInfo } from "./../models/models";
-import { rusToTranslit, serializeUser } from "./../serializers/serializeUser";
+import { serializeUser, serializeUserPostRequest } from "./../serializers/serializeUser";
 import {
   createEffect,
   forward,
@@ -96,49 +96,12 @@ sample({
 
 const sendUserInfo = createEvent<IMyInfo>();
 const sendUserInfoFx = createEffect(async (userInfo: IMyInfo) => {
-  console.log("sendUserInfoFx");
   const localToken = localStorage.getItem("auth");
 
   if (localToken) {
     const localTokenObj = JSON.parse(localToken);
     if (userInfo) {
-      // console.log(userInfo);
-      console.log(userInfo.name.split(" ")[1]);
-      console.log(userInfo.name.split(" ")[0]);
-
-      const year = parseInt(userInfo.birthday.split(".")[2]);
-      const mounth = parseInt(userInfo.birthday.split(".")[1]);
-      const day = parseInt(userInfo.birthday.split(".")[0]);
-      const birthday = new Date(year, mounth - 1, day);
-      console.log(birthday);
-
-      const city = DummyOptionsCity.find((item) => item.id === userInfo.city);
-      let resCity: string = "";
-      if (city) {
-        resCity = rusToTranslit(city?.value);
-      }
-      console.log(resCity);
-
-      const gender = userInfo.gender === 1 ? "male" : "female";
-      console.log(gender);
-
-      const pet = userInfo.pet === 1 ? true : false;
-      console.log(pet);
-
-      console.log(userInfo.smallAboutMe);
-      console.log(userInfo.aboutMeText);
-
-      let paramsObj = {
-        firstName: userInfo.name.split(" ")[1],
-        lastName: userInfo.name.split(" ")[0],
-        birthDate: birthday.toString(),
-        cityOfResidence: resCity,
-        gender: gender,
-        hasPet: pet,
-        smallAboutMe: userInfo.smallAboutMe,
-        aboutMe: userInfo.aboutMeText,
-      };
-
+      const sendData = serializeUserPostRequest(userInfo);
       const response = await fetch(
         `https://academtest.ilink.dev/user/updateInfo`,
         {
@@ -147,7 +110,7 @@ const sendUserInfoFx = createEffect(async (userInfo: IMyInfo) => {
             'Content-Type': 'application/json',
             authorization: "Bearer " + localTokenObj.accessToken,
           },
-          body: JSON.stringify(paramsObj),
+          body: JSON.stringify(sendData),
         }
       )
         .then((response) => response.text())
@@ -163,9 +126,13 @@ forward({
   to: sendUserInfoFx,
 });
 
+sample({
+  clock: sendUserInfoFx.doneData,
+  target: getUserInfo,
+});
+
 const $sendUserInfoRes = restore(sendUserInfoFx, null);
 
-// const $sendPhotoError = restore(sendUserPhotoFx, null);
 const $isLoadingUserPhoto = sendUserPhotoFx.pending;
 
 export const userStore = {
@@ -179,4 +146,5 @@ export const userStore = {
   $curUserPhoto,
   $chanhedUserPhotoRes,
   sendUserInfo,
+  $sendUserInfoRes
 };

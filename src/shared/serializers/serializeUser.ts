@@ -2,7 +2,6 @@ import { DummyOptionsCity } from "./../data/OptionsCity";
 import { IMyInfo } from "./../models/models";
 
 export const serializeUser = (infoObj: any) => {
-  console.log(infoObj);
   const birthday: Date = new Date(infoObj.birthDate);
   const userBirthday: string = `${birthday.getDate()}.${
     birthday.getMonth() + 1
@@ -28,11 +27,10 @@ export const serializeUser = (infoObj: any) => {
   // pet
   const pet: number = infoObj.hasPet ? 1 : 2;
 
-  console.log(infoObj.cityOfResidence);
   // city
   let city: number | string = 0; //1 - томск дефолт
   for (let i = 0; i < DummyOptionsCity.length; i++) {
-    if (infoObj.cityOfResidence === translit(DummyOptionsCity[i].value)) {
+    if (infoObj.cityOfResidence === rusToTranslit(DummyOptionsCity[i].value)) {
       city = DummyOptionsCity[i].id;
       break;
     }
@@ -51,33 +49,36 @@ export const serializeUser = (infoObj: any) => {
     aboutMeText: infoObj.aboutMe,
     pet: pet,
   };
-
-  console.log(userItem);
-
   return userItem;
 };
 
-function translit(str: string) {
-  let ru =
-    "А-а-Б-б-В-в-Ґ-ґ-Г-г-Д-д-Е-е-Ё-ё-Є-є-Ж-ж-З-з-И-и-І-і-Ї-ї-Й-й-К-к-Л-л-М-м-Н-н-О-о-П-п-Р-р-С-с-Т-т-У-у-Ф-ф-Х-х-Ц-ц-Ч-ч-Ш-ш-Щ-щ-Ъ-ъ-Ы-ы-Ь-ь-Э-э-Ю-ю-Я-я".split(
-      "-"
-    );
-  let en =
-    "A-a-B-b-V-v-G-g-G-g-D-d-E-e-E-e-E-e-ZH-zh-Z-z-I-i-I-i-I-i-J-j-K-k-L-l-M-m-N-n-O-o-P-p-R-r-S-s-T-t-U-u-F-f-H-h-TS-ts-CH-ch-SH-sh-SCH-sch-'-'-Y-y-'-'-E-e-YU-yu-YA-ya".split(
-      "-"
-    );
-  let res = "";
-  for (let i = 0, l = str.length; i < l; i++) {
-    let s = str.charAt(i),
-      n = ru.indexOf(s);
-    if (n >= 0) {
-      res += en[n];
-    } else {
-      res += s;
-    }
+export const serializeUserPostRequest = (userInfo: any) => {
+  const year = parseInt(userInfo.birthday.split(".")[2]);
+  const mounth = parseInt(userInfo.birthday.split(".")[1]);
+  const day = parseInt(userInfo.birthday.split(".")[0]);
+  const birthday = new Date(year, mounth - 1, day);
+
+  const city = DummyOptionsCity.find((item) => item.id === userInfo.city);
+  let resCity: string = "";
+  if (city) {
+    resCity = rusToTranslit(city?.value);
   }
-  return res;
-}
+
+  const gender = userInfo.gender === 1 ? "male" : "female";
+  const pet = userInfo.pet === 1 ? true : false;
+
+  const paramsObj = {
+    firstName: userInfo.name.split(" ")[1],
+    lastName: userInfo.name.split(" ")[0],
+    birthDate: birthday.toString(),
+    cityOfResidence: resCity,
+    gender: gender,
+    hasPet: pet,
+    smallAboutMe: userInfo.smallAboutMe,
+    aboutMe: userInfo.aboutMeText,
+  };
+  return paramsObj;
+} 
 
 export function rusToTranslit(text: string, engToRus?: boolean) {
   const rus =
