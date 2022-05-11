@@ -142,13 +142,17 @@
 
 .info {
   height: auto;
-  height: 100%;
-  height: max-content;
+  /* height: 100%; */
+  /* height: max-content; */
 }
 
 .text {
   height: auto;
 }
+
+.info, .text, .statusWrapper {
+  min-height: 88px;
+} 
 
 
 @media (max-width: 1150px) {

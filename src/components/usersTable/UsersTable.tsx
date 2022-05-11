@@ -3,6 +3,7 @@ import { IParticipant } from "../../shared/models/models";
 import style from "./UsersTable.module.css";
 import { DummyOptionsParticipants } from "../../shared/data/OptionsParticipant";
 import { IOption } from "../../shared/models/models";
+import { setUsersItemHeight } from "../../shared/lib/users/setUsersItemHeitght";
 
 interface IUserTable {
   filteredParticipants: IParticipant[];
@@ -11,6 +12,7 @@ interface IUserTable {
 
 const UsersTable: React.FC<IUserTable> = (props) => {
   useEffect(() => {
+    setUsersItemHeight(style.text, style.info, style.statusWrapper);//я пытался сделать через css, но подходящего решения не нашел
     const table = document.getElementById("tableStyle");
     if (table) {
       table.addEventListener("scroll", (e) => {
@@ -32,7 +34,6 @@ const UsersTable: React.FC<IUserTable> = (props) => {
           {props.filteredParticipants.map((item) => (
             <div className={style.info} key={item.id}>
               <img
-                // src={require(`../../assets/img/participant/${item.imgUrl}`)}
                 src={`https://academtest.ilink.dev/images/${item.imgUrl}`}
                 alt="participantImg"
               />
