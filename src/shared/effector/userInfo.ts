@@ -131,9 +131,13 @@ sample({
   target: getUserInfo,
 });
 
+const clearUserInfoRes = createEvent<IMyInfo>();
 const $sendUserInfoRes = restore(sendUserInfoFx, null);
+$sendUserInfoRes.on(clearUserInfoRes, (_, state) => state);
 
 const $isLoadingUserPhoto = sendUserPhotoFx.pending;
+
+
 
 export const userStore = {
   getUserInfo,
@@ -146,5 +150,6 @@ export const userStore = {
   $curUserPhoto,
   $chanhedUserPhotoRes,
   sendUserInfo,
-  $sendUserInfoRes
+  $sendUserInfoRes,
+  clearUserInfoRes
 };

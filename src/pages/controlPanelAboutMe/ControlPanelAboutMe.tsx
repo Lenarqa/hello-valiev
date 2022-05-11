@@ -8,7 +8,7 @@ import TextArea from "../../components/UI/textarea/TextArea";
 import ErrorMsg from "../../components/UI/ErrorMsg/ErrorMsg";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 import { ReactComponent as PencilIcon } from "../../assets/icons/pencil.svg";
-import { IMyInfo, IValidationResult } from "../../shared/models/models";
+import { IMyInfo, ITostData, IValidationResult } from "../../shared/models/models";
 import { DummyOptionsCity } from "../../shared/data/OptionsCity";
 import { DummyOptionsGender } from "../../shared/data/OptionsGender";
 import { DummyOptionsPet } from "../../shared/data/OptionsPet";
@@ -21,20 +21,16 @@ import {
   smallAboutMeValidation,
 } from "../../shared/lib/validation/ControlPanelAboutMe";
 import { userStore } from "../../shared/effector/userInfo";
-import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
 
 const ControlPanelAboutMe: React.FC = () => {
   const userInfoStore = useStore(userStore.$userInfo);
   const isLoadingUserInfo = useStore(userStore.$isLoading);
   const chanhedUserPhotoRes = useStore(userStore.$chanhedUserPhotoRes);
+  const sendUserInfoRes = useStore(userStore.$sendUserInfoRes);
   const popUpCtx = useContext(PopUpContext);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  // const [userInfo, setUserInfo] = useState<IMyInfo>(MyInfo);
   const [isBtnDisable, setIsBtnDisable] = useState<boolean>(false);
   const [isUserHaveImg, setIsUserHaveImg] = useState<boolean>(false);
-
-  const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(false);
-  const [isShowBadWindow, setIsShowBadWindow] = useState<boolean>(false);
 
   useEffect(() => {
     userStore.getUserInfo();
@@ -49,7 +45,7 @@ const ControlPanelAboutMe: React.FC = () => {
   useEffect(() => {
     if(chanhedUserPhotoRes) {
       if (chanhedUserPhotoRes?.profileImage) {
-        setIsShowGoodWindow(true);
+        popUpCtx.setIsOpenGoodWindow(true);
       } else if(chanhedUserPhotoRes?.error){
         popUpCtx.setIsError(true);
           popUpCtx.setErrorMsg(
@@ -58,6 +54,18 @@ const ControlPanelAboutMe: React.FC = () => {
       }
     }
   }, [chanhedUserPhotoRes]);
+
+  useEffect(() => {
+    if(sendUserInfoRes) {
+      if (sendUserInfoRes?.profileImage) {
+        popUpCtx.setIsOpenGoodWindow(true);
+        userStore.clearUserInfoRes({} as IMyInfo);
+      } else if(sendUserInfoRes?.error){
+        popUpCtx.setIsOpenBadWindow(true);
+        userStore.clearUserInfoRes({} as IMyInfo);
+      }
+    }
+  }, [sendUserInfoRes]);
 
   //selected Options city
   const curCity: IOption | undefined = DummyOptionsCity.find(
@@ -141,11 +149,7 @@ const ControlPanelAboutMe: React.FC = () => {
         pet: selectedPet.id as number,
       };
 
-      // userStore.setUserInfo(newUserInfoData); //пока нет запроса меняем локально
       userStore.sendUserInfo(newUserInfoData);
-      popUpCtx.setIsOpenGoodWindow(true);
-
-      // popUpCtx.setIsOpenGoodWindow(true); в случае ошибки
       setIsEditMode(false);
     }
   };
@@ -494,20 +498,6 @@ const ControlPanelAboutMe: React.FC = () => {
               </div>
             </div>
           </div>
-          {isShowGoodWindow && (
-            <GoodWindow
-              title="Успешно"
-              text="Фото изменено"
-              setShowGoodWindow={setIsShowGoodWindow}
-            />
-          )}
-          {isShowBadWindow && (
-            <GoodWindow
-              title="Ошибка"
-              text="Что то пошло не так"
-              setShowGoodWindow={setIsShowBadWindow}
-            />
-          )}
         </>
       )}
     </div>
