@@ -12,6 +12,7 @@ interface IInput {
   inputType?: string;
   register: any;
   error?:string | undefined;
+  style?:string;
 }
 
 const MyInput: React.FC<IInput> = (props) => {
@@ -19,7 +20,8 @@ const MyInput: React.FC<IInput> = (props) => {
     <div
       className={style.formItem}
       data-type={props.type}
-      data-input-type={props.inputType}
+    //   data-input-type={props.inputType}
+      data-style={props.style}
     >
       <label htmlFor={props.id}>{props.labelTitle}</label>
       <div className={style.inputWrapper}>

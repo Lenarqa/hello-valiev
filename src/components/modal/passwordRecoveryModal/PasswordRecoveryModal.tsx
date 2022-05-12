@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./PasswordRecoveryModal.module.css";
 import Button from "../../UI/myButton/Button";
-import MsgWindow from "../../UI/myMsgWindow/MsgWindow";
-import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg";
 import { ReactComponent as ArrowLeftIcon } from "../../../assets/icons/arrowLeft.svg";
 import { EmailValidationRegEx } from "../../../shared/lib/validation/regEx";
-import { emailValidation } from "../../../shared/lib/validation/AuthValidation";
-import { IValidationResult } from "../../../shared/models/models";
+import {
+  validateEmailReactHookForm,
+} from "../../../shared/lib/validation/AuthValidation";
+import { IPasswordRecovery } from "../../../shared/models/models";
+import { useForm } from "react-hook-form";
+import MyInput from "../../UI/input/MyInput";
 
 interface IPasswordRecoveryModal {
   showGoodWindow: (value: boolean) => void;
@@ -16,56 +18,31 @@ interface IPasswordRecoveryModal {
 
 const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string>("");
-  const [isEmailError, setIsEmailError] = useState<boolean>(false);
-  const [emailErrorMsg, setEmailErrorMsg] = useState<string>("");
-  const [isHoverEmail, setIsHoverEmail] = useState<boolean>(false);
   const [btnIsDisable, setBtnIsDisable] = useState<boolean>(true);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+  } = useForm<IPasswordRecovery>({ mode: "all" });
+
   useEffect(() => {
-    if (!isEmailError) {
+    if (!errors.email) {
       setBtnIsDisable(false);
     }
 
-    if (email.trim().length === 0) {
+    if (getValues("email").trim().length === 0) {
       setBtnIsDisable(true);
     }
-  }, [isEmailError, email]);
+  }, [errors.email]);
 
-  const emailValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value;
-    setEmailErrorMsg("");
-    setEmail(newValue);
-    setIsEmailError(false);
-    setBtnIsDisable(true);
+  const submitHandler = (data:any) => {
+    props.showGoodWindow(false);
+    props.showBadWindow(false);
 
-    const res: IValidationResult = emailValidation(newValue);
-
-    if (res.result) {
-      setIsEmailError(true);
-      setEmailErrorMsg(res.errorMsg);
-      return;
-    }
-
-    // когда пользователь оставляет мышку поверх infoIcon и иконка исчезает
-    // чтобы не оставалось окно с описанием ошибки без сообщения, выключаем ховер
-    if (EmailValidationRegEx.test(newValue)) {
-      setIsHoverEmail(false);
-    }
-  };
-
-  const emailMouseOutHandler = () => {
-    setIsHoverEmail(false);
-  };
-
-  const emailMouseOverHandler = () => {
-    setIsHoverEmail(true);
-  };
-
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (EmailValidationRegEx.test(email)) {
-      if (email === "enter@gmail.com") {
+    if (EmailValidationRegEx.test(data.email)) {
+      if (data.email === "enter@gmail.com") {
         setTimeout(() => {
           props.showGoodWindow(true);
         }, 2000);
@@ -82,7 +59,7 @@ const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
   };
 
   return (
-    <form className={style.form} onSubmit={submitHandler}>
+    <form className={style.form} onSubmit={handleSubmit(submitHandler)}>
       <div className={style.formHeader} onClick={cancelHandler}>
         <ArrowLeftIcon className={style.arrow} />
         <h2>Сброс пароля</h2>
@@ -90,26 +67,16 @@ const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
       <div className={style.formItem}>
         <label htmlFor="login">Электронная почта</label>
         <div className={style.inputWrapper}>
-          <input
-            id="login"
+          <MyInput
+            id="email"
+            type="string"
+            style="password-recovery"
+            register={register("email", {
+              validate: validateEmailReactHookForm,
+            })}
             placeholder="Введите логин"
-            onChange={emailValidationHandler}
-            value={email}
-            data-is-error={isEmailError}
-            data-has-data={!isEmailError && email.trim().length > 0}
+            error={errors.email?.message}
           />
-          <div className={style.icons}>
-            {isEmailError && (
-              <InfoIcon
-                className={style.icon}
-                onMouseOver={emailMouseOverHandler}
-                onMouseOut={emailMouseOutHandler}
-              />
-            )}
-            {isHoverEmail && (
-              <MsgWindow style={style.hoverMsg}>{emailErrorMsg}</MsgWindow>
-            )}
-          </div>
         </div>
       </div>
       <div className={style.actions}>

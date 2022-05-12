@@ -88,3 +88,7 @@ export interface IAuth {
   email:string;
   password: string;
 }
+
+export interface IPasswordRecovery {
+  email:string;
+}

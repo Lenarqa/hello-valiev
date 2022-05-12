@@ -9,7 +9,6 @@ import {
   passwordValidationRegEx,
 } from "../../../shared/lib/validation/regEx";
 import {
-  passwordValidation,
   validateEmailReactHookForm,
   validatePasswordReactHookForm,
 } from "../../../shared/lib/validation/AuthValidation";
@@ -29,7 +28,7 @@ interface IAuthModal {
 
 const AuthModal: React.FC<IAuthModal> = (props) => {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm<IAuth>({mode:"all"});
+  const { register, handleSubmit, formState: { errors }, getValues } = useForm<IAuth>({mode:"all"});
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
   const [btnIsDisable, setBtnIsDisable] = useState<boolean>(false);
 
@@ -41,7 +40,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       setBtnIsDisable(false);
     }
 
-    if (errors.email || errors.password) {
+    if (getValues("email").trim().length === 0 || getValues("password").trim().length === 0) {
       setBtnIsDisable(true);
     }
   }, [errors.email, errors.password]);
