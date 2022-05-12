@@ -4,7 +4,6 @@ import style from "./AuthModal.module.css";
 import Button from "../../UI/myButton/Button";
 import { ReactComponent as OpenEyeIcon } from "../../../assets/icons/openEye.svg";
 import { ReactComponent as CloseEyeIcon } from "../../../assets/icons/closeEye.svg";
-import Input from "../../UI/input/Input";
 import {
   EmailValidationRegEx,
   passwordValidationRegEx,
@@ -12,14 +11,15 @@ import {
 import {
   passwordValidation,
   validateEmailReactHookForm,
+  validatePasswordReactHookForm,
 } from "../../../shared/lib/validation/AuthValidation";
-import { IValidationResult } from "../../../shared/models/models";
 
 import { authStore } from "../../../shared/effector/auth";
 import { useStore } from "effector-react";
 import LoadingSpiner from "../../UI/loadingSpiner/LoadingSpiner";
 import {useForm} from "react-hook-form";
-import NewInput from "../../UI/input/NewInput";
+import MyInput from "../../UI/input/MyInput";
+import { IAuth } from "../../../shared/models/models";
 
 interface IAuthModal {
   isFooterErrMsg: boolean;
@@ -27,34 +27,24 @@ interface IAuthModal {
   setFooterErrMsg: (value: string) => void;
 }
 
-type IAuth = {
-  email:string;
-  password: string;
-}
-
 const AuthModal: React.FC<IAuthModal> = (props) => {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm<IAuth>({mode:"all"});
-
-  const [password, setPassword] = useState<string>("");
-  const [isPasswordError, setIsPasswordError] = useState<boolean>(false);
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
-  const [passwordErrorMsg, setPasswordErrorMsg] = useState<string>("");
-
-  const [btnIsDisable, setBtnIsDisable] = useState<boolean>(false);// return to true
+  const [btnIsDisable, setBtnIsDisable] = useState<boolean>(false);
 
   const auth = useStore(authStore.$token);
   const isLoading = useStore(authStore.$isLoading);
 
   useEffect(() => {
-    if (!errors.email && !isPasswordError) {
+    if (!errors.email && !errors.password) {
       setBtnIsDisable(false);
     }
 
-    if (errors.email || password.trim().length === 0) {
+    if (errors.email || errors.password) {
       setBtnIsDisable(true);
     }
-  }, [errors.email, isPasswordError, password]);
+  }, [errors.email, errors.password]);
 
   useEffect(() => {
     if (auth?.statusCode === 500) {
@@ -73,24 +63,6 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
     }
   }, [auth]);
 
-  const passwordValidationHandler = (
-    e: React.FormEvent<HTMLInputElement>
-  ): void => {
-    const newValue = e.currentTarget.value;
-    setPasswordErrorMsg("");
-    setPassword(newValue);
-    setIsPasswordError(false);
-    setBtnIsDisable(true);
-    props.showFooterErrMsg(false);
-
-    const res: IValidationResult = passwordValidation(newValue);
-    if (res.result) {
-      setIsPasswordError(true);
-      setPasswordErrorMsg(res.errorMsg);
-      return;
-    }
-  };
-
   const showPasswordHandler = (): void => {
     setIsVisiblePassword((prev) => !prev);
   };
@@ -98,12 +70,11 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
   const submitHandler = (data: any): void => {
     if (
       EmailValidationRegEx.test(data.email) &&
-      passwordValidationRegEx.test(password)
+      passwordValidationRegEx.test(data.password)
     ) {
-      authStore.getToken({ email: data.email, password: password });
+      authStore.getToken({ email: data.email, password: data.password });
     }
   };
-
 
   const passwordRecoveryModalHandler = (): void => {
     props.showFooterErrMsg(false);
@@ -117,7 +88,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       ) : (
         <>
           <h2>Войти</h2>
-          <NewInput
+          <MyInput
             id="email"
             type="string"
             register={register("email", {validate:validateEmailReactHookForm})}
@@ -127,28 +98,23 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
           <div className={style.formItem}>
             <label htmlFor="password">Пароль</label>
             <div className={style.inputWrapper}>
-              <Input
+              <MyInput
                 type="password"
-                dataIsError={isPasswordError}
-                data-is-unknown-user={props.isFooterErrMsg}
-                dataHasData={!isPasswordError && password.trim().length > 0}
                 id="password"
                 placeholder="Введите пароль"
                 inputType={isVisiblePassword ? "text" : "password"}
-                onChange={passwordValidationHandler}
-                isError={isPasswordError}
-                errorMsg={passwordErrorMsg}
-                value={password}
+                register={register("password", {validate: validatePasswordReactHookForm})}
+                error={errors.password?.message}
               />
               {isVisiblePassword ? (
                 <CloseEyeIcon
-                  data-is-error={isPasswordError}
+                  data-is-error={!errors.password}
                   className={style.icon}
                   onClick={showPasswordHandler}
                 />
               ) : (
                 <OpenEyeIcon
-                  data-is-error={isPasswordError}
+                  data-is-error={!errors.password}
                   className={style.icon}
                   onClick={showPasswordHandler}
                 />

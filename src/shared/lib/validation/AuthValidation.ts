@@ -141,6 +141,41 @@ export const emailValidation = (newValue: string): IValidationResult => {
   return res;
 };
 
+export const validatePasswordReactHookForm = (newValue: string) => {
+  
+
+  if (newValue.trim().length === 0) {
+    return "Поле не может быть пустым";
+  }
+
+  if (!/.*\d/.test(newValue)) {
+   return "Пароль должен содержать цифры";
+  }
+
+  if (!/.*[a-z]/.test(newValue)) {
+    return "Пароль должен содержать латинские буквы нижнего регистра";
+  }
+
+  if (!/.*[A-Z]/.test(newValue)) {
+    return "Пароль должен содержать латинские буквы верхнего регистра";
+  }
+
+  if (!/.*\W/.test(newValue)) {
+    return "Пароль должен содержать символы (например !№%:?)";
+  }
+
+  if (newValue.length < 8 || newValue.length > 24) {
+    return "Пароль не может быть короче 8 символов и длиннее 24 символов";
+  }
+
+  // \W это аналог ([^a-zA-Z0-9_]) он позволяет вводить кириллицу
+  // я не думаю что в пароле должна быть кириллица поэтому добавил проверку
+  // если кириллица в пароле все таки имеет место быть я уберу эту проверку.
+  if (/[а-яА-ЯёЁ]/.test(newValue)) {
+    return "Пароль не может содержать кириллицу, используйте только латиницу";
+  }
+}
+
 export const passwordValidation = (newValue: string): IValidationResult => {
   const res: IValidationResult = {
     result: false,

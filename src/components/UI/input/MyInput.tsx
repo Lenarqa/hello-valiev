@@ -1,14 +1,7 @@
 import React from "react";
-import style from "./NewInput.module.css";
+import style from "./MyInput.module.css";
 import { ReactComponent as InfoIcon } from "../../../assets/icons/infoSquare.svg";
 import MsgWindow from "../myMsgWindow/MsgWindow";
-import { useForm } from "react-hook-form";
-import { UseFormRegister, Path } from 'react-hook-form';
-
-export type FormInputProps<T> = {
-  name: Path<T>;
-  register?: UseFormRegister<T>;
-}
 
 interface IInput {
   id?: string;
@@ -21,10 +14,7 @@ interface IInput {
   error?:string | undefined;
 }
 
-const NewInput: React.FC<IInput> = (props) => {
-//   const { register } = useForm();
-    const myRef = React.createRef();
-
+const MyInput: React.FC<IInput> = (props) => {
   return (
     <div
       className={style.formItem}
@@ -47,4 +37,5 @@ const NewInput: React.FC<IInput> = (props) => {
     </div>
   );
 };
-export default NewInput;
+
+export default MyInput;

@@ -97,7 +97,7 @@ input[data-has-data="true"]:active {
   top: 22px;
 }
 
-.icon[data-is-error="true"] {
+.icon[data-is-error="false"] {
   right: 45px;
 }
 

@@ -83,3 +83,8 @@ export interface IChangeReviewText {
   id: string, 
   text:string,
 }
+
+export interface IAuth {
+  email:string;
+  password: string;
+}
