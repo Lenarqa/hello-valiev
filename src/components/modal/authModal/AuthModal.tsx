@@ -10,14 +10,16 @@ import {
   passwordValidationRegEx,
 } from "../../../shared/lib/validation/regEx";
 import {
-  emailValidation,
   passwordValidation,
+  validateEmailReactHookForm,
 } from "../../../shared/lib/validation/AuthValidation";
 import { IValidationResult } from "../../../shared/models/models";
 
 import { authStore } from "../../../shared/effector/auth";
 import { useStore } from "effector-react";
 import LoadingSpiner from "../../UI/loadingSpiner/LoadingSpiner";
+import {useForm} from "react-hook-form";
+import NewInput from "../../UI/input/NewInput";
 
 interface IAuthModal {
   isFooterErrMsg: boolean;
@@ -25,31 +27,34 @@ interface IAuthModal {
   setFooterErrMsg: (value: string) => void;
 }
 
+type IAuth = {
+  email:string;
+  password: string;
+}
+
 const AuthModal: React.FC<IAuthModal> = (props) => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string>("");
-  const [isEmailError, setIsEmailError] = useState<boolean>(false);
-  const [emailErrorMsg, setEmailErrorMsg] = useState<string>("");
+  const { register, handleSubmit, formState: { errors } } = useForm<IAuth>({mode:"all"});
 
   const [password, setPassword] = useState<string>("");
   const [isPasswordError, setIsPasswordError] = useState<boolean>(false);
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
   const [passwordErrorMsg, setPasswordErrorMsg] = useState<string>("");
 
-  const [btnIsDisable, setBtnIsDisable] = useState<boolean>(true);
+  const [btnIsDisable, setBtnIsDisable] = useState<boolean>(false);// return to true
 
   const auth = useStore(authStore.$token);
   const isLoading = useStore(authStore.$isLoading);
 
   useEffect(() => {
-    if (!isEmailError && !isPasswordError) {
+    if (!errors.email && !isPasswordError) {
       setBtnIsDisable(false);
     }
 
-    if (email.trim().length === 0 || password.trim().length === 0) {
+    if (errors.email || password.trim().length === 0) {
       setBtnIsDisable(true);
     }
-  }, [isEmailError, isPasswordError, email, password]);
+  }, [errors.email, isPasswordError, password]);
 
   useEffect(() => {
     if (auth?.statusCode === 500) {
@@ -67,25 +72,6 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
       props.showFooterErrMsg(true);
     }
   }, [auth]);
-
-  const emailValidationHandler = (
-    e: React.FormEvent<HTMLInputElement>
-  ): void => {
-    const newValue = e.currentTarget.value;
-    setEmailErrorMsg("");
-    setEmail(newValue);
-    setIsEmailError(false);
-    setBtnIsDisable(true);
-    props.showFooterErrMsg(false);
-
-    const res: IValidationResult = emailValidation(newValue);
-
-    if (res.result) {
-      setIsEmailError(true);
-      setEmailErrorMsg(res.errorMsg);
-      return;
-    }
-  };
 
   const passwordValidationHandler = (
     e: React.FormEvent<HTMLInputElement>
@@ -108,23 +94,16 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
   const showPasswordHandler = (): void => {
     setIsVisiblePassword((prev) => !prev);
   };
-
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
+  
+  const submitHandler = (data: any): void => {
     if (
-      EmailValidationRegEx.test(email) &&
+      EmailValidationRegEx.test(data.email) &&
       passwordValidationRegEx.test(password)
     ) {
-      authStore.getToken({ email: email, password: password });
-      if (auth?.statusCode === 500) {
-        props.showFooterErrMsg(true);
-      } else {
-        localStorage.setItem("auth", auth);
-        props.showFooterErrMsg(false);
-        navigate(`/hello-valiev/about-me`);
-      }
+      authStore.getToken({ email: data.email, password: password });
     }
   };
+
 
   const passwordRecoveryModalHandler = (): void => {
     props.showFooterErrMsg(false);
@@ -132,23 +111,18 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
   };
 
   return (
-    <form className={style.form} onSubmit={submitHandler}>
+    <form className={style.form} onSubmit={handleSubmit(submitHandler)}>
       {isLoading ? (
         <LoadingSpiner />
       ) : (
         <>
           <h2>Войти</h2>
-          <Input
-            labelTitle="Логин"
-            id="login"
+          <NewInput
+            id="email"
+            type="string"
+            register={register("email", {validate:validateEmailReactHookForm})}
             placeholder="Введите логин"
-            onChange={emailValidationHandler}
-            value={email}
-            dataIsError={isEmailError}
-            dataIsUnknownUser={props.isFooterErrMsg}
-            dataHasData={!isEmailError && email.trim().length > 0}
-            errorMsg={emailErrorMsg}
-            isError={isEmailError}
+            error={errors.email?.message}
           />
           <div className={style.formItem}>
             <label htmlFor="password">Пароль</label>
@@ -182,9 +156,6 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
             </div>
           </div>
           <Button
-            onClick={() =>
-              authStore.getToken({ email: email, password: password })
-            }
             type="submit"
             style={style.enterBtn}
             isDisable={btnIsDisable}

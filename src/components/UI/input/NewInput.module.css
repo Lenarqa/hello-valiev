@@ -1,0 +1,187 @@
+.formItem {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    margin-bottom: 32px;
+  }
+  
+  .formItem label {
+    margin-bottom: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    font-family: "Factor A";
+    color: #333333;
+  }
+  
+  .formItem .passwordInput[type="text"] {
+    font-weight: 600;
+    letter-spacing: 0.2em;
+  }
+  
+  .formItem input {
+    width: 100%;
+    padding: 15px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    font-family: "Gilroy";
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    font-style: normal;
+  }
+  
+  .formItem input[data-is-error="true"],
+  input[data-is-error="true"]:focus,
+  input[data-is-error="true"]:active {
+    outline: 2px solid #eb5757;
+  }
+  
+  .formItem input[data-has-data="true"],
+  input[data-has-data="true"]:focus,
+  input[data-has-data="true"]:active {
+    outline: 2px solid #585cc6;
+  }
+  
+  .formItem input[data-is-unknown-user="true"],
+  .formItem input[data-is-unknown-user="true"]:focus,
+  .formItem input[data-is-unknown-user="true"]:active {
+    outline: 2px solid #eb5757;
+  }
+  
+  .inputWrapper {
+    position: relative;
+    width: 100%;
+  }
+  
+  .icons {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+  }
+  
+  .icon {
+    cursor: pointer;
+  }
+  
+  .hoverMsg {
+    position: absolute;
+    bottom: 50px;
+    right: -16px;
+  }
+  
+  .hoverMsg {
+    display: none;
+  }
+  
+  .icon:hover + .hoverMsg {
+    display: block;
+  }
+  
+  .formItem[data-type="userName"] {
+    width: 395px;
+    margin-bottom: 0px;
+    margin-right: 16px;
+    height: 100%;
+  }
+  
+  .formItem[data-type="caphaInput"] {
+    width: 383px;
+    margin-bottom: 0;
+    margin-right: 16px;
+  }
+  
+  .formItem[data-type="password"] {
+    margin-bottom: 0;
+  }
+  
+  .formItem[data-type="password"] input {
+    color: #333333;
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  
+  /* type controlPanel  */
+  .formItem[data-type="controlPanel"] {
+    width: 403px;
+    margin-right: 24px;
+    margin-bottom: 0;
+  }
+  
+  .formItem[data-type="controlPanel"] .formItem input[data-has-data="true"],
+  .formItem[data-type="controlPanel"] input[data-has-data="true"]:focus,
+  .formItem[data-type="controlPanel"] input[data-has-data="true"]:active {
+    outline: 2px solid transparent;
+  }
+  
+  /* type invisible */
+  .formItem[data-type="invisible"] {
+    display: none;
+  }
+  
+  /* input type date */
+  .formItem[data-input-type="date"] {
+    width: 209px;
+  }
+  
+  .formItem input[data-is-edit="false"] {
+    color: #8a8a8a;
+  }
+  
+  /* input type  */
+  .formItem[data-type="selectFind"] {
+    margin: 12px;
+    width: 379px;
+    height: 42px;
+    position: relative;
+  }
+  
+  .formItem[data-type="selectFind"] input {
+    padding: 10px 34px;
+  }
+  
+  @media (max-width: 1370px) {
+    .formItem[data-type="controlPanel"] {
+      width: 33%;
+      margin-right: 12px;
+    }
+  }
+  
+  @media (max-width: 720px) {
+    .formItem[data-type="caphaInput"] {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 420px) {
+    .formItem[data-type="userName"] {
+      width: 256px;
+      margin-bottom: 12px;
+    }
+  
+    .formItem[data-type="caphaInput"] {
+      width: 256px;
+    }
+  }
+  
+  @media (max-width: 320px) {
+    .formItem[data-type="controlPanel"] {
+      width: 100%;
+      margin-right: 0px;
+      margin-bottom: 20px;
+    }
+  
+    .formItem[data-input-type="date"] {
+      width: 100%;
+      margin-bottom: 0;
+    }
+  }
+  
