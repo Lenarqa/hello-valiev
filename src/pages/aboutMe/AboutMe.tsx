@@ -10,21 +10,8 @@ import { userReviewsStore } from "../../shared/effector/reviews";
 import { IMyInfo } from "../../shared/models/models";
 
 const AboutMe: React.FC = () => {
-  const userInfo = useStore(userStore.$userInfo);
   const isLoadingUserInfo = useStore(userStore.$isLoading);
   const isLoadingReviews = useStore(userReviewsStore.$isLoadingReviews);
-
-  useEffect(() => {
-    // тут временная провека пока не реализован запрос на редактирование профиля, 
-    // сейчас я изменяю в панели управления userInfo, через ивент и чтобы при возвращении с панели управления на
-    // главную не производился запрос который перетрет измененный стейт я проверяю есть ли что то в userInfo
-    if(userInfo?.id) {
-      return;
-    }else {
-      userStore.getUserInfo();
-    }
-    userReviewsStore.getUserReviews([]);
-  }, []);
 
   return (
     <>

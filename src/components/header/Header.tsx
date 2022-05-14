@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import style from "./Header.module.css";
 import useWindowDimensions from "../../functions/ScreenSize";
 import Button from "../UI/myButton/Button";
@@ -17,9 +17,12 @@ const Header: React.FC<IHeader> = (props) => {
   const { height, width } = useWindowDimensions();
   const navigate = useNavigate();
   const userInfo = useStore(userStore.$userInfo);
+  
+  useEffect(()=>{
+    userStore.getUserInfo();
+  },[])
 
   const openControlPanelHandler = (): void => {
-    // usersStore.getUsers([]);//delete this later
     navigate(`/hello-valiev/controlPanel/users`);
   };
 
