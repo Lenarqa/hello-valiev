@@ -15,7 +15,7 @@ const getTokenFx = createEffect(async (user: IUser) => {
   })
     .then((response) => response.text())
     .then((response) => JSON.parse(response));
-    console.log(response)
+    console.log(response);
   return response;
 });
 

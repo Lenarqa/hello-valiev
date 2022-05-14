@@ -7,6 +7,7 @@ import { IOption } from "./../models/models";
 
 // get reviews
 const getUserReviews = createEvent<IReview[]>();
+
 const getUserReviewsFx = createEffect(async () => {
   const localToken = localStorage.getItem("auth");
   if (localToken) {
@@ -59,6 +60,7 @@ const filterReviewsFx = createEffect((option: IOption) => {
 });
 
 const $isLoadingFilteredUsers = filterReviewsFx.pending;
+
 forward({
   from: filterReviews,
   to: filterReviewsFx,
@@ -137,6 +139,7 @@ const changeReviewStatusFx = createEffect(
 );
 
 const $isLoadingReviewChangeStatus = changeReviewStatusFx.pending;
+
 const $changeReviewStatusRes = restore(changeReviewStatusFx, {} as IReview);
 
 forward({

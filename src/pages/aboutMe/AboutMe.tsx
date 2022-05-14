@@ -7,9 +7,13 @@ import Footer from "../../components/footer/footer/Footer";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 import { userStore } from "../../shared/effector/userInfo";
 import { userReviewsStore } from "../../shared/effector/reviews";
-import { IMyInfo } from "../../shared/models/models";
 
 const AboutMe: React.FC = () => {
+  useEffect(()=>{
+    userStore.getUserInfo();
+    userReviewsStore.getUserReviews([]);
+  }, [])
+
   const isLoadingUserInfo = useStore(userStore.$isLoading);
   const isLoadingReviews = useStore(userReviewsStore.$isLoadingReviews);
 

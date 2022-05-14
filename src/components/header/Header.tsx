@@ -43,7 +43,6 @@ const Header: React.FC<IHeader> = (props) => {
         <div className={style.photoSection}>
           <img
             className={style.img}
-            // src={`https://academtest.ilink.dev/images/${userInfo?.mainImgUrl}`}
             src={reviewImg}
             alt="photo"
           />

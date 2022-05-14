@@ -197,24 +197,25 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
 
   const fethingReviews = useStore(userReviewsStore.$userReviews);
 
-  const filteredReviews = REVIEWS.filter((item)=>item.status === DummyOptionsReview[2].id); // Отображаем только отзывы со статусом допущен
+  // const filteredReviews = REVIEWS.filter((item)=>item.status === DummyOptionsReview[2].id); // Отображаем только отзывы со статусом допущен
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [rewies, setRewiews] = useState<IReview[]>(filteredReviews);
+  // const [rewies, setRewiews] = useState<IReview[]>(filteredReviews);
   const [curSlide, setCurSlide] = useState<number>(0);
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const [disableLeftBtn, setDisableLeftBtn] = useState<boolean>(true);
   const [disableRightBtn, setDisableRightBtn] = useState<boolean>(false);
 
-  useEffect(()=>{
-    if(fethingReviews !== undefined && fethingReviews?.length > 0){
-      if(fethingReviews[fethingReviews.length-1].id === rewies[0].id){
-        return;
-      }else{
-        setRewiews(prev => [fethingReviews[fethingReviews.length-1], ...prev]);
-      }
-    }
-  },[fethingReviews])
+  // useEffect(()=>{
+  //   if(fethingReviews !== undefined && fethingReviews?.length > 0){
+  //     if(fethingReviews[fethingReviews.length-1].id === rewies[0].id){
+  //       return;
+  //     }else{
+  //       setRewiews(prev => [fethingReviews[fethingReviews.length-1], ...prev]);
+  //     }
+  //   }
+  // },[fethingReviews])
+  // console.log(fethingReviews);
 
   const openModalHandler = () =>{
     // перед открытием чистим стор эффектора
@@ -231,12 +232,14 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
       setDisableLeftBtn(false);
     }
 
-    if (curSlide === rewies.length - 2) {
-      setDisableRightBtn(true);
-    } else {
-      setDisableRightBtn(false);
+    if(fethingReviews) {
+      if (curSlide === fethingReviews.length - 2) {
+        setDisableRightBtn(true);
+      } else {
+        setDisableRightBtn(false);
+      }
     }
-  }, [curSlide, rewies]);
+  }, [curSlide, fethingReviews]);
 
   const nextSlideBarHandler = (index: number) => {
     setCurSlide(index);
@@ -272,11 +275,11 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
 
         <SlidesWrapper>
           <Slides
-            slideNum={rewies.length}
+            slideNum={fethingReviews!.length}
             curSlide={curSlide}
             sliderItemWith={sliderItemWidth}
           >
-            {rewies.map((review) => (
+            {fethingReviews?.filter((item)=>item.status === DummyOptionsReview[2].id).map((review) => (
               <ReviewItem
                 key={review.id}
                 id={review.id}
@@ -288,9 +291,9 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
             ))}
           </Slides>
           <Navigation>
-            {rewies.map((rewiew, index) => {
+            {fethingReviews!.map((rewiew, index) => {
               // this if check that the slider always displays 2 reviews (if rewiews odd number 3,5.7...)
-              if (index < rewies.length - 1) {
+              if (index < fethingReviews!.filter((item)=>item.status === DummyOptionsReview[2].id).length - 1) {
                 return (
                   <Bar
                     key={index}
