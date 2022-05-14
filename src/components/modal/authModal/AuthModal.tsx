@@ -16,7 +16,7 @@ import {
 import { authStore } from "../../../shared/effector/auth";
 import { useStore } from "effector-react";
 import LoadingSpiner from "../../UI/loadingSpiner/LoadingSpiner";
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import MyInput from "../../UI/input/MyInput";
 import { IAuth } from "../../../shared/models/models";
 
@@ -28,22 +28,16 @@ interface IAuthModal {
 
 const AuthModal: React.FC<IAuthModal> = (props) => {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors }, getValues } = useForm<IAuth>({mode:"all"});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty, isValid },
+  } = useForm<IAuth>({ mode: "all" });
+
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
-  const [btnIsDisable, setBtnIsDisable] = useState<boolean>(false);
 
   const auth = useStore(authStore.$token);
   const isLoading = useStore(authStore.$isLoading);
-
-  useEffect(() => {
-    if (!errors.email && !errors.password) {
-      setBtnIsDisable(false);
-    }
-
-    if (getValues("email").trim().length === 0 || getValues("password").trim().length === 0) {
-      setBtnIsDisable(true);
-    }
-  }, [errors.email, errors.password]);
 
   useEffect(() => {
     if (auth?.statusCode === 500) {
@@ -65,7 +59,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
   const showPasswordHandler = (): void => {
     setIsVisiblePassword((prev) => !prev);
   };
-  
+
   const submitHandler = (data: any): void => {
     if (
       EmailValidationRegEx.test(data.email) &&
@@ -90,7 +84,9 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
           <MyInput
             id="email"
             type="string"
-            register={register("email", {validate:validateEmailReactHookForm})}
+            register={register("email", {
+              validate: validateEmailReactHookForm,
+            })}
             placeholder="Введите логин"
             error={errors.email?.message}
           />
@@ -102,7 +98,9 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
                 id="password"
                 placeholder="Введите пароль"
                 inputType={isVisiblePassword ? "text" : "password"}
-                register={register("password", {validate: validatePasswordReactHookForm})}
+                register={register("password", {
+                  validate: validatePasswordReactHookForm,
+                })}
                 error={errors.password?.message}
               />
               {isVisiblePassword ? (
@@ -120,11 +118,7 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
               )}
             </div>
           </div>
-          <Button
-            type="submit"
-            style={style.enterBtn}
-            isDisable={btnIsDisable}
-          >
+          <Button type="submit" style={style.enterBtn} isDisable={!isDirty || !isValid}>
             Войти
           </Button>
           <Button type="authModalBtn" onClick={passwordRecoveryModalHandler}>

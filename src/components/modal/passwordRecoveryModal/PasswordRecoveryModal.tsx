@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./PasswordRecoveryModal.module.css";
 import Button from "../../UI/myButton/Button";
@@ -18,24 +18,12 @@ interface IPasswordRecoveryModal {
 
 const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
   const navigate = useNavigate();
-  const [btnIsDisable, setBtnIsDisable] = useState<boolean>(true);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    getValues,
+    formState: { errors, isDirty, isValid },
   } = useForm<IPasswordRecovery>({ mode: "all" });
-
-  useEffect(() => {
-    if (!errors.email) {
-      setBtnIsDisable(false);
-    }
-
-    if (getValues("email").trim().length === 0) {
-      setBtnIsDisable(true);
-    }
-  }, [errors.email]);
 
   const submitHandler = (data:any) => {
     props.showGoodWindow(false);
@@ -80,14 +68,14 @@ const PasswordRecoveryModal: React.FC<IPasswordRecoveryModal> = (props) => {
         </div>
       </div>
       <div className={style.actions}>
-        <Button type="submit" isDisable={btnIsDisable}>
+        <Button type="submit" isDisable={!isDirty || !isValid}>
           Отправить код
         </Button>
         <Button type="button" onClick={cancelHandler}>
           Отмена
         </Button>
       </div>
-      <button className={style.mobileBtn} type="submit" disabled={btnIsDisable}>
+      <button className={style.mobileBtn} type="submit" disabled={!isDirty || !isValid}>
         Cбросить
       </button>
     </form>
