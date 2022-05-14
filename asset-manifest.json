@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/hello-valiev/static/css/main.c9f4d947.css",
-    "main.js": "/hello-valiev/static/js/main.adeba3c0.js",
+    "main.js": "/hello-valiev/static/js/main.aba8cfef.js",
     "static/media/Gilroy-Regular.ttf": "/hello-valiev/static/media/Gilroy-Regular.b91b0127c56a8e5f9e83.ttf",
     "static/media/FactorAMedium-Regular.ttf": "/hello-valiev/static/media/FactorAMedium-Regular.1a1b89bd931afe1bfa27.ttf",
     "static/media/bgNoData.svg": "/hello-valiev/static/media/bgNoData.1d083cbc93b597049c6ad2eeaa94b84a.svg",
@@ -44,10 +44,10 @@
     "static/media/buttonAdd.svg": "/hello-valiev/static/media/buttonAdd.c9c4d03a3323c6c4bbd6970d03fa28f9.svg",
     "static/media/plus.svg": "/hello-valiev/static/media/plus.75a21b6bf9a3d513b795f0b6ff855b10.svg",
     "main.c9f4d947.css.map": "/hello-valiev/static/css/main.c9f4d947.css.map",
-    "main.adeba3c0.js.map": "/hello-valiev/static/js/main.adeba3c0.js.map"
+    "main.aba8cfef.js.map": "/hello-valiev/static/js/main.aba8cfef.js.map"
   },
   "entrypoints": [
     "static/css/main.c9f4d947.css",
-    "static/js/main.adeba3c0.js"
+    "static/js/main.aba8cfef.js"
   ]
 }
