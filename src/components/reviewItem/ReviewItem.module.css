@@ -11,8 +11,8 @@
 }
 
 .item {
-  width: 519px;
-  height: 279px;
+  min-width: 519px;
+  min-height: 279px;
   padding: 24px;
   border-radius: 2px;
   background-color: #f5f5f5;
