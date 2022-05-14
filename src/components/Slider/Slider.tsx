@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useStore } from "effector-react";
-import styled from "styled-components";
 import ButtonAdd from "../UI/buttonAdd/ButtonAdd";
 import ReviewItem from "../reviewItem/ReviewItem";
 import { ITostData } from "../../shared/models/models";
@@ -13,7 +12,6 @@ import { userReviewsStore } from "../../shared/effector/reviews";
 import style from "./Slider.module.css";
 import useWindowDimensions from "../../functions/ScreenSize";
 import Carusel from "./Carusel";
-
 
 interface ISliderSection {
   setShowGoodWindow: (value: boolean) => void;
@@ -133,7 +131,8 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
                 1
             ) {
               return (
-                <div className={style.bar}
+                <div
+                  className={style.bar}
                   key={index}
                   // activeIndex={activeIndex}
                   data-is-active={activeIndex === index}
@@ -169,4 +168,5 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
     </div>
   );
 };
+
 export default SliderSection;

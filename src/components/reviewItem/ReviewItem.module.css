@@ -92,11 +92,13 @@
 }
 
 /* publish */
+.item[data-status="approved"],
 .item[data-is-publish="true"] {
   background-color: rgba(181, 255, 162, 0.1);
 }
 
 /* cancel */
+.item[data-status="declined"],
 .item[data-is-canceled="true"] {
   background-color: #fdeeee;
 }
@@ -105,10 +107,12 @@
   display: none;
 }
 
+.item[data-status="declined"] .canceledMsg,
 .item .canceledMsg[data-is-canceled="true"] {
   display: flex;
 }
 
+.item[data-status="declined"] .action,
 .item .action[data-is-canceled="true"] {
   display: none;
 }
@@ -137,17 +141,17 @@
 /* end cancel */
 
 /* publish  */
-
 .publishMsg[data-status="approved"],
 .publishMsg[data-is-publish="true"] {
   display: flex;
 }
 
+.item[data-status="approved"] .action,
 .publishMsg[data-status="approved"],
 .item .action[data-is-publish="true"] {
   display: none;
 }
-
+.item[data-status="approved"] .publishMsg,
 .publishMsg[data-status="approved"],
 .publishMsg {
   position: absolute;
