@@ -38,23 +38,22 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
 
   const auth = useStore(authStore.$token);
   const isLoading = useStore(authStore.$isLoading);
+  
+  const authError = useStore(authStore.$authError);
+  console.log(authError);
 
   useEffect(() => {
-    if (auth?.statusCode === 500) {
-      props.setFooterErrMsg("Такого пользователя не существует");
+    if (authError) {
+      props.setFooterErrMsg(authError);
       props.showFooterErrMsg(true);
-    } else if (auth?.statusCode === 400) {
-      props.setFooterErrMsg("Неправильный пароль!");
-      props.showFooterErrMsg(true);
+      authStore.clearError('');
     } else if (auth.accessToken) {
       localStorage.setItem("auth", JSON.stringify(auth));
       props.showFooterErrMsg(false);
       navigate(`/hello-valiev/about-me`);
-    } else if (auth?.statusCode) {
-      props.setFooterErrMsg("Что то пошло не так! " + auth?.message);
-      props.showFooterErrMsg(true);
     }
-  }, [auth]);
+  }, [authError, auth]);
+  
 
   const showPasswordHandler = (): void => {
     setIsVisiblePassword((prev) => !prev);

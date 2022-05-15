@@ -157,6 +157,7 @@ const ReviewModal: React.FC<IReviewModal> = ({
         setShowUsersFile(true);
         setIsErrorFile(false);
       }
+      e.target.value = "";
     }
   };
 

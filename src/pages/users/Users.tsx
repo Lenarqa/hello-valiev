@@ -11,6 +11,7 @@ import ParticipantItemSkeleton from "../../components/participantItem/skeleton/P
 import UsersTable from "../../components/usersTable/UsersTable";
 import { usersStore } from "../../shared/effector/users";
 
+
 const Users: React.FC = () => {
   // если в controlPanelAboutMe была ошибка скрываем ее
   const popUpCtx = useContext(PopUpContext);
@@ -48,6 +49,7 @@ const Users: React.FC = () => {
   const isLoadingUsers: boolean = useStore(usersStore.$isLoadingUsers);
 
   useEffect(() => {
+    console.log("render")
     usersStore.getUsers([]);
     popUpCtx.setIsError(false);
     popUpCtx.setIsOpenBadWindow(false);
@@ -91,7 +93,7 @@ const Users: React.FC = () => {
 
   return (
     <div className={style.container}>
-      {isEmptyPage ? (
+      {curFilteredParticipants.length === 0 ? (
         <EmptyScreen text="Список участников пуст" />
       ) : (
         <div className={style.content}>

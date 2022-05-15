@@ -30,7 +30,6 @@ const UsersTable: React.FC<IUserTable> = (props) => {
       <div className={style.table}>
         <div className={style.column}>
           <h2 className={style.colHeader}>ИФ УЧЕНИКА</h2>
-
           {props.filteredParticipants.map((item) => (
             <div className={style.info} key={item.id}>
               <img
