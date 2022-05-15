@@ -47,6 +47,8 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
 
   const openModalHandler = () => {
     // перед открытием чистим стор эффектора
+    props.setShowBadWindow(false);
+    props.setShowGoodWindow(false);
     addReviewStore.setSendReviewError();
     addReviewStore.setUserPhoto(null);
     addReviewStore.setSendPhotoError();

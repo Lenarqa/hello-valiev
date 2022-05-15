@@ -40,7 +40,6 @@ const AuthModal: React.FC<IAuthModal> = (props) => {
   const isLoading = useStore(authStore.$isLoading);
   
   const authError = useStore(authStore.$authError);
-  console.log(authError);
 
   useEffect(() => {
     if (authError) {

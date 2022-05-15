@@ -47,7 +47,7 @@ const clearError = createEvent<string>();
 $authError.on(setError, (_, state) => state)
 $authError.on(clearError, (_, state) => '')
 
-const fetchErrorHandler = (errorStatus: any) => {
+const fetchErrorHandler = (errorStatus: number):void => {
   if (errorStatus === 500) {
     setError("Такого пользователя не существует");
   } else if (errorStatus === 400) {

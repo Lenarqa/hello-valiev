@@ -67,10 +67,9 @@ const ReviewModal: React.FC<IReviewModal> = ({
 
   const capha = useStore(caphaStore.$capha);
   const isLoadingCapha = useStore(caphaStore.$isLoadingCapha);
-  const authToken = useStore(authStore.$token);
 
   const isLoadingAddReview = useStore(addReviewStore.$isLoadingAddReview);
-  const sendReviewError = useStore(addReviewStore.$sendReviewError);
+  const sendReviewRes = useStore(addReviewStore.$sendReviewRes);
   const sendPhotoError = useStore(addReviewStore.$sendPhotoError);
   const isLoadingPostPhoto = useStore(addReviewStore.$isLoadingPostPhoto);
 
@@ -79,38 +78,30 @@ const ReviewModal: React.FC<IReviewModal> = ({
     caphaImg = capha.base64Image;
   }
 
+  const addReviewErr = useStore(addReviewStore.$addReviewError);
+  const sendPhotoErrorNew = useStore(addReviewStore.$sendPhotoErrorNew);
+
   useEffect(() => {
-    if (sendReviewError) {
-      if (sendReviewError?.status === 400) {
-        setTostData({ title: "Что-то не так...", msg: "Ошибка в капче!" });
-        setShowBadWindow(true);
-        close();
-      } else if (
-        sendReviewError?.status === 500 ||
-        sendReviewError?.statusCode
-      ) {
-        setTostData({
-          title: "Что-то не так...",
-          msg: "Произошла ошибка попробуйте позже.",
-        });
-        setShowBadWindow(true);
-        close();
-      } else if (sendPhotoError) {
-        if (sendPhotoError?.status === 500 || sendPhotoError?.statusCode) {
-          setTostData({
-            title: "Что-то не так ...",
-            msg: "Произошла ошибка при отправке изображения.",
-          });
-          setShowBadWindow(true);
-          close();
-        }
-      } else {
-        setShowGoodWindow(true);
-        userReviewsStore.getUserReviews([]);
-        close();
-      }
+    if (addReviewErr) {
+      setTostData({ title: "Что-то не так...", msg: addReviewErr });
+      setShowBadWindow(true);
+      close();
+      addReviewStore.clearAddReviewErr("");
+    } else if (sendPhotoErrorNew) {
+      setTostData({
+        title: "Что-то не так ...",
+        msg: sendPhotoErrorNew,
+      });
+      setShowBadWindow(true);
+      addReviewStore.clearSendPhotoErrorNew("");
+      close();
+    } else if(!addReviewErr && !sendPhotoError && sendReviewRes) {
+      console.log(sendReviewRes);
+      setShowGoodWindow(true);
+      userReviewsStore.getUserReviews([]);
+      close();
     }
-  }, [sendReviewError, sendPhotoError]);
+  }, [addReviewErr, sendPhotoErrorNew, sendReviewRes]);
 
   const changeNameHandler = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
