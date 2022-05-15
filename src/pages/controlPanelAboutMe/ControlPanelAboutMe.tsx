@@ -8,7 +8,7 @@ import TextArea from "../../components/UI/textarea/TextArea";
 import ErrorMsg from "../../components/UI/ErrorMsg/ErrorMsg";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 import { ReactComponent as PencilIcon } from "../../assets/icons/pencil.svg";
-import { IMyInfo, ITostData, IValidationResult } from "../../shared/models/models";
+import { IMyInfo, IValidationResult } from "../../shared/models/models";
 import { DummyOptionsCity } from "../../shared/data/OptionsCity";
 import { DummyOptionsGender } from "../../shared/data/OptionsGender";
 import { DummyOptionsPet } from "../../shared/data/OptionsPet";

@@ -18,11 +18,10 @@ const getUserReviewsFx = createEffect(async () => {
         method: "GET",
         headers: { authorization: "Bearer " + localTokenObj.accessToken },
       }
-    )
-      .then((response) => response.text())
-      .then((response) => JSON.parse(response));
-      console.log(response);
-    return serializeReview(response);
+    );
+    const text = await response.text();
+    const data = await JSON.parse(text);
+    return serializeReview(data);
   }
 });
 
@@ -72,29 +71,27 @@ const $filteredReviews = restore(filterReviewsFx, []);
 // update review text
 const changeReviewText = createEvent<IChangeReviewText>();
 
-const changeReviewTextFx = createEffect(
-  async (reviewData: IChangeReviewText) => {
-    const localToken = localStorage.getItem("auth");
+const changeReviewTextFx = createEffect((reviewData: IChangeReviewText) => {
+  const localToken = localStorage.getItem("auth");
 
-    if (localToken) {
-      const localTokenObj = JSON.parse(localToken);
-      const response = await fetch(
-        `https://academtest.ilink.dev/reviews/updateInfo/${reviewData.id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            authorization: `Bearer ${localTokenObj.accessToken}`,
-          },
-          body: "text=" + encodeURIComponent(reviewData.text),
-        }
-      )
-        .then((response) => response.text())
-        .then((response) => JSON.parse(response));
-      return response;
-    }
+  if (localToken) {
+    const localTokenObj = JSON.parse(localToken);
+    const response = fetch(
+      `https://academtest.ilink.dev/reviews/updateInfo/${reviewData.id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          authorization: `Bearer ${localTokenObj.accessToken}`,
+        },
+        body: "text=" + encodeURIComponent(reviewData.text),
+      }
+    )
+      .then((response) => response.text())
+      .then((response) => JSON.parse(response));
+    return response;
   }
-);
+});
 
 const $isLoadingReviewChangeText = changeReviewTextFx.pending;
 
@@ -114,29 +111,27 @@ sample({
 
 // change status
 const changeReviewStatus = createEvent<IChangeReviewText>();
-const changeReviewStatusFx = createEffect(
-  async (reviewData: IChangeReviewText) => {
-    const localToken = localStorage.getItem("auth");
+const changeReviewStatusFx = createEffect((reviewData: IChangeReviewText) => {
+  const localToken = localStorage.getItem("auth");
 
-    if (localToken) {
-      const localTokenObj = JSON.parse(localToken);
-      const response = await fetch(
-        `https://academtest.ilink.dev/reviews/updateStatus/${reviewData.id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            authorization: `Bearer ${localTokenObj.accessToken}`,
-          },
-          body: "status=" + encodeURIComponent(reviewData.text),
-        }
-      )
-        .then((response) => response.text())
-        .then((response) => JSON.parse(response));
-      return response;
-    }
+  if (localToken) {
+    const localTokenObj = JSON.parse(localToken);
+    const response = fetch(
+      `https://academtest.ilink.dev/reviews/updateStatus/${reviewData.id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          authorization: `Bearer ${localTokenObj.accessToken}`,
+        },
+        body: "status=" + encodeURIComponent(reviewData.text),
+      }
+    )
+      .then((response) => response.text())
+      .then((response) => JSON.parse(response));
+    return response;
   }
-);
+});
 
 const $isLoadingReviewChangeStatus = changeReviewStatusFx.pending;
 
@@ -165,5 +160,5 @@ export const userReviewsStore = {
   $isLoadingFilteredUsers,
   $changeTextRes,
   clearChangeTextRes,
-  $changeReviewStatusRes
+  $changeReviewStatusRes,
 };
