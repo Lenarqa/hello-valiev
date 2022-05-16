@@ -10,9 +10,11 @@ import { DummyOptionsPet } from "../../../shared/data/OptionsPet";
 
 const MyCard: React.FC = () => {
   const userInfo = useStore(userStore.$userInfo);
-  const userCity = DummyOptionsCity.find(item => item.id === userInfo?.city);
-  const userGender = DummyOptionsGender.find(item => item.id === userInfo?.gender);
-  const userPet = DummyOptionsPet.find(item => item.id === userInfo?.pet);
+  const userCity = DummyOptionsCity.find((item) => item.id === userInfo?.city);
+  const userGender = DummyOptionsGender.find(
+    (item) => item.id === userInfo?.gender
+  );
+  const userPet = DummyOptionsPet.find((item) => item.id === userInfo?.pet);
 
   return (
     <div className={style.card}>
@@ -38,6 +40,11 @@ const MyCard: React.FC = () => {
       <div className={style.aboutMeInfo}>
         <div className={style.aboutMeText}>
           <b>О себе:</b> {userInfo?.aboutMeText}
+        </div>
+        <div className={style.smallAboutMe}>
+          <br />
+          <b>BTW: </b>
+          {userInfo?.smallAboutMe}
         </div>
       </div>
       <div>
