@@ -25,7 +25,7 @@ const ProgressBar: React.FC<IProgressBar> = ({
         if (value === 100) {
           setIsLoading(false);
         }
-      }, 1000);
+      }, 250);
     }
     return () => {
       clearInterval(interval);

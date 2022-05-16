@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useStore } from "effector-react";
 import ButtonAdd from "../UI/buttonAdd/ButtonAdd";
-import ReviewItem from "../reviewItem/ReviewItem";
 import { ITostData } from "../../shared/models/models";
 import SliderBtn from "./sliderBtn/SliderBtn";
 import ReviewModal from "../modal/rewiewModal/ReviewModal";
 import { ReactComponent as ButtonAddIcon } from "../../assets/icons/buttonAdd.svg";
 import { DummyOptionsReview } from "../../shared/data/OptionsReviews";
 import { addReviewStore } from "../../shared/effector/addReview";
-import { userReviewsStore } from "../../shared/effector/reviews";
+import { userReviewsStore } from "../../entities/review/model/index";
 import style from "./Slider.module.css";
 import useWindowDimensions from "../../functions/ScreenSize";
 import Carusel from "./Carusel";
+import { Review } from "../../entities/review";
 
 interface ISliderSection {
   setShowGoodWindow: (value: boolean) => void;
@@ -112,7 +112,7 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
           {fethingReviews
             ?.filter((item) => item.status === DummyOptionsReview[2].id)
             .map((review) => (
-              <ReviewItem
+              <Review
                 key={review.id}
                 id={review.id}
                 name={review.name}
@@ -136,7 +136,6 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
                 <div
                   className={style.bar}
                   key={index}
-                  // activeIndex={activeIndex}
                   data-is-active={activeIndex === index}
                   onClick={nextSlideBarHandler.bind(this, index)}
                 />

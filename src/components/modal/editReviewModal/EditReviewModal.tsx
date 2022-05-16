@@ -4,8 +4,9 @@ import TextArea from "../../UI/textarea/TextArea";
 import style from "./EditReviewModal.module.css";
 import ErrorMsg from "../../UI/ErrorMsg/ErrorMsg";
 import { useStore } from "effector-react";
-import { userReviewsStore } from "../../../shared/effector/reviews";
+import { userReviewsStore } from "../../../entities/review/model/index";
 import LoadingSpiner from "../../UI/loadingSpiner/LoadingSpiner";
+import { IChangeReviewText } from "../../../shared/models/models";
 
 interface IEditReviewModal {
   rewiewId: string;
@@ -40,11 +41,11 @@ const EditReviewModal: React.FC<IEditReviewModal> = (props) => {
 
   const updateTextHandler = (): void => {
     if (
-      props.updateReviewText !== undefined &&
       props.showGoodWindow !== undefined &&
       props.showBadWindow !== undefined
     ) {
-      props.updateReviewText(userReviewText, props.rewiewId);
+      const reviewData: IChangeReviewText = { id: props.rewiewId, text: userReviewText };
+      userReviewsStore.changeReviewText(reviewData);
     }
   };
 

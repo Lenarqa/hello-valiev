@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Button from "../UI/myButton/Button";
-import Overlay from "../UI/overlay/Overlay";
-import EditReviewModal from "../modal/editReviewModal/EditReviewModal";
-import style from "./ReviewItem.module.css";
-import { ReactComponent as EditBtn } from "../../assets/icons/editBtn.svg";
-import { ReactComponent as CloseIcon } from "../../assets/icons/сloseIcon.svg";
-import { ReactComponent as PublishIcon } from "../../assets/icons/publishIcon.svg";
-import { IOption } from "../../shared/models/models";
-import { userReviewsStore } from "../../shared/effector/reviews";
 import { useStore } from "effector-react";
+import Button from "../../../../components/UI/myButton/Button";
+import Overlay from "../../../../components/UI/overlay/Overlay";
+import EditReviewModal from "../../../../components/modal/editReviewModal/EditReviewModal";
+import style from "./index.module.css";
+import { ReactComponent as EditBtn } from "../../../../assets/icons/editBtn.svg"; //editBtn.svg
+import { ReactComponent as CloseIcon } from "../../../../assets/icons/сloseIcon.svg"; //сloseIcon.svg
+import { ReactComponent as PublishIcon } from "../../../../assets/icons/publishIcon.svg"; //publishIcon.svg
+import { IChangeReviewText } from "../../../../shared/models/models";
+import { userReviewsStore } from "../../model/index";
 
-interface ISliderItem {
+interface IReview {
   type?: string;
   id: string;
   name: string;
@@ -18,15 +18,11 @@ interface ISliderItem {
   date: string;
   text: string;
   status?: string;
-  selected?: IOption;
-  cancelHandler?: (id: string) => void;
-  publishHandler?: (id: string) => void;
-  updateReviewText?: (updatedReviewText: string, id: string) => boolean;
   showGoodWindow?: (value: boolean) => void;
   showBadWindow?: (value: boolean) => void;
 }
 
-const ReviewItem: React.FC<ISliderItem> = ({
+export const Review: React.FC<IReview> = ({
   type,
   id,
   name,
@@ -34,10 +30,6 @@ const ReviewItem: React.FC<ISliderItem> = ({
   date,
   text,
   status,
-  selected,
-  cancelHandler,
-  publishHandler,
-  updateReviewText,
   showGoodWindow,
   showBadWindow,
 }) => {
@@ -46,46 +38,34 @@ const ReviewItem: React.FC<ISliderItem> = ({
   const [isEditRevie, setIsEditReview] = useState<boolean>(false);
   const isLoadingText = useStore(userReviewsStore.$isLoadingReviewChangeText);
 
-  useEffect(()=>{
-    if(!isLoadingText){
-      setIsEditReview(false)
+  useEffect(() => {
+    if (!isLoadingText) {
+      setIsEditReview(false);
     }
-  },[isLoadingText]);
+  }, [isLoadingText]);
 
   let reviewImg;
   if (!imgUrl) {
-    reviewImg = require(`../../assets/img/users/user-0.png`);
+    reviewImg = require(`../../../../assets/img/users/user-0.png`);
   } else {
     reviewImg = `https://academtest.ilink.dev/images/${imgUrl}`;
   }
 
-  //если отзыв ранее отмечен как (отмененный/опубликованный),
-  //то при переходе на другой фильтр убираем стиль, и переносим опубликованный в опубликованный
-  //отмененный в отмененный
-  useEffect(() => {
-    if (selected?.id === status) {
-      setIsCanseled(false);
-      setIsPublish(false);
-    }
-  }, [selected, status]);
-
-  const curCancelHandler = () => {
-    if (cancelHandler !== undefined) {
-      cancelHandler(id);
-      setIsCanseled(true); //устанавливаем стиль отмененного
-    }
+  const cancelHandler = () => {
+    const reviewData: IChangeReviewText = { id: id, text: "declined" };
+    userReviewsStore.changeReviewStatus(reviewData);
+    setIsCanseled(true);
   };
 
-  const curPublishHandler = (): void => {
-    if (publishHandler !== undefined) {
-      publishHandler(id);
-      setIsPublish(true);
-    }
+  const publishHandler = (): void => {
+    const reviewData: IChangeReviewText = { id: id, text: "approved" };
+    userReviewsStore.changeReviewStatus(reviewData);
+    setIsPublish(true);
   };
 
   const showEditWindowHandler = (): void => {
     setIsEditReview(true);
-    if(showBadWindow && showGoodWindow){
+    if (showBadWindow && showGoodWindow) {
       showBadWindow(false);
       showGoodWindow(false);
     }
@@ -121,10 +101,10 @@ const ReviewItem: React.FC<ISliderItem> = ({
           data-is-publish={isPublish}
         >
           <div>
-            <Button type="submit" onClick={curPublishHandler}>
+            <Button type="submit" onClick={publishHandler}>
               Опубликовать
             </Button>
-            <Button type="cancel" onClick={curCancelHandler}>
+            <Button type="cancel" onClick={cancelHandler}>
               Отклонить
             </Button>
           </div>
@@ -142,7 +122,6 @@ const ReviewItem: React.FC<ISliderItem> = ({
             close={closeEditWindowHandler}
             rewiewId={id}
             reviewText={text}
-            updateReviewText={updateReviewText}
             showGoodWindow={showGoodWindow}
             showBadWindow={showBadWindow}
           />
@@ -151,4 +130,3 @@ const ReviewItem: React.FC<ISliderItem> = ({
     </>
   );
 };
-export default ReviewItem;

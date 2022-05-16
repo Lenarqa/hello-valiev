@@ -16,9 +16,8 @@ import Overlay from "../../UI/overlay/Overlay";
 import TextArea from "../../UI/textarea/TextArea";
 import Input from "../../UI/input/Input";
 import { caphaStore } from "../../../shared/effector/capha";
-import { authStore } from "../../../shared/effector/auth";
 import { addReviewStore } from "../../../shared/effector/addReview";
-import { userReviewsStore } from "../../../shared/effector/reviews";
+import { userReviewsStore } from "../../../entities/review/model/index";
 import LoadingSpiner from "../../UI/loadingSpiner/LoadingSpiner";
 import Button from "../../UI/myButton/Button";
 

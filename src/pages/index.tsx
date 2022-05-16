@@ -1,5 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+
+// pages
 import AboutMe from "./aboutMe/AboutMe";
 import Auth from "./auth/Auth";
 import ControlPanel from "./controlPanel/ControlPanel";

@@ -6,7 +6,7 @@ import Content from "../../components/content/Content";
 import Footer from "../../components/footer/footer/Footer";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 import { userStore } from "../../shared/effector/userInfo";
-import { userReviewsStore } from "../../shared/effector/reviews";
+import { userReviewsStore } from "../../entities/review/model/index";
 
 const AboutMe: React.FC = () => {
   useEffect(()=>{

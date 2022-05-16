@@ -5,18 +5,17 @@ import EmptyScreen from "../../components/UI/emtyScreen/EmptyScreen";
 import Select from "../../components/UI/select/Select";
 import { DummyOptionsReview } from "../../shared/data/OptionsReviews";
 import {
-  IChangeReviewText,
   IOption,
   IReview,
   ITostData,
 } from "../../shared/models/models";
-import ReviewItem from "../../components/reviewItem/ReviewItem";
 import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
 import BadWindow from "../../components/UI/badWindow/BadWindow";
 import { PopUpContext } from "../../components/store/PopUpContext";
-import ReviewItemSkeleton from "../../components/reviewItem/skeleton/ReviewsSkeleton";
-import { userReviewsStore } from "../../shared/effector/reviews";
+// import ReviewItemSkeleton from "../../components/reviewItem/skeleton/ReviewsSkeleton";
+import { userReviewsStore } from "../../entities/review/model/index";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
+import { Review, ReviewSkeleton } from "../../entities/review";
 
 const Reviews: React.FC = () => {
   const popUpCtx = useContext(PopUpContext);
@@ -127,25 +126,6 @@ const Reviews: React.FC = () => {
     onChangeFilterHandler(selected);
   }, [onChangeFilterHandler]);
 
-  const cancelHandler = (id: string): void => {
-    const reviewData: IChangeReviewText = { id: id, text: "declined" };
-    userReviewsStore.changeReviewStatus(reviewData);
-  };
-
-  const publishHandler = (id: string): void => {
-    const reviewData: IChangeReviewText = { id: id, text: "approved" };
-    userReviewsStore.changeReviewStatus(reviewData);
-  };
-
-  const updateReviewTextHandler = (
-    updatedReviewText: string,
-    id: string
-  ): boolean => {
-    const reviewData: IChangeReviewText = { id: id, text: updatedReviewText };
-    userReviewsStore.changeReviewText(reviewData);
-    return true;
-  };
-
   const nextPageHandler = () => {
     setCurPage((prev) => prev + 1);
     setisLoadingPage(true);
@@ -194,7 +174,7 @@ const Reviews: React.FC = () => {
                   .map((review, index) => {
                     if (!isLoadingPage) {
                       return (
-                        <ReviewItem
+                        <Review
                           type="controlPanelReview"
                           key={review.id}
                           id={review.id}
@@ -202,17 +182,13 @@ const Reviews: React.FC = () => {
                           date={review.date}
                           imgUrl={review.imgUrl}
                           text={review.text}
-                          cancelHandler={cancelHandler}
                           status={review.status}
-                          selected={selected}
-                          publishHandler={publishHandler}
-                          updateReviewText={updateReviewTextHandler}
                           showGoodWindow={setIsShowGoodWindow}
                           showBadWindow={setIsShowBadWindow}
                         />
                       );
                     } else {
-                      return <ReviewItemSkeleton key={index} />;
+                      return <ReviewSkeleton key={index} />;
                     }
                   })}
               </div>

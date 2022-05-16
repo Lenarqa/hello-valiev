@@ -271,7 +271,6 @@
     margin-right: 6px;
     width: 102px;
   }
-
 }
 
 @media (max-width: 320px) {
@@ -334,7 +333,7 @@
     align-items: center;
   }
 
-   .item[data-type="controlPanelReview"] .action div {
+  .item[data-type="controlPanelReview"] .action div {
     display: flex;
     flex-direction: row;
     margin-right: 6px;
@@ -344,5 +343,5 @@
     margin: 0;
     width: 42px;
     height: 42px;
-  } 
+  }
 }
