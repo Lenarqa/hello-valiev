@@ -1,13 +1,13 @@
 @font-face {
   font-family: "Factor A";
-  src: url("./assets/fonts/FactorAMedium-Regular.ttf") format("truetype");
+  src: url("../../assets/fonts/FactorAMedium-Regular.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Gilroy";
-  src: url("./assets/fonts/Gilroy-Regular.ttf") format("truetype");
+  src: url("../../assets/fonts/Gilroy-Regular.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
 }
@@ -16,6 +16,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
 }
 
 body {

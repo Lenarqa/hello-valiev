@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
-import "./index.css";
+import App from "./app/";
+import "./app/styles/index.css";
 import { BrowserRouter } from "react-router-dom";
 import PopUpContextProvider from "./components/store/PopUpContext";
 
