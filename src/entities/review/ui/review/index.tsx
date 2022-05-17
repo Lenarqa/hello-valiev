@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useStore } from "effector-react";
 import { Button } from "../../../../shared/ui/button";
-import Overlay from "../../../../components/UI/overlay/Overlay";
+import { Overlay } from "../../../../shared/ui/overlay";
 import EditReviewModal from "../../../../components/modal/editReviewModal/EditReviewModal";
 import style from "./index.module.css";
 import { ReactComponent as EditBtn } from "../../../../assets/icons/editBtn.svg"; //editBtn.svg

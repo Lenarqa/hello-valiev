@@ -11,7 +11,7 @@ import {
   IReviewPost,
   ITostData,
 } from "../../../shared/models/models";
-import Overlay from "../../UI/overlay/Overlay";
+import { Overlay } from "../../../shared/ui/overlay";
 import TextArea from "../../UI/textarea/TextArea";
 import Input from "../../UI/input/Input";
 import { caphaStore } from "../../../shared/effector/capha";
