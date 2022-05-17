@@ -1,18 +1,13 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useStore } from "effector-react";
 import style from "./Reviews.module.css";
-import EmptyScreen from "../../components/UI/emtyScreen/EmptyScreen";
+import { EmptyScreen } from "../../shared/ui/EmptyScreen/ui";
 import Select from "../../components/UI/select/Select";
 import { DummyOptionsReview } from "../../shared/data/OptionsReviews";
-import {
-  IOption,
-  IReview,
-  ITostData,
-} from "../../shared/models/models";
+import { IOption, IReview, ITostData } from "../../shared/models/models";
 import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
 import BadWindow from "../../components/UI/badWindow/BadWindow";
 import { PopUpContext } from "../../components/store/PopUpContext";
-// import ReviewItemSkeleton from "../../components/reviewItem/skeleton/ReviewsSkeleton";
 import { userReviewsStore } from "../../entities/review/model/index";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 import { Review, ReviewSkeleton } from "../../entities/review";
@@ -84,30 +79,30 @@ const Reviews: React.FC = () => {
     }
   }, [changeTextRes]);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(changeStatusRes);
-    if(changeStatusRes.status === "declined") {
+    if (changeStatusRes.status === "declined") {
       setTostData({
         title: "Отзыв отклонен",
         msg: "Отзыв успешно отклонен!",
       });
       setIsShowGoodWindow(true);
       return;
-    }else if (changeStatusRes.status === "approved") {
+    } else if (changeStatusRes.status === "approved") {
       setTostData({
         title: "Отзыв опубликован",
         msg: "Отзыв успешно опубликован!",
       });
       setIsShowGoodWindow(true);
       return;
-    }else if(changeStatusRes.error) {
+    } else if (changeStatusRes.error) {
       setTostData({
         title: "Что то пощло не так",
         msg: "Ой ой что то не так!",
       });
       setIsShowBadWindow(true);
     }
-  },[changeStatusRes])
+  }, [changeStatusRes]);
 
   const [isShowGoodWindow, setIsShowGoodWindow] = useState<boolean>(false);
   const [isShowBadWindow, setIsShowBadWindow] = useState<boolean>(false);

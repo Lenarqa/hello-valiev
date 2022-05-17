@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useStore } from "effector-react";
-import EmptyScreen from "../../components/UI/emtyScreen/EmptyScreen";
+import { EmptyScreen } from "../../shared/ui/EmptyScreen/ui";
 import style from "./Users.module.css";
 import Select from "../../components/UI/select/Select";
 import { IOption, IParticipant } from "../../shared/models/models";
