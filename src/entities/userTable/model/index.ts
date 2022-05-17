@@ -1,5 +1,5 @@
-import { IParticipant, IOption } from "./../models/models";
-import { serializeUsers } from "./../serializers/serializeUsers";
+import { IParticipant, IOption } from "../../../shared/models/models";
+import { serializeUsers } from "../lib/index";
 import {
   createEffect,
   forward,
@@ -8,24 +8,12 @@ import {
   sample,
   createStore,
 } from "effector";
+import { getUsersHandler } from "../api";
 
 // get users
 const getUsers = createEvent<IParticipant[]>();
 
-const getUsersFx = createEffect(async () => {
-  const localToken = localStorage.getItem("auth");
-
-  if (localToken) {
-    const localTokenObj = JSON.parse(localToken);
-    const response = await fetch("https://academtest.ilink.dev/user/getAll", {
-      method: "GET",
-      headers: { authorization: "Bearer " + localTokenObj.accessToken },
-    })
-      .then((response) => response.text())
-      .then((response) => JSON.parse(response));
-    return serializeUsers(response);
-  }
-});
+const getUsersFx = createEffect(getUsersHandler);
 
 forward({
   from: getUsers,

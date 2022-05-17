@@ -8,14 +8,14 @@ import Pagination from "../../components/UI/pagination/Pagination";
 import { DummyOptionsParticipants } from "../../shared/data/OptionsParticipant";
 import { PopUpContext } from "../../components/store/PopUpContext";
 import ParticipantItemSkeleton from "../../components/participantItem/skeleton/ParticipantItemSkeleton";
-import UsersTable from "../../components/usersTable/UsersTable";
-import { usersStore } from "../../shared/effector/users";
-
+import { UsersTable } from "../../entities/userTable";
+import { usersStore } from "../../entities/userTable/model";
+import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 
 const Users: React.FC = () => {
   // если в controlPanelAboutMe была ошибка скрываем ее
   const popUpCtx = useContext(PopUpContext);
-  
+
   const [isScrollLeft, setIsScrollLeft] = useState<boolean>(true);
 
   const [isLoadingPage, setIsloadingPage] = useState<boolean>(false);
@@ -24,7 +24,6 @@ const Users: React.FC = () => {
   const [selected, setIsSelected] = useState<IOption>(
     DummyOptionsParticipants[0]
   ); //0 - элемент, это элемент по дефолту отображающийся в селект;
-
 
   const filteredUsers: IParticipant[] | undefined = useStore(
     usersStore.$filteredUsers
@@ -49,7 +48,6 @@ const Users: React.FC = () => {
   const isLoadingUsers: boolean = useStore(usersStore.$isLoadingUsers);
 
   useEffect(() => {
-    console.log("render")
     usersStore.getUsers([]);
     popUpCtx.setIsError(false);
     popUpCtx.setIsOpenBadWindow(false);
@@ -93,46 +91,54 @@ const Users: React.FC = () => {
 
   return (
     <div className={style.container}>
-      {curFilteredParticipants.length === 0 ? (
-        <EmptyScreen text="Список участников пуст" />
+      {isLoadingFilteredUsers ? (
+        <div className={style.spinerWrapper}>
+          <LoadingSpiner />
+        </div>
       ) : (
-        <div className={style.content}>
-          <div className={style.contentHeader}>
-            <h2>Участники</h2>
-            <Select
-              selected={selected}
-              setSelected={setIsSelected}
-              options={DummyOptionsParticipants}
-              onChange={onChangeFilterHandler}
-            />
-            <div className={style.leftBtn} data-is-active={isScrollLeft} />
-            <div className={style.rightBtn} data-is-active={isScrollLeft} />
-          </div>
-          {!isLoadingPage && (
-            <UsersTable
-              filteredParticipants={curFilteredParticipants}
-              setIsLeft={setIsScrollLeft}
-            />
-          )}
-          {(isLoadingPage || isLoadingFilteredUsers) && (
-            <div className={style.table}>
-              <div className={style.headerSkeleton}></div>
-              {filteredUsers!.map((participant, index) => (
-                <ParticipantItemSkeleton key={index} />
-              ))}
+        <>
+          {curFilteredParticipants.length === 0 ? (
+            <EmptyScreen text="Список участников пуст" />
+          ) : (
+            <div className={style.content}>
+              <div className={style.contentHeader}>
+                <h2>Участники</h2>
+                <Select
+                  selected={selected}
+                  setSelected={setIsSelected}
+                  options={DummyOptionsParticipants}
+                  onChange={onChangeFilterHandler}
+                />
+                <div className={style.leftBtn} data-is-active={isScrollLeft} />
+                <div className={style.rightBtn} data-is-active={isScrollLeft} />
+              </div>
+              {!isLoadingPage && (
+                <UsersTable
+                  filteredParticipants={curFilteredParticipants}
+                  setIsLeft={setIsScrollLeft}
+                />
+              )}
+              {(isLoadingPage || isLoadingFilteredUsers) && (
+                <div className={style.table}>
+                  <div className={style.headerSkeleton}></div>
+                  {filteredUsers!.map((participant, index) => (
+                    <ParticipantItemSkeleton key={index} />
+                  ))}
+                </div>
+              )}
+              {filteredUsers!.length !== 0 && (
+                <Pagination
+                  curPage={curPage}
+                  participantPerPage={6}
+                  totalParticipant={fethingUsers!.length}
+                  changePageHandler={changePageHandler}
+                  nextPageHandler={nextPageHandler}
+                  backPageHandler={BackPageHandler}
+                />
+              )}
             </div>
           )}
-          {filteredUsers!.length !== 0 && (
-            <Pagination
-              curPage={curPage}
-              participantPerPage={6}
-              totalParticipant={fethingUsers!.length}
-              changePageHandler={changePageHandler}
-              nextPageHandler={nextPageHandler}
-              backPageHandler={BackPageHandler}
-            />
-          )}
-        </div>
+        </>
       )}
     </div>
   );

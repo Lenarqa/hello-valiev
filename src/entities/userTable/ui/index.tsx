@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
-import { IParticipant } from "../../shared/models/models";
-import style from "./UsersTable.module.css";
-import { DummyOptionsParticipants } from "../../shared/data/OptionsParticipant";
-import { IOption } from "../../shared/models/models";
-import { setUsersItemHeight } from "../../shared/lib/users/setUsersItemHeitght";
+import { IParticipant } from "../../../shared/models/models";
+import style from "./index.module.css";
+import { DummyOptionsParticipants } from "../../../shared/data/OptionsParticipant";
+import { IOption } from "../../../shared/models/models";
+import { setUsersItemHeight } from "../../../shared/lib/users/setUsersItemHeitght";
 
 interface IUserTable {
   filteredParticipants: IParticipant[];
   setIsLeft: (val: boolean) => void;
 }
 
-const UsersTable: React.FC<IUserTable> = (props) => {
+export const UsersTable: React.FC<IUserTable> = (props) => {
   useEffect(() => {
     setUsersItemHeight(style.text, style.info, style.statusWrapper);//я пытался сделать через css, но подходящего решения не нашел
     const table = document.getElementById("tableStyle");
@@ -65,4 +65,4 @@ const UsersTable: React.FC<IUserTable> = (props) => {
     </div>
   );
 };
-export default UsersTable;
+

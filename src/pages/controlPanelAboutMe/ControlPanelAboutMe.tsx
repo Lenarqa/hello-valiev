@@ -313,7 +313,9 @@ const ControlPanelAboutMe: React.FC = () => {
   return (
     <div className={style.container}>
       {isLoadingUserInfo ? (
-        <LoadingSpiner />
+        <div className={style.spinerWrapper}>
+          <LoadingSpiner />
+        </div>
       ) : (
         <>
           <div className={style.content}>

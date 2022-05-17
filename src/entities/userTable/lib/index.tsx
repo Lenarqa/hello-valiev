@@ -1,4 +1,4 @@
-import { IParticipant } from "../models/models";
+import { IParticipant } from "../../../shared/models/models";
 
 export const serializeUsers = (usersArray: any[]): IParticipant[] => {
     const users:IParticipant[] = usersArray.map(user => {

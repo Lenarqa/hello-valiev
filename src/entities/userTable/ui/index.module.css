@@ -3,7 +3,6 @@
   margin-bottom: 29px;
 }
 
-
 .table {
   display: flex;
   width: 100%;
@@ -134,7 +133,7 @@
   background-color: #f5f5f5;
 }
 
-.row{
+.row {
   background-color: lightblue;
   /* display: flex; */
   /* height: min-content; */
@@ -150,10 +149,11 @@
   height: auto;
 }
 
-.info, .text, .statusWrapper {
+.info,
+.text,
+.statusWrapper {
   min-height: 88px;
-} 
-
+}
 
 @media (max-width: 1150px) {
   .status {
