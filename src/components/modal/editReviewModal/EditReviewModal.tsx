@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Button from "../../UI/myButton/Button";
+import { Button } from "../../../shared/ui/button";
 import TextArea from "../../UI/textarea/TextArea";
 import style from "./EditReviewModal.module.css";
 import ErrorMsg from "../../UI/ErrorMsg/ErrorMsg";

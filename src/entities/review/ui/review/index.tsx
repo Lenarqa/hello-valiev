@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useStore } from "effector-react";
-import Button from "../../../../components/UI/myButton/Button";
+import { Button } from "../../../../shared/ui/button";
 import Overlay from "../../../../components/UI/overlay/Overlay";
 import EditReviewModal from "../../../../components/modal/editReviewModal/EditReviewModal";
 import style from "./index.module.css";

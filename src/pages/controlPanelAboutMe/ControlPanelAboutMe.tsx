@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useStore } from "effector-react";
 import style from "./ControlPanelAboutMe.module.css";
-import Button from "../../components/UI/myButton/Button";
+import { Button } from "../../shared/ui/button";
 import Select from "../../components/UI/select/Select";
 import Input from "../../components/UI/input/Input";
 import TextArea from "../../components/UI/textarea/TextArea";

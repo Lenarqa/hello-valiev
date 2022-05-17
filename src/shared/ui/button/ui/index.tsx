@@ -1,5 +1,6 @@
 import React from "react";
-import style from "./Button.module.css";
+import style from "./index.module.css";
+import plus from "../assets/plus.svg";
 
 interface IButton {
   onClick?: () => void;
@@ -8,7 +9,7 @@ interface IButton {
   isDisable?: boolean;
 }
 
-const Button: React.FC<IButton> = (props) => {
+export const Button: React.FC<IButton> = (props) => {
   return (
     <button
       data-type={props.type}
@@ -16,8 +17,9 @@ const Button: React.FC<IButton> = (props) => {
       className={`${props.style} ${style.button} `}
       onClick={props.onClick}
     >
+      <img src={plus} className={style.icon} />
       {props.children}
     </button>
   );
 };
-export default Button;
+

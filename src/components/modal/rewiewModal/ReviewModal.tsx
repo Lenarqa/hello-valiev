@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import style from "./RewiewModal.module.css";
 import ReactDOM from "react-dom";
 import { useStore } from "effector-react";
-import ButtonAdd from "../../UI/buttonAdd/ButtonAdd";
 import { ReactComponent as InfoIcon } from "../../../assets/icons/info.svg";
 import { ReactComponent as ReloadIcon } from "../../../assets/icons/reload.svg";
 import FileItem from "../fileItem/FileItem";
@@ -19,7 +18,7 @@ import { caphaStore } from "../../../shared/effector/capha";
 import { addReviewStore } from "../../../shared/effector/addReview";
 import { userReviewsStore } from "../../../entities/review/model/index";
 import LoadingSpiner from "../../UI/loadingSpiner/LoadingSpiner";
-import Button from "../../UI/myButton/Button";
+import { Button } from "../../../shared/ui/button";;
 
 interface IReviewModal {
   close: () => void;
@@ -246,13 +245,13 @@ const ReviewModal: React.FC<IReviewModal> = ({
                     style={{ display: "none" }}
                     onChange={imgSelectHandler}
                   />
-                  <ButtonAdd
-                    type="addImg"
+                  <Button
+                    type="addBtn"
                     onClick={fileUploadHandler}
-                    isDisabled={disabledBtn}
+                    isDisable={disabledBtn}
                   >
                     Загрузить фото
-                  </ButtonAdd>
+                  </Button>
                 </div>
                 {isErrorName && <ErrorMsg>{errorNameMsg}</ErrorMsg>}
                 {isErrorFile && <ErrorMsg>{errorFileMsg}</ErrorMsg>}

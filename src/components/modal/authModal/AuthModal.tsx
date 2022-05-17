@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./AuthModal.module.css";
-import Button from "../../UI/myButton/Button";
+import { Button } from "../../../shared/ui/button";
 import { ReactComponent as OpenEyeIcon } from "../../../assets/icons/openEye.svg";
 import { ReactComponent as CloseEyeIcon } from "../../../assets/icons/closeEye.svg";
 import {

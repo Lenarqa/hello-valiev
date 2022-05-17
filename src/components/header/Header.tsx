@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import style from "./Header.module.css";
 import useWindowDimensions from "../../functions/ScreenSize";
-import Button from "../UI/myButton/Button";
+import { Button } from "../../shared/ui/button";
 import { ReactComponent as ButtonMobile } from "../../assets/icons/button1.svg";
 import { ReactComponent as ILinkLogo } from "../../assets/img/logoAcademy.svg";
 import { useNavigate } from "react-router-dom";

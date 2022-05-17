@@ -18,13 +18,21 @@
   transition: 0.5s ease-out;
 }
 
+.button img {
+  display: none;
+}
+
+.button[data-type="addBtn"] img {
+  display: flex;
+}
+
+.button[data-type="addBtn"]:hover,
 .button[data-type="editReviewCancel"]:hover,
 .button[data-type="editReviewSubmit"]:hover,
 .button[data-type="cancel"]:hover,
 .button:hover {
   background-position: left;
 }
-
 
 .button:disabled {
   background: #8a8a8a 100%;
@@ -38,7 +46,7 @@
 .button[data-type="cancel"] {
   width: 148px;
   margin-left: 12px;
-  background: linear-gradient(to left, #EB5757 50%, #f85d5d 50%) right;
+  background: linear-gradient(to left, #eb5757 50%, #f85d5d 50%) right;
   background-size: 200%;
   transition: 0.5s ease-out;
 }
@@ -86,6 +94,57 @@
   transform: scaleX(1);
 }
 
+/* add btn */
+.button[data-type="addBtn"] {
+  cursor: pointer;
+  height: 52px;
+  width: 220px;
+  padding: 17px 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-family: "Gilroy";
+  font-weight: 600;
+  border: none;
+  border-radius: 2px;
+  margin: 0;
+  font-size: 17px;
+
+  background: linear-gradient(to left, #585cc6 50%, #6469e6e6 50%) right;
+  background-size: 200%;
+  transition: 0.5s ease-out;
+}
+
+.button[data-type="addBtn"] .icon {
+  margin-right: 12px;
+}
+
+.button[data-type="addBtn"]:disabled {
+  background: #8a8a8a;
+}
+
+@media (max-width: 420px) {
+  .button[data-type="addImg"] {
+    padding: 12px 13px;
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 18px;
+    width: 149px;
+    height: 42px;
+  }
+
+  .button[data-type="addImg"] .icon {
+    margin-right: 11px;
+    width: 9.5px;
+    height: 9.5px;
+  }
+}
+/* end add btn */
+
+
 @media (max-width: 320px) {
   .button[data-type="submit"] {
     width: 108px;
@@ -103,7 +162,7 @@
     font-size: 14px;
     padding: 12px 6px;
     margin-right: 6px;
-  } 
+  }
 
   .button[data-type="cancel"] {
     width: 102px;
@@ -112,7 +171,7 @@
     font-size: 14px;
     padding: 12px 6px;
     margin-right: 6px;
-  } 
+  }
 
   .button[data-type="editReviewCancel"] {
     width: 100%;
@@ -121,7 +180,7 @@
     font-size: 14px;
     padding: 12px 6px;
     margin-right: 6px;
-  } 
+  }
 
   .button[data-type="submitAboutMeControlPanel"],
   .button[data-type="submitAboutMe"] {
@@ -130,7 +189,7 @@
     padding: 12px 92px;
   }
 
-  .button[data-type="submitAboutMeControlPanel"]{
+  .button[data-type="submitAboutMeControlPanel"] {
     padding: 12px;
     text-align: center;
   }

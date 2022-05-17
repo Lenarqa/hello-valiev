@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./PasswordRecoveryModal.module.css";
-import Button from "../../UI/myButton/Button";
+import { Button } from "../../../shared/ui/button";
 import { ReactComponent as ArrowLeftIcon } from "../../../assets/icons/arrowLeft.svg";
 import { EmailValidationRegEx } from "../../../shared/lib/validation/regEx";
 import {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useStore } from "effector-react";
-import ButtonAdd from "../UI/buttonAdd/ButtonAdd";
+import { Button } from "../../shared/ui/button";
 import { ITostData } from "../../shared/models/models";
 import SliderBtn from "./sliderBtn/SliderBtn";
 import ReviewModal from "../modal/rewiewModal/ReviewModal";
@@ -105,7 +105,7 @@ const SliderSection: React.FC<ISliderSection> = (props) => {
               style={{ height: 42, width: 42 }}
             />
           ) : (
-            <ButtonAdd onClick={openModalHandler}>Добавить отзыв</ButtonAdd>
+            <Button onClick={openModalHandler} type="addBtn">Добавить отзыв</Button>
           )}
         </div>
         <Carusel offset={offset}>
