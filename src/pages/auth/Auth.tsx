@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import style from "./Auth.module.css";
 import Footer from "../../components/footer/footer/Footer";
 import AuthContent from "../../components/authContent/AuthContent";
-import FooterErrorMsg from "../../components/UI/footerErrorMsg/FooterErrorMsg";
+import { FooterErrorMsg } from "../../shared/ui/footerErrorMsg";
 import Header from "../../components/header/Header";
 
 const Auth: React.FC = () => {

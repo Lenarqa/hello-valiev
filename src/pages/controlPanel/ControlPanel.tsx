@@ -5,7 +5,7 @@ import Footer from "../../components/footer/footer/Footer";
 import ControlPanelMenu from "../../components/controlPanelMenu/ControlPanelMenu";
 import { Outlet } from "react-router-dom";
 import { PopUpContext } from "../../components/store/PopUpContext";
-import FooterErrorMsg from "../../components/UI/footerErrorMsg/FooterErrorMsg";
+import { FooterErrorMsg } from "../../shared/ui/footerErrorMsg";
 import LoadingSpiner from "../../components/UI/loadingSpiner/LoadingSpiner";
 import GoodWindow from "../../components/UI/goodWindow/GoodWindow";
 import BadWindow from "../../components/UI/badWindow/BadWindow";
